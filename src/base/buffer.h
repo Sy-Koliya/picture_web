@@ -35,3 +35,4 @@ int buffer_search(buffer_t *buf, const char* sep, const int seplen);
 
 uint8_t * buffer_write_atmost(buffer_t *p);
 
+#endif 
