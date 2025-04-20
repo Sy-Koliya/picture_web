@@ -1,58 +1,145 @@
+#ifndef TOOLS_H
+#define TOOLS_H
+
+/*
+工具库头文件
+注意普通函数需要inline展开避免重定义
+
+*/
+
 #include <functional>
 #include <tuple>
 #include <type_traits>
 #include <utility>
 #include <vector>
+#include <chrono>
+#include <memory>
+#include "types.h"
 
-
-//ref 并不保证引用的生命周期，可能会出现悬挂现象，请保证资源的生命周期
+// wrap_arg_: 左值引用使用 std::ref，右值按值传递
 template <typename T>
- decltype(auto) wrap_arg_(T &&arg) {
-    if constexpr (std::is_lvalue_reference<T>::value) {
+decltype(auto) wrap_arg_(T &&arg)
+{
+    if constexpr (std::is_lvalue_reference_v<T>)
+    {
         return std::ref(arg);
-    } else {
+    }
+    else
+    {
         return std::forward<T>(arg);
     }
 }
 
-//Package2FVV: 打包成 std::function<void()>
- template <typename Func, typename... Args>
-std::function<void()> Package2FVV(Func&& f, Args&&... args) {
+// Package2FVV: 将任意可调用对象和参数封装为 std::function<void()>
+template <typename Func, typename... Args>
+std::function<void()> Package2FVV(Func &&f, Args &&...args)
+{
     // 把函数和每个参数都包进一个 tuple
     auto tup = std::make_tuple(
-        wrap_arg_(std::forward<Args>(args))...
-    );
+        wrap_arg_(std::forward<Args>(args))...);
 
     // 构造可拷贝的 lambda，并转换为 std::function<void()>
     return std::function<void()>(
-        [ func = std::forward<Func>(f),
-          tup  = std::move(tup) ]() mutable
+        [func = std::forward<Func>(f),
+         tup = std::move(tup)]() mutable
         {
             std::apply(func, tup);
-        }
-    );
+        });
 }
-
-
-//no threads empty
-class IDhelper{
+// no threads empty
+class IDhelper
+{
 public:
-    int get(){}
-    void del(int id){}
+    IDhelper() : idx(0) {}
+    int Get()
+    {
+        if (!stk.empty())
+        {
+            int tmp = stk.back();
+            stk.pop_back();
+            return tmp;
+        }
+        return ++idx;
+    }
+    void Del(int id)
+    {
+        if (id > idx)
+            return;
+        if (id == idx)
+            idx--;
+        stk.push_back(id);
+    }
+
 private:
-    std::vector<int>stk;
+    std::vector<int> stk;
     int idx;
 };
+class NoCopy
+{
+public:
+    NoCopy() = default;
+    ~NoCopy() = default;
+
+    // 禁止拷贝
+    NoCopy(const NoCopy &) = delete;
+    NoCopy &operator=(const NoCopy &) = delete;
+};
+
+// RefCount: 简单的引用计数基类
+class RefCount
+{
+public:
+    RefCount() : ref_count_(0) {}
+
+    // 增加引用计数
+    void AddRef() { ++ref_count_; }
+
+    // 减少引用计数，当计数归零时自动删除自身
+    void ReleaseRef()
+    {
+        if (--ref_count_ == 0)
+        {
+            delete this;
+        }
+    }
+
+protected:
+    virtual ~RefCount() = default;
+
+private:
+    int ref_count_;
+};
+
+inline uint64_t get_tick_count()
+{
+    // 1. 获取当前 steady_clock 时间点
+    auto tp = std::chrono::steady_clock::now();
+
+    // 2. 转为自 epoch 以来的纳秒数
+    auto ns = std::chrono::duration_cast<std::chrono::milliseconds>(
+                  tp.time_since_epoch())
+                  .count();
+
+    return static_cast<uint64_t>(ns);
+}
+
+inline size_t align_pow_2(size_t n)
+{
+    if (n == 0)
+        return 0;
+    std::size_t p = 1;
+    while ((p << 1) <= n)
+    {
+        p <<= 1;
+    }
+    return p;
+}
 
 
 // void writePid()
 // {
 //     uint32_t curPid;
-// #ifdef _WIN32
-//     curPid = (uint32_t)GetCurrentProcess();
-// #else
 //     curPid = (uint32_t)getpid();
-// #endif
 //     FILE *f = fopen("server.pid", "w");
 //     assert(f);
 //     char szPid[32];
@@ -61,3 +148,4 @@ private:
 //     fclose(f);
 // }
 
+#endif
