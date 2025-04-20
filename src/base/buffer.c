@@ -160,6 +160,20 @@ buf_chain_insert(buffer_t *buf, buf_chain_t *chain) {
     buf->total_len += chain->off;
 }
 
+static int
+buf_chain_should_realign(buf_chain_t *chain, uint32_t datlen)
+{
+    return chain->buffer_len - chain->off >= datlen &&
+        (chain->off < chain->buffer_len / 2) &&
+        (chain->off <= MAX_TO_REALIGN_IN_EXPAND);
+}
+
+static void
+buf_chain_align(buf_chain_t *chain) {
+    memmove(chain->buffer, chain->buffer + chain->misalign, chain->off);
+    chain->misalign = 0;
+}
+
 /**
  * buffer_add: 向 buffer 追加数据
  * 1) 尝试写入 last_with_datap 所指节点
@@ -322,23 +336,6 @@ static int buffer_search_kmp(buffer_t *buf, const char *sep, int seplen) {
 /**
  * buffer_search: 按长度选择 KMP 或暴力搜索
  */
-int buffer_search(buffer_t *buf, const char* sep, const int seplen) {
-    if (!buf || seplen <= 0 || buf->total_len < (uint32_t)seplen)
-        return -1;
-    if (seplen >= REQURIEDLEN_WITH_KMP)
-        return buffer_search_kmp(buf, sep, seplen);
-    // 简单暴力搜索（需自行实现）
-    return 0;
-}
-
-/**
- * buffer_write_atmost: 获取首个链节点可连续写入地址
- */
-uint8_t * buffer_write_atmost(buffer_t *p) {
-    if (!p->first) return NULL;
-    return p->first->buffer + p->first->misalign + p->first->off;
-}
-
 
 static bool check_sep(buf_chain_t * chain, int from, const char *sep, int seplen) {
     for (;;) {
