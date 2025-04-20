@@ -1,0 +1,54 @@
+#ifndef TYPE_H
+#define TYPE_H
+#include <cstdint>
+
+constexpr int SOCKET_ERROR = -1;
+constexpr int _INVALID_SOCKET = -1;
+constexpr int  NETLIB_INVALID_HANDLE = -1;
+typedef int net_handle_t;
+typedef int conn_handle_t;
+
+// SOCKET
+enum 
+{
+    SOCKET_STATE_IDLE,
+    SOCKET_STATE_LISTENING,
+    SOCKET_STATE_CONNECTING,
+    SOCKET_STATE_CONNECTED,
+    SOCKET_STATE_CLOSING
+};
+
+//epoll
+enum
+{
+	SOCKET_READ = 0x1,
+	SOCKET_WRITE = 0x2,
+	SOCKET_EXCEP = 0x4,
+	SOCKET_ALL = 0x7
+};
+
+//NetLib
+enum
+{
+    NETLIB_MSG_CONNECT = 1,
+    NETLIB_MSG_CONFIRM,
+    NETLIB_MSG_READ,
+    NETLIB_MSG_WRITE,
+    NETLIB_MSG_CLOSE,
+    NETLIB_MSG_TIMER,
+    NETLIB_MSG_LOOP
+};
+
+//NetStat
+enum
+{
+    NETLIB_OK = 0,
+    NETLIB_ERROR = -1
+};
+
+
+
+typedef void (*callback_t)(void *callback_data, uint8_t msg, uint32_t handle, void *pParam);
+
+
+#endif
