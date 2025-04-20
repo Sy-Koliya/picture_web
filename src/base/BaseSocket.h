@@ -7,21 +7,23 @@
  
 #include "types.h"
 #include "tools.h"
+#include "EventDispatch.h"
 #include <netinet/in.h>
 #include <string>
 
 
  
- class CBaseSocket : public RefCount
+ class BaseSocket : public RefCount
  {
 
 
  public:
-     CBaseSocket();
+     BaseSocket();
  
-     virtual ~CBaseSocket();
+     virtual ~BaseSocket();
  
      int GetSocket() { return m_socket; }
+     EventDispatch* GetEventDispatch(){return m_ev_dispatch;}
      void SetSocket(int  fd) { m_socket = fd; }
      void SetState(uint8_t state) { m_state = state; }
  
@@ -77,15 +79,16 @@
      uint16_t m_remote_port;
      std::string m_local_ip;
      uint16_t m_local_port;
- 
      callback_t m_callback;
      void *m_callback_data;
  
      uint8_t m_state;
+
+     EventDispatch* m_ev_dispatch;
      int m_socket;
  };
  
- CBaseSocket *FindBaseSocket(net_handle_t fd);
+ BaseSocket *FindBaseSocket(net_handle_t fd);
  
  #endif
  

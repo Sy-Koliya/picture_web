@@ -12,22 +12,22 @@
 
  
 
-typedef std::map<net_handle_t, CBaseSocket*> SocketMap;
+typedef std::map<net_handle_t, BaseSocket*> SocketMap;
 SocketMap	g_socket_map;
 
-void AddBaseSocket(CBaseSocket* pSocket)
+void AddBaseSocket(BaseSocket* pSocket)
 {
 	g_socket_map.insert(std::make_pair((net_handle_t)pSocket->GetSocket(), pSocket));
 }
 
-void RemoveBaseSocket(CBaseSocket* pSocket)
+void RemoveBaseSocket(BaseSocket* pSocket)
 {
 	g_socket_map.erase((net_handle_t)pSocket->GetSocket());
 }
 
-CBaseSocket* FindBaseSocket(net_handle_t fd)
+BaseSocket* FindBaseSocket(net_handle_t fd)
 {
-	CBaseSocket* pSocket = NULL;
+	BaseSocket* pSocket = nullptr;
 	SocketMap::iterator iter = g_socket_map.find(fd);
 	if (iter != g_socket_map.end())
 	{
@@ -40,19 +40,19 @@ CBaseSocket* FindBaseSocket(net_handle_t fd)
 
 //////////////////////////////
 
-CBaseSocket::CBaseSocket()
+BaseSocket::BaseSocket()
 {
-	//printf("CBaseSocket::CBaseSocket\n");
+	//printf("BaseSocket::BaseSocket\n");
 	m_socket = _INVALID_SOCKET;
 	m_state = SOCKET_STATE_IDLE;
 }
 
-CBaseSocket::~CBaseSocket()
+BaseSocket::~BaseSocket()
 {
-	//printf("CBaseSocket::~CBaseSocket, socket=%d\n", m_socket);
+	//printf("BaseSocket::~BaseSocket, socket=%d\n", m_socket);
 }
 
-int CBaseSocket::Listen(const char* server_ip, uint16_t port, callback_t callback, void* callback_data)
+int BaseSocket::Listen(const char* server_ip, uint16_t port, callback_t callback, void* callback_data)
 {
 	m_local_ip = server_ip;
 	m_local_port = port;
@@ -89,16 +89,16 @@ int CBaseSocket::Listen(const char* server_ip, uint16_t port, callback_t callbac
 
 	m_state = SOCKET_STATE_LISTENING;
 
-	printf("CBaseSocket::Listen on %s:%d", server_ip, port);
+	printf("BaseSocket::Listen on %s:%d", server_ip, port);
 
 	AddBaseSocket(this);
-	CEventDispatch::Instance().AddEvent(m_socket, SOCKET_READ | SOCKET_EXCEP);
+	m_ev_dispatch->AddEvent(m_socket, SOCKET_READ | SOCKET_EXCEP);
 	return NETLIB_OK;
 }
 
-net_handle_t CBaseSocket::Connect(const char* server_ip, uint16_t port, callback_t callback, void* callback_data)
+net_handle_t BaseSocket::Connect(const char* server_ip, uint16_t port, callback_t callback, void* callback_data)
 {
-	printf("CBaseSocket::Connect, server_ip=%s, port=%d", server_ip, port);
+	printf("BaseSocket::Connect, server_ip=%s, port=%d", server_ip, port);
 
 	m_remote_ip = server_ip;
 	m_remote_port = port;
@@ -125,12 +125,12 @@ net_handle_t CBaseSocket::Connect(const char* server_ip, uint16_t port, callback
 	}
 	m_state = SOCKET_STATE_CONNECTING;
 	AddBaseSocket(this);
-	CEventDispatch::Instance().AddEvent(m_socket, SOCKET_ALL);
+	m_ev_dispatch->AddEvent(m_socket, SOCKET_ALL);
 	
 	return (net_handle_t)m_socket;
 }
 
-int CBaseSocket::Send(void* buf, int len)
+int BaseSocket::Send(void* buf, int len)
 {
 	if (m_state != SOCKET_STATE_CONNECTED)
 		return NETLIB_ERROR;
@@ -153,14 +153,14 @@ int CBaseSocket::Send(void* buf, int len)
 	return ret;
 }
 
-int CBaseSocket::Recv(void* buf, int len)
+int BaseSocket::Recv(void* buf, int len)
 {
 	return recv(m_socket, (char*)buf, len, 0);
 }
 
-int CBaseSocket::Close()
+int BaseSocket::Close()
 {
-	CEventDispatch::Instance().RemoveEvent(m_socket, SOCKET_ALL);
+	m_ev_dispatch->RemoveEvent(m_socket, SOCKET_ALL);
 	RemoveBaseSocket(this);
 	close(m_socket);
 	ReleaseRef();
@@ -168,7 +168,7 @@ int CBaseSocket::Close()
 	return 0;
 }
 //监测是否可读
-void CBaseSocket::OnRead()
+void BaseSocket::OnRead()
 {
 	if (m_state == SOCKET_STATE_LISTENING)
 	{
@@ -180,16 +180,16 @@ void CBaseSocket::OnRead()
         int ret = ioctl(m_socket, FIONREAD, &avail);
 		if ( (SOCKET_ERROR == ret) || (avail == 0) )
 		{
-			m_callback(m_callback_data, NETLIB_MSG_CLOSE, (net_handle_t)m_socket, NULL);
+			m_callback(m_callback_data, NETLIB_MSG_CLOSE, (net_handle_t)m_socket, nullptr);
 		}
 		else
 		{
-			m_callback(m_callback_data, NETLIB_MSG_READ, (net_handle_t)m_socket, NULL);
+			m_callback(m_callback_data, NETLIB_MSG_READ, (net_handle_t)m_socket, nullptr);
 		}
 	}
 }
 //监测是否可写
-void CBaseSocket::OnWrite()
+void BaseSocket::OnWrite()
 {
 
 	if (m_state == SOCKET_STATE_CONNECTING)
@@ -198,25 +198,25 @@ void CBaseSocket::OnWrite()
 		socklen_t len = sizeof(error);
 		getsockopt(m_socket, SOL_SOCKET, SO_ERROR, (void*)&error, &len);
 		if (error) {
-			m_callback(m_callback_data, NETLIB_MSG_CLOSE, (net_handle_t)m_socket, NULL);
+			m_callback(m_callback_data, NETLIB_MSG_CLOSE, (net_handle_t)m_socket, nullptr);
 		} else {
 			m_state = SOCKET_STATE_CONNECTED;
-			m_callback(m_callback_data, NETLIB_MSG_CONFIRM, (net_handle_t)m_socket, NULL);
+			m_callback(m_callback_data, NETLIB_MSG_CONFIRM, (net_handle_t)m_socket, nullptr);
 		}
 	}
 	else
 	{
-		m_callback(m_callback_data, NETLIB_MSG_WRITE, (net_handle_t)m_socket, NULL);
+		m_callback(m_callback_data, NETLIB_MSG_WRITE, (net_handle_t)m_socket, nullptr);
 	}
 }
 //监测是否可以关闭
-void CBaseSocket::OnClose()
+void BaseSocket::OnClose()
 {
 	m_state = SOCKET_STATE_CLOSING;
-	m_callback(m_callback_data, NETLIB_MSG_CLOSE, (net_handle_t)m_socket, NULL);
+	m_callback(m_callback_data, NETLIB_MSG_CLOSE, (net_handle_t)m_socket, nullptr);
 }
 
-void CBaseSocket::SetSendBufSize(uint32_t send_size)
+void BaseSocket::SetSendBufSize(uint32_t send_size)
 {
 	int ret = setsockopt(m_socket, SOL_SOCKET, SO_SNDBUF, &send_size, 4);
 	if (ret == SOCKET_ERROR) {
@@ -229,7 +229,7 @@ void CBaseSocket::SetSendBufSize(uint32_t send_size)
 	printf("socket=%d send_buf_size=%d", m_socket, size);
 }
 
-void CBaseSocket::SetRecvBufSize(uint32_t recv_size)
+void BaseSocket::SetRecvBufSize(uint32_t recv_size)
 {
 	int ret = setsockopt(m_socket, SOL_SOCKET, SO_RCVBUF, &recv_size, 4);
 	if (ret == SOCKET_ERROR) {
@@ -242,17 +242,17 @@ void CBaseSocket::SetRecvBufSize(uint32_t recv_size)
 	printf("socket=%d recv_buf_size=%d", m_socket, size);
 }
 
-int CBaseSocket::_GetErrorCode()
+int BaseSocket::_GetErrorCode()
 {
 	return errno;
 }
 
-bool CBaseSocket::_IsBlock(int error_code)
+bool BaseSocket::_IsBlock(int error_code)
 {
 	return ( (error_code == EINPROGRESS) || (error_code == EWOULDBLOCK) );
 }
 
-void CBaseSocket::_SetNonblock(int fd)
+void BaseSocket::_SetNonblock(int fd)
 {
 	int ret = fcntl(fd, F_SETFL, O_NONBLOCK | fcntl(fd, F_GETFL));
 	if (ret == SOCKET_ERROR)
@@ -261,7 +261,7 @@ void CBaseSocket::_SetNonblock(int fd)
 	}
 }
 
-void CBaseSocket::_SetReuseAddr(int fd)
+void BaseSocket::_SetReuseAddr(int fd)
 {
 	int reuse = 1;
 	int ret = setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (char*)&reuse, sizeof(reuse));
@@ -271,7 +271,7 @@ void CBaseSocket::_SetReuseAddr(int fd)
 	}
 }
 
-void CBaseSocket::_SetNoDelay(int fd)
+void BaseSocket::_SetNoDelay(int fd)
 {
 	int nodelay = 1;
 	int ret = setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char*)&nodelay, sizeof(nodelay));
@@ -281,7 +281,7 @@ void CBaseSocket::_SetNoDelay(int fd)
 	}
 }
 
-void CBaseSocket::_SetAddr(const char* ip, const uint16_t port, sockaddr_in* pAddr)
+void BaseSocket::_SetAddr(const char* ip, const uint16_t port, sockaddr_in* pAddr)
 {
 	memset(pAddr, 0, sizeof(sockaddr_in));
 	pAddr->sin_family = AF_INET;
@@ -292,7 +292,7 @@ void CBaseSocket::_SetAddr(const char* ip, const uint16_t port, sockaddr_in* pAd
 	if (pAddr->sin_addr.s_addr == INADDR_NONE)
 	{
 		hostent* host = gethostbyname(ip);
-		if (host == NULL)
+		if (host == nullptr)
 		{
             printf("gethostbyname failed, ip=%s, port=%u", ip, port);
 			return;
@@ -301,7 +301,7 @@ void CBaseSocket::_SetAddr(const char* ip, const uint16_t port, sockaddr_in* pAd
 	}
 }
 
-void CBaseSocket::_AcceptNewSocket()
+void BaseSocket::_AcceptNewSocket()
 {
 	int fd = 0;
 	sockaddr_in peer_addr;
@@ -309,7 +309,7 @@ void CBaseSocket::_AcceptNewSocket()
 	char ip_str[INET_ADDRSTRLEN];
 	while ( (fd = accept(m_socket, (sockaddr*)&peer_addr, &addr_len)) != _INVALID_SOCKET )
 	{
-		CBaseSocket* pSocket = new CBaseSocket();
+		BaseSocket* pSocket = new BaseSocket();
 		uint16_t port = ntohs(peer_addr.sin_port);
 
 		if (inet_ntop(AF_INET, &peer_addr.sin_addr, ip_str, sizeof(ip_str)) == nullptr) {
@@ -328,8 +328,8 @@ void CBaseSocket::_AcceptNewSocket()
 		_SetNoDelay(fd);
 		_SetNonblock(fd);
 		AddBaseSocket(pSocket);
-		CEventDispatch::Instance().AddEvent(fd, SOCKET_READ | SOCKET_EXCEP);
-		m_callback(m_callback_data, NETLIB_MSG_CONNECT, (net_handle_t)fd, NULL);
+		m_ev_dispatch->AddEvent(fd, SOCKET_READ | SOCKET_EXCEP);
+		m_callback(m_callback_data, NETLIB_MSG_CONNECT, (net_handle_t)fd, nullptr);
 	}
 }
 

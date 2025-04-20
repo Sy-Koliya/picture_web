@@ -7,9 +7,7 @@
 
 #define MIN_TIMER_DURATION 100 // 100 miliseconds
 
-CEventDispatch *CEventDispatch::m_pEventDispatch = nullptr;
-
-CEventDispatch::CEventDispatch()
+EventDispatch::EventDispatch()
 {
     running = false;
     m_epfd = epoll_create(1024);
@@ -19,42 +17,27 @@ CEventDispatch::CEventDispatch()
     }
 }
 
-CEventDispatch::~CEventDispatch()
+EventDispatch::~EventDispatch()
 {
-    close(m_epfd);
+    StopDispatch();
 }
 
-// 注册计时事件并且返回句柄
-int CEventDispatch::AddTimer(TimerEvent *te)
+void EventDispatch::AddTimer(TimerEvent *te)
 {
+    handle_te[te->te_id] = te;
     m_timer_list.push(te);
-    return te->te_id;
+
 }
 
-int CEventDispatch::AddTimer(callback_t callback, void *user_data, uint64_t interval, int calltime = -1)
-{
-    TimerEvent *te = (TimerEvent *)malloc(sizeof(TimerEvent));
-    te->callback = callback;
-    te->user_data = user_data;
-    te->interval = interval;
-    te->next_tick = get_tick_count();
-    te->te_id = id_helper.Get();
-    te->calltime = calltime;
-    handle_te.insert(std::make_pair(te->te_id, te));
-    return AddTimer(te);
-}
-
-void CEventDispatch::RemoveTimer(int handle_te_id)
+void EventDispatch::RemoveTimer(int handle_te_id)
 {
     if (handle_te.find(handle_te_id) == handle_te.end())
         return;
     TimerEvent *te = handle_te[handle_te_id];
-    delete te;
     handle_te.erase(handle_te_id);
-    id_helper.Del(handle_te_id);
 }
 
-void CEventDispatch::_CheckTimer()
+void EventDispatch::_CheckTimer()
 {
     uint64_t curr_tick = get_tick_count();
     while (!m_timer_list.empty())
@@ -68,7 +51,7 @@ void CEventDispatch::_CheckTimer()
         if (te->next_tick <= curr_tick)
         {
             m_timer_list.pop();
-            te->callback(te->user_data, NETLIB_MSG_TIMER, 0, nullptr);  //此处后面加入线程池
+            te->Execute(); //此处后面加入线程池
             if (te->calltime == -1 || --te->calltime != 0)
             {
                 te->next_tick = curr_tick + te->interval;
@@ -79,37 +62,27 @@ void CEventDispatch::_CheckTimer()
                 RemoveTimer(te->te_id);
             }
         }
-        else
+        else{
             break;
+        }
     }
 }
 
-void CEventDispatch::AddLoop(callback_t callback, void *user_data)
+void EventDispatch::AddLoop(TimerEvent* te)
 {
-    TimerEvent *te = (TimerEvent *)malloc(sizeof(TimerEvent));
-    te->callback = callback;
-    te->user_data = user_data;
-    te->interval = -1;
-    te->next_tick = -1;
-    te->te_id = id_helper.Get();
-    te->calltime = -2;
     m_loop_list.push_back(te);
 }
 
-void CEventDispatch::_CheckLoop()
+void EventDispatch::_CheckLoop()
 {
     for(auto it:m_loop_list){
-        it->callback(it->user_data, NETLIB_MSG_LOOP, 0, nullptr);
+        (it->callback)();
     }
 }
 
-CEventDispatch& CEventDispatch::Instance()
-{
-    static CEventDispatch  m_pEventDispatch;
-    return m_pEventDispatch;
-}
 
-void CEventDispatch::AddEvent(int fd, uint8_t socket_event)
+
+void EventDispatch::AddEvent(int fd, uint8_t socket_event)
 {
     struct epoll_event ev;
     ev.events = EPOLLIN | EPOLLOUT | EPOLLET | EPOLLPRI | EPOLLERR | EPOLLHUP;
@@ -120,7 +93,7 @@ void CEventDispatch::AddEvent(int fd, uint8_t socket_event)
     }
 }
 
-void CEventDispatch::RemoveEvent(int fd, uint8_t socket_event)
+void EventDispatch::RemoveEvent(int fd, uint8_t socket_event)
 {
     if (epoll_ctl(m_epfd, EPOLL_CTL_DEL, fd, nullptr) != 0)
     {
@@ -128,7 +101,7 @@ void CEventDispatch::RemoveEvent(int fd, uint8_t socket_event)
     }
 }
 
-void CEventDispatch::StartDispatch(uint32_t wait_timeout)
+void EventDispatch::StartDispatch(uint32_t wait_timeout)
 {
     struct epoll_event events[1024];
     int nfds = 0;
@@ -143,7 +116,7 @@ void CEventDispatch::StartDispatch(uint32_t wait_timeout)
         for (int i = 0; i < nfds; i++)
         {
             int ev_fd = events[i].data.fd;
-            CBaseSocket *pSocket = FindBaseSocket(ev_fd);
+           BaseSocket *pSocket = FindBaseSocket(ev_fd);
             if (!pSocket)
                 continue;
 
@@ -183,7 +156,9 @@ void CEventDispatch::StartDispatch(uint32_t wait_timeout)
     }
 }
 
-void CEventDispatch::StopDispatch()
+void EventDispatch::StopDispatch()
 {
+    //能否平滑退出
     running = false;
+    close(m_epfd);
 }

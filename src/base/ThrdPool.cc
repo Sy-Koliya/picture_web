@@ -22,13 +22,25 @@ extern "C"
 #include "ThrdPool.h"
 #include "tools.h"
 
-ThreadPool::ThreadPool(size_t nthreads, size_t stacksize )
-{
+//===============================================================================================================
+
+
+static size_t getDeviceMaxThreads() {
+    unsigned int hc = std::thread::hardware_concurrency();
+    return (hc > 0 ? static_cast<size_t>(hc) : 1);
+}
+
+void ThreadPool::CreatPool(size_t nthreads,size_t stacksize){
     pool_ =  thrdpool_create(nthreads, stacksize);
     if (!pool_)
     {
         throw std::runtime_error("Failed to create thread pool");
     }
+}
+
+ThreadPool::ThreadPool(size_t nthreads, size_t stacksize )
+{
+    CreatPool(nthreads,stacksize);
 }
 
 ThreadPool::~ThreadPool()
@@ -59,3 +71,48 @@ size_t ThreadPool::thrdpool_size(thrdpool_t *pool)
 }
 
 thrdpool_t *pool_;
+
+
+
+//=====================================================================================================
+
+
+SocketPool& SocketPool::Instance(size_t nthreads ){
+        nthreads=std::min(nthreads,getDeviceMaxThreads());
+        size_t nthds=align_pow_2(nthreads);
+        if(nthds==0){
+            throw std::runtime_error("Failed to create thread, Max useful thread is zero ");
+        };
+        static SocketPool socket_pool_t(nthds);
+        return socket_pool_t;
+}
+
+
+SocketPool::SocketPool(size_t nthreads)
+:nthreads(nthreads),ThreadPool(nthreads)
+{
+    for(size_t i = 0 ;i<nthreads;++i){
+        EventDispatch* ev_dispatch = new EventDispatch{};
+        Submit(&EventDispatch::StartDispatch,*ev_dispatch,0);//非阻塞
+        ev_queue.push_back(ev_dispatch);
+    }
+}
+SocketPool::~SocketPool(){
+    for(int i=0;i<nthreads;i++){
+        ev_queue[i]->StopDispatch();
+    }
+
+}
+
+void SocketPool::AddSocketEvent(int fd,uint8_t event){
+    int target = fd&((1<<nthreads)-1);
+    EventDispatch* socket_ev_dispatch = FindBaseSocket(fd)->GetEventDispatch();
+    socket_ev_dispatch = ev_queue[target];
+    ev_queue[target]->AddEvent(fd,event);
+}
+
+void SocketPool::AddTimerEvent(TimerEvent* ev){
+    int fd =ev->te_id;
+    int target = fd&((1<<nthreads)-1);
+    ev_queue[target]->AddTimer(ev);
+}
