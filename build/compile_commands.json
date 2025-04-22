@@ -1,0 +1,68 @@
+[
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/g++-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu++17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseSocket.cc.o -c /home/koliya/picture_web/src/base/BaseSocket.cc",
+  "file": "/home/koliya/picture_web/src/base/BaseSocket.cc",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseSocket.cc.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/gcc-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseThrdPool.c.o -c /home/koliya/picture_web/src/base/BaseThrdPool.c",
+  "file": "/home/koliya/picture_web/src/base/BaseThrdPool.c",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseThrdPool.c.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/g++-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu++17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventDispatch.cc.o -c /home/koliya/picture_web/src/base/EventDispatch.cc",
+  "file": "/home/koliya/picture_web/src/base/EventDispatch.cc",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventDispatch.cc.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/g++-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu++17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventManage.cc.o -c /home/koliya/picture_web/src/base/EventManage.cc",
+  "file": "/home/koliya/picture_web/src/base/EventManage.cc",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventManage.cc.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/g++-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu++17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.o -c /home/koliya/picture_web/src/base/Factory.cc",
+  "file": "/home/koliya/picture_web/src/base/Factory.cc",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/g++-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu++17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o -c /home/koliya/picture_web/src/base/ThrdPool.cc",
+  "file": "/home/koliya/picture_web/src/base/ThrdPool.cc",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/gcc-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o -c /home/koliya/picture_web/src/base/buffer.c",
+  "file": "/home/koliya/picture_web/src/base/buffer.c",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/gcc-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o -c /home/koliya/picture_web/src/base/msgqueue.c",
+  "file": "/home/koliya/picture_web/src/base/msgqueue.c",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/g++-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu++17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o -c /home/koliya/picture_web/src/base/poll.cc",
+  "file": "/home/koliya/picture_web/src/base/poll.cc",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/g++-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu++17 -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o -c /home/koliya/picture_web/src/frame/http.cpp",
+  "file": "/home/koliya/picture_web/src/frame/http.cpp",
+  "output": "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o"
+},
+{
+  "directory": "/home/koliya/picture_web/build",
+  "command": "/usr/bin/g++-11  -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame -g -std=gnu++17 -o CMakeFiles/test_socketpool.dir/test_socketpool.cc.o -c /home/koliya/picture_web/src/test/test_socketpool.cc",
+  "file": "/home/koliya/picture_web/src/test/test_socketpool.cc",
+  "output": "CMakeFiles/test_socketpool.dir/test_socketpool.cc.o"
+}
+]

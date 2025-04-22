@@ -1,15 +1,17 @@
 #ifndef TYPE_H
 #define TYPE_H
 #include <cstdint>
+#include <functional>
+#include "tools.h"
 
 constexpr int SOCKET_ERROR = -1;
 constexpr int _INVALID_SOCKET = -1;
-constexpr int  NETLIB_INVALID_HANDLE = -1;
-typedef int net_handle_t;
-typedef int conn_handle_t;
+constexpr int NETLIB_INVALID_HANDLE = -1;
+using net_handle_t = int;
+using conn_handle_t = int;
 
 // SOCKET
-enum 
+enum
 {
     SOCKET_STATE_IDLE,
     SOCKET_STATE_LISTENING,
@@ -18,16 +20,16 @@ enum
     SOCKET_STATE_CLOSING
 };
 
-//epoll
+// epoll
 enum
 {
-	SOCKET_READ = 0x1,
-	SOCKET_WRITE = 0x2,
-	SOCKET_EXCEP = 0x4,
-	SOCKET_ALL = 0x7
+    SOCKET_READ = 0x1,
+    SOCKET_WRITE = 0x2,
+    SOCKET_EXCEP = 0x4,
+    SOCKET_ALL = 0x7
 };
 
-//NetLib
+// CallbackStatus
 enum
 {
     NETLIB_MSG_CONNECT = 1,
@@ -39,16 +41,14 @@ enum
     NETLIB_MSG_LOOP
 };
 
-//NetStat
+// NetStat
 enum
 {
     NETLIB_OK = 0,
     NETLIB_ERROR = -1
 };
 
-
-
-typedef void (*callback_t)(void *callback_data, uint8_t msg, uint32_t handle, void *pParam);
-
+typedef void (*callback_t)(void *callbackdata, uint8_t msg, uint32_t handle, void *pParam);
+// using callbackt = std::function<void()>;
 
 #endif

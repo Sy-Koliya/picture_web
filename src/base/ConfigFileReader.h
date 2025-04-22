@@ -8,7 +8,7 @@
 #ifndef CONFIGFILEREADER_H_
 #define CONFIGFILEREADER_H_
 
-//#include "util.h"
+
 #include <string>     // std::string
 #include <fstream>    // std::ifstream
 #include <iostream>   // std::cerr, std::cout

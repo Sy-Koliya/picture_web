@@ -52,7 +52,7 @@ class SocketPool:public ThreadPool{
 
 public: 
     static SocketPool& Instance(size_t nthreads = 4);
-    void  AddSocketEvent(int fd,uint8_t event); //可以根据 fd拿到BaseSocket
+    void  AddSocketEvent(int fd,uint32_t event); //可以根据 fd拿到BaseSocket
     void  AddTimerEvent(TimerEvent* ev);
 
 private :

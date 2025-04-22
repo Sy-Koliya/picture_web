@@ -2,6 +2,10 @@
 #define _chain_buffer_h
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C"{
+#endif 
+
 typedef struct buf_chain_s buf_chain_t;
 typedef struct buffer_s buffer_t;
 // struct buf_chain_s {
@@ -34,5 +38,9 @@ void buffer_free(buffer_t *buf);
 int buffer_search(buffer_t *buf, const char* sep, const int seplen);
 
 uint8_t * buffer_write_atmost(buffer_t *p);
+
+#ifdef __cplusplus
+}
+#endif 
 
 #endif 

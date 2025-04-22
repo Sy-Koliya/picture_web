@@ -104,15 +104,14 @@ SocketPool::~SocketPool(){
 
 }
 
-void SocketPool::AddSocketEvent(int fd,uint8_t event){
-    int target = fd&((1<<nthreads)-1);
-    EventDispatch* socket_ev_dispatch = FindBaseSocket(fd)->GetEventDispatch();
-    socket_ev_dispatch = ev_queue[target];
+void SocketPool::AddSocketEvent(int fd,uint32_t event){
+    int target = fd&(nthreads-1);
+    FindBaseSocket(fd)->SetEventDispatch(ev_queue[target]);
     ev_queue[target]->AddEvent(fd,event);
 }
 
 void SocketPool::AddTimerEvent(TimerEvent* ev){
     int fd =ev->te_id;
-    int target = fd&((1<<nthreads)-1);
+    int target = fd&(nthreads-1);
     ev_queue[target]->AddTimer(ev);
 }

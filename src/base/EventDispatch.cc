@@ -82,10 +82,10 @@ void EventDispatch::_CheckLoop()
 
 
 
-void EventDispatch::AddEvent(int fd, uint8_t socket_event)
+void EventDispatch::AddEvent(int fd, uint32_t socket_event)
 {
     struct epoll_event ev;
-    ev.events = EPOLLIN | EPOLLOUT | EPOLLET | EPOLLPRI | EPOLLERR | EPOLLHUP;
+    ev.events = socket_event;
     ev.data.fd = fd;
     if (epoll_ctl(m_epfd, EPOLL_CTL_ADD, fd, &ev) != 0)
     {
@@ -93,7 +93,7 @@ void EventDispatch::AddEvent(int fd, uint8_t socket_event)
     }
 }
 
-void EventDispatch::RemoveEvent(int fd, uint8_t socket_event)
+void EventDispatch::RemoveEvent(int fd)
 {
     if (epoll_ctl(m_epfd, EPOLL_CTL_DEL, fd, nullptr) != 0)
     {

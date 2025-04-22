@@ -1,5 +1,6 @@
 #include "BaseSocket.h"
 #include "EventDispatch.h"
+#include "ThrdPool.h"
 #include <sys/socket.h>  // 定义 socket()、bind() 等
 #include <arpa/inet.h>   // 定义 inet_pton()/inet_ntop() 等地址转换函数
 #include <unistd.h>      //定义 close()等系统调用
@@ -9,7 +10,7 @@
 #include <sys/ioctl.h>
 #include <netdb.h> //for dns
 #include <map>
-
+#include <sys/epoll.h>
  
 
 typedef std::map<net_handle_t, BaseSocket*> SocketMap;
@@ -32,7 +33,6 @@ BaseSocket* FindBaseSocket(net_handle_t fd)
 	if (iter != g_socket_map.end())
 	{
 		pSocket = iter->second;
-		pSocket->AddRef();
 	}
 
 	return pSocket;
@@ -45,6 +45,8 @@ BaseSocket::BaseSocket()
 	//printf("BaseSocket::BaseSocket\n");
 	m_socket = _INVALID_SOCKET;
 	m_state = SOCKET_STATE_IDLE;
+	in_buf= buffer_new(1);
+	out_buf = buffer_new(1);
 }
 
 BaseSocket::~BaseSocket()
@@ -92,7 +94,7 @@ int BaseSocket::Listen(const char* server_ip, uint16_t port, callback_t callback
 	printf("BaseSocket::Listen on %s:%d", server_ip, port);
 
 	AddBaseSocket(this);
-	m_ev_dispatch->AddEvent(m_socket, SOCKET_READ | SOCKET_EXCEP);
+	SocketPool::Instance().AddSocketEvent(m_socket, EPOLLIN);
 	return NETLIB_OK;
 }
 
@@ -125,8 +127,7 @@ net_handle_t BaseSocket::Connect(const char* server_ip, uint16_t port, callback_
 	}
 	m_state = SOCKET_STATE_CONNECTING;
 	AddBaseSocket(this);
-	m_ev_dispatch->AddEvent(m_socket, SOCKET_ALL);
-	
+	SocketPool::Instance().AddSocketEvent(m_socket, EPOLLOUT);
 	return (net_handle_t)m_socket;
 }
 
@@ -160,14 +161,15 @@ int BaseSocket::Recv(void* buf, int len)
 
 int BaseSocket::Close()
 {
-	m_ev_dispatch->RemoveEvent(m_socket, SOCKET_ALL);
+	if(m_ev_dispatch!=nullptr)m_ev_dispatch->RemoveEvent(m_socket);
+	else{
+		//loginfo
+	}
 	RemoveBaseSocket(this);
 	close(m_socket);
-	ReleaseRef();
 
 	return 0;
 }
-//监测是否可读
 void BaseSocket::OnRead()
 {
 	if (m_state == SOCKET_STATE_LISTENING)
@@ -188,7 +190,6 @@ void BaseSocket::OnRead()
 		}
 	}
 }
-//监测是否可写
 void BaseSocket::OnWrite()
 {
 
@@ -209,7 +210,6 @@ void BaseSocket::OnWrite()
 		m_callback(m_callback_data, NETLIB_MSG_WRITE, (net_handle_t)m_socket, nullptr);
 	}
 }
-//监测是否可以关闭
 void BaseSocket::OnClose()
 {
 	m_state = SOCKET_STATE_CLOSING;
@@ -300,7 +300,11 @@ void BaseSocket::_SetAddr(const char* ip, const uint16_t port, sockaddr_in* pAdd
 		pAddr->sin_addr.s_addr = *(uint32_t*)host->h_addr;
 	}
 }
-
+BaseSocket* BaseSocket::SetNewSession(){
+	BaseSocket* pSocket = new BaseSocket();
+	pSocket->SetCallback(m_callback);
+	pSocket->SetCallbackData(m_callback_data);
+}
 void BaseSocket::_AcceptNewSocket()
 {
 	int fd = 0;
@@ -309,18 +313,19 @@ void BaseSocket::_AcceptNewSocket()
 	char ip_str[INET_ADDRSTRLEN];
 	while ( (fd = accept(m_socket, (sockaddr*)&peer_addr, &addr_len)) != _INVALID_SOCKET )
 	{
-		BaseSocket* pSocket = new BaseSocket();
 		uint16_t port = ntohs(peer_addr.sin_port);
-
+		
 		if (inet_ntop(AF_INET, &peer_addr.sin_addr, ip_str, sizeof(ip_str)) == nullptr) {
 			perror("inet_ntop");
 			return;
 		}
 		printf("AcceptNewSocket, socket=%d from %s:%d\n", fd, ip_str, port);
+		
+
+		//new_session
+		BaseSocket* pSocket = SetNewSession();
 
 		pSocket->SetSocket(fd);
-		pSocket->SetCallback(m_callback);
-		pSocket->SetCallbackData(m_callback_data);
 		pSocket->SetState(SOCKET_STATE_CONNECTED);
 		pSocket->SetRemoteIP(ip_str);
 		pSocket->SetRemotePort(port);
@@ -328,7 +333,7 @@ void BaseSocket::_AcceptNewSocket()
 		_SetNoDelay(fd);
 		_SetNonblock(fd);
 		AddBaseSocket(pSocket);
-		m_ev_dispatch->AddEvent(fd, SOCKET_READ | SOCKET_EXCEP);
+		SocketPool::Instance().AddSocketEvent(fd, SOCKET_READ | SOCKET_EXCEP);
 		m_callback(m_callback_data, NETLIB_MSG_CONNECT, (net_handle_t)fd, nullptr);
 	}
 }
