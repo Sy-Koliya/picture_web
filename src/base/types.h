@@ -48,7 +48,14 @@ enum
     NETLIB_ERROR = -1
 };
 
-
+enum class HttpState {
+    Http_Header_Read,
+    Http_Header_Parser ,
+    Http_Len_Parser,
+    Http_Chunked_Parser,
+    Http_Body_Parser,
+    Http_Ready
+};
 class NoCopy
 {
 public:
