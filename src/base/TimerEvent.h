@@ -8,7 +8,7 @@
 #include <utility>
 #include <unordered_set>
 #include <mutex>
-
+#include <iostream>
 
 // 前置声明
 
@@ -32,7 +32,6 @@ public:
     {
     }
 
-    // 析构时自动销毁回调指针
     ~TimerEvent(){}
 
     // 执行回调
@@ -73,49 +72,62 @@ public:
         static TimerEventManager inst;
         return inst;
     }
-    
-    TimerEvent* createEvent(callback_t &callback,
-                           uint64_t interval,
-                           int calltime = -1,
-                           void* user_data = nullptr)
+
+    TimerEvent *Create(callback_t &callback,
+                            uint64_t interval,
+                            int calltime = -1,
+                            void *user_data = nullptr)
     {
-        std::lock_guard<std::mutex> guard (m_lock);
-        TimerEvent * te = new TimerEvent(user_data, std::move(callback), interval, idHelper_.Get(), calltime);
-        handle_.insert(std::make_pair(te->te_id,te));
+        std::lock_guard<std::mutex> guard(m_lock);
+        TimerEvent *te = new TimerEvent(user_data, std::move(callback), interval, idHelper_.Get(), calltime);
+        handle_.insert(std::make_pair(te->te_id, te));
         return te;
     }
-    void destoryEvent(TimerEvent* te){
-        std::lock_guard<std::mutex> guard (m_lock);//注意，此处并不能保证其他线程对于te指针的销毁，管理仍需谨慎！
-        if(te==nullptr)return ;
-        int id= te->te_id;
-        if(handle_.find(id)!=handle_.end()){
+    void Destory(TimerEvent *te)
+    {
+        std::lock_guard<std::mutex> guard(m_lock); // 注意，此处并不能保证其他线程对于te指针的销毁，管理仍需谨慎！
+        if (te == nullptr)
+            return;
+        int id = te->te_id;
+        if (handle_.find(id) != handle_.end())
+        {
             idHelper_.Del(te->te_id);
             handle_.erase(id);
             delete te;
-           
+        }else{
+            std::cout << "No tracked TimerEvent  found!" << std::endl;
         }
     }
-    void destoryEvent(int handle){
-        std::lock_guard<std::mutex> guard (m_lock);
-        if(handle_.find(handle)!=handle_.end()){
+    void Destory(int handle)
+    {
+        std::lock_guard<std::mutex> guard(m_lock);
+        if (handle_.find(handle) != handle_.end())
+        {
             idHelper_.Del(handle);
-            TimerEvent* te = handle_[handle];
-            if(te!=nullptr)delete te;
+            TimerEvent *te = handle_[handle];
+            if (te != nullptr)
+                delete te;
             handle_.erase(handle);
+        }else{
+            std::cout << "No tracked TimerEvent  found!" << std::endl;
         }
     }
+
 private:
     TimerEventManager() = default;
-    ~TimerEventManager(){
-        for(auto hd:handle_){
-            TimerEvent* ptr = hd.second;
-            if(ptr!=nullptr){
+    ~TimerEventManager()
+    {
+        for (auto hd : handle_)
+        {
+            TimerEvent *ptr = hd.second;
+            if (ptr != nullptr)
+            {
                 delete ptr;
             }
         }
     }
     mutable std::mutex m_lock;
-    std::unordered_map<int ,TimerEvent*>handle_; 
+    std::unordered_map<int, TimerEvent *> handle_;
     IDhelper idHelper_;
 };
 

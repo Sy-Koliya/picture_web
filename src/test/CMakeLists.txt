@@ -2,12 +2,10 @@ cmake_minimum_required(VERSION 3.10)
 project(TestThrPool C CXX)
 
 set(CMAKE_C_STANDARD 17)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug CACHE STRING "" FORCE)
 endif()
-# 找到 pthread
-find_package(Threads REQUIRED)
 
 # ROOT_DIR 指向项目根（test 目录的上一级）
 get_filename_component(ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
@@ -27,7 +25,7 @@ file(GLOB_RECURSE FRAME_SOURCES
     ${ROOT_DIR}/frame/*.cpp
 )
 
-set(my_target_test test_socketpool)
+set(my_target_test socketpool_test)
 add_executable(${my_target_test}
     ${BASE_SOURCES}
     ${FRAME_SOURCES}
@@ -35,4 +33,5 @@ add_executable(${my_target_test}
 )
 
 # 链接 pthread
-target_link_libraries(${my_target_test} PRIVATE Threads::Threads)
+target_link_libraries(${my_target_test} PRIVATE pthread)
+target_link_libraries(${my_target_test} PRIVATE dl)

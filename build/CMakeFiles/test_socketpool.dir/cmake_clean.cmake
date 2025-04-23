@@ -11,6 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventManage.cc.o.d"
   "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.o"
   "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.o.d"
+  "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o"
+  "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o.d"
   "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o"
   "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o.d"
   "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o"

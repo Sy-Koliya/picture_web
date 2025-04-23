@@ -74,16 +74,7 @@ private:
     std::vector<int> stk;
     int idx;
 };
-class NoCopy
-{
-public:
-    NoCopy() = default;
-    ~NoCopy() = default;
 
-    // 禁止拷贝
-    NoCopy(const NoCopy &) = delete;
-    NoCopy &operator=(const NoCopy &) = delete;
-};
 
 // RefCount: 简单的引用计数基类
 class RefCount

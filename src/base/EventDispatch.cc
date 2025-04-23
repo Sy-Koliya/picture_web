@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <iostream>
 
-#define MIN_TIMER_DURATION 100 // 100 miliseconds
+#define MIN_TIMER_DURATION 100
 
 EventDispatch::EventDispatch()
 {
@@ -13,7 +13,10 @@ EventDispatch::EventDispatch()
     m_epfd = epoll_create(1024);
     if (m_epfd == -1)
     {
-        printf("epoll_create failed");
+        std::cerr
+        << "epoll_create failed"
+        << "\n";
+    
     }
 }
 
@@ -89,7 +92,9 @@ void EventDispatch::AddEvent(int fd, uint32_t socket_event)
     ev.data.fd = fd;
     if (epoll_ctl(m_epfd, EPOLL_CTL_ADD, fd, &ev) != 0)
     {
-        printf("epoll_ctl() failed, errno=%d", errno);
+        std::cerr
+            << "epoll_ctl() failed, errno=" << errno
+            << "\n";
     }
 }
 
@@ -97,7 +102,9 @@ void EventDispatch::RemoveEvent(int fd)
 {
     if (epoll_ctl(m_epfd, EPOLL_CTL_DEL, fd, nullptr) != 0)
     {
-        printf("epoll_ctl failed, errno=%d", errno);
+        std::cerr
+            << "epoll_ctl failed, errno=" << errno
+            << "\n";
     }
 }
 
@@ -124,31 +131,24 @@ void EventDispatch::StartDispatch(uint32_t wait_timeout)
 #ifdef EPOLLRDHUP
             if (events[i].events & EPOLLRDHUP)
             {
-                // printf("On Peer Close, socket=%d, ev_fd);
                 pSocket->OnClose();
             }
 #endif
             // Commit End
-
+            
+            if (events[i].events & ( EPOLLERR | EPOLLHUP))
+            {
+                pSocket->OnClose();
+            }
             if (events[i].events & EPOLLIN)
             {
-                // printf("OnRead, socket=%d\n", ev_fd);
                 pSocket->OnRead();
             }
-
             if (events[i].events & EPOLLOUT)
             {
-                // printf("OnWrite, socket=%d\n", ev_fd);
                 pSocket->OnWrite();
             }
 
-            if (events[i].events & (EPOLLPRI | EPOLLERR | EPOLLHUP))
-            {
-                // printf("OnClose, socket=%d\n", ev_fd);
-                pSocket->OnClose();
-            }
-
-            pSocket->ReleaseRef();
         }
 
         _CheckTimer();

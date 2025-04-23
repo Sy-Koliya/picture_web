@@ -142,10 +142,24 @@ CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.s: cm
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.s"
 	/usr/bin/g++-11 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/koliya/picture_web/src/base/Factory.cc -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.s
 
+CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o: CMakeFiles/test_socketpool.dir/flags.make
+CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o: /home/koliya/picture_web/src/base/HttpServer.cc
+CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o: CMakeFiles/test_socketpool.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o"
+	/usr/bin/g++-11 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o -MF CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o.d -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o -c /home/koliya/picture_web/src/base/HttpServer.cc
+
+CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.i"
+	/usr/bin/g++-11 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/koliya/picture_web/src/base/HttpServer.cc > CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.i
+
+CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.s"
+	/usr/bin/g++-11 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/koliya/picture_web/src/base/HttpServer.cc -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.s
+
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o: CMakeFiles/test_socketpool.dir/flags.make
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o: /home/koliya/picture_web/src/base/ThrdPool.cc
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o: CMakeFiles/test_socketpool.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o"
 	/usr/bin/g++-11 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o -MF CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o.d -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o -c /home/koliya/picture_web/src/base/ThrdPool.cc
 
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.i: cmake_force
@@ -159,7 +173,7 @@ CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.s: c
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o: CMakeFiles/test_socketpool.dir/flags.make
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o: /home/koliya/picture_web/src/base/buffer.c
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o: CMakeFiles/test_socketpool.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o"
 	/usr/bin/gcc-11 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o -MF CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o.d -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o -c /home/koliya/picture_web/src/base/buffer.c
 
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.i: cmake_force
@@ -173,7 +187,7 @@ CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.s: cmak
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o: CMakeFiles/test_socketpool.dir/flags.make
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o: /home/koliya/picture_web/src/base/msgqueue.c
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o: CMakeFiles/test_socketpool.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o"
 	/usr/bin/gcc-11 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o -MF CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o.d -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o -c /home/koliya/picture_web/src/base/msgqueue.c
 
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.i: cmake_force
@@ -187,7 +201,7 @@ CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.s: cm
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o: CMakeFiles/test_socketpool.dir/flags.make
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o: /home/koliya/picture_web/src/base/poll.cc
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o: CMakeFiles/test_socketpool.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o"
 	/usr/bin/g++-11 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o -MF CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o.d -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o -c /home/koliya/picture_web/src/base/poll.cc
 
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.i: cmake_force
@@ -201,7 +215,7 @@ CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.s: cmake
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o: CMakeFiles/test_socketpool.dir/flags.make
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o: /home/koliya/picture_web/src/frame/http.cpp
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o: CMakeFiles/test_socketpool.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o"
 	/usr/bin/g++-11 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o -MF CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o.d -o CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o -c /home/koliya/picture_web/src/frame/http.cpp
 
 CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.i: cmake_force
@@ -215,7 +229,7 @@ CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.s: cma
 CMakeFiles/test_socketpool.dir/test_socketpool.cc.o: CMakeFiles/test_socketpool.dir/flags.make
 CMakeFiles/test_socketpool.dir/test_socketpool.cc.o: /home/koliya/picture_web/src/test/test_socketpool.cc
 CMakeFiles/test_socketpool.dir/test_socketpool.cc.o: CMakeFiles/test_socketpool.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/test_socketpool.dir/test_socketpool.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/test_socketpool.dir/test_socketpool.cc.o"
 	/usr/bin/g++-11 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_socketpool.dir/test_socketpool.cc.o -MF CMakeFiles/test_socketpool.dir/test_socketpool.cc.o.d -o CMakeFiles/test_socketpool.dir/test_socketpool.cc.o -c /home/koliya/picture_web/src/test/test_socketpool.cc
 
 CMakeFiles/test_socketpool.dir/test_socketpool.cc.i: cmake_force
@@ -233,6 +247,7 @@ test_socketpool_OBJECTS = \
 "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventDispatch.cc.o" \
 "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventManage.cc.o" \
 "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.o" \
+"CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o" \
 "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o" \
 "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o" \
 "CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o" \
@@ -248,6 +263,7 @@ test_socketpool_EXTERNAL_OBJECTS =
 /home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventDispatch.cc.o
 /home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventManage.cc.o
 /home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.o
+/home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/HttpServer.cc.o
 /home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o
 /home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o
 /home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o
@@ -256,7 +272,7 @@ test_socketpool_EXTERNAL_OBJECTS =
 /home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/test_socketpool.cc.o
 /home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/build.make
 /home/koliya/picture_web/src/test/test_socketpool: CMakeFiles/test_socketpool.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable /home/koliya/picture_web/src/test/test_socketpool"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/koliya/picture_web/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable /home/koliya/picture_web/src/test/test_socketpool"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_socketpool.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

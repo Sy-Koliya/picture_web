@@ -29,17 +29,17 @@ enum
     SOCKET_ALL = 0x7
 };
 
-// CallbackStatus
-enum
-{
-    NETLIB_MSG_CONNECT = 1,
-    NETLIB_MSG_CONFIRM,
-    NETLIB_MSG_READ,
-    NETLIB_MSG_WRITE,
-    NETLIB_MSG_CLOSE,
-    NETLIB_MSG_TIMER,
-    NETLIB_MSG_LOOP
-};
+// // CallbackStatus
+// enum
+// {
+//     NETLIB_MSG_CONNECT = 1,
+//     NETLIB_MSG_CONFIRM,
+//     NETLIB_MSG_READ,
+//     NETLIB_MSG_WRITE,
+//     NETLIB_MSG_CLOSE,
+//     NETLIB_MSG_TIMER,
+//     NETLIB_MSG_LOOP
+// };
 
 // NetStat
 enum
@@ -48,7 +48,18 @@ enum
     NETLIB_ERROR = -1
 };
 
-typedef void (*callback_t)(void *callbackdata, uint8_t msg, uint32_t handle, void *pParam);
+
+class NoCopy
+{
+public:
+    NoCopy() = default;
+    ~NoCopy() = default;
+
+    // 禁止拷贝
+    NoCopy(const NoCopy &) = delete;
+    NoCopy &operator=(const NoCopy &) = delete;
+};
+//typedef void (*callback_t)(void *callbackdata, uint8_t msg, uint32_t handle, void *pParam);
 // using callbackt = std::function<void()>;
 
 #endif

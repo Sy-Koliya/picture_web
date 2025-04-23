@@ -21,6 +21,7 @@ extern "C"
 }
 #include "ThrdPool.h"
 #include "tools.h"
+#include <iostream>
 
 //===============================================================================================================
 
@@ -105,6 +106,10 @@ SocketPool::~SocketPool(){
 }
 
 void SocketPool::AddSocketEvent(int fd,uint32_t event){
+    std::cout
+    << "AddEvent event " << event
+    << "  fd " << fd
+    << '\n';
     int target = fd&(nthreads-1);
     FindBaseSocket(fd)->SetEventDispatch(ev_queue[target]);
     ev_queue[target]->AddEvent(fd,event);
@@ -115,3 +120,6 @@ void SocketPool::AddTimerEvent(TimerEvent* ev){
     int target = fd&(nthreads-1);
     ev_queue[target]->AddTimer(ev);
 }
+
+//=========================================================================
+WorkPool::WorkPool(size_t nthreads ):ThreadPool(nthreads){} 

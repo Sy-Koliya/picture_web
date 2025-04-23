@@ -12,6 +12,7 @@
 #include "BaseSocket.h"
 #include "EventDispatch.h"
 #include "TimerEvent.h"
+#include "Global.h"
 
 struct thrdpool_task;
 
@@ -51,7 +52,7 @@ protected:
 class SocketPool:public ThreadPool{
 
 public: 
-    static SocketPool& Instance(size_t nthreads = 4);
+    static SocketPool& Instance(size_t nthreads = Global::Instance().get<size_t>("SocketPool"));
     void  AddSocketEvent(int fd,uint32_t event); //可以根据 fd拿到BaseSocket
     void  AddTimerEvent(TimerEvent* ev);
 
@@ -64,7 +65,13 @@ private:
     std::vector<EventDispatch*>ev_queue;
 };
 
-
+class WorkPool:public ThreadPool{
+public: 
+    static WorkPool& Instance(size_t nthreads = Global::Instance().get<size_t>("WorkPool"));
+private:
+    explicit WorkPool(size_t nthreads);
+    ~WorkPool();
+};
 
 
 

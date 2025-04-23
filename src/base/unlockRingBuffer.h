@@ -14,7 +14,7 @@ typedef struct {
 } RingBuffer;
 
 // 初始化环形缓冲区
-RingBuffer* ringbuffer_create() {
+inline RingBuffer* ringbuffer_create() {
     RingBuffer* rb = (RingBuffer*)malloc(sizeof(RingBuffer));
     if (!rb) return NULL;
     
@@ -25,12 +25,12 @@ RingBuffer* ringbuffer_create() {
 }
 
 // 销毁环形缓冲区
-void ringbuffer_destroy(RingBuffer* rb) {
+inline void ringbuffer_destroy(RingBuffer* rb) {
     free(rb);
 }
 
 // 尝试将数据推入缓冲区（生产者线程安全）
-bool ringbuffer_push(RingBuffer* rb, int data) {
+inline bool ringbuffer_push(RingBuffer* rb, int data) {
     size_t current_head = atomic_load_explicit(&rb->head, memory_order_acquire);
     size_t current_tail = atomic_load_explicit(&rb->tail, memory_order_acquire);
     

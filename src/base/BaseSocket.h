@@ -9,32 +9,31 @@
 #include <netinet/in.h>
 #include <string>
 #include <functional>
+#include <iostream>
 
-
-template <class Dervied>
-class Base {
-protected:
+// template <class Dervied>
+// class Base {
+// protected:
  
-    void  OnRead(){
-        // 调用子类的实现函数。要求子类必须实现名为 impl() 的函数
-        // 这个函数会被调用来执行具体的操作
-        static_cast<Dervied*>(this)->read_impl();
-    }
+//     void  OnRead(){
+//         // 调用子类的实现函数。要求子类必须实现名为 impl() 的函数
+//         // 这个函数会被调用来执行具体的操作
+//         static_cast<Dervied*>(this)->read_impl();
+//     }
 
-    void OnWrite(){
-        static_cast<Dervied*>(this)->write_impl();
-    }
-    void OnClose(){
-        static_cast<Dervied*>(this)->close_impl();
-    }
+//     void OnWrite(){
+//         static_cast<Dervied*>(this)->write_impl();
+//     }
+//     void OnClose(){
+//         static_cast<Dervied*>(this)->close_impl();
+//     }
 
-     void _AcceptNewSocket(){
-        static_cast<Derived*>(this)->accept_impl();
-     }
-};
+//      void _AcceptNewSocket(){
+//         static_cast<Derived*>(this)->accept_impl();
+//      }
+// };
 
 
-//template <class Dervied>
  class BaseSocket
  {
     //using callback_t = std::function<void()>; 
@@ -50,8 +49,6 @@ protected:
      void SetSocket(int  fd) { m_socket = fd; }
      void SetState(uint8_t state) { m_state = state; }
  
-     void SetCallback(callback_t callback) { m_callback = callback; }
-     void SetCallbackData(void *data) { m_callback_data = data; }
      void SetRemoteIP(char *ip) { m_remote_ip = ip; }
      void SetRemotePort(uint16_t port) { m_remote_port = port; }
      void SetSendBufSize(uint32_t send_size);
@@ -66,15 +63,13 @@ protected:
  public:
      int Listen(
          const char *server_ip,
-         uint16_t port,
-         callback_t callback,
-         void *callback_data);
+         uint16_t port
+        );
  
      net_handle_t Connect(
          const char *server_ip,
-         uint16_t port,
-         callback_t callback,
-         void *callback_data);
+         uint16_t port
+        );
  
      int Send(void *buf, int len);
  
@@ -83,14 +78,16 @@ protected:
      int Close();
  
  public:
-    void  OnRead();
+    void OnRead();
     void OnWrite();
     void OnClose();
  protected:
-     BaseSocket* SetNewSession();
-     void Close_imp();
-     void Read_imp();
-     void Write_imp();
+     virtual int Close_imp();
+     virtual int Read_imp();
+     virtual int Write_imp();
+     virtual int Listen_imp();
+     virtual int Connect_imp();
+     BaseSocket* AddNew_imp();
  private:
      int _GetErrorCode();
      bool _IsBlock(int error_code);
@@ -108,8 +105,6 @@ protected:
      std::string m_local_ip;
      uint16_t m_local_port;
 
-     callback_t m_callback;
-     void *m_callback_data;
 
      buffer_t* in_buf;
      buffer_t* out_buf;
@@ -121,7 +116,62 @@ protected:
      int m_socket;
  };
  
+ 
  BaseSocket *FindBaseSocket(net_handle_t fd);
  
+
+ class BaseSocketManager : public NoCopy
+ {
+ public:
+     static BaseSocketManager &Instance()
+     {
+         static BaseSocketManager inst;
+         return inst;
+     }
+ 
+     BaseSocket *Create()
+     {
+         std::lock_guard<std::mutex> guard(m_lock);
+         BaseSocket *socket_ptr = new BaseSocket();
+         socket_handle_.insert(socket_ptr);
+         return socket_ptr;
+     }
+ 
+     void Destroy(BaseSocket *socket_ptr)
+     {
+         std::lock_guard<std::mutex> guard(m_lock);
+         if (!socket_ptr)
+             return;
+         auto it = socket_handle_.find(socket_ptr);
+         if (it != socket_handle_.end())
+         {
+             socket_ptr->Close();
+             delete socket_ptr;
+             socket_handle_.erase(it);
+         }
+         else
+         {
+             std::cout << "No tracked socket_ptr found!" << std::endl;
+         }
+     }
+ 
+ private:
+     BaseSocketManager() = default;
+     ~BaseSocketManager()
+     {
+         for (auto socket_ptr : socket_handle_)
+         {
+             if (socket_ptr)
+             {
+                 socket_ptr->Close();
+                 //delete socket_ptr; 双重释放！
+             }
+         }
+     }
+ 
+     mutable std::mutex m_lock;
+     std::unordered_set<BaseSocket *> socket_handle_;
+ };
+
  #endif
  

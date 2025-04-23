@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_socketpool
+# Target rules for targets named socketpool_test
 
 # Build rule for target.
-test_socketpool: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_socketpool
-.PHONY : test_socketpool
+socketpool_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 socketpool_test
+.PHONY : socketpool_test
 
 # fast build rule for target.
-test_socketpool/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/build
-.PHONY : test_socketpool/fast
+socketpool_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/build
+.PHONY : socketpool_test/fast
 
 home/koliya/picture_web/src/base/BaseSocket.o: home/koliya/picture_web/src/base/BaseSocket.cc.o
 .PHONY : home/koliya/picture_web/src/base/BaseSocket.o
 
 # target to build an object file
 home/koliya/picture_web/src/base/BaseSocket.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseSocket.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/BaseSocket.cc.o
 .PHONY : home/koliya/picture_web/src/base/BaseSocket.cc.o
 
 home/koliya/picture_web/src/base/BaseSocket.i: home/koliya/picture_web/src/base/BaseSocket.cc.i
@@ -142,7 +142,7 @@ home/koliya/picture_web/src/base/BaseSocket.i: home/koliya/picture_web/src/base/
 
 # target to preprocess a source file
 home/koliya/picture_web/src/base/BaseSocket.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseSocket.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/BaseSocket.cc.i
 .PHONY : home/koliya/picture_web/src/base/BaseSocket.cc.i
 
 home/koliya/picture_web/src/base/BaseSocket.s: home/koliya/picture_web/src/base/BaseSocket.cc.s
@@ -150,7 +150,7 @@ home/koliya/picture_web/src/base/BaseSocket.s: home/koliya/picture_web/src/base/
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/base/BaseSocket.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseSocket.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/BaseSocket.cc.s
 .PHONY : home/koliya/picture_web/src/base/BaseSocket.cc.s
 
 home/koliya/picture_web/src/base/BaseThrdPool.o: home/koliya/picture_web/src/base/BaseThrdPool.c.o
@@ -158,7 +158,7 @@ home/koliya/picture_web/src/base/BaseThrdPool.o: home/koliya/picture_web/src/bas
 
 # target to build an object file
 home/koliya/picture_web/src/base/BaseThrdPool.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseThrdPool.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/BaseThrdPool.c.o
 .PHONY : home/koliya/picture_web/src/base/BaseThrdPool.c.o
 
 home/koliya/picture_web/src/base/BaseThrdPool.i: home/koliya/picture_web/src/base/BaseThrdPool.c.i
@@ -166,7 +166,7 @@ home/koliya/picture_web/src/base/BaseThrdPool.i: home/koliya/picture_web/src/bas
 
 # target to preprocess a source file
 home/koliya/picture_web/src/base/BaseThrdPool.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseThrdPool.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/BaseThrdPool.c.i
 .PHONY : home/koliya/picture_web/src/base/BaseThrdPool.c.i
 
 home/koliya/picture_web/src/base/BaseThrdPool.s: home/koliya/picture_web/src/base/BaseThrdPool.c.s
@@ -174,7 +174,7 @@ home/koliya/picture_web/src/base/BaseThrdPool.s: home/koliya/picture_web/src/bas
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/base/BaseThrdPool.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/BaseThrdPool.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/BaseThrdPool.c.s
 .PHONY : home/koliya/picture_web/src/base/BaseThrdPool.c.s
 
 home/koliya/picture_web/src/base/EventDispatch.o: home/koliya/picture_web/src/base/EventDispatch.cc.o
@@ -182,7 +182,7 @@ home/koliya/picture_web/src/base/EventDispatch.o: home/koliya/picture_web/src/ba
 
 # target to build an object file
 home/koliya/picture_web/src/base/EventDispatch.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventDispatch.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/EventDispatch.cc.o
 .PHONY : home/koliya/picture_web/src/base/EventDispatch.cc.o
 
 home/koliya/picture_web/src/base/EventDispatch.i: home/koliya/picture_web/src/base/EventDispatch.cc.i
@@ -190,7 +190,7 @@ home/koliya/picture_web/src/base/EventDispatch.i: home/koliya/picture_web/src/ba
 
 # target to preprocess a source file
 home/koliya/picture_web/src/base/EventDispatch.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventDispatch.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/EventDispatch.cc.i
 .PHONY : home/koliya/picture_web/src/base/EventDispatch.cc.i
 
 home/koliya/picture_web/src/base/EventDispatch.s: home/koliya/picture_web/src/base/EventDispatch.cc.s
@@ -198,7 +198,7 @@ home/koliya/picture_web/src/base/EventDispatch.s: home/koliya/picture_web/src/ba
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/base/EventDispatch.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventDispatch.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/EventDispatch.cc.s
 .PHONY : home/koliya/picture_web/src/base/EventDispatch.cc.s
 
 home/koliya/picture_web/src/base/EventManage.o: home/koliya/picture_web/src/base/EventManage.cc.o
@@ -206,7 +206,7 @@ home/koliya/picture_web/src/base/EventManage.o: home/koliya/picture_web/src/base
 
 # target to build an object file
 home/koliya/picture_web/src/base/EventManage.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventManage.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/EventManage.cc.o
 .PHONY : home/koliya/picture_web/src/base/EventManage.cc.o
 
 home/koliya/picture_web/src/base/EventManage.i: home/koliya/picture_web/src/base/EventManage.cc.i
@@ -214,7 +214,7 @@ home/koliya/picture_web/src/base/EventManage.i: home/koliya/picture_web/src/base
 
 # target to preprocess a source file
 home/koliya/picture_web/src/base/EventManage.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventManage.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/EventManage.cc.i
 .PHONY : home/koliya/picture_web/src/base/EventManage.cc.i
 
 home/koliya/picture_web/src/base/EventManage.s: home/koliya/picture_web/src/base/EventManage.cc.s
@@ -222,7 +222,7 @@ home/koliya/picture_web/src/base/EventManage.s: home/koliya/picture_web/src/base
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/base/EventManage.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/EventManage.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/EventManage.cc.s
 .PHONY : home/koliya/picture_web/src/base/EventManage.cc.s
 
 home/koliya/picture_web/src/base/Factory.o: home/koliya/picture_web/src/base/Factory.cc.o
@@ -230,7 +230,7 @@ home/koliya/picture_web/src/base/Factory.o: home/koliya/picture_web/src/base/Fac
 
 # target to build an object file
 home/koliya/picture_web/src/base/Factory.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/Factory.cc.o
 .PHONY : home/koliya/picture_web/src/base/Factory.cc.o
 
 home/koliya/picture_web/src/base/Factory.i: home/koliya/picture_web/src/base/Factory.cc.i
@@ -238,7 +238,7 @@ home/koliya/picture_web/src/base/Factory.i: home/koliya/picture_web/src/base/Fac
 
 # target to preprocess a source file
 home/koliya/picture_web/src/base/Factory.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/Factory.cc.i
 .PHONY : home/koliya/picture_web/src/base/Factory.cc.i
 
 home/koliya/picture_web/src/base/Factory.s: home/koliya/picture_web/src/base/Factory.cc.s
@@ -246,15 +246,63 @@ home/koliya/picture_web/src/base/Factory.s: home/koliya/picture_web/src/base/Fac
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/base/Factory.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/Factory.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/Factory.cc.s
 .PHONY : home/koliya/picture_web/src/base/Factory.cc.s
+
+home/koliya/picture_web/src/base/Global.o: home/koliya/picture_web/src/base/Global.cc.o
+.PHONY : home/koliya/picture_web/src/base/Global.o
+
+# target to build an object file
+home/koliya/picture_web/src/base/Global.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/Global.cc.o
+.PHONY : home/koliya/picture_web/src/base/Global.cc.o
+
+home/koliya/picture_web/src/base/Global.i: home/koliya/picture_web/src/base/Global.cc.i
+.PHONY : home/koliya/picture_web/src/base/Global.i
+
+# target to preprocess a source file
+home/koliya/picture_web/src/base/Global.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/Global.cc.i
+.PHONY : home/koliya/picture_web/src/base/Global.cc.i
+
+home/koliya/picture_web/src/base/Global.s: home/koliya/picture_web/src/base/Global.cc.s
+.PHONY : home/koliya/picture_web/src/base/Global.s
+
+# target to generate assembly for a file
+home/koliya/picture_web/src/base/Global.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/Global.cc.s
+.PHONY : home/koliya/picture_web/src/base/Global.cc.s
+
+home/koliya/picture_web/src/base/HttpServer.o: home/koliya/picture_web/src/base/HttpServer.cc.o
+.PHONY : home/koliya/picture_web/src/base/HttpServer.o
+
+# target to build an object file
+home/koliya/picture_web/src/base/HttpServer.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/HttpServer.cc.o
+.PHONY : home/koliya/picture_web/src/base/HttpServer.cc.o
+
+home/koliya/picture_web/src/base/HttpServer.i: home/koliya/picture_web/src/base/HttpServer.cc.i
+.PHONY : home/koliya/picture_web/src/base/HttpServer.i
+
+# target to preprocess a source file
+home/koliya/picture_web/src/base/HttpServer.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/HttpServer.cc.i
+.PHONY : home/koliya/picture_web/src/base/HttpServer.cc.i
+
+home/koliya/picture_web/src/base/HttpServer.s: home/koliya/picture_web/src/base/HttpServer.cc.s
+.PHONY : home/koliya/picture_web/src/base/HttpServer.s
+
+# target to generate assembly for a file
+home/koliya/picture_web/src/base/HttpServer.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/HttpServer.cc.s
+.PHONY : home/koliya/picture_web/src/base/HttpServer.cc.s
 
 home/koliya/picture_web/src/base/ThrdPool.o: home/koliya/picture_web/src/base/ThrdPool.cc.o
 .PHONY : home/koliya/picture_web/src/base/ThrdPool.o
 
 # target to build an object file
 home/koliya/picture_web/src/base/ThrdPool.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/ThrdPool.cc.o
 .PHONY : home/koliya/picture_web/src/base/ThrdPool.cc.o
 
 home/koliya/picture_web/src/base/ThrdPool.i: home/koliya/picture_web/src/base/ThrdPool.cc.i
@@ -262,7 +310,7 @@ home/koliya/picture_web/src/base/ThrdPool.i: home/koliya/picture_web/src/base/Th
 
 # target to preprocess a source file
 home/koliya/picture_web/src/base/ThrdPool.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/ThrdPool.cc.i
 .PHONY : home/koliya/picture_web/src/base/ThrdPool.cc.i
 
 home/koliya/picture_web/src/base/ThrdPool.s: home/koliya/picture_web/src/base/ThrdPool.cc.s
@@ -270,7 +318,7 @@ home/koliya/picture_web/src/base/ThrdPool.s: home/koliya/picture_web/src/base/Th
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/base/ThrdPool.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/ThrdPool.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/ThrdPool.cc.s
 .PHONY : home/koliya/picture_web/src/base/ThrdPool.cc.s
 
 home/koliya/picture_web/src/base/buffer.o: home/koliya/picture_web/src/base/buffer.c.o
@@ -278,7 +326,7 @@ home/koliya/picture_web/src/base/buffer.o: home/koliya/picture_web/src/base/buff
 
 # target to build an object file
 home/koliya/picture_web/src/base/buffer.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/buffer.c.o
 .PHONY : home/koliya/picture_web/src/base/buffer.c.o
 
 home/koliya/picture_web/src/base/buffer.i: home/koliya/picture_web/src/base/buffer.c.i
@@ -286,7 +334,7 @@ home/koliya/picture_web/src/base/buffer.i: home/koliya/picture_web/src/base/buff
 
 # target to preprocess a source file
 home/koliya/picture_web/src/base/buffer.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/buffer.c.i
 .PHONY : home/koliya/picture_web/src/base/buffer.c.i
 
 home/koliya/picture_web/src/base/buffer.s: home/koliya/picture_web/src/base/buffer.c.s
@@ -294,7 +342,7 @@ home/koliya/picture_web/src/base/buffer.s: home/koliya/picture_web/src/base/buff
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/base/buffer.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/buffer.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/buffer.c.s
 .PHONY : home/koliya/picture_web/src/base/buffer.c.s
 
 home/koliya/picture_web/src/base/msgqueue.o: home/koliya/picture_web/src/base/msgqueue.c.o
@@ -302,7 +350,7 @@ home/koliya/picture_web/src/base/msgqueue.o: home/koliya/picture_web/src/base/ms
 
 # target to build an object file
 home/koliya/picture_web/src/base/msgqueue.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/msgqueue.c.o
 .PHONY : home/koliya/picture_web/src/base/msgqueue.c.o
 
 home/koliya/picture_web/src/base/msgqueue.i: home/koliya/picture_web/src/base/msgqueue.c.i
@@ -310,7 +358,7 @@ home/koliya/picture_web/src/base/msgqueue.i: home/koliya/picture_web/src/base/ms
 
 # target to preprocess a source file
 home/koliya/picture_web/src/base/msgqueue.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/msgqueue.c.i
 .PHONY : home/koliya/picture_web/src/base/msgqueue.c.i
 
 home/koliya/picture_web/src/base/msgqueue.s: home/koliya/picture_web/src/base/msgqueue.c.s
@@ -318,7 +366,7 @@ home/koliya/picture_web/src/base/msgqueue.s: home/koliya/picture_web/src/base/ms
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/base/msgqueue.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/msgqueue.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/msgqueue.c.s
 .PHONY : home/koliya/picture_web/src/base/msgqueue.c.s
 
 home/koliya/picture_web/src/base/poll.o: home/koliya/picture_web/src/base/poll.cc.o
@@ -326,7 +374,7 @@ home/koliya/picture_web/src/base/poll.o: home/koliya/picture_web/src/base/poll.c
 
 # target to build an object file
 home/koliya/picture_web/src/base/poll.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/poll.cc.o
 .PHONY : home/koliya/picture_web/src/base/poll.cc.o
 
 home/koliya/picture_web/src/base/poll.i: home/koliya/picture_web/src/base/poll.cc.i
@@ -334,7 +382,7 @@ home/koliya/picture_web/src/base/poll.i: home/koliya/picture_web/src/base/poll.c
 
 # target to preprocess a source file
 home/koliya/picture_web/src/base/poll.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/poll.cc.i
 .PHONY : home/koliya/picture_web/src/base/poll.cc.i
 
 home/koliya/picture_web/src/base/poll.s: home/koliya/picture_web/src/base/poll.cc.s
@@ -342,7 +390,7 @@ home/koliya/picture_web/src/base/poll.s: home/koliya/picture_web/src/base/poll.c
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/base/poll.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/base/poll.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/base/poll.cc.s
 .PHONY : home/koliya/picture_web/src/base/poll.cc.s
 
 home/koliya/picture_web/src/frame/http.o: home/koliya/picture_web/src/frame/http.cpp.o
@@ -350,7 +398,7 @@ home/koliya/picture_web/src/frame/http.o: home/koliya/picture_web/src/frame/http
 
 # target to build an object file
 home/koliya/picture_web/src/frame/http.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/frame/http.cpp.o
 .PHONY : home/koliya/picture_web/src/frame/http.cpp.o
 
 home/koliya/picture_web/src/frame/http.i: home/koliya/picture_web/src/frame/http.cpp.i
@@ -358,7 +406,7 @@ home/koliya/picture_web/src/frame/http.i: home/koliya/picture_web/src/frame/http
 
 # target to preprocess a source file
 home/koliya/picture_web/src/frame/http.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/frame/http.cpp.i
 .PHONY : home/koliya/picture_web/src/frame/http.cpp.i
 
 home/koliya/picture_web/src/frame/http.s: home/koliya/picture_web/src/frame/http.cpp.s
@@ -366,32 +414,32 @@ home/koliya/picture_web/src/frame/http.s: home/koliya/picture_web/src/frame/http
 
 # target to generate assembly for a file
 home/koliya/picture_web/src/frame/http.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/home/koliya/picture_web/src/frame/http.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/home/koliya/picture_web/src/frame/http.cpp.s
 .PHONY : home/koliya/picture_web/src/frame/http.cpp.s
 
-test_socketpool.o: test_socketpool.cc.o
-.PHONY : test_socketpool.o
+socketpool_test.o: socketpool_test.cc.o
+.PHONY : socketpool_test.o
 
 # target to build an object file
-test_socketpool.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/test_socketpool.cc.o
-.PHONY : test_socketpool.cc.o
+socketpool_test.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/socketpool_test.cc.o
+.PHONY : socketpool_test.cc.o
 
-test_socketpool.i: test_socketpool.cc.i
-.PHONY : test_socketpool.i
+socketpool_test.i: socketpool_test.cc.i
+.PHONY : socketpool_test.i
 
 # target to preprocess a source file
-test_socketpool.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/test_socketpool.cc.i
-.PHONY : test_socketpool.cc.i
+socketpool_test.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/socketpool_test.cc.i
+.PHONY : socketpool_test.cc.i
 
-test_socketpool.s: test_socketpool.cc.s
-.PHONY : test_socketpool.s
+socketpool_test.s: socketpool_test.cc.s
+.PHONY : socketpool_test.s
 
 # target to generate assembly for a file
-test_socketpool.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socketpool.dir/build.make CMakeFiles/test_socketpool.dir/test_socketpool.cc.s
-.PHONY : test_socketpool.cc.s
+socketpool_test.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/socketpool_test.dir/build.make CMakeFiles/socketpool_test.dir/socketpool_test.cc.s
+.PHONY : socketpool_test.cc.s
 
 # Help Target
 help:
@@ -401,7 +449,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test_socketpool"
+	@echo "... socketpool_test"
 	@echo "... home/koliya/picture_web/src/base/BaseSocket.o"
 	@echo "... home/koliya/picture_web/src/base/BaseSocket.i"
 	@echo "... home/koliya/picture_web/src/base/BaseSocket.s"
@@ -417,6 +465,12 @@ help:
 	@echo "... home/koliya/picture_web/src/base/Factory.o"
 	@echo "... home/koliya/picture_web/src/base/Factory.i"
 	@echo "... home/koliya/picture_web/src/base/Factory.s"
+	@echo "... home/koliya/picture_web/src/base/Global.o"
+	@echo "... home/koliya/picture_web/src/base/Global.i"
+	@echo "... home/koliya/picture_web/src/base/Global.s"
+	@echo "... home/koliya/picture_web/src/base/HttpServer.o"
+	@echo "... home/koliya/picture_web/src/base/HttpServer.i"
+	@echo "... home/koliya/picture_web/src/base/HttpServer.s"
 	@echo "... home/koliya/picture_web/src/base/ThrdPool.o"
 	@echo "... home/koliya/picture_web/src/base/ThrdPool.i"
 	@echo "... home/koliya/picture_web/src/base/ThrdPool.s"
@@ -432,9 +486,9 @@ help:
 	@echo "... home/koliya/picture_web/src/frame/http.o"
 	@echo "... home/koliya/picture_web/src/frame/http.i"
 	@echo "... home/koliya/picture_web/src/frame/http.s"
-	@echo "... test_socketpool.o"
-	@echo "... test_socketpool.i"
-	@echo "... test_socketpool.s"
+	@echo "... socketpool_test.o"
+	@echo "... socketpool_test.i"
+	@echo "... socketpool_test.s"
 .PHONY : help
 
 

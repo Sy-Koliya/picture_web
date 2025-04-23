@@ -13,5 +13,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/koliya/picture_web/src/base -I/home/koliya/picture_web/src/frame
 
-CXX_FLAGS = -g -std=gnu++17
+CXX_FLAGS = -g -std=gnu++20
 

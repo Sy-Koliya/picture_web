@@ -71,7 +71,10 @@
         "streambuf": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "any": "cpp",
+        "shared_mutex": "cpp",
+        "csignal": "cpp"
     },
     "cmake.sourceDirectory": "/home/koliya/picture_web/src/test"
 }
