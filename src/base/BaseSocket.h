@@ -99,16 +99,17 @@
  
      void _AcceptNewSocket();
  
- private:
+
+
+ protected:
      std::string m_remote_ip;
      uint16_t m_remote_port;
      std::string m_local_ip;
      uint16_t m_local_port;
 
-
+        
      buffer_t* in_buf;
      buffer_t* out_buf;
-
      uint8_t m_state;
 
 

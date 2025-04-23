@@ -83,16 +83,7 @@ int  BaseSocket::Connect_imp(){
 }
 
 int BaseSocket::Close_imp(){
-	if(m_ev_dispatch!=nullptr)m_ev_dispatch->RemoveEvent(m_socket);
-	else{
-		//loginfo
-		return -1;
-	}
-
-	RemoveBaseSocket(this);
-	::close(m_socket);
-	delete this;
-	return 0;
+    return 0;
 }	
 
 
@@ -240,6 +231,15 @@ int BaseSocket::Recv(void* buf, int len)
 int BaseSocket::Close()
 {
 	Close_imp();
+    if(m_ev_dispatch!=nullptr)m_ev_dispatch->RemoveEvent(m_socket);
+	else{
+		//loginfo
+		return -1;
+	}
+	RemoveBaseSocket(this);
+	::close(m_socket);
+	delete this;
+	return 0;
 	return 0;
 }
 void BaseSocket::OnRead()
