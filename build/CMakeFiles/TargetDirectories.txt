@@ -1,3 +1,0 @@
-/home/koliya/picture_web/build/CMakeFiles/socketpool_test.dir
-/home/koliya/picture_web/build/CMakeFiles/edit_cache.dir
-/home/koliya/picture_web/build/CMakeFiles/rebuild_cache.dir
