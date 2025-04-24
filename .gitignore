@@ -1,8 +1,4 @@
-# ==== 构建输出 ====
-# 通常在根目录使用 out/、build/、cmake-build-debug/ 等作为构建目录
-/build/
-/out/
-/cmake-build-*/
+
 
 # 二进制和中间文件
 *.o
@@ -18,7 +14,7 @@ Makefile.bak
 
 # ==== IDE/编辑器配置 ====
 # VS Code
-.vscode/
+./.vscode
 
 # CLion / IntelliJ IDEA
 .idea/
@@ -44,9 +40,13 @@ Thumbs.db
 # ==== 专用目录 ====
 # 忽略 mem 目录下所有 .mem 文件（如果你有这类文件）
 /src/test/mem/*.mem
-/src/test/build
 
 # ==== 保留某些文件 ====
 # 如果你想忽略整个 data 目录，但保留 data/README.md：
 # /data/*
 # !/data/README.md
+
+# ==== 忽略build ====
+/build/              # 忽略根目录下 build
+**/build/            # 或者忽略任何子目录下的 build
+/src/test/mem/*.mem  # 忽略 src/test/mem 下所有 .mem 文件
