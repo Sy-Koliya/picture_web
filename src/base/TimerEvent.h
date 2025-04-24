@@ -73,7 +73,7 @@ public:
         return inst;
     }
 
-    TimerEvent *Create(callback_t &callback,
+    TimerEvent *Create(callback_t&& callback,
                             uint64_t interval,
                             int calltime = -1,
                             void *user_data = nullptr)

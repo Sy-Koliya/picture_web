@@ -1,5 +1,6 @@
 #include "EventDispatch.h"
 #include "BaseSocket.h"
+#include "ThrdPool.h"
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <unistd.h>
@@ -14,9 +15,8 @@ EventDispatch::EventDispatch()
     if (m_epfd == -1)
     {
         std::cerr
-        << "epoll_create failed"
-        << "\n";
-    
+            << "epoll_create failed"
+            << "\n";
     }
 }
 
@@ -29,7 +29,6 @@ void EventDispatch::AddTimer(TimerEvent *te)
 {
     handle_te[te->te_id] = te;
     m_timer_list.push(te);
-
 }
 
 void EventDispatch::RemoveTimer(int handle_te_id)
@@ -54,7 +53,7 @@ void EventDispatch::_CheckTimer()
         if (te->next_tick <= curr_tick)
         {
             m_timer_list.pop();
-            te->Execute(); //此处后面加入线程池
+            WorkPool::Instance().Submit(te->callback);
             if (te->calltime == -1 || --te->calltime != 0)
             {
                 te->next_tick = curr_tick + te->interval;
@@ -65,25 +64,25 @@ void EventDispatch::_CheckTimer()
                 RemoveTimer(te->te_id);
             }
         }
-        else{
+        else
+        {
             break;
         }
     }
 }
 
-void EventDispatch::AddLoop(TimerEvent* te)
+void EventDispatch::AddLoop(TimerEvent *te)
 {
     m_loop_list.push_back(te);
 }
 
 void EventDispatch::_CheckLoop()
 {
-    for(auto it:m_loop_list){
+    for (auto it : m_loop_list)
+    {
         (it->callback)();
     }
 }
-
-
 
 void EventDispatch::AddEvent(int fd, uint32_t socket_event)
 {
@@ -123,7 +122,7 @@ void EventDispatch::StartDispatch(uint32_t wait_timeout)
         for (int i = 0; i < nfds; i++)
         {
             int ev_fd = events[i].data.fd;
-           BaseSocket *pSocket = FindBaseSocket(ev_fd);
+            BaseSocket *pSocket = FindBaseSocket(ev_fd);
             if (!pSocket)
                 continue;
 
@@ -135,8 +134,8 @@ void EventDispatch::StartDispatch(uint32_t wait_timeout)
             }
 #endif
             // Commit End
-            
-            if (events[i].events & ( EPOLLERR | EPOLLHUP))
+
+            if (events[i].events & (EPOLLERR | EPOLLHUP))
             {
                 pSocket->OnClose();
             }
@@ -148,7 +147,6 @@ void EventDispatch::StartDispatch(uint32_t wait_timeout)
             {
                 pSocket->OnWrite();
             }
-
         }
 
         _CheckTimer();
@@ -158,7 +156,7 @@ void EventDispatch::StartDispatch(uint32_t wait_timeout)
 
 void EventDispatch::StopDispatch()
 {
-    //能否平滑退出
+    // 能否平滑退出
     running = false;
     close(m_epfd);
 }

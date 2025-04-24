@@ -122,4 +122,9 @@ void SocketPool::AddTimerEvent(TimerEvent* ev){
 }
 
 //=========================================================================
-WorkPool::WorkPool(size_t nthreads ):ThreadPool(nthreads){} 
+WorkPool::WorkPool(size_t nthreads ):ThreadPool(nthreads){}
+WorkPool::~WorkPool()=default;
+WorkPool& WorkPool::Instance(size_t nthreads ){
+    static WorkPool imp (nthreads);
+    return imp;
+}
