@@ -87,7 +87,7 @@
      virtual int Write_imp();
      virtual int Listen_imp();
      virtual int Connect_imp();
-     BaseSocket* AddNew_imp();
+     virtual BaseSocket* AddNew_imp();
  private:
      int _GetErrorCode();
      bool _IsBlock(int error_code);
