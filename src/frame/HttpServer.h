@@ -47,7 +47,9 @@ private:
     BaseSocket *AddNew_imp() override;
 private:
     void CheckTimeOutConn();
+    void Close_Conn();
 private:
+    friend  int HttpConn::Close_imp();
     std::atomic<bool> running{false};
     std::set< HttpConn *,ConnCompare> conns; 
 

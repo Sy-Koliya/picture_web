@@ -1,20 +1,27 @@
 #include "HttpConn.h"
+#include "HttpServer.h"
 #include "HttpRequestParser.h"
 #include "Global.h"
 #include <string.h>
+#include <sys/epoll.h>
 
 using namespace httpparser;
+
 
 HttpConn::HttpConn()
     : BaseSocket(),
       state(HttpState::Http_Header_Read),
-      last_recv(std::chrono::steady_clock::now())
+      last_recv(std::chrono::steady_clock::now()),
+      isKeepAlive(false)
 {
     // any other setup…
 }
 
 // Destructor
 HttpConn::~HttpConn() = default;
+
+
+static int DispatchHttpRequest(int fd ,Request &req);
 
 // 每一次有读事件就会调用这个
 int HttpConn::Read_imp()
@@ -39,22 +46,63 @@ int HttpConn::Read_imp()
     HandleRead();
     return 0;
 }
-int HttpConn::Write_imp()
-{
-    return 0;
-}
+
 int HttpConn::Connect_imp()
 {
     return 0;
 }
 
 int HttpConn::Close_imp()
-{
+{   
+    BaseSocket* b_ptr = FindBaseSocket(server_socket);
+    if(b_ptr==nullptr)return -1;
+    HttpServer* s_ptr = dynamic_cast<HttpServer*>(b_ptr);
+    s_ptr->conns.erase(this);
+    
+    //如果正在处理请求
+    if(state == HttpState::HttpCallback){
+
+    }
     // 如果发生错误要告诉客户端
     if (state == HttpState::Http_Error)
     {
         // HttpManager::Instacn().create_404_responce(m_remote_ip.c_str,m_remote_port);
     }
+    return 0;
+}
+
+
+
+int HttpConn::Write_imp()
+{
+    sended_size += Send((char *)resp.c_str() + sended_size, resp.size() - sended_size);
+    if (sended_size == resp.size())
+    {
+        sended_size = 0;
+        resp.clear();
+        if (isKeepAlive)
+        {
+            state = HttpState::Http_Header_Parser;
+            m_ev_dispatch->ModifyEvent(m_socket, EPOLLIN );
+            //防止读完不会触发
+            HandleRead();
+        }
+        else
+        {
+            Close();
+        }
+    }
+    return 0;
+}
+
+//-1 表示错误
+int HttpConn::SetResponse(std::string &&_resp)
+{
+    if (state != HttpState::HttpCallback)
+        return -1;
+    resp = std::move(_resp);
+    sended_size = 0;
+    m_ev_dispatch->ModifyEvent(m_socket, EPOLLIN | EPOLLOUT);
     return 0;
 }
 
@@ -67,16 +115,14 @@ void HttpConn::HandleRead()
     {
         // 查找 "\r\n\r\n" 头结束标志
         const char *sep = "\r\n\r\n";
-        if (Global::Instance().get<int>("Debug") & 1){
-            std::cout<<"state :Http_Header_Read "<<'\n';
+        if (Global::Instance().get<int>("Debug") & 1)
+        {
+            std::cout << "state :Http_Header_Read " << '\n';
         }
         int header_len = buffer_search(in_buf, sep, strlen(sep));
 
-        if (header_len>0)
+        if (header_len > 0)
         {
-            if (Global::Instance().get<int>("Debug") & 1)
-                std::cout << "find \r\n\r\n"
-                          << '\n';
             recv_str.resize(header_len);
             buffer_remove(in_buf, (char *)recv_str.c_str(), header_len);
             state = HttpState::Http_Header_Parser;
@@ -103,16 +149,16 @@ void HttpConn::HandleRead()
             return;
         }
         req.nv2map();
-        if (!Global::Instance().contains(req.uri))
-        {
-            if (Global::Instance().get<int>("Debug") & 1)
-            {
-                std::cout << "Error ! uri not found " << '\n';
-            }
-            state = HttpState::Http_Error;
-            Close();
-            return;
-        }
+        // if (!Global::Instance().contains(req.uri))
+        // {
+        //     if (Global::Instance().get<int>("Debug") & 1)
+        //     {
+        //         std::cout << "Error ! uri not found " << '\n';
+        //     }
+        //     state = HttpState::Http_Error;
+        //     Close();
+        //     return;
+        // }
         if (Global::Instance().get<int>("Debug") & 1)
         {
             std::cout << req.inspect() << '\n';
@@ -128,17 +174,11 @@ void HttpConn::HandleRead()
         {
             if (Global::Instance().get<int>("Debug") & 1)
             {
-                std::cout << "Error ! " << Global::Instance().get<std::string>("Content_length_type") << "  not found " << '\n';
+                std::cout << "info  nobody http request" << '\n';
             }
-            state = HttpState::Http_Error;
-            Close();
-            return;
+            state = HttpState::Http_Ready;
+            goto http_ready;
         }
-        //  chunked 编码
-        // std::string chk =  Global::Instance().get<std::string>("Chunked_type");
-        //  if(req.HaveName(chk)){
-        //     state_ |=HttpState::Http_Chunked_Parser;
-        //  }
     }
 
     case HttpState::Http_Len_Parser:
@@ -185,42 +225,31 @@ void HttpConn::HandleRead()
 
     case HttpState::Http_Ready:
     {
-        state = HttpState::HttpCallback;
-    }
-
-    case HttpState::HttpCallback:
-    {
+    http_ready:
         // 如果是 HTTP/1.1 且支持 keep-alive，准备下一个请求
+        state = HttpState::HttpCallback;
         if (req.keepAlive)
         {
-            if (Global::Instance().get<int>("Debug") & 1)
-            {
-                Send((char *)req.Content2String().c_str(), req.body_length);
-            }
-            state = HttpState::Http_Header_Read;
-            // 交给上层 API 分发器处理
-            // dispatchHttpRequest(std::move(req));
+            isKeepAlive = true;
         }
-        else
-        {
-            if (Global::Instance().get<int>("Debug") & 1)
-            {
-                Send((char *)req.Content2String().c_str(), req.body_length);
-            }
-            // 短连接，处理完就关闭
-            // dispatchHttpRequest(std::move(req));
-            Close();
-        }
+        DispatchHttpRequest(m_socket,req);
         break;
     }
     }
-    // add_alive_set (this)
 }
 
+
 // 分发后,api使用connect请求
-static void DispatchHttpRequest(Request req)
+static int DispatchHttpRequest(int fd ,Request &req)
 {
-    // std::string uri = req.uri;
-    // using call = Global::Instance().get< callback >(uri);
-    // auto handle = call(req);
+    std::string uri = req.uri;
+    std::string _resp = "HTTP/1.1 200 OK\r\n"
+    "Connection: close\r\n"
+    "Content-Type: application/json; charset=utf-8\r\n"
+    "Content-Length: " + std::to_string(5) +
+    "\r\n\r\n" + "hello";
+    BaseSocket * b_ptr = FindBaseSocket(fd);
+    if(b_ptr==nullptr)return -1;
+    HttpConn* con_ = dynamic_cast<HttpConn*>(FindBaseSocket(fd));
+    con_->SetResponse(std::move(_resp));
 }

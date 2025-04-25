@@ -7,6 +7,7 @@
 #include "HttpResponse.h"
 
 constexpr int  recv_buf_len = 1024;
+constexpr int  send_buf_len = 1024;
 constexpr int  max_recv_len = 4096;
 
 //HttpServer -> Listen -> HttpConn  Read ->解析完 -> HttpRequest ->api ->HttpResponce ->HttpConn  Write ->send  
@@ -17,6 +18,7 @@ public:
     HttpState GetState(){return state;}
     HttpConn();
     ~HttpConn();
+    int  SetResponse(std::string &&_resp);
 private:
     int Read_imp() override;
     int Write_imp() override;
@@ -34,8 +36,10 @@ private:
     std::chrono::steady_clock::time_point last_recv;
     std::string  recv_str;
     //std::function<>  此处为了扩展性，可以在callback调用状态调用func，为了方便我使用dispatch函数
+    bool isKeepAlive;
     httpparser::Request req;  //解析之后传给api
-    httpparser::Response resp ;    //api处理完之后返回
+    std::string resp ;    //api处理完之后返回
+    int sended_size;
 };
 
 

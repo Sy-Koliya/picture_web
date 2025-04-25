@@ -84,7 +84,7 @@ void HttpServer::CheckTimeOutConn(){
         // 如果是 nullptr，或者最后一次接收时间早于过期阈值
         if (conn == nullptr || conn->last_recv < expire_time)
         {
-            if (conn)
+            if (conn!=nullptr)
             {
                 conn->Close();    
             }
@@ -94,6 +94,14 @@ void HttpServer::CheckTimeOutConn(){
         else
         {
             break;
+        }
+    }
+}
+
+void HttpServer::Close_Conn(){
+    for(auto it :conns){
+        if(it!=nullptr){
+            it->Close();
         }
     }
 }
@@ -108,5 +116,6 @@ void HttpServer::loop()
     {
         cv.wait_for(lk, std::chrono::milliseconds(loop_wait_duration_mil));
     }
+    Close_Conn();
     Close();
 }
