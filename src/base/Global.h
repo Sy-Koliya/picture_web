@@ -9,6 +9,8 @@
 #include <stdexcept>
 #include "types.h"
 
+
+
 class Global {
 public:
     // 获取单例
