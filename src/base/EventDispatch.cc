@@ -84,27 +84,47 @@ void EventDispatch::_CheckLoop()
     }
 }
 
-void EventDispatch::AddEvent(int fd, uint32_t socket_event)
+int EventDispatch::AddEvent(int fd, uint32_t socket_event)
 {
     struct epoll_event ev;
     ev.events = socket_event;
     ev.data.fd = fd;
     if (epoll_ctl(m_epfd, EPOLL_CTL_ADD, fd, &ev) != 0)
     {
+        if (Global::Instance().get<int>("Debug") & 1)
         std::cerr
-            << "epoll_ctl() failed, errno=" << errno
+            << "epoll_ctl_add failed, errno=" << errno
             << "\n";
+        return -1;
     }
+    return 0;
+}
+int EventDispatch::ModifyEvent(int fd,uint32_t socket_event){
+    struct epoll_event ev;
+    ev.events = socket_event;
+    ev.data.fd = fd;
+    if(epoll_ctl(m_epfd,EPOLL_CTL_MOD,fd,&ev)!=0){
+        if (Global::Instance().get<int>("Debug") & 1)
+        std::cerr
+        << "epoll_ctl_mod failed, errno=" << errno
+        << "\n";
+        return -1;
+    }
+    return 0;
 }
 
-void EventDispatch::RemoveEvent(int fd)
+
+int EventDispatch::RemoveEvent(int fd)
 {
     if (epoll_ctl(m_epfd, EPOLL_CTL_DEL, fd, nullptr) != 0)
     {
+        if (Global::Instance().get<int>("Debug") & 1)
         std::cerr
-            << "epoll_ctl failed, errno=" << errno
+            << "epoll_ctl remove failed, errno=" << errno
             << "\n";
+        return -1;
     }
+    return 0;
 }
 
 void EventDispatch::StartDispatch(uint32_t wait_timeout)
@@ -126,7 +146,6 @@ void EventDispatch::StartDispatch(uint32_t wait_timeout)
             if (!pSocket)
                 continue;
 
-// Commit by zhfu @2015-02-28
 #ifdef EPOLLRDHUP
             if (events[i].events & EPOLLRDHUP)
             {

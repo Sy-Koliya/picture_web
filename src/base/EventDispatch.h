@@ -34,8 +34,9 @@ public:
     EventDispatch();
 	virtual ~EventDispatch();
 
-	void AddEvent(int  fd, uint32_t socket_event);
-	void RemoveEvent(int fd);
+	int AddEvent(int  fd, uint32_t socket_event);
+    int ModifyEvent(int fd,uint32_t socket_event);
+	int RemoveEvent(int fd);
 
     void AddTimer(TimerEvent * te);
 	void RemoveTimer(int handlie_te_id);

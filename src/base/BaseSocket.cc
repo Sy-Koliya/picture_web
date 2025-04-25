@@ -215,6 +215,7 @@ int BaseSocket::Send(void *buf, int len)
         }
         else
         {
+            if (Global::Instance().get<int>("Debug") & 1)
             std::cerr
                 << "send failed, err_code=" << err_code
                 << ", len=" << len
