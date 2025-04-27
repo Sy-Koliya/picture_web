@@ -231,14 +231,38 @@ MYSQL_EXECUTABLE:FILEPATH=/usr/bin/mysql
 // zlib), specify them here.
 MYSQL_EXTRA_LIBRARIES:FILEPATH=/usr/local/lib/libz.so
 
-//Path to a file.
+//Specify the directory containing mysql.h.
 MYSQL_INCLUDE_DIR:PATH=/usr/include/mysql
-
-//Path to a library.
-MYSQL_LIBRARIES:FILEPATH=/usr/lib/x86_64-linux-gnu/libmysqlclient.so
 
 //Specify the location of the mysql library here.
 MYSQL_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libmysqlclient.so
+
+//Path to a file.
+Protobuf_INCLUDE_DIR:PATH=/usr/local/include
+
+//Path to a library.
+Protobuf_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libprotobuf.so
+
+//Path to a library.
+Protobuf_LIBRARY_RELEASE:FILEPATH=/usr/local/lib/libprotobuf.so
+
+//Path to a library.
+Protobuf_LITE_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libprotobuf-lite.so
+
+//Path to a library.
+Protobuf_LITE_LIBRARY_RELEASE:FILEPATH=/usr/local/lib/libprotobuf-lite.so
+
+//The Google Protocol Buffers Compiler
+Protobuf_PROTOC_EXECUTABLE:FILEPATH=/usr/local/bin/protoc
+
+//Path to a library.
+Protobuf_PROTOC_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libprotoc.so
+
+//Path to a library.
+Protobuf_PROTOC_LIBRARY_RELEASE:FILEPATH=/usr/local/lib/libprotoc.so
+
+//The directory containing a CMake configuration file for absl.
+absl_DIR:PATH=/usr/local/lib/cmake/absl
 
 //Value Computed by CMake
 async_server_BINARY_DIR:STATIC=/home/koliya/picture_web/src/dbserver/build
@@ -251,6 +275,9 @@ async_server_SOURCE_DIR:STATIC=/home/koliya/picture_web/src/dbserver
 
 //The directory containing a CMake configuration file for fmt.
 fmt_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/fmt
+
+//The directory containing a CMake configuration file for gRPC.
+gRPC_DIR:PATH=/usr/local/lib/cmake/grpc
 
 
 ########################
@@ -337,6 +364,12 @@ CMAKE_GENERATOR_INSTANCE:INTERNAL=
 CMAKE_GENERATOR_PLATFORM:INTERNAL=
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
+//Test CMAKE_HAVE_LIBC_PTHREAD
+CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=
+//Have library pthreads
+CMAKE_HAVE_PTHREADS_CREATE:INTERNAL=
+//Have library pthread
+CMAKE_HAVE_PTHREAD_CREATE:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/home/koliya/picture_web/src/dbserver
@@ -404,6 +437,10 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding Protobuf
+FIND_PACKAGE_MESSAGE_DETAILS_Protobuf:INTERNAL=[/usr/local/lib/libprotobuf.so;-lpthread][/usr/local/include][v3.19.4()]
+//Details about finding Threads
+FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Have symbol strtod_l
 HAVE_STRTOD_L:INTERNAL=
 //ADVANCED property for variable: MYSQL_EXECUTABLE
@@ -414,6 +451,22 @@ MYSQL_EXTRA_LIBRARIES-ADVANCED:INTERNAL=1
 MYSQL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MYSQL_LIBRARY
 MYSQL_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Protobuf_INCLUDE_DIR
+Protobuf_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Protobuf_LIBRARY_DEBUG
+Protobuf_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Protobuf_LIBRARY_RELEASE
+Protobuf_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Protobuf_LITE_LIBRARY_DEBUG
+Protobuf_LITE_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Protobuf_LITE_LIBRARY_RELEASE
+Protobuf_LITE_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Protobuf_PROTOC_EXECUTABLE
+Protobuf_PROTOC_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Protobuf_PROTOC_LIBRARY_DEBUG
+Protobuf_PROTOC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Protobuf_PROTOC_LIBRARY_RELEASE
+Protobuf_PROTOC_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //linker supports push/pop state
 _CMAKE_CXX_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 //linker supports push/pop state

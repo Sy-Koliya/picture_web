@@ -44,12 +44,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/koliya/picture_web/src/dbserver/build/fmt/cmake_install.cmake")
+  include("/home/koliya/picture_web/src/dbserver/build/dbimpl_build/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/koliya/picture_web/src/dbserver/build/dbimpl/cmake_install.cmake")
+  include("/home/koliya/picture_web/src/dbserver/build/fmt_build/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT

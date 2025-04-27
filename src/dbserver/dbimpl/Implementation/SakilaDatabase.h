@@ -27,9 +27,10 @@ enum SakilaDatabaseStatements : uint32
         When updating more than one field, consider looking at the calling function
         name for a suiting suffix.
     */
-    SAKILA_SEL_ACTOR_INFO,
-    SAKILA_SEL_ACTOR_INFO_ASYNC,
-    MAX_SAKILADATABASE_STATEMENTS
+    CHECK_REGISTER_INFO_EXIST,
+    REGISTER_INTO_USER_INFO,
+    
+    MAX_SAKILADATABASE_STATEMENTS,
 };
 
 class TC_DATABASE_API SakilaDatabaseConnection : public MySQLConnection

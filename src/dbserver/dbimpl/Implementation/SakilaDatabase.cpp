@@ -23,15 +23,26 @@ void SakilaDatabaseConnection::DoPrepareStatements()
 {
     if (!m_reconnecting)
         m_stmts.resize(MAX_SAKILADATABASE_STATEMENTS);
-    PrepareStatement(SAKILA_SEL_ACTOR_INFO, "select id, nick_name, user_name from user_info where id = ?", CONNECTION_SYNCH);
-    PrepareStatement(SAKILA_SEL_ACTOR_INFO_ASYNC, "select id, nick_name, user_name from user_info where id = ?", CONNECTION_ASYNC);
+
+    PrepareStatement(
+        CHECK_REGISTER_INFO_EXIST,
+        "select id from user_info "
+        "where user_name = ?",
+        CONNECTION_ASYNC);
+
+    PrepareStatement(
+        REGISTER_INTO_USER_INFO,
+        "INSERT INTO user_info "
+        "(user_name, nick_name, password, phone, email) "
+        "VALUES (?, ?, ?, ?, ?)",
+        CONNECTION_ASYNC);
 }
 
-SakilaDatabaseConnection::SakilaDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo)
+SakilaDatabaseConnection::SakilaDatabaseConnection(MySQLConnectionInfo &connInfo) : MySQLConnection(connInfo)
 {
 }
 
-SakilaDatabaseConnection::SakilaDatabaseConnection(ProducerConsumerQueue<SQLOperation*>* q, MySQLConnectionInfo& connInfo) : MySQLConnection(q, connInfo)
+SakilaDatabaseConnection::SakilaDatabaseConnection(ProducerConsumerQueue<SQLOperation *> *q, MySQLConnectionInfo &connInfo) : MySQLConnection(q, connInfo)
 {
 }
 

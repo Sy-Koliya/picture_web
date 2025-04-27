@@ -180,7 +180,7 @@ fmt/CMakeFiles/fmt.dir/src/os.cc.o: \
  /usr/include/c++/9/bits/shared_ptr_atomic.h \
  /usr/include/c++/9/bits/atomic_base.h \
  /usr/include/c++/9/bits/atomic_lockfree_defines.h \
- /usr/include/c++/9/backward/auto_ptr.h \
+ /usr/include/c++/9/backward/auto_ptr.h /usr/include/c++/9/bit \
  /usr/include/c++/9/pstl/glue_memory_defs.h \
  /home/koliya/picture_web/src/dbserver/fmt/include/fmt/core.h \
  /usr/include/c++/9/cstring /usr/include/string.h /usr/include/strings.h \

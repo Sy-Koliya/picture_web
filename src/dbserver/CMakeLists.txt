@@ -1,37 +1,77 @@
 cmake_minimum_required(VERSION 3.23)
 project(async_server)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_library(MYSQL_LIBRARIES
-  NAMES mysqlclient
-  PATHS /usr/lib /usr/lib/x86_64-linux-gnu /usr/local/lib
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+
+# 第三方
+find_package(fmt        REQUIRED)
+find_package(Protobuf   REQUIRED)
+find_package(gRPC       REQUIRED)
+find_package(MySQL      REQUIRED)
+find_package(Threads    REQUIRED)
+
+# 子模块（相对于 src/dbserver 目录）
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/dbimpl   dbimpl_build)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/fmt      fmt_build)
+
+# 源文件收集：上一级的 base 和 proto
+file(GLOB_RECURSE BASE_SOURCES
+    "${CMAKE_CURRENT_LIST_DIR}/../base/*.cc"
+    "${CMAKE_CURRENT_LIST_DIR}/../base/*.c"
 )
-if (NOT MYSQL_INCLUDE_DIR OR NOT MYSQL_LIBRARIES)
-  message(FATAL_ERROR "未找到 MySQL 客户端开发包 (libmysqlclient-dev)，请安装后重试。")
-endif()
-find_package(fmt REQUIRED)
-
-# 引入子模块：fmt 和 dbimpl
-add_subdirectory(fmt)
-add_subdirectory(dbimpl)
-
-# 生成可执行文件
-add_executable(async_server
-    async_server.cc
+file(GLOB_RECURSE PROTO_SOURCES
+    "${CMAKE_CURRENT_LIST_DIR}/../proto/*.cc"
+    "${CMAKE_CURRENT_LIST_DIR}/../proto/*.c"
 )
 
-# 包含 MySQL 头文件路径
-target_include_directories(async_server PRIVATE
-    ${MySQL_INCLUDE_DIR}
+# 本目录下的 dbapi 和 api
+file(GLOB_RECURSE DBAPI_SOURCES
+    "${CMAKE_CURRENT_LIST_DIR}/dbapi/*.cc"
+    "${CMAKE_CURRENT_LIST_DIR}/dbapi/*.c"
+)
+file(GLOB_RECURSE API_SOURCES
+    "${CMAKE_CURRENT_LIST_DIR}/api/*.cc"
+    "${CMAKE_CURRENT_LIST_DIR}/api/*.c"
 )
 
-# 链接库：dbimpl、fmt 和 MySQL 客户端
-target_link_libraries(async_server PRIVATE
+add_executable(server_rpc
+    ${CMAKE_CURRENT_LIST_DIR}/server_rpc.cc
+    ${BASE_SOURCES}
+    ${DBAPI_SOURCES}
+    ${API_SOURCES}
+    ${PROTO_SOURCES}
+)
+
+# 包含路径：上一级根目录 + 子模块
+target_include_directories(server_rpc PRIVATE
+    # 项目上一级（包含 base, proto, frame 等）
+    ${CMAKE_CURRENT_LIST_DIR}/..
+
+    # 本目录及子目录
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/dbapi
+    ${CMAKE_CURRENT_LIST_DIR}/api
+
+    # 子模块头
+    ${CMAKE_CURRENT_LIST_DIR}/../dbimpl
+    ${CMAKE_CURRENT_LIST_DIR}/../fmt/include
+    ${CMAKE_CURRENT_LIST_DIR}/../proto
+    ${CMAKE_CURRENT_LIST_DIR}/../base
+    ${CMAKE_CURRENT_LIST_DIR}/../frame
+    # 第三方
+    ${Protobuf_INCLUDE_DIRS}
+    ${gRPC_INCLUDE_DIRS}
+    ${MySQL_INCLUDE_DIRS}
+)
+
+target_link_libraries(server_rpc PRIVATE
     dbimpl
     fmt::fmt
-    ${MySQL_LIBRARIES}
+    protobuf::libprotobuf
+    gRPC::grpc++_unsecure 
+    Threads::Threads
+    ${MYSQL_LIBRARIES}
 )
