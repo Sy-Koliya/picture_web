@@ -1,0 +1,20 @@
+syntax = "proto3";
+package rpc;
+
+
+
+message RegisterRequest {
+  string nick_name  = 1;
+  string user_name  = 2;
+  string password   = 3;
+  string phone      = 4;
+  string email      = 5;
+}
+
+message RegisterResponse {
+  int32 code = 1;   //1成功 2重复插入 3 mysql服务器错误
+}
+
+service DatabaseService {
+  rpc registerUser(RegisterRequest) returns (RegisterResponse);
+}
