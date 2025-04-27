@@ -2,20 +2,17 @@
 #include "Global.h"
 #include "ThrdPool.h"
 
+    // 单例指针，用于信号处理
 HttpServer *HttpServer::instance = nullptr;
 
 HttpServer& HttpServer::Instance()
 {
-    static HttpServer *instance = []()
-    {
-        return new HttpServer();
-    }();
-    return *instance;
+    static HttpServer instance = HttpServer{};
+    return instance;
 }
 
 HttpServer::HttpServer()
 {
-    // 单例指针，用于信号处理
     instance = this;
     // 注册 SIGINT 处理函数
     std::signal(SIGINT, HttpServer::handle_sigint);
@@ -35,6 +32,7 @@ void HttpServer::handle_sigint(int)
 {
     if (instance)
     {
+        if(Global::Instance().get<int>("Debug")&Debug_std)
         std::cout << "SIGINT received, stopping server..." << std::endl;
         instance->stop();
     }
@@ -69,7 +67,7 @@ BaseSocket *HttpServer::AddNew_imp()
     HttpConn *conn = new HttpConn();
     conn->server_socket = m_socket;
     conns.insert(conn);
-    return conn;
+    return static_cast<BaseSocket*>(conn);
 }
 
 void HttpServer::CheckTimeOutConn(){
@@ -86,7 +84,8 @@ void HttpServer::CheckTimeOutConn(){
         {
             if (conn!=nullptr)
             {
-                conn->Close();    
+                conn->Close(); 
+                delete conn;   
             }
             // erase 返回下一个有效迭代器
             it = conns.erase(it);
@@ -98,13 +97,19 @@ void HttpServer::CheckTimeOutConn(){
     }
 }
 
-void HttpServer::Close_Conn(){
+int HttpServer::Close_imp() {
     for(auto it :conns){
         if(it!=nullptr){
             it->Close();
+            if(Global::Instance().get<int>("Debug")&Debug_std){
+                std::cout<<"server rm socket  "<<it->GetSocket()<<'\n';
+            }
+            delete it;
         }
     }
+    return 0;
 }
+
 
 void HttpServer::loop()
 {
@@ -116,6 +121,5 @@ void HttpServer::loop()
     {
         cv.wait_for(lk, std::chrono::milliseconds(loop_wait_duration_mil));
     }
-    Close_Conn();
     Close();
 }

@@ -31,8 +31,10 @@
      int versionMinor;
      std::vector<HeaderItem> headers;
      std::vector<char> content;
+     std::string m_content;
      bool keepAlive;
      std::unordered_map<std::string,std::string>mp;
+     int body_length;
 
      std::string inspect() const
      {
@@ -56,7 +58,7 @@
         for(auto hi:headers){
             mp.insert(std::make_pair(hi.name,hi.value));
         }
-        headers.clear();
+        //headers.clear();
      }
      bool HaveName(std::string name){
         if(mp.find(name)!=mp.end())return true;
@@ -68,6 +70,23 @@
         }
         return "";
      }
+     std::string Content2String(){
+        m_content.assign(content.begin(),content.end());
+        return m_content;
+     }
+
+     void clear() {
+        method.clear();
+        uri.clear();
+        versionMajor = 0;
+        versionMinor = 0;
+        headers.clear();
+        content.clear();
+        m_content.clear();
+        keepAlive = false;
+        mp.clear();
+        body_length = 0;
+    }
  };
 
  } // namespace httpparser

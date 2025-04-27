@@ -54,11 +54,6 @@ int HttpConn::Connect_imp()
 
 int HttpConn::Close_imp()
 {   
-    BaseSocket* b_ptr = FindBaseSocket(server_socket);
-    if(b_ptr==nullptr)return -1;
-    HttpServer* s_ptr = dynamic_cast<HttpServer*>(b_ptr);
-    s_ptr->conns.erase(this);
-    
     //如果正在处理请求
     if(state == HttpState::HttpCallback){
 
@@ -252,4 +247,5 @@ static int DispatchHttpRequest(int fd ,Request &req)
     if(b_ptr==nullptr)return -1;
     HttpConn* con_ = dynamic_cast<HttpConn*>(FindBaseSocket(fd));
     con_->SetResponse(std::move(_resp));
+    return 0;
 }
