@@ -135,15 +135,8 @@ void free(void *ptr) {
     
     char filename[128] = {0};
     snprintf(filename, sizeof(filename), "./mem/%p.mem", ptr);
-    
-    // 使用 unlink 删除记录文件，如果 unlink 失败则可能是重复释放
-    if (unlink(filename) < 0) {
-       // fprintf(stderr, "double free or unlink error: %p, error: %s\n", ptr, strerror(errno));
-        // 恢复标志后直接返回，不调用真实 free 避免二次释放
-        hook_in_free = 0;
-        return;
-    }
-    
+    // 使用 unlink 删除记录文件
+    unlink(filename) ;
     real_free(ptr);
     hook_in_free = 0;
 }

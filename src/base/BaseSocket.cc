@@ -216,10 +216,10 @@ int BaseSocket::Send(void *buf, int len)
         else
         {
             if (Global::Instance().get<int>("Debug") & 1)
-            std::cerr
-                << "send failed, err_code=" << err_code
-                << ", len=" << len
-                << "\n";
+                std::cerr
+                    << "send failed, err_code=" << err_code
+                    << ", len=" << len
+                    << "\n";
         }
     }
 
@@ -233,6 +233,10 @@ int BaseSocket::Recv(void *buf, int len)
 
 int BaseSocket::Close()
 {
+    if (m_state == SOCKET_STATE_CLOSED)
+    {
+        return 1;
+    }
     Close_imp();
     if (m_ev_dispatch != nullptr)
         m_ev_dispatch->RemoveEvent(m_socket);
@@ -243,7 +247,7 @@ int BaseSocket::Close()
     }
     RemoveBaseSocket(this);
     ::close(m_socket);
-    delete this;
+    m_state = SOCKET_STATE_CLOSED;
     return 0;
 }
 void BaseSocket::OnRead()
@@ -435,5 +439,51 @@ void BaseSocket::_AcceptNewSocket()
         _SetNonblock(fd);
         AddBaseSocket(pSocket);
         SocketPool::Instance().AddSocketEvent(fd, EPOLLIN);
+    }
+}
+
+// =======================BaseSocketManager======================================================
+
+ BaseSocketManager& BaseSocketManager::Instance()
+{
+    static BaseSocketManager inst;
+    return inst;
+}
+
+BaseSocket * BaseSocketManager:: Create()
+{
+    std::lock_guard<std::mutex> guard(m_lock);
+    BaseSocket *socket_ptr = new BaseSocket();
+    socket_handle_.insert(socket_ptr);
+    return socket_ptr;
+}
+void BaseSocketManager::Destroy(BaseSocket *socket_ptr)
+{
+    std::lock_guard<std::mutex> guard(m_lock);
+    if (!socket_ptr)
+        return;
+    auto it = socket_handle_.find(socket_ptr);
+    if (it != socket_handle_.end())
+    {
+        socket_ptr->Close();
+        delete socket_ptr;
+        socket_handle_.erase(it);
+    }
+    else
+    {
+        if(Global::Instance().get<int>("Debug")&Debug_std)
+        std::cout << "No tracked socket_ptr found!" << std::endl;
+    }
+}
+
+BaseSocketManager::~BaseSocketManager()
+{
+    for (auto socket_ptr : socket_handle_)
+    {
+        if (socket_ptr)
+        {
+            socket_ptr->Close();
+            delete socket_ptr; 
+        }
     }
 }

@@ -9,4 +9,6 @@ Global::Global()
     vars_["Http_ttl_s"] = std::chrono::seconds(60);
     vars_["loop_wait_duration_mil"] = 100;
     vars_["Debug"] = (int)Debug_std; // 1<<1
+    vars_["Mysql_Rpc_Server"]= std::string("0.0.0.0:50051");
+    
 }

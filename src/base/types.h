@@ -17,7 +17,8 @@ enum
     SOCKET_STATE_LISTENING,
     SOCKET_STATE_CONNECTING,
     SOCKET_STATE_CONNECTED,
-    SOCKET_STATE_CLOSING
+    SOCKET_STATE_CLOSING,
+    SOCKET_STATE_CLOSED
 };
 
 // epoll
@@ -57,6 +58,13 @@ enum class HttpState : uint32_t {
     HttpCallback         = 1u << 5,  
     Http_Ready           = 1u << 6,  
     Http_Error           = 1u << 7
+};
+
+enum
+{
+    Debug_std   = 1,
+    Debug_throw = 1 << 1,
+    Debug_log   = 1 << 2
 };
 
 class NoCopy

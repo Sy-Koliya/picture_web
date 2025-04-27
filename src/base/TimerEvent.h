@@ -26,7 +26,7 @@ public:
         : user_data(user_data),
           callback(callback),
           interval(interval),
-          next_tick(get_tick_count()),
+          next_tick(get_tick_count()+interval),
           te_id(te_id),
           calltime(calltime)
     {
@@ -83,7 +83,7 @@ public:
         handle_.insert(std::make_pair(te->te_id, te));
         return te;
     }
-    void Destory(TimerEvent *te)
+    void Destroy(TimerEvent *te)
     {
         std::lock_guard<std::mutex> guard(m_lock); // 注意，此处并不能保证其他线程对于te指针的销毁，管理仍需谨慎！
         if (te == nullptr)

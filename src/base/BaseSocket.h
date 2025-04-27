@@ -1,7 +1,7 @@
 
 #ifndef __SOCKET_H__
 #define __SOCKET_H__
- 
+
 #include "buffer.h"
 #include "types.h"
 #include "tools.h"
@@ -14,7 +14,7 @@
 // template <class Dervied>
 // class Base {
 // protected:
- 
+
 //     void  OnRead(){
 //         // 调用子类的实现函数。要求子类必须实现名为 impl() 的函数
 //         // 这个函数会被调用来执行具体的操作
@@ -33,146 +33,103 @@
 //      }
 // };
 
+class BaseSocket
+{
+    // using callback_t = std::function<void()>;
 
- class BaseSocket
- {
-    //using callback_t = std::function<void()>; 
+public:
+    int GetSocket() { return m_socket; }
+    void SetEventDispatch(EventDispatch *ed) { m_ev_dispatch = ed; }
+    EventDispatch *GetEventDispatch() { return m_ev_dispatch; }
+    void SetSocket(int fd) { m_socket = fd; }
+    void SetState(uint8_t state) { m_state = state; }
 
- public:
-     BaseSocket();
- 
-     virtual ~BaseSocket();
- 
-     int GetSocket() { return m_socket; }
-     void SetEventDispatch(EventDispatch* ed) { m_ev_dispatch = ed; }
-     EventDispatch* GetEventDispatch(){return m_ev_dispatch;}
-     void SetSocket(int  fd) { m_socket = fd; }
-     void SetState(uint8_t state) { m_state = state; }
- 
-     void SetRemoteIP(char *ip) { m_remote_ip = ip; }
-     void SetRemotePort(uint16_t port) { m_remote_port = port; }
-     void SetSendBufSize(uint32_t send_size);
-     void SetRecvBufSize(uint32_t recv_size);
+    void SetRemoteIP(char *ip) { m_remote_ip = ip; }
+    void SetRemotePort(uint16_t port) { m_remote_port = port; }
+    void SetSendBufSize(uint32_t send_size);
+    void SetRecvBufSize(uint32_t recv_size);
 
+    const char *GetRemoteIP() { return m_remote_ip.c_str(); }
+    uint16_t GetRemotePort() { return m_remote_port; }
+    const char *GetLocalIP() { return m_local_ip.c_str(); }
+    uint16_t GetLocalPort() { return m_local_port; }
+    uint8_t GetState() { return m_state; }
+    bool IsAlive(){return m_state!=SOCKET_STATE_CLOSED&&m_state!=SOCKET_STATE_CLOSING;}
 
-     const char *GetRemoteIP() { return m_remote_ip.c_str(); }
-     uint16_t GetRemotePort() { return m_remote_port; }
-     const char *GetLocalIP() { return m_local_ip.c_str(); }
-     uint16_t GetLocalPort() { return m_local_port; }
- 
- public:
-     int Listen(
-         const char *server_ip,
-         uint16_t port
-        );
- 
-     net_handle_t Connect(
-         const char *server_ip,
-         uint16_t port
-        );
- 
-     int Send(void *buf, int len);
- 
-     int Recv(void *buf, int len);
- 
-     int Close();
- 
- public:
+public:
+    int Listen(
+        const char *server_ip,
+        uint16_t port);
+
+    net_handle_t Connect(
+        const char *server_ip,
+        uint16_t port);
+
+    int Send(void *buf, int len);
+
+    int Recv(void *buf, int len);
+
+    int Close();
+
+protected:
     void OnRead();
     void OnWrite();
     void OnClose();
- protected:
-     virtual int Close_imp();
-     virtual int Read_imp();
-     virtual int Write_imp();
-     virtual int Listen_imp();
-     virtual int Connect_imp();
-     virtual BaseSocket* AddNew_imp();
- private:
-     int _GetErrorCode();
-     bool _IsBlock(int error_code);
- 
-     void _SetNonblock(int fd);
-     void _SetReuseAddr(int fd);
-     void _SetNoDelay(int fd);
-     void _SetAddr(const char *ip, const uint16_t port, sockaddr_in *pAddr);
- 
-     void _AcceptNewSocket();
- 
 
+protected:
+    BaseSocket();
+    virtual ~BaseSocket();
+    virtual int Close_imp();
+    virtual int Read_imp();
+    virtual int Write_imp();
+    virtual int Listen_imp();
+    virtual int Connect_imp();
+    virtual BaseSocket *AddNew_imp();
 
- protected:
-     std::string m_remote_ip;
-     uint16_t m_remote_port;
-     std::string m_local_ip;
-     uint16_t m_local_port;
+private:
+    friend class BaseSocketManager;
+    friend void EventDispatch::StartDispatch(uint32_t);
 
-        
-     buffer_t* in_buf;
-     buffer_t* out_buf;
-     uint8_t m_state;
+private:
+    int _GetErrorCode();
+    bool _IsBlock(int error_code);
 
+    void _SetNonblock(int fd);
+    void _SetReuseAddr(int fd);
+    void _SetNoDelay(int fd);
+    void _SetAddr(const char *ip, const uint16_t port, sockaddr_in *pAddr);
 
-     EventDispatch* m_ev_dispatch;
-     int m_socket;
- };
- 
- 
- BaseSocket *FindBaseSocket(net_handle_t fd);
- 
+    void _AcceptNewSocket();
 
- class BaseSocketManager : public NoCopy
- {
- public:
-     static BaseSocketManager &Instance()
-     {
-         static BaseSocketManager inst;
-         return inst;
-     }
- 
-     BaseSocket *Create()
-     {
-         std::lock_guard<std::mutex> guard(m_lock);
-         BaseSocket *socket_ptr = new BaseSocket();
-         socket_handle_.insert(socket_ptr);
-         return socket_ptr;
-     }
- 
-     void Destroy(BaseSocket *socket_ptr)
-     {
-         std::lock_guard<std::mutex> guard(m_lock);
-         if (!socket_ptr)
-             return;
-         auto it = socket_handle_.find(socket_ptr);
-         if (it != socket_handle_.end())
-         {
-             socket_ptr->Close();
-             delete socket_ptr;
-             socket_handle_.erase(it);
-         }
-         else
-         {
-             std::cout << "No tracked socket_ptr found!" << std::endl;
-         }
-     }
- 
- private:
-     BaseSocketManager() = default;
-     ~BaseSocketManager()
-     {
-         for (auto socket_ptr : socket_handle_)
-         {
-             if (socket_ptr)
-             {
-                 socket_ptr->Close();
-                 //delete socket_ptr; 双重释放！
-             }
-         }
-     }
- 
-     mutable std::mutex m_lock;
-     std::unordered_set<BaseSocket *> socket_handle_;
- };
+protected:
+    std::string m_remote_ip;
+    uint16_t m_remote_port;
+    std::string m_local_ip;
+    uint16_t m_local_port;
 
- #endif
- 
+    buffer_t *in_buf;
+    buffer_t *out_buf;
+    uint8_t m_state;
+
+    EventDispatch *m_ev_dispatch;
+    int m_socket;
+};
+
+BaseSocket *FindBaseSocket(net_handle_t fd);
+
+class BaseSocketManager : public NoCopy
+{
+public:
+    static BaseSocketManager &Instance();
+    BaseSocket *Create();
+    void Destroy(BaseSocket *socket_ptr);
+
+private:
+    BaseSocketManager() = default;
+    ~BaseSocketManager();
+
+    mutable std::mutex m_lock;
+    std::unordered_set<BaseSocket *> socket_handle_;
+};
+
+#endif
