@@ -1,23 +1,25 @@
 
 #include "ConfigFileReader.h"
+#include "Global.h"
+#include <algorithm>
 
 using std::map;
 using std::string;
-CConfigFileReader::CConfigFileReader(const char *filename)
+ConfigFileReader::ConfigFileReader(const char *filename)
 {
 	_LoadFile(filename);
 }
 
-CConfigFileReader::~CConfigFileReader()
+ConfigFileReader::~ConfigFileReader()
 {
 }
 
-char *CConfigFileReader::GetConfigName(const char *name)
+char *ConfigFileReader::GetConfigName(const char *name)
 {
 	if (!m_load_ok)
-		return NULL;
+		return nullptr;
 
-	char *value = NULL;
+	char *value = nullptr;
 	map<string, string>::iterator it = m_config_map.find(name);
 	if (it != m_config_map.end())
 	{
@@ -27,7 +29,7 @@ char *CConfigFileReader::GetConfigName(const char *name)
 	return value;
 }
 
-int CConfigFileReader::SetConfigValue(const char *name, const char *value)
+int ConfigFileReader::SetConfigValue(const char *name, const char *value)
 {
 	if (!m_load_ok)
 		return -1;
@@ -43,7 +45,7 @@ int CConfigFileReader::SetConfigValue(const char *name, const char *value)
 	}
 	return _WriteFIle();
 }
-void CConfigFileReader::_LoadFile(const char *filename)
+void ConfigFileReader::_LoadFile(const char *filename)
 {
 	m_config_file = filename;
 
@@ -79,9 +81,10 @@ void CConfigFileReader::_LoadFile(const char *filename)
     // 如果流没出错，标记加载成功
     if (fin.good() || fin.eof())
         m_load_ok = true;
+    LoadConfigToGlobal();
 }
 
-int CConfigFileReader::_WriteFIle(const char *filename)
+int ConfigFileReader::_WriteFIle(const char *filename)
 {
 
     const std::string path = filename
@@ -109,7 +112,7 @@ int CConfigFileReader::_WriteFIle(const char *filename)
     return 0;
 }
 
-void CConfigFileReader::_ParseLine(const std::string &line)
+void ConfigFileReader::_ParseLine(const std::string &line)
 {
     // 1. 找到等号位置
     auto pos = line.find('=');
@@ -132,10 +135,7 @@ void CConfigFileReader::_ParseLine(const std::string &line)
     }
 }
 
-#include <string>
-#include <algorithm>
-
-std::string CConfigFileReader::_TrimSpace(const string& input) {
+std::string ConfigFileReader::_TrimSpace(const string& input) {
     // 找到第一个不为空白的位置
     const auto begin = input.find_first_not_of(" \t");
     if (begin == std::string::npos) {
@@ -146,4 +146,49 @@ std::string CConfigFileReader::_TrimSpace(const string& input) {
     const auto end = input.find_last_not_of(" \t");
     // substr 的第二个参数是长度，所以要 end - begin + 1
     return input.substr(begin, end - begin + 1);
+}
+
+
+
+void ConfigFileReader::LoadConfigToGlobal(){
+    auto& global = Global::Instance();
+
+    for (const auto& [key, str_val] : m_config_map) {
+        try {
+            // 根据预定义的 key 做类型转换
+            if (key == "WorkPool") {
+                global.set(key, static_cast<size_t>(std::stoul(str_val)));
+            } 
+            else if (key == "SocketPool") {
+                global.set(key, static_cast<size_t>(std::stoul(str_val)));
+            }
+            else if (key == "Content_length_type") {
+                global.set(key, str_val);  // 直接存字符串
+            }
+            else if (key == "Http_ttl_s") {
+                global.set(key, std::chrono::seconds(std::stoi(str_val)));
+            }
+            else if (key == "loop_wait_duration_mil") {
+                global.set(key, std::stoi(str_val));
+            }
+            else if (key == "Debug") {
+                global.set(key, std::stoi(str_val));
+            }
+            else if (key == "Mysql_Rpc_Server") {
+                global.set(key, str_val);
+            }
+            // 其他已知 key 的处理...
+            else {
+                // 未知 key 的警告处理
+            }
+        } 
+        catch (const std::invalid_argument& e) {
+            // 转换失败处理（如 "abc" 转数字）
+            throw std::runtime_error("Config parse error for key '" + key + "': " + e.what());
+        }
+        catch (const std::out_of_range& e) {
+            // 数值超出范围处理（如 9999999999999999999）
+            throw std::runtime_error("Config value overflow for key '" + key + "'");
+        }
+    }
 }
