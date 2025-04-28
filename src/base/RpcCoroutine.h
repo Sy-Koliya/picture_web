@@ -5,21 +5,28 @@
 #include <optional>
 #include <functional>
 #include <iostream>
-#include "GrpcClient.h"     
+#include "GrpcClient.h"
+#include <chrono>
 
 using namespace rpc;
 
+// 前向声明 Notify 和 Coroutine_finish
+template <typename T>
+struct Notify;
 
-// T ≠ void 版本
+template <typename T>
+void Coroutine_finish(Notify<T>* nt);
+
+// RpcTask 模板及 void 特化
+
 template<typename T>
 class RpcTask {
 public:
     struct promise_type {
         std::optional<T> result;
-
-        std::suspend_never initial_suspend() noexcept { return {}; }
-        // 协程结束自动清理
-        std::suspend_never   final_suspend()   noexcept { return {}; }
+        Notify<T>* nt; // 通过 CoroutineScheduler 注入
+        std::suspend_always initial_suspend() noexcept { return {}; }
+        std::suspend_always final_suspend()   noexcept { return {}; }
 
         RpcTask get_return_object() {
             return RpcTask{
@@ -27,8 +34,10 @@ public:
             };
         }
 
-        // 非 void 协程必须提供 return_value
         void return_value(T v) {
+            if (nt) {
+                Coroutine_finish(nt);
+            }
             result = std::move(v);
         }
 
@@ -40,43 +49,69 @@ public:
     using handle_type = std::coroutine_handle<promise_type>;
 
     explicit RpcTask(handle_type h) : coro_(h) {}
-    //rpc的协程调用是多次且在线程池中的，不需要通过句柄对协程帧进行管理
-    ~RpcTask() = default; 
+    ~RpcTask() {
+        if (coro_) coro_.destroy();
+    }
+
+    RpcTask(const RpcTask&) = delete;
+    RpcTask& operator=(const RpcTask&) = delete;
+
+    // 移动语义
+    RpcTask(RpcTask&& other) noexcept : coro_(other.coro_) {
+        other.coro_ = nullptr;
+    }
+    RpcTask& operator=(RpcTask&& other) noexcept {
+        if (this != &other) {
+            if (coro_) coro_.destroy();
+            coro_ = other.coro_;
+            other.coro_ = nullptr;
+        }
+        return *this;
+    }
 
     bool is_ready() const noexcept {
         return coro_ && coro_.done();
     }
 
-    // 只有非 void 才有返回值
     T get() {
+        while (!is_ready()) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
         return std::move(*coro_.promise().result);
     }
 
-    // 手动触发一次 resume（如果需要的话）
     void resume() {
-        if (coro_ && !coro_.done()) coro_.resume();
+        if (coro_ && !coro_.done())
+            coro_.resume();
     }
 
 private:
-    handle_type coro_;
+    friend class CoroutineScheduler;
+    handle_type& handle() noexcept { return coro_; }
+    handle_type  coro_;
 };
 
-// T = void 版本
+// void 专化
+
 template<>
 class RpcTask<void> {
 public:
     struct promise_type {
-        std::suspend_never initial_suspend() noexcept { return {}; }
-        std::suspend_never   final_suspend()   noexcept { return {}; }
+        Notify<void>* nt;
+        std::suspend_always initial_suspend() noexcept { return {}; }
+        std::suspend_always final_suspend()   noexcept { return {}; }
+
         RpcTask get_return_object() {
             return RpcTask{
                 std::coroutine_handle<promise_type>::from_promise(*this)
             };
         }
 
-        // void 协程必须提供 return_void
-        void return_void() noexcept {}
-
+        void return_void() noexcept {
+            if (nt) {
+                Coroutine_finish(nt);
+            }
+        }
         void unhandled_exception() {
             std::terminate();
         }
@@ -85,21 +120,39 @@ public:
     using handle_type = std::coroutine_handle<promise_type>;
 
     explicit RpcTask(handle_type h) : coro_(h) {}
-    ~RpcTask() =default;
+    ~RpcTask() {
+        if (coro_) coro_.destroy();
+    }
+
+    RpcTask(const RpcTask&) = delete;
+    RpcTask& operator=(const RpcTask&) = delete;
+
+    // 移动语义
+    RpcTask(RpcTask&& other) noexcept : coro_(other.coro_) {
+        other.coro_ = nullptr;
+    }
+    RpcTask& operator=(RpcTask&& other) noexcept {
+        if (this != &other) {
+            if (coro_) coro_.destroy();
+            coro_ = other.coro_;
+            other.coro_ = nullptr;
+        }
+        return *this;
+    }
 
     bool is_ready() const noexcept {
         return coro_ && coro_.done();
     }
 
-    // void 版本的 get() 只是保证类型存在，什么都不返回
-    void get() {}
-
     void resume() {
-        if (coro_ && !coro_.done()) coro_.resume();
+        if (coro_ && !coro_.done())
+            coro_.resume();
     }
 
 private:
-    handle_type coro_;
+    friend class CoroutineScheduler;
+    handle_type& handle() noexcept { return coro_; }
+    handle_type  coro_;
 };
 
 #define MYSQL_RPC_CALL(Method)                                                         \
@@ -117,5 +170,7 @@ inline auto MysqlRegisterCall(MysqlClient<Req,Resp>* client, Req req) {
     return RpcAwaitable<Req,Resp,&DatabaseService::Stub::PrepareAsyncregisterUser>{client, std::move(req)};
 }
 
+// 包含实现
+#include "RpcCoroutine.hpp"
 
-#endif
+#endif // COROTINUE_H
