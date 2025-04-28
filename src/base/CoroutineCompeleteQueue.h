@@ -12,17 +12,15 @@
 #include "MPSCqueue.h"
 #include "ThrdPool.h"
 
-static constexpr int try_agian_times = 2; 
+static constexpr int try_agian_times = 2;
 
-// 抽象基类：统一存储在队列里
 struct NotifyBase
 {
     virtual ~NotifyBase() = default;
     virtual bool try_notify() = 0; // ready? 调用回调并返回 true，否则 false
 };
-template<typename T>
+template <typename T>
 class RpcTask;
-
 
 // T 版本
 template <typename T>
@@ -38,8 +36,11 @@ struct Notify : NotifyBase
     {
         if (!task.is_ready())
             return false;
-        WorkPool::Instance().Submit([cb_ = std::move(cb) , v_ = task.get()]()
-        { cb_(v_); });
+        if (cb)
+        {
+            WorkPool::Instance().Submit([cb_ = std::move(cb), v_ = task.get()]()
+                                        { cb_(v_); });
+        }
 
         return true;
     }
@@ -59,12 +60,14 @@ struct Notify<void> : NotifyBase
     {
         if (!task.is_ready())
             return false;
-        WorkPool::Instance().Submit([cb = std::move(cb)]()
-        { cb(); });
+        if (cb)
+        {
+            WorkPool::Instance().Submit([cb = std::move(cb)]()
+                                        { cb(); });
+        }
         return true;
     }
 };
-
 
 class CoroutineScheduler
 {
@@ -80,30 +83,17 @@ public:
     // 只支持移动语义
 
     template <typename T>
-    void schedule(std::remove_reference_t< RpcTask<T>> &&t,
-                  std::function<void(T)> cb )
+    void schedule(std::remove_reference_t<RpcTask<T>> &&t,
+                  std::function<void(T)> cb = {})
     {
         auto nt = new Notify<T>(std::move(t), std::move(cb));
         auto h = nt->task.handle();
         h.promise().nt = nt;
         nt->task.resume();
-     
     }
-    void schedule(std::remove_reference_t<RpcTask<void>> &&t,
-                  std::function<void()> cb = {})
+    template <typename T>
+    void finish(Notify<T> *nt)
     {
-        if (!cb)
-        {
-            t.resume();
-            return;
-        }
-        auto *nt = new Notify<void>(std::move(t), std::move(cb));
-        auto h = nt->task.handle();
-        h.promise().nt = nt;
-        nt->task.resume();
-    }
-    template<typename T>
-    void finish(Notify<T>*nt){
         pending_.Enqueue(nt);
     }
 
@@ -113,40 +103,52 @@ private:
     std::once_flag start_flag_;
     std::thread thread_handle;
     bool running;
-    CoroutineScheduler():running(true)
+    CoroutineScheduler() : running(true)
     {
-        std::call_once(start_flag_, [this]{
-            this->thread_handle =std::thread(&CoroutineScheduler::run_loop,this);
-        });
+        std::call_once(start_flag_, [this]
+                       { this->thread_handle = std::thread(&CoroutineScheduler::run_loop, this); });
     }
-    ~CoroutineScheduler(){
-        running=false;
+    ~CoroutineScheduler()
+    {
+        running = false;
     }
 
     void run_loop()
     {
         while (running)
         {
-            NotifyBase* nt;
-            while(pending_.Dequeue(nt)){
-                if(nt->try_notify()){
-                delete nt;
-                }else{
-                   bool flag = false;
-                   for(int i=0;i<try_agian_times;i++){
-                        flag=nt->try_notify();
-                        if(flag)break;
+            NotifyBase *nt;
+            while (pending_.Dequeue(nt))
+            {
+                if (nt->try_notify())
+                {
+                    delete nt;
+                }
+                else
+                {
+                    bool flag = false;
+                    for (int i = 0; i < try_agian_times; i++)
+                    {
+                        flag = nt->try_notify();
+                        if (flag)
+                            break;
                         std::this_thread::sleep_for(std::chrono::milliseconds(20));
-                   }
-                   if(!flag){
-                    throw ;
-                   }
+                    }
+                    if (!flag)
+                    {
+                        throw;
+                    }
                 }
             }
             std::this_thread::sleep_for(interval_);
-      
         }
     }
 };
 
-#endif 
+template <typename T>
+inline void coro_register(std::remove_reference_t<RpcTask<T>> &&task, std::function<void(T)> cb = {})
+{
+    CoroutineScheduler::Instance().schedule<T>(std::move(task), std::move(cb));
+}
+
+#endif
