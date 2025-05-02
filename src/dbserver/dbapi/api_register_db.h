@@ -24,25 +24,19 @@
 #include <chrono>
 
 
-class RegisterUserCall
-  : public CallData<
-        rpc::RegisterRequest,
-        rpc::RegisterResponse,
-        RegisterUserCall,
-        rpc::DatabaseService::AsyncService,
-        &rpc::DatabaseService::AsyncService::RequestregisterUser
-    >
-{
-public:
-    using Request  = rpc::RegisterRequest;
-    using Response = rpc::RegisterResponse;
-    using Base     = CallData<
-                       Request,
-                       Response,
-                       RegisterUserCall,
-                       rpc::DatabaseService::AsyncService,
-                       &rpc::DatabaseService::AsyncService::RequestregisterUser
-                     >;
+
+template<>
+struct ServiceMethodTraits<rpc::RegisterRequest> {
+    using ResponseType = rpc::RegisterResponse;
+    static constexpr auto Method = 
+        &rpc::DatabaseService::AsyncService::RequestregisterUser;
+};
+
+class RegisterUserCall : public CallData<rpc::RegisterRequest, RegisterUserCall> {
+  public:
+      using Request  = rpc::RegisterRequest;
+      using Response = rpc::RegisterResponse;
+      using Base     = CallData<Request, RegisterUserCall>;
 
     // 构造时启动一次全局后台线程（第一次调用）
     RegisterUserCall(rpc::DatabaseService::AsyncService* service,
