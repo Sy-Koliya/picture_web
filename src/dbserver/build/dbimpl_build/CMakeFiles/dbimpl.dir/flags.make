@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/koliya/picture_web/src/dbserver/dbimpl -I/home/koliya/picture_web/src/dbserver/fmt/include -I/usr/include/mysql
 
-CXX_FLAGS = -std=gnu++2a
+CXX_FLAGS = -std=gnu++20
 

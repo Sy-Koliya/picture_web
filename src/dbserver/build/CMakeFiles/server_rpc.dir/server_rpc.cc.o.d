@@ -1,63 +1,15 @@
 CMakeFiles/server_rpc.dir/server_rpc.cc.o: \
  /home/koliya/picture_web/src/dbserver/server_rpc.cc \
  /usr/include/stdc-predef.h \
- /home/koliya/picture_web/src/dbserver/dbapi/commom.h \
- /home/koliya/picture_web/src/dbserver/dbapi/api_register_db.h \
- /usr/local/include/grpcpp/grpcpp.h /usr/local/include/grpc/grpc.h \
- /usr/local/include/grpc/support/port_platform.h \
- /usr/local/include/grpc/impl/codegen/port_platform.h \
+ /home/koliya/picture_web/src/dbserver/../frame/GrpcServer.h \
+ /usr/include/c++/11/memory /usr/include/c++/11/bits/stl_algobase.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/bits/long-double.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/include/linux/version.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
- /usr/include/x86_64-linux-gnu/bits/types.h \
- /usr/include/x86_64-linux-gnu/bits/timesize.h \
- /usr/include/x86_64-linux-gnu/bits/typesizes.h \
- /usr/include/x86_64-linux-gnu/bits/time64.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
- /usr/local/include/grpc/byte_buffer.h \
- /usr/local/include/grpc/impl/codegen/byte_buffer.h \
- /usr/local/include/grpc/impl/codegen/grpc_types.h \
- /usr/local/include/grpc/impl/codegen/compression_types.h \
- /usr/local/include/grpc/impl/codegen/gpr_types.h \
- /usr/local/include/grpc/impl/codegen/slice.h \
- /usr/local/include/grpc/impl/codegen/gpr_slice.h \
- /usr/local/include/grpc/impl/codegen/status.h \
- /usr/local/include/grpc/slice_buffer.h /usr/local/include/grpc/slice.h \
- /usr/local/include/grpc/support/sync.h \
- /usr/local/include/grpc/impl/codegen/sync.h \
- /usr/local/include/grpc/impl/codegen/sync_generic.h \
- /usr/local/include/grpc/impl/codegen/atm.h \
- /usr/local/include/grpc/impl/codegen/atm_gcc_atomic.h \
- /usr/local/include/grpc/impl/codegen/sync_abseil.h \
- /usr/local/include/grpc/impl/codegen/connectivity_state.h \
- /usr/local/include/grpc/impl/codegen/propagation_bits.h \
- /usr/local/include/grpc/status.h /usr/local/include/grpc/support/time.h \
- /usr/include/time.h /usr/include/x86_64-linux-gnu/bits/time.h \
- /usr/include/x86_64-linux-gnu/bits/timex.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
- /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
- /usr/include/x86_64-linux-gnu/bits/endian.h \
- /usr/include/x86_64-linux-gnu/bits/endianness.h \
- /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
- /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
- /usr/local/include/grpcpp/channel.h /usr/include/c++/11/memory \
- /usr/include/c++/11/bits/stl_algobase.h \
- /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
- /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h \
  /usr/include/c++/11/pstl/pstl_config.h \
  /usr/include/c++/11/bits/functexcept.h \
@@ -90,6 +42,15 @@ CMakeFiles/server_rpc.dir/server_rpc.cc.o: \
  /usr/include/c++/11/bits/stl_tempbuf.h \
  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
  /usr/include/c++/11/bits/align.h /usr/include/c++/11/bit \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+ /usr/include/x86_64-linux-gnu/bits/types.h \
+ /usr/include/x86_64-linux-gnu/bits/timesize.h \
+ /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+ /usr/include/x86_64-linux-gnu/bits/time64.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/c++/11/bits/uses_allocator.h \
  /usr/include/c++/11/bits/unique_ptr.h /usr/include/c++/11/utility \
  /usr/include/c++/11/bits/stl_relops.h \
@@ -105,12 +66,15 @@ CMakeFiles/server_rpc.dir/server_rpc.cc.o: \
  /usr/include/c++/11/cwchar /usr/include/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+ /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/c++/11/exception /usr/include/c++/11/bits/exception_ptr.h \
  /usr/include/c++/11/bits/cxxabi_init_exception.h \
  /usr/include/c++/11/typeinfo /usr/include/c++/11/bits/nested_exception.h \
@@ -119,14 +83,25 @@ CMakeFiles/server_rpc.dir/server_rpc.cc.o: \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++locale.h \
  /usr/include/c++/11/clocale /usr/include/locale.h \
  /usr/include/x86_64-linux-gnu/bits/locale.h /usr/include/c++/11/cctype \
- /usr/include/ctype.h /usr/include/c++/11/bits/ios_base.h \
- /usr/include/c++/11/ext/atomicity.h \
+ /usr/include/ctype.h /usr/include/x86_64-linux-gnu/bits/endian.h \
+ /usr/include/x86_64-linux-gnu/bits/endianness.h \
+ /usr/include/c++/11/bits/ios_base.h /usr/include/c++/11/ext/atomicity.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/gthr.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/gthr-default.h \
  /usr/include/pthread.h /usr/include/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
  /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
- /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+ /usr/include/x86_64-linux-gnu/bits/cpu-set.h /usr/include/time.h \
+ /usr/include/x86_64-linux-gnu/bits/time.h \
+ /usr/include/x86_64-linux-gnu/bits/timex.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+ /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+ /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
@@ -219,7 +194,30 @@ CMakeFiles/server_rpc.dir/server_rpc.cc.o: \
  /usr/include/c++/11/bits/stream_iterator.h \
  /usr/include/c++/11/bits/uses_allocator_args.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
- /usr/include/c++/11/pstl/execution_defs.h \
+ /usr/include/c++/11/pstl/execution_defs.h /usr/include/c++/11/iostream \
+ /usr/include/c++/11/istream /usr/include/c++/11/bits/istream.tcc \
+ /usr/local/include/grpcpp/grpcpp.h /usr/local/include/grpc/grpc.h \
+ /usr/local/include/grpc/support/port_platform.h \
+ /usr/local/include/grpc/impl/codegen/port_platform.h \
+ /usr/include/linux/version.h /usr/local/include/grpc/byte_buffer.h \
+ /usr/local/include/grpc/impl/codegen/byte_buffer.h \
+ /usr/local/include/grpc/impl/codegen/grpc_types.h \
+ /usr/local/include/grpc/impl/codegen/compression_types.h \
+ /usr/local/include/grpc/impl/codegen/gpr_types.h \
+ /usr/local/include/grpc/impl/codegen/slice.h \
+ /usr/local/include/grpc/impl/codegen/gpr_slice.h \
+ /usr/local/include/grpc/impl/codegen/status.h \
+ /usr/local/include/grpc/slice_buffer.h /usr/local/include/grpc/slice.h \
+ /usr/local/include/grpc/support/sync.h \
+ /usr/local/include/grpc/impl/codegen/sync.h \
+ /usr/local/include/grpc/impl/codegen/sync_generic.h \
+ /usr/local/include/grpc/impl/codegen/atm.h \
+ /usr/local/include/grpc/impl/codegen/atm_gcc_atomic.h \
+ /usr/local/include/grpc/impl/codegen/sync_abseil.h \
+ /usr/local/include/grpc/impl/codegen/connectivity_state.h \
+ /usr/local/include/grpc/impl/codegen/propagation_bits.h \
+ /usr/local/include/grpc/status.h /usr/local/include/grpc/support/time.h \
+ /usr/local/include/grpcpp/channel.h \
  /usr/local/include/grpcpp/impl/call.h \
  /usr/local/include/grpcpp/impl/codegen/call.h \
  /usr/local/include/grpcpp/impl/codegen/call_hook.h \
@@ -251,8 +249,7 @@ CMakeFiles/server_rpc.dir/server_rpc.cc.o: \
  /usr/include/c++/11/bits/enable_special_members.h \
  /usr/include/c++/11/bits/node_handle.h \
  /usr/include/c++/11/bits/unordered_map.h \
- /usr/include/c++/11/bits/erase_if.h /usr/include/c++/11/iostream \
- /usr/include/c++/11/istream /usr/include/c++/11/bits/istream.tcc \
+ /usr/include/c++/11/bits/erase_if.h \
  /usr/local/include/grpcpp/impl/codegen/metadata_map.h \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_tree.h \
  /usr/include/c++/11/bits/stl_map.h \
@@ -441,12 +438,18 @@ CMakeFiles/server_rpc.dir/server_rpc.cc.o: \
  /usr/local/include/grpcpp/impl/codegen/proto_buffer_reader.h \
  /usr/local/include/grpcpp/impl/codegen/proto_buffer_writer.h \
  /usr/local/include/grpcpp/impl/codegen/stub_options.h \
+ /home/koliya/picture_web/src/dbserver/../base/Global.h \
+ /usr/include/c++/11/any \
+ /home/koliya/picture_web/src/dbserver/../base/types.h \
+ /home/koliya/picture_web/src/dbserver/../base/tools.h \
+ /home/koliya/picture_web/src/dbserver/../base/RpcCalldata.h \
+ /home/koliya/picture_web/src/dbserver/dbapi/commom.h \
+ /home/koliya/picture_web/src/dbserver/dbapi/api_register_db.h \
  /home/koliya/picture_web/src/dbserver/../proto/mysql_rpc.pb.h \
  /home/koliya/picture_web/src/dbserver/dbimpl/AsyncCallbackProcessor.h \
  /home/koliya/picture_web/src/dbserver/dbimpl/Define.h \
  /home/koliya/picture_web/src/dbserver/dbimpl/CompilerDefs.h \
  /usr/include/c++/11/cinttypes /usr/include/inttypes.h \
- /home/koliya/picture_web/src/dbserver/../base/RpcCalldata.h \
  /home/koliya/picture_web/src/dbserver/dbimpl/DatabaseEnvFwd.h \
  /usr/include/c++/11/future /usr/include/c++/11/condition_variable \
  /usr/include/c++/11/stop_token /usr/include/c++/11/bits/std_thread.h \
@@ -482,8 +485,4 @@ CMakeFiles/server_rpc.dir/server_rpc.cc.o: \
  /home/koliya/picture_web/src/dbserver/dbimpl/MySQLThreading.h \
  /home/koliya/picture_web/src/dbserver/dbimpl/QueryHolder.h \
  /usr/include/c++/11/thread \
- /home/koliya/picture_web/src/dbserver/../frame/GrpcServer.h \
- /home/koliya/picture_web/src/dbserver/../base/Global.h \
- /usr/include/c++/11/any \
- /home/koliya/picture_web/src/dbserver/../base/types.h \
- /home/koliya/picture_web/src/dbserver/../base/tools.h
+ /home/koliya/picture_web/src/dbserver/dbapi/api_login_db.h

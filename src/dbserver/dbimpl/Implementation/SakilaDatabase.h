@@ -27,9 +27,23 @@ enum SakilaDatabaseStatements : uint32
         When updating more than one field, consider looking at the calling function
         name for a suiting suffix.
     */
+    //注册相关
     CHECK_REGISTER_INFO_EXIST,
     REGISTER_INTO_USER_INFO,
-    
+
+    //登录相关
+    CHECK_LOGIN_PASSWORD,
+
+    // 秒传相关
+    CHECK_FILE_REF_COUNT,   // SELECT count FROM file_info WHERE md5 = ?
+    CHECK_USER_FILE,        // SELECT 1   FROM user_file_list WHERE user=? AND md5=? AND file_name=?
+    UPDATE_FILE_INFO_COUNT, // UPDATE file_info SET count=? WHERE md5=?
+    INSERT_USER_FILE,       // INSERT INTO user_file_list(...)
+    GET_USER_FILE_COUNT,    // SELECT count FROM user_file_count WHERE user=?
+    INSERT_USER_FILE_COUNT, // INSERT INTO user_file_count(user,count) VALUES(?,?)
+    UPDATE_USER_FILE_COUNT, // UPDATE user_file_count SET count=? WHERE user=?
+
+
     MAX_SAKILADATABASE_STATEMENTS,
 };
 
@@ -39,8 +53,8 @@ public:
     typedef SakilaDatabaseStatements Statements;
 
     //- Constructors for sync and async connections
-    SakilaDatabaseConnection(MySQLConnectionInfo& connInfo);
-    SakilaDatabaseConnection(ProducerConsumerQueue<SQLOperation*>* q, MySQLConnectionInfo& connInfo);
+    SakilaDatabaseConnection(MySQLConnectionInfo &connInfo);
+    SakilaDatabaseConnection(ProducerConsumerQueue<SQLOperation *> *q, MySQLConnectionInfo &connInfo);
     ~SakilaDatabaseConnection();
 
     //- Loads database type specific prepared statements

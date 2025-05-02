@@ -13,5 +13,5 @@ CXX_DEFINES = -DCARES_STATICLIB -DFMT_LOCALE
 
 CXX_INCLUDES = -I/home/koliya/picture_web/src/dbserver/.. -I/home/koliya/picture_web/src/dbserver -I/home/koliya/picture_web/src/dbserver/dbapi -I/home/koliya/picture_web/src/dbserver/api -I/home/koliya/picture_web/src/dbserver/../dbimpl -I/home/koliya/picture_web/src/dbserver/../fmt/include -I/home/koliya/picture_web/src/dbserver/../proto -I/home/koliya/picture_web/src/dbserver/../base -I/home/koliya/picture_web/src/dbserver/../frame -I/home/koliya/picture_web/src/dbserver/dbimpl -I/home/koliya/picture_web/src/dbserver/fmt/include -I/usr/include/mysql
 
-CXX_FLAGS = -std=gnu++2a
+CXX_FLAGS = -std=gnu++20
 

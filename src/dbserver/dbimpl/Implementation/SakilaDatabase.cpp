@@ -23,7 +23,7 @@ void SakilaDatabaseConnection::DoPrepareStatements()
 {
     if (!m_reconnecting)
         m_stmts.resize(MAX_SAKILADATABASE_STATEMENTS);
-
+    // 注册
     PrepareStatement(
         CHECK_REGISTER_INFO_EXIST,
         "select id from user_info "
@@ -35,6 +35,49 @@ void SakilaDatabaseConnection::DoPrepareStatements()
         "INSERT INTO user_info "
         "(user_name, nick_name, password, phone, email) "
         "VALUES (?, ?, ?, ?, ?)",
+        CONNECTION_ASYNC);
+
+    // 登录
+    PrepareStatement(
+        CHECK_LOGIN_PASSWORD,
+        "SELECT password FROM user_info WHERE user_name = ?",
+        CONNECTION_ASYNC);
+
+
+    //秒传
+    PrepareStatement(
+        CHECK_FILE_REF_COUNT,
+        "SELECT count FROM file_info WHERE md5 = ?",
+        CONNECTION_ASYNC);
+
+    PrepareStatement(
+        CHECK_USER_FILE,
+        "SELECT 1 FROM user_file_list WHERE user = ? AND md5 = ? AND file_name = ?",
+        CONNECTION_ASYNC);
+
+    PrepareStatement(
+        UPDATE_FILE_INFO_COUNT,
+        "UPDATE file_info SET count = ? WHERE md5 = ?",
+        CONNECTION_ASYNC);
+
+    PrepareStatement(
+        INSERT_USER_FILE,
+        "INSERT INTO user_file_list(user, md5, create_time, file_name, shared_status, pv) VALUES (?, ?, ?, ?, ?, ?)",
+        CONNECTION_ASYNC);
+
+    PrepareStatement(
+        GET_USER_FILE_COUNT,
+        "SELECT count FROM user_file_count WHERE user = ?",
+        CONNECTION_ASYNC);
+
+    PrepareStatement(
+        INSERT_USER_FILE_COUNT,
+        "INSERT INTO user_file_count(user, count) VALUES (?, ?)",
+        CONNECTION_ASYNC);
+
+    PrepareStatement(
+        UPDATE_USER_FILE_COUNT,
+        "UPDATE user_file_count SET count = ? WHERE user = ?",
         CONNECTION_ASYNC);
 }
 
