@@ -14,7 +14,27 @@ message RegisterRequest {
 message RegisterResponse {
   int32 code = 1;   //1成功 2重复插入 3 mysql服务器错误
 }
+message LoginRequest {
+  string user_name = 1;
+  string password  = 2;
+}
+
+message LoginResponse {
+  int32  code  = 1;   // 1成功，2失败
+}
+
+message Md5Request {
+  string user     = 1;
+  string md5      = 2;
+  string filename = 3;
+}
+
+message Md5Response {
+  int32 code = 1;  // 0=Ok, 1=Failed, 4=TokenErr, 5=FileExist
+}
 
 service DatabaseService {
   rpc registerUser(RegisterRequest) returns (RegisterResponse);
+  rpc loginUser(LoginRequest)       returns (LoginResponse);
+  rpc InstantUpload(Md5Request) returns (Md5Response);
 }

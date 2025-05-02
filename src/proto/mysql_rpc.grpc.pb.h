@@ -42,11 +42,29 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::RegisterResponse>> PrepareAsyncregisterUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::RegisterResponse>>(PrepareAsyncregisterUserRaw(context, request, cq));
     }
+    virtual ::grpc::Status loginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::rpc::LoginResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::LoginResponse>> AsyncloginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::LoginResponse>>(AsyncloginUserRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::LoginResponse>> PrepareAsyncloginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::LoginResponse>>(PrepareAsyncloginUserRaw(context, request, cq));
+    }
+    virtual ::grpc::Status InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::rpc::Md5Response* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::Md5Response>> AsyncInstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::Md5Response>>(AsyncInstantUploadRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::Md5Response>> PrepareAsyncInstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::Md5Response>>(PrepareAsyncInstantUploadRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
       virtual void registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest* request, ::rpc::RegisterResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest* request, ::rpc::RegisterResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void loginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void loginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -54,6 +72,10 @@ class DatabaseService final {
    private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::RegisterResponse>* AsyncregisterUserRaw(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::RegisterResponse>* PrepareAsyncregisterUserRaw(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::LoginResponse>* AsyncloginUserRaw(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::LoginResponse>* PrepareAsyncloginUserRaw(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::Md5Response>* AsyncInstantUploadRaw(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::Md5Response>* PrepareAsyncInstantUploadRaw(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -65,11 +87,29 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::RegisterResponse>> PrepareAsyncregisterUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::RegisterResponse>>(PrepareAsyncregisterUserRaw(context, request, cq));
     }
+    ::grpc::Status loginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::rpc::LoginResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::LoginResponse>> AsyncloginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::LoginResponse>>(AsyncloginUserRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::LoginResponse>> PrepareAsyncloginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::LoginResponse>>(PrepareAsyncloginUserRaw(context, request, cq));
+    }
+    ::grpc::Status InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::rpc::Md5Response* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::Md5Response>> AsyncInstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::Md5Response>>(AsyncInstantUploadRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::Md5Response>> PrepareAsyncInstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::Md5Response>>(PrepareAsyncInstantUploadRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
       void registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest* request, ::rpc::RegisterResponse* response, std::function<void(::grpc::Status)>) override;
       void registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest* request, ::rpc::RegisterResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void loginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response, std::function<void(::grpc::Status)>) override;
+      void loginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response, std::function<void(::grpc::Status)>) override;
+      void InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -83,7 +123,13 @@ class DatabaseService final {
     class async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::rpc::RegisterResponse>* AsyncregisterUserRaw(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rpc::RegisterResponse>* PrepareAsyncregisterUserRaw(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::LoginResponse>* AsyncloginUserRaw(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::LoginResponse>* PrepareAsyncloginUserRaw(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::Md5Response>* AsyncInstantUploadRaw(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::Md5Response>* PrepareAsyncInstantUploadRaw(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_registerUser_;
+    const ::grpc::internal::RpcMethod rpcmethod_loginUser_;
+    const ::grpc::internal::RpcMethod rpcmethod_InstantUpload_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -92,6 +138,8 @@ class DatabaseService final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status registerUser(::grpc::ServerContext* context, const ::rpc::RegisterRequest* request, ::rpc::RegisterResponse* response);
+    virtual ::grpc::Status loginUser(::grpc::ServerContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response);
+    virtual ::grpc::Status InstantUpload(::grpc::ServerContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_registerUser : public BaseClass {
@@ -113,7 +161,47 @@ class DatabaseService final {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_registerUser<Service > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_loginUser : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_loginUser() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_loginUser() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status loginUser(::grpc::ServerContext* /*context*/, const ::rpc::LoginRequest* /*request*/, ::rpc::LoginResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestloginUser(::grpc::ServerContext* context, ::rpc::LoginRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::LoginResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_InstantUpload : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_InstantUpload() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_InstantUpload() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status InstantUpload(::grpc::ServerContext* /*context*/, const ::rpc::Md5Request* /*request*/, ::rpc::Md5Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestInstantUpload(::grpc::ServerContext* context, ::rpc::Md5Request* request, ::grpc::ServerAsyncResponseWriter< ::rpc::Md5Response>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_registerUser<WithAsyncMethod_loginUser<WithAsyncMethod_InstantUpload<Service > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_registerUser : public BaseClass {
    private:
@@ -141,7 +229,61 @@ class DatabaseService final {
     virtual ::grpc::ServerUnaryReactor* registerUser(
       ::grpc::CallbackServerContext* /*context*/, const ::rpc::RegisterRequest* /*request*/, ::rpc::RegisterResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_registerUser<Service > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_loginUser : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_loginUser() {
+      ::grpc::Service::MarkMethodCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::LoginRequest, ::rpc::LoginResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response) { return this->loginUser(context, request, response); }));}
+    void SetMessageAllocatorFor_loginUser(
+        ::grpc::MessageAllocator< ::rpc::LoginRequest, ::rpc::LoginResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::LoginRequest, ::rpc::LoginResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_loginUser() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status loginUser(::grpc::ServerContext* /*context*/, const ::rpc::LoginRequest* /*request*/, ::rpc::LoginResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* loginUser(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::LoginRequest* /*request*/, ::rpc::LoginResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_InstantUpload : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_InstantUpload() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::Md5Request, ::rpc::Md5Response>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response) { return this->InstantUpload(context, request, response); }));}
+    void SetMessageAllocatorFor_InstantUpload(
+        ::grpc::MessageAllocator< ::rpc::Md5Request, ::rpc::Md5Response>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::Md5Request, ::rpc::Md5Response>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_InstantUpload() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status InstantUpload(::grpc::ServerContext* /*context*/, const ::rpc::Md5Request* /*request*/, ::rpc::Md5Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* InstantUpload(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::Md5Request* /*request*/, ::rpc::Md5Response* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_registerUser<WithCallbackMethod_loginUser<WithCallbackMethod_InstantUpload<Service > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_registerUser : public BaseClass {
@@ -156,6 +298,40 @@ class DatabaseService final {
     }
     // disable synchronous version of this method
     ::grpc::Status registerUser(::grpc::ServerContext* /*context*/, const ::rpc::RegisterRequest* /*request*/, ::rpc::RegisterResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_loginUser : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_loginUser() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_loginUser() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status loginUser(::grpc::ServerContext* /*context*/, const ::rpc::LoginRequest* /*request*/, ::rpc::LoginResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_InstantUpload : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_InstantUpload() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_InstantUpload() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status InstantUpload(::grpc::ServerContext* /*context*/, const ::rpc::Md5Request* /*request*/, ::rpc::Md5Response* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -181,6 +357,46 @@ class DatabaseService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_loginUser : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_loginUser() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_loginUser() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status loginUser(::grpc::ServerContext* /*context*/, const ::rpc::LoginRequest* /*request*/, ::rpc::LoginResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestloginUser(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_InstantUpload : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_InstantUpload() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_InstantUpload() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status InstantUpload(::grpc::ServerContext* /*context*/, const ::rpc::Md5Request* /*request*/, ::rpc::Md5Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestInstantUpload(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_registerUser : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -200,6 +416,50 @@ class DatabaseService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* registerUser(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_loginUser : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_loginUser() {
+      ::grpc::Service::MarkMethodRawCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->loginUser(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_loginUser() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status loginUser(::grpc::ServerContext* /*context*/, const ::rpc::LoginRequest* /*request*/, ::rpc::LoginResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* loginUser(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_InstantUpload : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_InstantUpload() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->InstantUpload(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_InstantUpload() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status InstantUpload(::grpc::ServerContext* /*context*/, const ::rpc::Md5Request* /*request*/, ::rpc::Md5Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* InstantUpload(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -229,9 +489,63 @@ class DatabaseService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedregisterUser(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::RegisterRequest,::rpc::RegisterResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_registerUser<Service > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_loginUser : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_loginUser() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::LoginRequest, ::rpc::LoginResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::LoginRequest, ::rpc::LoginResponse>* streamer) {
+                       return this->StreamedloginUser(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_loginUser() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status loginUser(::grpc::ServerContext* /*context*/, const ::rpc::LoginRequest* /*request*/, ::rpc::LoginResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedloginUser(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::LoginRequest,::rpc::LoginResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_InstantUpload : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_InstantUpload() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::Md5Request, ::rpc::Md5Response>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::Md5Request, ::rpc::Md5Response>* streamer) {
+                       return this->StreamedInstantUpload(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_InstantUpload() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status InstantUpload(::grpc::ServerContext* /*context*/, const ::rpc::Md5Request* /*request*/, ::rpc::Md5Response* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedInstantUpload(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::Md5Request,::rpc::Md5Response>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<Service > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_registerUser<Service > StreamedService;
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<Service > > > StreamedService;
 };
 
 }  // namespace rpc

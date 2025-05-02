@@ -23,6 +23,8 @@ namespace rpc {
 
 static const char* DatabaseService_method_names[] = {
   "/rpc.DatabaseService/registerUser",
+  "/rpc.DatabaseService/loginUser",
+  "/rpc.DatabaseService/InstantUpload",
 };
 
 std::unique_ptr< DatabaseService::Stub> DatabaseService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -33,6 +35,8 @@ std::unique_ptr< DatabaseService::Stub> DatabaseService::NewStub(const std::shar
 
 DatabaseService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_registerUser_(DatabaseService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_loginUser_(DatabaseService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_InstantUpload_(DatabaseService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DatabaseService::Stub::registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::rpc::RegisterResponse* response) {
@@ -58,6 +62,52 @@ void DatabaseService::Stub::async::registerUser(::grpc::ClientContext* context, 
   return result;
 }
 
+::grpc::Status DatabaseService::Stub::loginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::rpc::LoginResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::LoginRequest, ::rpc::LoginResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_loginUser_, context, request, response);
+}
+
+void DatabaseService::Stub::async::loginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::LoginRequest, ::rpc::LoginResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_loginUser_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::loginUser(::grpc::ClientContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_loginUser_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::LoginResponse>* DatabaseService::Stub::PrepareAsyncloginUserRaw(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::LoginResponse, ::rpc::LoginRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_loginUser_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::LoginResponse>* DatabaseService::Stub::AsyncloginUserRaw(::grpc::ClientContext* context, const ::rpc::LoginRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncloginUserRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::rpc::Md5Response* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::Md5Request, ::rpc::Md5Response, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_InstantUpload_, context, request, response);
+}
+
+void DatabaseService::Stub::async::InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::Md5Request, ::rpc::Md5Response, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_InstantUpload_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_InstantUpload_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::Md5Response>* DatabaseService::Stub::PrepareAsyncInstantUploadRaw(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::Md5Response, ::rpc::Md5Request, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_InstantUpload_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::Md5Response>* DatabaseService::Stub::AsyncInstantUploadRaw(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncInstantUploadRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 DatabaseService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DatabaseService_method_names[0],
@@ -69,12 +119,46 @@ DatabaseService::Service::Service() {
              ::rpc::RegisterResponse* resp) {
                return service->registerUser(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[1],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::LoginRequest, ::rpc::LoginResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::LoginRequest* req,
+             ::rpc::LoginResponse* resp) {
+               return service->loginUser(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[2],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::Md5Request, ::rpc::Md5Response, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::Md5Request* req,
+             ::rpc::Md5Response* resp) {
+               return service->InstantUpload(ctx, req, resp);
+             }, this)));
 }
 
 DatabaseService::Service::~Service() {
 }
 
 ::grpc::Status DatabaseService::Service::registerUser(::grpc::ServerContext* context, const ::rpc::RegisterRequest* request, ::rpc::RegisterResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::loginUser(::grpc::ServerContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::InstantUpload(::grpc::ServerContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response) {
   (void) context;
   (void) request;
   (void) response;
