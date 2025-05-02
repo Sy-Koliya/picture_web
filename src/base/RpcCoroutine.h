@@ -155,21 +155,6 @@ private:
     handle_type  coro_;
 };
 
-#define MYSQL_RPC_CALL(Method)                                                         \
-inline template<typename Req, typename Resp>                                           \
-auto Mysql##Method##Call( MysqlClient<Req,Resp>* client, Req req )                     \
-    -> RpcAwaitable<Req, Resp, &DatabaseService::Stub::PrepareAsync##Method>           \
-{                                                                                      \
-    return { client, std::move(req) };                                                 \
-}
-
-// 用户写 co_await MySqlRegisterCall(...)
-
-template<typename Req, typename Resp>
-inline auto MysqlRegisterCall(MysqlClient<Req,Resp>* client, Req req) {
-    return RpcAwaitable<Req,Resp,&DatabaseService::Stub::PrepareAsyncregisterUser>{client, std::move(req)};
-}
-
 // 包含实现
 #include "RpcCoroutine.hpp"
 

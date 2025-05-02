@@ -7,12 +7,12 @@
 #include <type_traits>
 #include <thread>
 #include <vector>
+#include "Global.h"
 #include "BaseThrdPool.h"
 #include "tools.h"
 #include "BaseSocket.h"
 #include "EventDispatch.h"
 #include "TimerEvent.h"
-#include "Global.h"
 
 struct thrdpool_task;
 
