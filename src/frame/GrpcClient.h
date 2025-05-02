@@ -131,4 +131,30 @@ struct RpcAwaitable
 };
 
 
+
+
+// #define MYSQL_RPC_CALL(Method)                                                         \
+// inline template<typename Req, typename Resp>                                           \
+// auto Mysql##Method##Call( MysqlClient<Req,Resp>* client, Req req )                     \
+//     -> RpcAwaitable<Req, Resp, &DatabaseService::Stub::PrepareAsync##Method>           \
+// {                                                                                      \
+//     return { client, std::move(req) };                                                 \
+// }
+
+//有新的请求参照上面模板进行增加
+
+template<typename Req, typename Resp>
+inline auto MysqlRegisterCall(MysqlClient<Req,Resp>* client, Req req) {
+    return RpcAwaitable<Req,Resp,&DatabaseService::Stub::PrepareAsyncregisterUser>{client, std::move(req)};
+}
+template<typename Req, typename Resp>
+inline auto MysqlLoginCall(MysqlClient<Req,Resp>* client, Req req) {
+    return RpcAwaitable<Req,Resp,&DatabaseService::Stub::PrepareAsyncloginUser>{client, std::move(req)};
+}
+
+template<typename Req, typename Resp>
+inline auto MysqlInstanceUploadCall(MysqlClient<Req,Resp>* client, Req req) {
+    return RpcAwaitable<Req,Resp,&DatabaseService::Stub::PrepareAsyncInstantUpload>{client, std::move(req)};
+}
+
 #endif
