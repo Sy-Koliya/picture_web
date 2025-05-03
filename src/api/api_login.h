@@ -9,12 +9,8 @@
 
 
 // 协程接口签名：输入 fd, HTTP body, 返回业务 code
-RpcTask<int> ApiUserLogin(int fd, std::string &post_data);
+RpcTask<int> ApiUserLogin(int fd, const std::string &post_data);
 
-
-// Global::Instance().RegisterUriHandler<
-//   rpc::RpcTask<int>, std::string&
-// >("/api/login", ApiUserLogin);
 
 
 #endif

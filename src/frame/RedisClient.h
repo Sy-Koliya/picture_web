@@ -23,6 +23,5 @@ inline sw::redis::Redis& get_redis() {
 
         return sw::redis::Redis{conn_opts, pool_opts};
     }();
-    std::cout<<"redis init ok"<<'\n';
     return redis;
 }

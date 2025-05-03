@@ -91,8 +91,7 @@ class RegisterUserCall : public CallData<rpc::RegisterRequest, RegisterUserCall>
         .WithChainingPreparedCallback(
           [this](QueryCallback& cb, PreparedQueryResult res)
           {
-            // rows should be 1
-            this->reply_.set_code(1);
+            this->reply_.set_code(0);
             this->status_ = FINISH;
             this->responder_.Finish(reply_, Status::OK, this);
           });

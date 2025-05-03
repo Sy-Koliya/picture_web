@@ -2,6 +2,7 @@
 #include "HttpServer.h"
 #include "HttpRequestParser.h"
 #include "Global.h"
+#include "Api_dispatch.h"
 #include <string.h>
 #include <sys/epoll.h>
 
@@ -34,10 +35,10 @@ int HttpConn::Read_imp()
         Close();
         return 1;
     }
-    if (Global::Instance().get<int>("Debug") & 1)
-    {
-        std::cout << "recv new msg:\n   " << buff << '\n';
-    }
+    // if (Global::Instance().get<int>("Debug") & 1)
+    // {
+    //     std::cout << "recv new msg:\n   " << buff << '\n';
+    // }
     buffer_add(in_buf, buff, len);
     if (buffer_len(in_buf) >= max_recv_len)
     {
@@ -110,10 +111,6 @@ void HttpConn::HandleRead()
     {
         // 查找 "\r\n\r\n" 头结束标志
         const char *sep = "\r\n\r\n";
-        if (Global::Instance().get<int>("Debug") & 1)
-        {
-            std::cout << "state :Http_Header_Read " << '\n';
-        }
         int header_len = buffer_search(in_buf, sep, strlen(sep));
 
         if (header_len > 0)
@@ -144,16 +141,6 @@ void HttpConn::HandleRead()
             return;
         }
         req.nv2map();
-        // if (!Global::Instance().contains(req.uri))
-        // {
-        //     if (Global::Instance().get<int>("Debug") & 1)
-        //     {
-        //         std::cout << "Error ! uri not found " << '\n';
-        //     }
-        //     state = HttpState::Http_Error;
-        //     Close();
-        //     return;
-        // }
         if (Global::Instance().get<int>("Debug") & 1)
         {
             std::cout << req.inspect() << '\n';
@@ -237,15 +224,7 @@ void HttpConn::HandleRead()
 // 分发后,api使用connect请求
 static int DispatchHttpRequest(int fd ,Request &req)
 {
-    std::string uri = req.uri;
-    std::string _resp = "HTTP/1.1 200 OK\r\n"
-    "Connection: close\r\n"
-    "Content-Type: application/json; charset=utf-8\r\n"
-    "Content-Length: " + std::to_string(5) +
-    "\r\n\r\n" + "hello";
-    BaseSocket * b_ptr = FindBaseSocket(fd);
-    if(b_ptr==nullptr)return -1;
-    HttpConn* con_ = dynamic_cast<HttpConn*>(FindBaseSocket(fd));
-    con_->SetResponse(std::move(_resp));
+    //api_dispatch(fd,req.uri,req.Content2String());
+    WorkPool::Instance().Submit( &api_dispatch,fd,req.uri,req.Content2String());
     return 0;
 }

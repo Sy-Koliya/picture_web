@@ -70,14 +70,14 @@ static int setToken(const std::string& user_name, std::string& token) {
 }
 
 // 协程任务：处理 /api/login
-RpcTask<int> ApiUserLogin(int fd, string &post_data)
+RpcTask<int> ApiUserLogin(int fd, const string &post_data)
 {
   if (Global::Instance().get<int>("Debug") & Debug_std)
   {
     std::cout << ", body=" << post_data << std::endl;
   }
 
-  int code = 0;
+  int code = 2;
   string user_name, pwd, token;
 
   // 解析 JSON
@@ -122,7 +122,7 @@ RpcTask<int> ApiUserLogin(int fd, string &post_data)
 
   //  构造 HTTP/JSON 响应
   json out;
-  if (code == 1)
+  if (code == 0)
   {
     if (setToken(user_name, token) != -1)
       out["token"] = token;
@@ -132,11 +132,10 @@ RpcTask<int> ApiUserLogin(int fd, string &post_data)
   }
   else
   {
-    out["code"] = -1;
+    out["code"] = 1;
   }
 
   auto body = out.dump();
-
   string response =
       "HTTP/1.1 200 OK\r\n"
       "Connection: close\r\n"

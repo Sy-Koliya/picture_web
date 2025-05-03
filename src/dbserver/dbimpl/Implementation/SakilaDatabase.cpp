@@ -43,16 +43,16 @@ void SakilaDatabaseConnection::DoPrepareStatements()
         "SELECT password FROM user_info WHERE user_name = ?",
         CONNECTION_ASYNC);
 
-
-    //秒传
+    // 秒传
     PrepareStatement(
-        CHECK_FILE_REF_COUNT,
+        CHECK_MD5_FILE_REF_COUNT,
         "SELECT count FROM file_info WHERE md5 = ?",
         CONNECTION_ASYNC);
 
     PrepareStatement(
-        CHECK_USER_FILE,
-        "SELECT 1 FROM user_file_list WHERE user = ? AND md5 = ? AND file_name = ?",
+        CHECK_USER_FILE_LIST_EXIST,
+        "SELECT md5 FROM user_file_list "
+        "WHERE user = ? AND md5 = ? AND file_name = ?",
         CONNECTION_ASYNC);
 
     PrepareStatement(
@@ -61,18 +61,20 @@ void SakilaDatabaseConnection::DoPrepareStatements()
         CONNECTION_ASYNC);
 
     PrepareStatement(
-        INSERT_USER_FILE,
-        "INSERT INTO user_file_list(user, md5, create_time, file_name, shared_status, pv) VALUES (?, ?, ?, ?, ?, ?)",
+        INSERT_USER_FILE_LIST,
+        "INSERT INTO user_file_list "
+        "(user, md5, create_time, file_name, shared_status, pv) "
+        "VALUES (?, ?, ?, ?, ?, ?)",
         CONNECTION_ASYNC);
 
     PrepareStatement(
-        GET_USER_FILE_COUNT,
+        SELECT_USER_FILE_COUNT,
         "SELECT count FROM user_file_count WHERE user = ?",
         CONNECTION_ASYNC);
 
     PrepareStatement(
         INSERT_USER_FILE_COUNT,
-        "INSERT INTO user_file_count(user, count) VALUES (?, ?)",
+        "INSERT INTO user_file_count (user, count) VALUES (?, ?)",
         CONNECTION_ASYNC);
 
     PrepareStatement(

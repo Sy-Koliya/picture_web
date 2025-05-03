@@ -11,157 +11,189 @@
 #include <thread>
 #include <atomic>
 #include <chrono>
-//秒传功能
+// 秒传功能
 
 using rpc::Md5Request;
 using rpc::Md5Response;
 
-template<>
-struct ServiceMethodTraits<Md5Request> {
-    using ResponseType = Md5Response;
-    static constexpr auto Method =
+template <>
+struct ServiceMethodTraits<Md5Request>
+{
+  using ResponseType = Md5Response;
+  static constexpr auto Method =
       &rpc::DatabaseService::AsyncService::RequestInstantUpload;
 };
 
 class InstantUploadCall
-  : public CallData<Md5Request, InstantUploadCall>
+    : public CallData<Md5Request, InstantUploadCall>
 {
 public:
-    InstantUploadCall(
-      rpc::DatabaseService::AsyncService* service,
-      grpc::ServerCompletionQueue* cq)
+  InstantUploadCall(
+      rpc::DatabaseService::AsyncService *service,
+      grpc::ServerCompletionQueue *cq)
       : CallData<Md5Request, InstantUploadCall>(service, cq)
-    {
-        std::call_once(init_flag_, [](){
-            processor_thread_ = std::thread([]{
-                while (!stop_flag_.load()) {
-                    processor_.ProcessReadyCallbacks();
-                    std::this_thread::sleep_for(
-                      std::chrono::milliseconds(50));
-                }
-            });
-        });
-    }
+  {
+    std::call_once(processor_init_flag_, []()
+                   {
+        // jthread 的析构会自动 request_stop() 并 join()
+        processor_thread_ = std::thread([]{
+           while (!processor_stop_flag_.load()) {
+             processor_.ProcessReadyCallbacks();
+             std::this_thread::sleep_for(std::chrono::milliseconds(50));
+           }
+       }); });
+  }
 
-    void OnRequest(const Md5Request& req, Md5Response& resp) override {
-        // 1. 查 file_info.count
-        auto stmt1 = SakilaDatabase.GetPreparedStatement(
-                       CHECK_FILE_REF_COUNT);
-        stmt1->setString(0, req.md5());
-        auto qc = SakilaDatabase
-          .AsyncQuery(stmt1)
-          .WithChainingPreparedCallback(
-            [this, &req, &resp](QueryCallback& cb1,
-                                PreparedQueryResult r1) {
-              if (!r1 || r1->GetRowCount() == 0) {
-                resp.set_code(1);  // Md5Failed
-                finish(resp);
-                return;
-              }
-              int file_ref = r1->Fetch()[0].GetInt32();
+  void OnRequest(const Md5Request &req, Md5Response &resp)
+  {
+    struct UploadContext {
+      std::string user;
+      std::string md5;
+      std::string filename;
+      uint32_t    file_ref_count   = 0;
+      uint32_t    user_file_count  = 0;
+  };
+  auto ctx = std::make_shared<UploadContext>();
+  ctx->user     = request_.user();
+  ctx->md5      = request_.md5();
+  ctx->filename = request_.filename();
 
-              // 2. 查用户是否已拥有此文件
-              auto stmt2 = SakilaDatabase.GetPreparedStatement(
-                             CHECK_USER_FILE);
-              stmt2->setString(0, req.user());
-              stmt2->setString(1, req.md5());
-              stmt2->setString(2, req.filename());
-              cb1.SetNextQuery(
-                SakilaDatabase.AsyncQuery(stmt2)
-              ).WithChainingPreparedCallback(
-                [this, file_ref, &req, &resp](QueryCallback& cb2,
-                                              PreparedQueryResult r2) {
-                  if (r2 && r2->GetRowCount()>0) {
-                    resp.set_code(5);  // Md5FileExit
-                    finish(resp);
-                  } else {
-                    // 3. 更新 file_info.count
-                    auto stmt3 = SakilaDatabase.GetPreparedStatement(
-                                   UPDATE_FILE_INFO_COUNT);
-                    stmt3->setInt32(0, file_ref+1);
-                    stmt3->setString(1, req.md5());
-                    cb2.SetNextQuery(
-                      SakilaDatabase.AsyncQuery(stmt3)
-                    ).WithChainingPreparedCallback(
-                      [this, &req, &resp](QueryCallback& cb3,
-                                          PreparedQueryResult) {
-                        // 4. 插入 user_file_list
-                        auto stmt4 = SakilaDatabase.GetPreparedStatement(
-                                       INSERT_USER_FILE);
-                        stmt4->setString(0, req.user());
-                        stmt4->setString(1, req.md5());
-                        stmt4->setString(2, now_str());
-                        stmt4->setString(3, req.filename());
-                        stmt4->setInt32(4, 0);
-                        stmt4->setInt32(5, 0);
-                        cb3.SetNextQuery(
-                          SakilaDatabase.AsyncQuery(stmt4)
-                        ).WithChainingPreparedCallback(
-                          [this, &req, &resp](QueryCallback& cb4,
-                                              PreparedQueryResult) {
-                            // 5. 更新或插入 user_file_count
-                            auto stmt5 = SakilaDatabase.GetPreparedStatement(
-                                           GET_USER_FILE_COUNT);
-                            stmt5->setString(0, req.user());
-                            cb4.SetNextQuery(
-                              SakilaDatabase.AsyncQuery(stmt5)
-                            ).WithChainingPreparedCallback(
-                              [this, &req, &resp](QueryCallback& cb5,
-                                                  PreparedQueryResult r5) {
-                                if (!r5 || r5->GetRowCount()==0) {
-                                  auto ins = SakilaDatabase.GetPreparedStatement(
-                                               INSERT_USER_FILE_COUNT);
-                                  ins->setString(0, req.user());
-                                  ins->setInt32(1,1);
-                                  processor_.AddCallback(
-                                    SakilaDatabase.AsyncQuery(ins)
-                                      .WithSimpleCallback(
-                                        [this,&resp](auto){
-                                          resp.set_code(0);
-                                          finish(resp);
-                                        }));
-                                } else {
-                                  int cnt = r5->Fetch()[0].GetInt32();
-                                  auto upd = SakilaDatabase.GetPreparedStatement(
-                                               UPDATE_USER_FILE_COUNT);
-                                  upd->setInt32(0,cnt+1);
-                                  upd->setString(1,req.user());
-                                  processor_.AddCallback(
-                                    SakilaDatabase.AsyncQuery(upd)
-                                      .WithSimpleCallback(
-                                        [this,&resp](auto){
-                                          resp.set_code(0);
-                                          finish(resp);
-                                        }));
-                                }
-                              });
-                          });
-                      });
-                  }
-                });
-            });
+  // 2. 准备第一条 SQL：查询 file_info.count
+  auto stmt_check_ref = 
+    SakilaDatabase.GetPreparedStatement(CHECK_MD5_FILE_REF_COUNT);
+  stmt_check_ref->setString(0, ctx->md5);
 
-        processor_.AddCallback(std::move(qc));
-    }
+  // 3. 发起异步链式调用
+  auto chain = SakilaDatabase
+    .AsyncQuery(stmt_check_ref)
+    // —— 第 1 步回调：处理 “SELECT count FROM file_info WHERE md5 = ?”
+    .WithChainingPreparedCallback(
+      [ctx, this](QueryCallback& callback,
+                  PreparedQueryResult query_result) {
+        // 如果没有任何行，秒传直接失败
+        if (!query_result || query_result->GetRowCount() == 0) {
+          this->reply_.set_code(1);
+          this->finish(this->reply_);
+          return;
+        }
+        // 读取 count
+        ctx->file_ref_count = query_result->Fetch()[0].GetUInt32();
+
+        // 继续第 2 步：检查 user_file_list
+        auto stmt_check_user = 
+          SakilaDatabase.GetPreparedStatement(CHECK_USER_FILE_LIST_EXIST);
+        stmt_check_user->setString(0, ctx->user);
+        stmt_check_user->setString(1, ctx->md5);
+        stmt_check_user->setString(2, ctx->filename);
+
+        // 设置下一查询
+        callback.SetNextQuery(
+          SakilaDatabase.AsyncQuery(stmt_check_user));
+      })
+    // —— 第 2 步回调：处理 “SELECT md5 FROM user_file_list…”
+    .WithChainingPreparedCallback(
+      [ctx, this](QueryCallback& callback,
+                  PreparedQueryResult query_result) {
+        if (query_result && query_result->GetRowCount() > 0) {
+          // 用户已上传过
+          this->reply_.set_code(5);
+          this->finish(this->reply_);
+          return;
+        }
+        // 第 3 步：更新 file_info.count
+        auto stmt_update_ref =
+          SakilaDatabase.GetPreparedStatement(UPDATE_FILE_INFO_COUNT);
+        stmt_update_ref->setUInt32(0, ctx->file_ref_count + 1);
+        stmt_update_ref->setString(1, ctx->md5);
+
+        callback.SetNextQuery(
+          SakilaDatabase.AsyncQuery(stmt_update_ref));
+      })
+    // —— 第 3 步回调：插入 user_file_list
+    .WithChainingPreparedCallback(
+      [ctx, this](QueryCallback& callback,
+                  PreparedQueryResult /*ignored*/) {
+        auto stmt_insert_user_file =
+          SakilaDatabase.GetPreparedStatement(INSERT_USER_FILE_LIST);
+        stmt_insert_user_file->setString(0, ctx->user);
+        stmt_insert_user_file->setString(1, ctx->md5);
+        stmt_insert_user_file->setString(2, now_str());
+        stmt_insert_user_file->setString(3, ctx->filename);
+        stmt_insert_user_file->setUInt32(4, 0);
+        stmt_insert_user_file->setUInt32(5, 0);
+
+        callback.SetNextQuery(
+          SakilaDatabase.AsyncQuery(stmt_insert_user_file));
+      })
+    // —— 第 4 步回调：查询 user_file_count
+    .WithChainingPreparedCallback(
+      [ctx, this](QueryCallback& callback,
+                  PreparedQueryResult /*ignored*/) {
+        auto stmt_sel_count =
+          SakilaDatabase.GetPreparedStatement(SELECT_USER_FILE_COUNT);
+        stmt_sel_count->setString(0, ctx->user);
+        callback.SetNextQuery(
+          SakilaDatabase.AsyncQuery(stmt_sel_count));
+      })
+    // —— 第 5 步回调：插入或更新 user_file_count
+    .WithChainingPreparedCallback(
+      [ctx, this](QueryCallback& /*callback*/,
+                  PreparedQueryResult query_result) {
+        if (!query_result || query_result->GetRowCount() == 0) {
+          // 首次插入
+          ctx->user_file_count = 1;
+          auto stmt_ins_count =
+            SakilaDatabase.GetPreparedStatement(INSERT_USER_FILE_COUNT);
+          stmt_ins_count->setString(0, ctx->user);
+          stmt_ins_count->setUInt32(1, ctx->user_file_count);
+          // 直接执行，不再链式调用
+          SakilaDatabase.AsyncQuery(stmt_ins_count)
+            .WithChainingPreparedCallback(
+              [this](QueryCallback&, PreparedQueryResult) {
+                this->reply_.set_code(0);
+                this->finish(this->reply_);
+              });
+        } else {
+          // 更新已有记录
+          ctx->user_file_count =
+            query_result->Fetch()[0].GetUInt32() + 1;
+          auto stmt_upd_count =
+            SakilaDatabase.GetPreparedStatement(UPDATE_USER_FILE_COUNT);
+          stmt_upd_count->setUInt32(0, ctx->user_file_count);
+          stmt_upd_count->setString(1, ctx->user);
+          SakilaDatabase.AsyncQuery(stmt_upd_count)
+            .WithChainingPreparedCallback(
+              [this](QueryCallback&, PreparedQueryResult) {
+                this->reply_.set_code(0);
+                this->finish(this->reply_);
+              });
+        }
+      });
+
+
+      processor_.AddCallback(std::move(chain));
+  }
 
 private:
-    void finish(Md5Response& r) {
-        status_ = FINISH;
-        responder_.Finish(r, grpc::Status::OK, this);
-    }
+  void finish(Md5Response &r)
+  {
+    status_ = FINISH;
+    responder_.Finish(r, grpc::Status::OK, this);
+  }
 
-    static std::string now_str() {
-        char buf[64];
-        auto t = std::time(nullptr);
-        std::strftime(buf, sizeof(buf), "%F %T",
-                      std::localtime(&t));
-        return buf;
-    }
-
-    inline static AsyncCallbackProcessor<QueryCallback> processor_;
-    inline static std::once_flag               init_flag_;
-    inline static std::thread                   processor_thread_;
-    inline static std::atomic<bool>             stop_flag_{false};
+  static std::string now_str()
+  {
+    char buf[64];
+    auto t = std::time(nullptr);
+    std::strftime(buf, sizeof(buf), "%F %T",
+                  std::localtime(&t));
+    return buf;
+  }
+  friend class RpcServer;
+  inline static AsyncCallbackProcessor<QueryCallback> processor_;
+  inline static std::once_flag processor_init_flag_;
+  inline static std::thread processor_thread_;
+  inline static std::atomic<bool> processor_stop_flag_{false};
 };
 
 #endif // API_MD5_DB_H

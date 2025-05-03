@@ -48,7 +48,7 @@ public:
         ServerBuilder builder;
         builder.AddListeningPort(
             // Global::Instance().get<std::string>("Mysql_Rpc_Server"),
-            "localhost:50051",
+            "0.0.0.0:50051",
             grpc::InsecureServerCredentials());
         builder.RegisterService(&service_);
         cq_ = builder.AddCompletionQueue();

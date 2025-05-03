@@ -153,7 +153,7 @@ inline auto MysqlLoginCall(MysqlClient<Req,Resp>* client, Req req) {
 }
 
 template<typename Req, typename Resp>
-inline auto MysqlInstanceUploadCall(MysqlClient<Req,Resp>* client, Req req) {
+inline auto MysqlInstantUploadCall(MysqlClient<Req,Resp>* client, Req req) {
     return RpcAwaitable<Req,Resp,&DatabaseService::Stub::PrepareAsyncInstantUpload>{client, std::move(req)};
 }
 
