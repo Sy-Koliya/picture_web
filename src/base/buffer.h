@@ -22,7 +22,7 @@ void buffer_free(buffer_t *buf);
 //查询当前是否有分隔符，有则返回第一个分隔符包含前面缓冲区内容的长度
 int buffer_search(buffer_t *buf, const char* sep, const int seplen);
 
-uint8_t * buffer_write_atmost(buffer_t *p);
+int buffer_add_from_readv(buffer_t * in_buf,int sock_fd);
 
 #ifdef __cplusplus
 }
