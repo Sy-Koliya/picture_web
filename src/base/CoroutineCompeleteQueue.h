@@ -1,25 +1,24 @@
-#ifndef COROUTINECOMPELETEQUEUE_H
-#define COROUTINECOMPELETEQUEUE_H
+#ifndef COROUTINECOMPLETEQUEUE_H
+#define COROUTINECOMPLETEQUEUE_H
 
 #include <atomic>
 #include <chrono>
 #include <functional>
 #include <thread>
 #include <mutex>
-#include <chrono>
-#include <unordered_set>
+#include <condition_variable>
 #include "ThrdPool.h"
 #include "RpcCoroutine.h"
 #include "MPSCqueue.h"
 
-
-static constexpr int try_agian_times = 2;
+static constexpr int try_again_times = 2;
 
 struct NotifyBase
 {
     virtual ~NotifyBase() = default;
     virtual bool try_notify() = 0; // ready? 调用回调并返回 true，否则 false
 };
+
 template <typename T>
 class RpcTask;
 
@@ -42,7 +41,6 @@ struct Notify : NotifyBase
             WorkPool::Instance().Submit([cb_ = std::move(cb), v_ = task.get()]()
                                         { cb_(v_); });
         }
-
         return true;
     }
 };
@@ -78,78 +76,91 @@ public:
         static CoroutineScheduler inst;
         return inst;
     }
-
-    // 非 void 协程必须传 cb；
-    // void 协程 cb 可选
-    // 只支持移动语义
-
     template <typename T>
-    void schedule(std::remove_reference_t<RpcTask<T>> &&t,
-                  std::function<void(T)> cb = {})
+    void schedule(RpcTask<T>&& t, std::function<void(T)> cb = {})
     {
-        auto nt = new Notify<T>(std::move(t), std::move(cb));
+        auto* nt = new Notify<T>(std::move(t), std::move(cb));
         auto h = nt->task.handle();
         h.promise().nt = nt;
         nt->task.resume();
     }
+
     template <typename T>
-    void finish(Notify<T> *nt)
+    void finish(Notify<T>* nt)
     {
         pending_.Enqueue(nt);
+        {
+            std::lock_guard<std::mutex> lk(mutex_);
+            cv_.notify_one();
+        }
     }
 
 private:
-    MPSCQueue<NotifyBase> pending_;
-    std::chrono::milliseconds interval_{50};
-    std::once_flag start_flag_;
-    std::thread thread_handle;
-    bool running;
-    CoroutineScheduler() : running(true)
+    CoroutineScheduler()
+        : running_(true)
     {
-        std::call_once(start_flag_, [this]
-                       { this->thread_handle = std::thread(&CoroutineScheduler::run_loop, this); });
+        thread_handle_ = std::thread(&CoroutineScheduler::run_loop, this);
     }
+
     ~CoroutineScheduler()
     {
-        running = false;
+        {
+            std::lock_guard<std::mutex> lk(mutex_);
+            running_.store(false, std::memory_order_release);
+            cv_.notify_one();
+        }
+        if (thread_handle_.joinable())
+            thread_handle_.join();
     }
 
     void run_loop()
     {
-        while (running)
+        std::unique_lock<std::mutex> lk(mutex_);
+        while (running_.load(std::memory_order_acquire))
         {
-            NotifyBase *nt;
-            while (pending_.Dequeue(nt))
+            // 等待 new tasks or stop signal
+            cv_.wait(lk, [this] { return !pending_.empty() || !running_.load(); });
+
+            // 调度完成队列
+            NotifyBase* nb = nullptr;
+            while (pending_.Dequeue(nb))
             {
-                if (nt->try_notify())
+                if (nb->try_notify())
                 {
-                    delete nt;
+                    delete nb;
                 }
                 else
                 {
-                    bool flag = false;
-                    for (int i = 0; i < try_agian_times; i++)
+                    bool ok = false;
+                    for (int i = 0; i < try_again_times; ++i)
                     {
-                        flag = nt->try_notify();
-                        if (flag)
+                        if (nb->try_notify())
+                        {
+                            ok = true;
                             break;
+                        }
                         std::this_thread::sleep_for(std::chrono::milliseconds(20));
                     }
-                    if (!flag)
-                    {
-                        throw;
-                    }
+                    if (!ok)
+                        throw std::runtime_error("CoroutineScheduler: notify failed");
+                    delete nb;
                 }
             }
-            std::this_thread::sleep_for(interval_);
         }
     }
+
+    MPSCQueue<NotifyBase*>      pending_;
+    std::mutex                  mutex_;
+    std::condition_variable     cv_;
+    std::thread                 thread_handle_;
+    std::atomic<bool>           running_;
 };
 
+// 帮助注册函数
 template <typename T>
-inline void coro_register(std::remove_reference_t<RpcTask<T>> &&task, std::function<void(T)> cb = {})
+inline void coro_register(RpcTask<T>&& task, std::function<void(T)> cb = {})
 {
-    CoroutineScheduler::Instance().schedule<T>(std::move(task), std::move(cb));
+    CoroutineScheduler::Instance().schedule(std::move(task), std::move(cb));
 }
 
-#endif
+#endif // COROUTINECOMPLETEQUEUE_H
