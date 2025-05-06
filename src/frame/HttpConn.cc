@@ -28,22 +28,20 @@ static int DispatchHttpRequest(int fd ,Request &req);
 int HttpConn::Read_imp()
 {
     last_recv = std::chrono::steady_clock::now();
-    char buff[recv_buf_len];
-    int len = Recv(buff, recv_buf_len);
+    int len = buffer_add_from_readv(in_buf,m_socket);
     if (len == 0)
     {
         Close();
         return 1;
     }
+    if(len <0){
+        Close();
+        return -1;
+    }
     // if (Global::Instance().get<int>("Debug") & 1)
     // {
     //     std::cout << "recv new msg:\n   " << buff << '\n';
     // }
-    buffer_add(in_buf, buff, len);
-    if (buffer_len(in_buf) >= max_recv_len)
-    {
-        // 可能被攻击，进一步处理
-    }
     HandleRead();
     return 0;
 }
