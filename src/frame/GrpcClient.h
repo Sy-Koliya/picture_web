@@ -10,7 +10,7 @@
 #include <grpc/support/log.h>
 #include <grpcpp/grpcpp.h>
 #include "mysql_rpc.grpc.pb.h"
-
+#include "fdfs_rpc.grpc.pb.h"
 
 using grpc::Channel;
 using grpc::ClientAsyncResponseReader;
@@ -22,139 +22,140 @@ using rpc::RegisterRequest;
 using rpc::RegisterResponse;
 
 
-template<typename Req, typename Resp,auto AsyncMethod >
-struct RpcAwaitable;
 
-template<typename Req, typename Resp>
-class MysqlClient {
+template<
+    typename ClientT,
+    typename Req,
+    typename Resp,
+    auto AsyncMethod
+>
+struct RpcAwaitable {
+    ClientT *client;
+    Req      request;
+    Resp     response;
+    std::coroutine_handle<> handle;
+
+    bool await_ready() const noexcept { return false; }
+
+    void await_suspend(std::coroutine_handle<> h) {
+        handle = h;
+        // 调用 client 上的 ClientCall<AsyncMethod>
+        client->template ClientCall<AsyncMethod>(std::move(request), this);
+    }
+
+    Resp await_resume() noexcept {
+        return std::move(response);
+    }
+};
+
+
+
+template<
+    typename Service,    // e.g. rpc::DatabaseService 或 rpc::FdfsService
+    typename Req,
+    typename Resp
+>
+class GrpcClient {
 public:
-    explicit MysqlClient(std::shared_ptr<grpc::Channel> channel)
-      : stub_(DatabaseService::NewStub(channel)),
-        completion_thread_(&MysqlClient::AsyncCompleteRpc, this)
+    using StubType = typename Service::Stub;
+
+    explicit GrpcClient(std::shared_ptr<grpc::Channel> channel)
+      : stub_(Service::NewStub(channel)),
+        completion_thread_(&GrpcClient::AsyncCompleteRpc, this)
     {}
 
-    ~MysqlClient() {
+    ~GrpcClient() {
         cq_.Shutdown();
         if (completion_thread_.joinable())
             completion_thread_.join();
     }
 
-    // co_await 调用
-    template<auto AsyncMethod>
-    RpcAwaitable<Req,Resp,AsyncMethod>
-    make_awaitable(Req req) {
-        return { this, std::move(req) };
-    }
+    // awaitable 需要访问私有成员
+    template<typename Cli, typename Rq, typename Rp, auto AM>
+    friend struct RpcAwaitable;
 
 private:
-   template<typename Rq, typename Rsp, auto AM>
-     friend struct RpcAwaitable;
-
+    // 基础 Tag，用来在 CompletionQueue 回调
     struct TagBase {
         virtual ~TagBase() = default;
         virtual void OnComplete(bool ok) = 0;
     };
 
-    // 嵌套模板：真正的 call context
+    // 每一次异步调用都会 new 一个 CallData
     template<auto AsyncMethod>
-    struct AsyncClientCall : TagBase {
-        RpcAwaitable<Req,Resp,AsyncMethod>* awaiter;
-        Resp      reply;
-        ClientContext    ctx;
-        Status           status;
-        std::unique_ptr<ClientAsyncResponseReader<Resp>> reader;
+    struct CallData : TagBase {
+        RpcAwaitable<GrpcClient, Req, Resp, AsyncMethod>* aw;
+        Resp        reply;
+        grpc::ClientContext ctx;
+        grpc::Status        status;
+        std::unique_ptr<grpc::ClientAsyncResponseReader<Resp>> reader;
 
-        AsyncClientCall(decltype(awaiter) aw) : awaiter(aw) {}
+        CallData(decltype(aw) a) : aw(a) {}
 
-        // Finish 回调后走这里
         void OnComplete(bool ok) override {
             if (ok && status.ok()) {
-                awaiter->response = std::move(reply);
-                awaiter->handle.resume();
+                aw->response = std::move(reply);
+                aw->handle.resume();
             } else {
-                std::cerr << "RPC failed: " 
-                          << status.error_message() 
-                          << std::endl;
+                std::cerr << "RPC failed: "
+                          << status.error_message() << std::endl;
             }
             delete this;
         }
     };
 
-    // 启动一次 RPC，并把 AsyncClientCall<AsyncMethod> 作为 tag
+    // 真正发起 RPC 的入口，被 RpcAwaitable 调用
     template<auto AsyncMethod>
     void ClientCall(Req req,
-                    RpcAwaitable<Req,Resp,AsyncMethod>* aw)
+                    RpcAwaitable<GrpcClient, Req, Resp, AsyncMethod>* aw)
     {
-        auto* call = new AsyncClientCall<AsyncMethod>{ aw };
-        call->reader = (stub_.get()->*AsyncMethod)(
-            &call->ctx, std::move(req), &cq_);
-        call->reader->StartCall();
-        call->reader->Finish(&call->reply, &call->status, call);
+        auto* cd = new CallData<AsyncMethod>{ aw };
+        cd->reader = (stub_.get()->*AsyncMethod)(&cd->ctx,
+                                                 std::move(req),
+                                                 &cq_);
+        cd->reader->StartCall();
+        cd->reader->Finish(&cd->reply, &cd->status, cd);
     }
 
-    // 唯一的 CompletionQueue 轮询点
+    // gRPC 的 CompletionQueue 循环
     void AsyncCompleteRpc() {
-        void* got_tag;
+        void* tag;
         bool ok;
-        while (cq_.Next(&got_tag, &ok)) {
-            static_cast<TagBase*>(got_tag)->OnComplete(ok);
+        while (cq_.Next(&tag, &ok)) {
+            static_cast<TagBase*>(tag)->OnComplete(ok);
         }
     }
 
-    std::unique_ptr<DatabaseService::Stub> stub_;
-    grpc::CompletionQueue               cq_;
-    std::thread                         completion_thread_;
-};
-
-template<typename Req, typename Resp,auto AsyncMethod >
-struct RpcAwaitable
-{
-  MysqlClient<Req, Resp> *client;
-  Req request;
-  Resp response;           
-  std::coroutine_handle<> handle; // 协程句柄
-
-  bool await_ready() const noexcept { return false; }
-
-  // suspend 时把自己传给 client，启动 RPC
-  void await_suspend(std::coroutine_handle<> h)
-  {
-    handle = h;
-    client->template ClientCall<AsyncMethod>(std::move(request), this);
-  }
-
-  // resume 后把 response 返给 co_await 表达式
-  Resp await_resume() noexcept
-  {
-    return std::move(response);
-  }
+    std::unique_ptr<StubType> stub_;
+    grpc::CompletionQueue     cq_;
+    std::thread               completion_thread_;
 };
 
 
 
 
-// #define MYSQL_RPC_CALL(Method)                                                         \
-// inline template<typename Req, typename Resp>                                           \
-// auto Mysql##Method##Call( MysqlClient<Req,Resp>* client, Req req )                     \
-//     -> RpcAwaitable<Req, Resp, &DatabaseService::Stub::PrepareAsync##Method>           \
-// {                                                                                      \
-//     return { client, std::move(req) };                                                 \
-// }
 
-//有新的请求参照上面模板进行增加
 
+//mysql调用
 template<typename Req, typename Resp>
-inline auto MysqlRegisterCall(MysqlClient<Req,Resp>* client, Req req) {
-    return RpcAwaitable<Req,Resp,&DatabaseService::Stub::PrepareAsyncregisterUser>{client, std::move(req)};
+inline auto MysqlRegisterCall(GrpcClient<rpc::DatabaseService, Req, Resp>*  client, Req req) {
+    return RpcAwaitable< GrpcClient<rpc::DatabaseService, Req, Resp>,Req,Resp,&DatabaseService::Stub::PrepareAsyncregisterUser>{client, std::move(req)};
 }
 template<typename Req, typename Resp>
-inline auto MysqlLoginCall(MysqlClient<Req,Resp>* client, Req req) {
-    return RpcAwaitable<Req,Resp,&DatabaseService::Stub::PrepareAsyncloginUser>{client, std::move(req)};
+inline auto MysqlLoginCall(GrpcClient<rpc::DatabaseService, Req, Resp>*  client, Req req) {
+    return RpcAwaitable< GrpcClient<rpc::DatabaseService, Req, Resp>,Req,Resp,&DatabaseService::Stub::PrepareAsyncloginUser>{client, std::move(req)};
 }
 
 template<typename Req, typename Resp>
-inline auto MysqlInstantUploadCall(MysqlClient<Req,Resp>* client, Req req) {
-    return RpcAwaitable<Req,Resp,&DatabaseService::Stub::PrepareAsyncInstantUpload>{client, std::move(req)};
+inline auto MysqlInstantUploadCall(GrpcClient<rpc::DatabaseService, Req, Resp>*  client, Req req) {
+    return RpcAwaitable< GrpcClient<rpc::DatabaseService, Req, Resp>,Req,Resp,&DatabaseService::Stub::PrepareAsyncInstantUpload>{client, std::move(req)};
 }
+
+template<typename Req, typename Resp>
+inline auto MysqlUploadFileCall( GrpcClient<rpc::DatabaseService, Req, Resp>*  client, Req req) {
+    return RpcAwaitable< GrpcClient<rpc::DatabaseService, Req, Resp>,Req,Resp,&DatabaseService::Stub::PrepareAsyncUploadFile>{client, std::move(req)};
+}
+
+
 
 #endif
