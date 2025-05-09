@@ -1,6 +1,0 @@
-全局变量类
-通过实例获取，禁止拷贝
-所有的成员私有
-ConfigFileReader类是友员类，可以通过ConfigFileReader修改对应的参数
-包括url类型以及url对应的函数地址
-redis以及mysql地址等等
