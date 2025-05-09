@@ -1,6 +1,6 @@
+# .gitignore for picture_web
 
-
-# 二进制和中间文件
+# ==== 二进制和中间文件 ====
 *.o
 *.obj
 *.so
@@ -9,22 +9,22 @@
 *.dll
 *.exe
 
-# Makefile 生成的
+# ==== Makefile 备份 ====
 Makefile.bak
 
-# ==== IDE/编辑器配置 ====
+# ==== IDE / 编辑器配置 ====
 # VS Code
-./.vscode
+/.vscode/
 
 # CLion / IntelliJ IDEA
-.idea/
+/.idea/
 
 # Eclipse
-.project
-.cproject
-.settings/
+/.project
+/.cproject
+/.settings/
 
-# Vim swap files
+# Vim swap 文件
 *.swp
 *.swo
 
@@ -38,16 +38,13 @@ Thumbs.db
 *.cache
 
 # ==== 专用目录 ====
-# 忽略 mem 目录下所有 .mem 文件（如果你有这类文件）
+# 忽略 src/test/mem 下所有 .mem 文件
 /src/test/mem/*.mem
 
-# ==== 保留某些文件 ====
-# 如果你想忽略整个 data 目录，但保留 data/README.md：
+# ==== 保留特定文件 ====
+# 忽略整个 data 目录，但保留 data/README.md
 # /data/*
 # !/data/README.md
 
-# ==== 忽略build ====
-/build/              # 忽略根目录下 build
-**/build/            # 或者忽略任何子目录下的 build
-/src/test/build      # 忽略test build
-/src/test/mem/*.mem  # 忽略 src/test/mem 下所有 .mem 文件
+# ==== 忽略所有名为 build 的目录 ====
+build/
