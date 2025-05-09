@@ -65,7 +65,7 @@ public:
     }
 
 private:
-    friend class RpcServer;
+    friend class MySqlRpcServer;
     inline static AsyncCallbackProcessor<QueryCallback> processor_;
     inline static std::once_flag processor_init_flag_;
     inline static std::thread processor_thread_;

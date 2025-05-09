@@ -1,5 +1,7 @@
 
-#include "GrpcServer.h"
+#include "dbapi/grpc_service.h"
+#include "Global.h" 
+
 
 int main(){
     MySQL::Library_Init();
@@ -16,12 +18,11 @@ int main(){
         TC_LOG_ERROR("", "SakilaDatabase connect error");
         return 1;
     }
-    // 到这里，所有在 SakilaDatabase 上注册的语句都已经被预编译完成
 
     TC_LOG_INFO("", "SakilaDatabase connect & prepare statements OK");
 
-    RpcServer rpc_server;
-    rpc_server.Run();
+    MySqlRpcServer rpc_server{};
+    rpc_server.Run(Global::Instance().get<std::string>("Mysql_Rpc_Server"));
 
     SakilaDatabase.Close();
     MySQL::Library_End();

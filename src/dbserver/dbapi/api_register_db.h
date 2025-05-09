@@ -102,7 +102,7 @@ class RegisterUserCall : public CallData<rpc::RegisterRequest, RegisterUserCall>
 
 private:
     // 全局唯一的 AsyncCallbackProcessor
-    friend class RpcServer;
+    friend class MySqlRpcServer;
     inline static AsyncCallbackProcessor<QueryCallback> processor_;
 
     // 确保线程只启动一次
