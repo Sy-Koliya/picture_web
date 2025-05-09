@@ -16,20 +16,30 @@ using rpc::RegisterResponse;
 using std::string;
 
 // 初始化一个全局Client
-static std::unique_ptr<MysqlClient<RegisterRequest, RegisterResponse>> mysql_client;
-static std::once_flag init_flag;
-static std::atomic<bool> g_rpc_inited{false};
+static std::unique_ptr<
+    GrpcClient<rpc::DatabaseService,
+               rpc::RegisterRequest,
+               rpc::RegisterResponse>>
+    register_client;
+static std::once_flag register_init_flag;
 
-static void init_gstub()
+// 真正的初始化函数，只执行一次
+static void init_register_client()
 {
-
-    auto target = Global::Instance().get<std::string>("Mysql_Rpc_Server");
-    std::cout << "[DEBUG] gRPC target = '" << target << "'\n";
-    auto channel = grpc::CreateChannel(
-        Global::Instance().get<std::string>("Mysql_Rpc_Server"),
-        grpc::InsecureChannelCredentials());
-    mysql_client = std::make_unique<MysqlClient<RegisterRequest, RegisterResponse>>(channel);
-    g_rpc_inited.store(true);
+    // 从配置读取地址
+    std::string addr = Global::Instance().get<std::string>("Mysql_Rpc_Server");
+    if (Global::Instance().get<int>("Debug") & Debug_std)
+    {
+        std::cout << "[DEBUG] gRPC target = '" << addr << "'\n";
+    }
+    // 创建 Channel
+    auto channel = grpc::CreateChannel(addr,
+                                       grpc::InsecureChannelCredentials());
+    // 用通用 GrpcClient 实例化
+    register_client = std::make_unique<
+        GrpcClient<rpc::DatabaseService,
+                   rpc::RegisterRequest,
+                   rpc::RegisterResponse>>(channel);
 }
 
 // 解析注册 JSON
@@ -73,16 +83,13 @@ static int encodeRegisterJson(int code, string &out_json)
 }
 
 // 协程任务：处理注册 API，返回业务 code
-RpcTask<int> ApiRegisterUser(int fd, const string &post_data)
+RpcTask<int> ApiRegisterUser(int fd, const string &post_data, const string & /*uri*/)
 {
     if (Global::Instance().get<int>("Debug") & Debug_std)
     {
         std::cout << ", data=" << post_data << std::endl;
     }
-    std::call_once(init_flag, init_gstub);
-    while (!g_rpc_inited.load(std::memory_order_acquire)) {
-        std::this_thread::sleep_for(std::chrono::microseconds(50));
-    }
+    std::call_once(register_init_flag, init_register_client);
 
     int code = 0;
     string user_name, nick_name, password, phone, email;
@@ -96,7 +103,7 @@ RpcTask<int> ApiRegisterUser(int fd, const string &post_data)
         int ret = decodeRegisterJson(post_data, user_name, nick_name, password, phone, email);
         if (ret < 0)
         {
-            std::cout<<"json parser faild"<<'\n';
+            std::cout << "json parser faild" << '\n';
             code = ret; // -1/ -2
         }
         else
@@ -111,7 +118,7 @@ RpcTask<int> ApiRegisterUser(int fd, const string &post_data)
             try
             {
                 RegisterResponse rpc_resp = co_await MysqlRegisterCall(
-                    mysql_client.get(), std::move(rpc_req));
+                    register_client.get(), std::move(rpc_req));
                 code = rpc_resp.code();
             }
             catch (...)
@@ -134,10 +141,9 @@ RpcTask<int> ApiRegisterUser(int fd, const string &post_data)
         std::to_string(body_json.size()) +
         "\r\n\r\n" + body_json;
 
-    BaseSocket *b = FindBaseSocket(fd);
-    if (b && b->IsAlive())
+    if (auto b = FindBaseSocket(fd); b)
     {
-        if (auto *h = dynamic_cast<HttpConn *>(b))
+        if (auto *h = dynamic_cast<HttpConn *>(b.GetBasePtr()))
         {
             h->SetResponse(std::move(response));
         }

@@ -7,5 +7,5 @@ using std::string;
 
 
 //注册 有了就返回2 没有返回1  
- RpcTask<int>  ApiRegisterUser(int fd,const string &post_data);
+ RpcTask<int>  ApiRegisterUser(int fd, const string &post_data,const string& /*uri*/);
 #endif

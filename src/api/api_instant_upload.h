@@ -4,9 +4,9 @@
 #include "RpcCoroutine.h"              
 #include "mysql_rpc.grpc.pb.h"    
 #include <string>
+using std::string;
 
-
-RpcTask<int> ApiInstantUpload(int fd, const std::string& post_data); 
+RpcTask<int> ApiInstantUpload(int fd, const string &post_data,const string&/*uri*/); 
 
 
 

@@ -7,11 +7,7 @@
 template <typename T>
 class RpcTask;
 
-// 前向声明
-template <typename T>
-class RpcTask;
-
-using Handler = RpcTask<int> (*)(int, const std::string &);
+using Handler = RpcTask<int> (*)(int, const std::string &, const std::string &);
 
 struct TrieNode
 {
@@ -89,20 +85,17 @@ public:
         std::call_once(getFlag(), [&]()
                        {
                            // 基础路由示例
-                           getTrie().insert("/api/reg",ApiRegisterUser);
+                           getTrie().insert("/api/reg", ApiRegisterUser);
                            getTrie().insert("/api/md5", ApiInstantUpload);
                            getTrie().insert("/api/login", ApiUserLogin);
-
                        });
-        //动态添加:
+        // 动态添加:
     }
     static auto FindHandler(const std::string &uri)
     {
         return getTrie().find(uri);
     }
 };
-
-
 
 void api_dispatch(int fd,
                   const std::string &uri,
@@ -118,16 +111,20 @@ void api_dispatch(int fd,
     try
     {
 
+        BaseCount sock = FindBaseSocket(fd);
+        if(!sock)return ;
         auto task = UriDispatcher::FindHandler(uri);
-        if(task==nullptr){
-            //无对应api 404
-
-            return ;
+        if (task == nullptr)
+        {
+                if (auto *h = dynamic_cast<HttpConn *>(sock.GetBasePtr()))
+                {
+                    h->SetErrorResponse(500,"url not found");
+                }
+            return;
         }
-        coro_register<int>(std::move(task(fd,content)),
-                           [](int business_code)
+        coro_register<int>(std::move(task(fd, content, uri)),
+                           [fd,sock](int code)
                            {
-                               // 结束逻辑
                            });
     }
     catch (const std::exception &e)

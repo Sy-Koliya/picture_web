@@ -4,7 +4,7 @@
 #include "Global.h"
 #include "HttpConn.h"
 #include "nlohmann/json.hpp"
-#include "commom_api.h"
+#include "common_api.h"
 #include <grpcpp/grpcpp.h>
 #include <mutex>
 #include <thread>
@@ -16,15 +16,27 @@ using rpc::Md5Response;
 using rpc::DatabaseService;
 
 // —— 全局 gRPC 客户端 —— 
-static std::unique_ptr<MysqlClient<Md5Request, Md5Response>> mysql_client;
-static std::once_flag init_flag;
+static std::unique_ptr<
+    GrpcClient<rpc::DatabaseService,
+               rpc::Md5Request,
+               rpc::Md5Response>
+> md5_client;
+static std::once_flag md5_init_flag;
 
-static void init_gstub() {
-    auto endpoint = Global::Instance().get<std::string>("Mysql_Rpc_Server");
-    auto channel  = grpc::CreateChannel(endpoint, grpc::InsecureChannelCredentials());
-    mysql_client  = std::make_unique<MysqlClient<Md5Request, Md5Response>>(channel);
+// 真正的初始化函数，只执行一次
+static void init_md5_client() {
+    std::string endpoint = Global::Instance().get<std::string>("Mysql_Rpc_Server");
+    if (Global::Instance().get<int>("Debug") & Debug_std) {
+        std::cout << "[DEBUG] MD5 gRPC target = '" << endpoint << "'\n";
+    }
+    auto channel = grpc::CreateChannel(endpoint,
+                                       grpc::InsecureChannelCredentials());
+    md5_client = std::make_unique<
+        GrpcClient<rpc::DatabaseService,
+                   rpc::Md5Request,
+                   rpc::Md5Response>
+    >(channel);
 }
-
 // —— JSON 解析 / 序列化 —— 
 static int decodeMd5Json(const string &str_json,
                          string &user,
@@ -61,7 +73,7 @@ static int encodeMd5Json(int code, string &out_json)
 }
 
 // —— HTTP 协程任务 —— 
-RpcTask<int> ApiInstantUpload(int fd, const string &post_data)
+RpcTask<int> ApiInstantUpload(int fd, const string &post_data,const string& /*uri*/)
 {
     if (Global::Instance().get<int>("Debug") & Debug_std) {
         std::cout << "[ApiInstantUpload] post_data=" << post_data << "\n";
@@ -71,7 +83,7 @@ RpcTask<int> ApiInstantUpload(int fd, const string &post_data)
     string user, token, md5, filename;
 
     if (post_data.empty()) {
-        code = -1;  // 空请求
+        code = 1;  // 空请求
     } else {
         int ret = decodeMd5Json(post_data, user, token, md5, filename);
         if (ret < 0) {
@@ -83,7 +95,7 @@ RpcTask<int> ApiInstantUpload(int fd, const string &post_data)
                 code = 4; // Token 错误
             } else {
                 // 初始化 gRPC 客户端
-                std::call_once(init_flag, init_gstub);
+                std::call_once(md5_init_flag, init_md5_client);
 
                 // 构造 RPC 请求
                 Md5Request rpc_req;
@@ -94,7 +106,7 @@ RpcTask<int> ApiInstantUpload(int fd, const string &post_data)
                 try {
                     // 发起异步调用，挂起协程
                     Md5Response rpc_resp =
-                        co_await MysqlInstantUploadCall(mysql_client.get(),
+                        co_await MysqlInstantUploadCall(md5_client.get(),
                                                         std::move(rpc_req));
                     code = rpc_resp.code();
                 } catch (const std::exception &e) {
@@ -117,8 +129,9 @@ RpcTask<int> ApiInstantUpload(int fd, const string &post_data)
         "\r\n\r\n" +
         body;
 
-    if (auto *b = FindBaseSocket(fd); b && b->IsAlive()) {
-        if (auto *h = dynamic_cast<HttpConn*>(b)) {
+    if (auto b = FindBaseSocket(fd); b) {
+        
+        if (auto *h = dynamic_cast<HttpConn*>(b.GetBasePtr())) {
             h->SetResponse(std::move(response));
         }
     } else {

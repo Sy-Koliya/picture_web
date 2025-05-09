@@ -3,10 +3,9 @@
 #include "HttpConn.h"
 #include "GrpcClient.h"
 #include "RedisClient.h"
-#include "commom_api.h"
+#include "common_api.h"
 #include <grpcpp/grpcpp.h>
 #include <nlohmann/json.hpp>
-#include <sw/redis++/redis++.h>
 #include <mutex>
 
 using nlohmann::json;
@@ -18,59 +17,72 @@ using namespace sw::redis;
 
 // 全局 gRPC 客户端 stub
 static std::unique_ptr<
-    MysqlClient<LoginRequest, LoginResponse>>
+    GrpcClient<rpc::DatabaseService,
+               rpc::LoginRequest,
+               rpc::LoginResponse>>
     login_client;
 static std::once_flag login_init_flag;
 
-// 线程安全初始化 stub
-static void init_login_stub()
+// 真正的初始化函数，只会被执行一次
+static void init_login_client()
 {
-  auto addr = Global::Instance().get<string>("Mysql_Rpc_Server");
-  auto channel = grpc::CreateChannel(addr, grpc::InsecureChannelCredentials());
+  // 从全局配置中读取地址
+  std::string addr = Global::Instance().get<std::string>("Mysql_Rpc_Server");
+  // 创建 gRPC Channel
+  auto channel = grpc::CreateChannel(addr,
+                                     grpc::InsecureChannelCredentials());
+  // 用通用 GrpcClient 实例化
   login_client = std::make_unique<
-      MysqlClient<LoginRequest, LoginResponse>>(channel);
+      GrpcClient<rpc::DatabaseService,
+                 rpc::LoginRequest,
+                 rpc::LoginResponse>>(channel);
 }
 
+static int setToken(const std::string &user_name, std::string &token)
+{
+  try
+  {
+    // 1. 拿到 Redis 客户端
+    auto &redis = get_redis();
 
-static int setToken(const std::string& user_name, std::string& token) {
-    try {
-        // 1. 拿到 Redis 客户端
-        auto &redis = get_redis();
-
-        // 2. 先读一次，看 key 有没有值
-        auto val = redis.get(user_name);
-        if (val) {
-            // key 存在，直接返回旧 token
-            token = *val;
-            return 0;
-        }
-
-        // 3. key 不存在，生成新的 token
-        token = RandomString(32);
-
-        // 4. 写入 Redis 并设置过期时间（86400 秒）
-        redis.setex(user_name,
-                    std::chrono::seconds(86400),
-                    token);
-
-        return 0;  // 写入成功
+    // 2. 先读一次，看 key 有没有值
+    auto val = redis.get(user_name);
+    if (val)
+    {
+      // key 存在，直接返回旧 token
+      token = *val;
+      return 0;
     }
-    catch (const sw::redis::IoError &e) {
-        std::cerr << "Redis connection failed: " << e.what() << "\n";
-        return -1;
-    }
-    catch (const sw::redis::Error &e) {
-        std::cerr << "Redis operation failed: " << e.what() << "\n";
-        return -1;
-    }
-    catch (...) {
-        std::cerr << "Unknown Redis error\n";
-        return -1;
-    }
+
+    // 3. key 不存在，生成新的 token
+    token = RandomString(32);
+
+    // 4. 写入 Redis 并设置过期时间（86400 秒）
+    redis.setex(user_name,
+                std::chrono::seconds(86400),
+                token);
+
+    return 0; // 写入成功
+  }
+  catch (const sw::redis::IoError &e)
+  {
+    std::cerr << "Redis connection failed: " << e.what() << "\n";
+    return -1;
+  }
+  catch (const sw::redis::Error &e)
+  {
+    std::cerr << "Redis operation failed: " << e.what() << "\n";
+    return -1;
+  }
+  catch (...)
+  {
+    std::cerr << "Unknown Redis error\n";
+    return -1;
+  }
 }
 
 // 协程任务：处理 /api/login
-RpcTask<int> ApiUserLogin(int fd, const string &post_data)
+RpcTask<int> ApiUserLogin(int fd, const string &post_data, const string & /*uri*/)
 {
   if (Global::Instance().get<int>("Debug") & Debug_std)
   {
@@ -101,7 +113,7 @@ RpcTask<int> ApiUserLogin(int fd, const string &post_data)
   {
 
     // rpc调用
-    std::call_once(login_init_flag, init_login_stub);
+    std::call_once(login_init_flag, init_login_client);
     std::cout << "rpc start" << '\n';
 
     LoginRequest req;
@@ -143,10 +155,9 @@ RpcTask<int> ApiUserLogin(int fd, const string &post_data)
       "Content-Length: " +
       std::to_string(body.size()) +
       "\r\n\r\n" + body;
-  auto *conn = FindBaseSocket(fd);
-  if (conn && conn->IsAlive())
+  if (auto b = FindBaseSocket(fd); b)
   {
-    if (auto *h = dynamic_cast<HttpConn *>(conn))
+    if (auto *h = dynamic_cast<HttpConn *>(b.GetBasePtr()))
     {
       h->SetResponse(std::move(response));
     }

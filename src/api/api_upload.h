@@ -1,8 +1,6 @@
 #pragma once
-
 #include <string>
-#include <fdfs_client.h>  // FastDFS client API
-#include <tracker_client.h>
 #include "RpcCoroutine.h"
-
-RpcTask<int> ApiUpload(int fd, const std::string &post_data);
+using std::string;
+// 异步上传接口，返回 UploadResponse
+RpcTask<int> ApiUploadFile(int fd, const string &post_data,const string& /*uri*/);
