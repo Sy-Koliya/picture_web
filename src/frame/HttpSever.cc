@@ -35,6 +35,12 @@ void HttpServer::handle_sigint(int)
             std::cout << "SIGINT received, stopping server..." << std::endl;
         instance->stop();
     }
+    else
+    {
+        if (Global::Instance().get<int>("Debug") & Debug_std)
+            std::cout << "SIGINT received, but instance is null." << std::endl;
+            _exit(EXIT_SUCCESS);
+    }
 }
 
 int HttpServer::start(const char *ip, uint16_t port)
