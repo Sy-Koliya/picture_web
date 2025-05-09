@@ -8,7 +8,7 @@
 #include "tools.h"
 #include "TimerEvent.h"
 #include <mutex>
-#include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <vector>
 
@@ -34,11 +34,12 @@ public:
     EventDispatch();
 	virtual ~EventDispatch();
 
-	void AddEvent(int  fd, uint32_t socket_event);
-	void RemoveEvent(int fd);
+	int AddEvent(int  fd, uint32_t socket_event);
+    int ModifyEvent(int fd,uint32_t socket_event);
+	int RemoveEvent(int fd);
 
     void AddTimer(TimerEvent * te);
-	void RemoveTimer(int handlie_te_id);
+	void RemoveTimer(TimerEvent * te);
 
 	void AddLoop(TimerEvent * te);
 
@@ -62,7 +63,7 @@ private:
         std::vector<TimerEvent*>,
         TimerMinCmp
     > m_timer_list;
-    std::unordered_map<int,TimerEvent*>handle_te;
+    std::unordered_set<TimerEvent*>handle_te;
 	bool running;
 };
 

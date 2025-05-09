@@ -1,9 +1,9 @@
 #include "BaseSocket.h"
 #include "EventDispatch.h"
 #include "ThrdPool.h"
-#include <sys/socket.h>  // 定义 socket()、bind() 等
-#include <arpa/inet.h>   // 定义 inet_pton()/inet_ntop() 等地址转换函数
-#include <unistd.h>      //定义 close()等系统调用
+#include <sys/socket.h> // 定义 socket()、bind() 等
+#include <arpa/inet.h>  // 定义 inet_pton()/inet_ntop() 等地址转换函数
+#include <unistd.h>     //定义 close()等系统调用
 #include <fcntl.h>
 #include <string.h>
 #include <netinet/tcp.h> // for TCP_NODELAY
@@ -12,102 +12,150 @@
 #include <map>
 #include <sys/epoll.h>
 #include <iostream>
+#include <exception>
 
-typedef std::map<net_handle_t, BaseSocket*> SocketMap;
-SocketMap	g_socket_map;
 
-void AddBaseSocket(BaseSocket* pSocket)
+BaseCount::BaseCount(BaseSocket* p)
+  : ptr(p)
 {
-	g_socket_map.insert(std::make_pair((net_handle_t)pSocket->GetSocket(), pSocket));
+    if (ptr) {
+        ptr->acquire();
+    }
 }
 
-void RemoveBaseSocket(BaseSocket* pSocket)
+BaseCount::BaseCount(const BaseCount& other)
+  : ptr(other.ptr)
 {
-	g_socket_map.erase((net_handle_t)pSocket->GetSocket());
+    if (ptr) {
+        ptr->acquire();
+    }
 }
 
-BaseSocket* FindBaseSocket(net_handle_t fd)
+BaseCount& BaseCount::operator=(const BaseCount& other)
 {
-	BaseSocket* pSocket = nullptr;
-	SocketMap::iterator iter = g_socket_map.find(fd);
-	if (iter != g_socket_map.end())
-	{
-		pSocket = iter->second;
-	}
-
-	return pSocket;
+    if (this != &other) {
+        if (ptr) {
+            ptr->release();
+        }
+        ptr = other.ptr;
+        if (ptr) {
+            ptr->acquire();
+        }
+    }
+    return *this;
 }
 
+BaseCount::BaseCount(BaseCount&& other) noexcept
+  : ptr(other.ptr)
+{
+    other.ptr = nullptr;
+}
+
+BaseCount& BaseCount::operator=(BaseCount&& other) noexcept
+{
+    if (this != &other) {
+        if (ptr) {
+            ptr->release();
+        }
+        ptr = other.ptr;
+        other.ptr = nullptr;
+    }
+    return *this;
+}
+
+BaseCount::~BaseCount()
+{
+    if (ptr) {
+        ptr->release();
+    }
+}
+
+BaseSocket* BaseCount::GetBasePtr() const
+{
+    return ptr;
+}
+
+typedef std::map<net_handle_t, BaseSocket *> SocketMap;
+SocketMap g_socket_map;
+static std::mutex g_map_mutex;
+
+void AddBaseSocket(BaseSocket *pSocket)
+{
+    std::lock_guard<std::mutex> lk(g_map_mutex);
+    g_socket_map.insert(std::make_pair((net_handle_t)pSocket->GetSocket(), pSocket));
+}
+
+void RemoveBaseSocket(BaseSocket *pSocket)
+{
+    std::lock_guard<std::mutex> lk(g_map_mutex);
+    g_socket_map.erase((net_handle_t)pSocket->GetSocket());
+}
+
+BaseCount FindBaseSocket(net_handle_t fd)
+{
+    std::lock_guard<std::mutex> lk(g_map_mutex);
+    BaseSocket *pSocket = nullptr;
+    SocketMap::iterator iter = g_socket_map.find(fd);
+    if (iter != g_socket_map.end())
+    {
+        pSocket = iter->second;
+    }
+
+    return BaseCount(pSocket);
+}
 
 BaseSocket::BaseSocket()
 {
-	m_socket = _INVALID_SOCKET;
-	m_state = SOCKET_STATE_IDLE;
-	in_buf= buffer_new(1);
-	out_buf = buffer_new(1);
+    m_socket = _INVALID_SOCKET;
+    m_state = SOCKET_STATE_IDLE;
+    ref = 1;
+    isptr = true;
+    in_buf = buffer_new(1);
 }
 
 BaseSocket::~BaseSocket()
 {
-	std::cout<<"~BaseSocket"<<'\n';
+    std::cout << "m_socket " << m_socket << "  closed" << '\n';
     buffer_free(in_buf);
-    buffer_free(out_buf);
-
 }
 ////////////////////////
 
+int BaseSocket::Read_imp()
+{
 
-int BaseSocket::Read_imp(){
-	char buf[4096];
-	int ret = Recv(buf, sizeof(buf));
-	if (ret > 0) {
-		// 收到 ret 字节，就原样发回去
-		Send(buf, ret);
-	}
-	else if (ret == 0) {
-		// 对端关闭
-		std::cout<<"Peer Close at ip : "<<GetRemoteIP()<< "  port :"<<std::to_string((int)GetRemotePort())<<"\n";
-		Close();
-	}
-	return 0;
-}
-
-int BaseSocket::Write_imp(){
     return 0;
 }
-int BaseSocket::Listen_imp(){
-	return 0;
+
+int BaseSocket::Write_imp()
+{
+    return 0;
 }
-int  BaseSocket::Connect_imp(){
-	return 0;
+int BaseSocket::Listen_imp()
+{
+    return 0;
 }
-
-int BaseSocket::Close_imp(){
-	if(m_ev_dispatch!=nullptr)m_ev_dispatch->RemoveEvent(m_socket);
-	else{
-		//loginfo
-		return -1;
-	}
-
-	RemoveBaseSocket(this);
-	::close(m_socket);
-	delete this;
-	return 0;
-}	
-
-
-BaseSocket*  BaseSocket::AddNew_imp(){
-	return new BaseSocket{};
+int BaseSocket::Connect_imp()
+{
+    return 0;
 }
 
+int BaseSocket::Close_imp()
+{
+    return 0;
+}
+
+BaseSocket *BaseSocket::AddNew_imp()
+{
+    return new BaseSocket{};
+}
 
 /////////////////////////
 
-int BaseSocket::Listen(const char* server_ip, uint16_t port)
+int BaseSocket::Listen(const char *server_ip, uint16_t port)
 {
-    m_local_ip   = server_ip;
+    m_local_ip = server_ip;
     m_local_port = port;
-    m_socket     = socket(AF_INET, SOCK_STREAM, 0);
+    m_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (m_socket == _INVALID_SOCKET)
     {
         std::cerr
@@ -123,7 +171,7 @@ int BaseSocket::Listen(const char* server_ip, uint16_t port)
 
     sockaddr_in serv_addr;
     _SetAddr(server_ip, port, &serv_addr);
-    int ret = ::bind(m_socket, (sockaddr*)&serv_addr, sizeof(serv_addr));
+    int ret = ::bind(m_socket, (sockaddr *)&serv_addr, sizeof(serv_addr));
     if (ret == SOCKET_ERROR)
     {
         std::cerr
@@ -160,15 +208,14 @@ int BaseSocket::Listen(const char* server_ip, uint16_t port)
     return NETLIB_OK;
 }
 
-
-net_handle_t BaseSocket::Connect(const char* server_ip, uint16_t port)
+net_handle_t BaseSocket::Connect(const char *server_ip, uint16_t port)
 {
     std::cout
         << "BaseSocket::Connect, server_ip=" << server_ip
         << ", port=" << port
         << "\n";
 
-    m_remote_ip   = server_ip;
+    m_remote_ip = server_ip;
     m_remote_port = port;
 
     m_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -186,7 +233,7 @@ net_handle_t BaseSocket::Connect(const char* server_ip, uint16_t port)
     _SetNoDelay(m_socket);
     sockaddr_in serv_addr;
     _SetAddr(server_ip, port, &serv_addr);
-    int ret = connect(m_socket, (sockaddr*)&serv_addr, sizeof(serv_addr));
+    int ret = connect(m_socket, (sockaddr *)&serv_addr, sizeof(serv_addr));
     if ((ret == SOCKET_ERROR) && (!_IsBlock(_GetErrorCode())))
     {
         std::cerr
@@ -206,12 +253,12 @@ net_handle_t BaseSocket::Connect(const char* server_ip, uint16_t port)
     return (net_handle_t)m_socket;
 }
 
-int BaseSocket::Send(void* buf, int len)
+int BaseSocket::Send(void *buf, int len)
 {
     if (m_state != SOCKET_STATE_CONNECTED)
         return NETLIB_ERROR;
 
-    int ret = ::send(m_socket, static_cast<char*>(buf), len, 0);
+    int ret = ::send(m_socket, static_cast<char *>(buf), len, 0);
     if (ret == SOCKET_ERROR)
     {
         int err_code = _GetErrorCode();
@@ -222,74 +269,111 @@ int BaseSocket::Send(void* buf, int len)
         }
         else
         {
-            std::cerr
-                << "send failed, err_code=" << err_code
-                << ", len=" << len
-                << "\n";
+            if (Global::Instance().get<int>("Debug") & 1)
+                std::cerr
+                    << "send failed, err_code=" << err_code
+                    << ", len=" << len
+                    << "\n";
         }
     }
 
     return ret;
 }
 
-int BaseSocket::Recv(void* buf, int len)
+int BaseSocket::Recv(void *buf, int len)
 {
-	return recv(m_socket, (char*)buf, len, 0);
+    return recv(m_socket, (char *)buf, len, 0);
+}
+
+void BaseSocket::acquire()
+{
+    ref++;
+}
+
+void BaseSocket::release()
+{
+    ref--;
+    if (ref == 0)
+    {
+        if (isptr)
+            delete this;
+    }
 }
 
 int BaseSocket::Close()
 {
-	Close_imp();
-	return 0;
+    std::lock_guard<std::mutex> lk(b_lock);
+    if (m_state == SOCKET_STATE_CLOSED)
+    {
+        return 1;
+    }
+    m_state = SOCKET_STATE_CLOSED;
+    Close_imp();
+    if (m_ev_dispatch != nullptr)
+        m_ev_dispatch->RemoveEvent(m_socket);
+    RemoveBaseSocket(this);
+    ::close(m_socket);
+    release();
+    return 0;
 }
+
+//On 方法都在同一个dispatch线程中调用，不会出现竞态
 void BaseSocket::OnRead()
 {
-	if (m_state == SOCKET_STATE_LISTENING)
-	{
-		_AcceptNewSocket();
-	}
-	else
-	{
-		u_long avail = 0;
+    if (m_state == SOCKET_STATE_CLOSED)
+        return;
+    if (m_state == SOCKET_STATE_LISTENING)
+    {
+        _AcceptNewSocket();
+    }
+    else
+    {
+        u_long avail = 0;
         int ret = ioctl(m_socket, FIONREAD, &avail);
-		if ( (SOCKET_ERROR == ret) || (avail == 0) )
-		{
-			Close_imp();
-		}
-		else
-		{
-			Read_imp();
-		}
-	}
+        if ((SOCKET_ERROR == ret) || (avail == 0))
+        {
+            OnClose();
+        }
+        else
+        {
+            buffer_add_from_readv(in_buf, m_socket);
+            Read_imp();
+        }
+    }
 }
 void BaseSocket::OnWrite()
 {
-
-	if (m_state == SOCKET_STATE_CONNECTING)
-	{
-		int error = 0;
-		socklen_t len = sizeof(error);
-		getsockopt(m_socket, SOL_SOCKET, SO_ERROR, (void*)&error, &len);
-		if (error) {
-			Close_imp();
-		} else {
-			m_state = SOCKET_STATE_CONNECTED;
-		}
-	}
-	else
-	{
-		Write_imp();
-	}
+    if (m_state == SOCKET_STATE_CLOSED)
+        return;
+    if (m_state == SOCKET_STATE_CONNECTING)
+    {
+        int error = 0;
+        socklen_t len = sizeof(error);
+        getsockopt(m_socket, SOL_SOCKET, SO_ERROR, (void *)&error, &len);
+        if (error)
+        {
+            OnClose();
+        }
+        else
+        {
+            m_state = SOCKET_STATE_CONNECTED;
+        }
+    }
+    else
+    {
+        Write_imp();
+    }
 }
+
 void BaseSocket::OnClose()
 {
-	m_state = SOCKET_STATE_CLOSING;
-	Close();
+    Close();
 }
 
 void BaseSocket::SetSendBufSize(uint32_t send_size)
 {
-    if (setsockopt(m_socket, SOL_SOCKET, SO_SNDBUF, &send_size, sizeof(send_size)) == SOCKET_ERROR) {
+    if (setsockopt(m_socket, SOL_SOCKET, SO_SNDBUF, &send_size, sizeof(send_size)) == SOCKET_ERROR)
+    {
         std::cerr
             << "set SO_SNDBUF failed for fd=" << m_socket
             << ", err_code=" << _GetErrorCode()
@@ -307,7 +391,8 @@ void BaseSocket::SetSendBufSize(uint32_t send_size)
 
 void BaseSocket::SetRecvBufSize(uint32_t recv_size)
 {
-    if (setsockopt(m_socket, SOL_SOCKET, SO_RCVBUF, &recv_size, sizeof(recv_size)) == SOCKET_ERROR) {
+    if (setsockopt(m_socket, SOL_SOCKET, SO_RCVBUF, &recv_size, sizeof(recv_size)) == SOCKET_ERROR)
+    {
         std::cerr
             << "set SO_RCVBUF failed for fd=" << m_socket
             << ", err_code=" << _GetErrorCode()
@@ -323,28 +408,26 @@ void BaseSocket::SetRecvBufSize(uint32_t recv_size)
         << "\n";
 }
 
-
 int BaseSocket::_GetErrorCode()
 {
-	return errno;
+    return errno;
 }
 
 bool BaseSocket::_IsBlock(int error_code)
 {
-	return ( (error_code == EINPROGRESS) || (error_code == EWOULDBLOCK) );
+    return ((error_code == EINPROGRESS) || (error_code == EWOULDBLOCK));
 }
 
 void BaseSocket::_SetNonblock(int fd)
 {
-	int ret = fcntl(fd, F_SETFL, O_NONBLOCK | fcntl(fd, F_GETFL));
-	if (ret == SOCKET_ERROR)
-	{
-		std::cerr
-		<< "_SetNonblock failed, err_code=" << _GetErrorCode()
-		<< ", fd=" << fd
-		<< "\n";
-	
-	}
+    int ret = fcntl(fd, F_SETFL, O_NONBLOCK | fcntl(fd, F_GETFL));
+    if (ret == SOCKET_ERROR)
+    {
+        std::cerr
+            << "_SetNonblock failed, err_code=" << _GetErrorCode()
+            << ", fd=" << fd
+            << "\n";
+    }
 }
 void BaseSocket::_SetReuseAddr(int fd)
 {
@@ -372,17 +455,17 @@ void BaseSocket::_SetNoDelay(int fd)
     }
 }
 
-void BaseSocket::_SetAddr(const char* ip, const uint16_t port, sockaddr_in* pAddr)
+void BaseSocket::_SetAddr(const char *ip, const uint16_t port, sockaddr_in *pAddr)
 {
     memset(pAddr, 0, sizeof(*pAddr));
-    pAddr->sin_family      = AF_INET;
-    pAddr->sin_port        = htons(port);
+    pAddr->sin_family = AF_INET;
+    pAddr->sin_port = htons(port);
     pAddr->sin_addr.s_addr = inet_addr(ip);
 
     // 如果 inet_addr 返回 INADDR_NONE，说明不是 a.b.c.d 格式，尝试 DNS 解析
     if (pAddr->sin_addr.s_addr == INADDR_NONE)
     {
-        hostent* host = gethostbyname(ip);
+        hostent *host = gethostbyname(ip);
         if (host == nullptr)
         {
             std::cerr
@@ -391,41 +474,42 @@ void BaseSocket::_SetAddr(const char* ip, const uint16_t port, sockaddr_in* pAdd
                 << "\n";
             return;
         }
-        pAddr->sin_addr.s_addr = *reinterpret_cast<uint32_t*>(host->h_addr);
+        pAddr->sin_addr.s_addr = *reinterpret_cast<uint32_t *>(host->h_addr);
     }
 }
 
 void BaseSocket::_AcceptNewSocket()
 {
-	int fd = 0;
-	sockaddr_in peer_addr;
-	socklen_t addr_len = sizeof(sockaddr_in);
-	char ip_str[INET_ADDRSTRLEN];
-	while ( (fd = accept(m_socket, (sockaddr*)&peer_addr, &addr_len)) != _INVALID_SOCKET )
-	{
-		uint16_t port = ntohs(peer_addr.sin_port);
-		
-		if (inet_ntop(AF_INET, &peer_addr.sin_addr, ip_str, sizeof(ip_str)) == nullptr) {
-			perror("inet_ntop");
-			return;
-		}
-		std::cout
-		<< "AcceptNewSocket, socket=" << fd
-		<< " from " << ip_str
-		<< ":" << port
-		<< "\n";
-	
-		//new_session
-		BaseSocket* pSocket =AddNew_imp();;
-		pSocket->SetSocket(fd);
-		pSocket->SetState(SOCKET_STATE_CONNECTED);
-		pSocket->SetRemoteIP(ip_str);
-		pSocket->SetRemotePort(port);
+    int fd = 0;
+    sockaddr_in peer_addr;
+    socklen_t addr_len = sizeof(sockaddr_in);
+    char ip_str[INET_ADDRSTRLEN];
+    while ((fd = accept(m_socket, (sockaddr *)&peer_addr, &addr_len)) != _INVALID_SOCKET)
+    {
+        uint16_t port = ntohs(peer_addr.sin_port);
 
-		_SetNoDelay(fd);
-		_SetNonblock(fd);
-		AddBaseSocket(pSocket);
-		SocketPool::Instance().AddSocketEvent(fd, EPOLLIN);
-	}
+        if (inet_ntop(AF_INET, &peer_addr.sin_addr, ip_str, sizeof(ip_str)) == nullptr)
+        {
+            perror("inet_ntop");
+            return;
+        }
+        std::cout
+            << "AcceptNewSocket, socket=" << fd
+            << " from " << ip_str
+            << ":" << port
+            << "\n";
+
+        // new_session
+        BaseSocket *pSocket = AddNew_imp();
+        ;
+        pSocket->SetSocket(fd);
+        pSocket->SetState(SOCKET_STATE_CONNECTED);
+        pSocket->SetRemoteIP(ip_str);
+        pSocket->SetRemotePort(port);
+
+        _SetNoDelay(fd);
+        _SetNonblock(fd);
+        AddBaseSocket(pSocket);
+        SocketPool::Instance().AddSocketEvent(fd, EPOLLIN);
+    }
 }
-

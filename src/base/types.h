@@ -17,7 +17,8 @@ enum
     SOCKET_STATE_LISTENING,
     SOCKET_STATE_CONNECTING,
     SOCKET_STATE_CONNECTED,
-    SOCKET_STATE_CLOSING
+    SOCKET_STATE_CLOSING,
+    SOCKET_STATE_CLOSED
 };
 
 // epoll
@@ -29,18 +30,6 @@ enum
     SOCKET_ALL = 0x7
 };
 
-// // CallbackStatus
-// enum
-// {
-//     NETLIB_MSG_CONNECT = 1,
-//     NETLIB_MSG_CONFIRM,
-//     NETLIB_MSG_READ,
-//     NETLIB_MSG_WRITE,
-//     NETLIB_MSG_CLOSE,
-//     NETLIB_MSG_TIMER,
-//     NETLIB_MSG_LOOP
-// };
-
 // NetStat
 enum
 {
@@ -48,6 +37,23 @@ enum
     NETLIB_ERROR = -1
 };
 
+enum class HttpState : uint32_t {
+    Http_Header_Read     = 1u << 0,  
+    Http_Header_Parser   = 1u << 1,  
+    Http_Len_Parser      = 1u << 2, 
+    Http_Chunked_Parser  = 1u << 3,
+    Http_Body_Parser     = 1u << 4,  
+    HttpCallback         = 1u << 5,  
+    Http_Ready           = 1u << 6,  
+    Http_Error           = 1u << 7
+};
+
+enum
+{
+    Debug_std   = 1,
+    Debug_throw = 1 << 1,
+    Debug_log   = 1 << 2
+};
 
 class NoCopy
 {

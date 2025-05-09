@@ -16,20 +16,22 @@
 #include <cstring>    // std::strerror
 #include <map>
 
-class CConfigFileReader
+class ConfigFileReader
 {
 public:
-    CConfigFileReader(const char *filename);
-    ~CConfigFileReader();
+    ConfigFileReader(const char *filename);
+    ~ConfigFileReader();
 
     char *GetConfigName(const char *name);
     int SetConfigValue(const char *name, const char *value);
 
 private:
     void _LoadFile(const char *filename);
-    int _WriteFIle(const char *filename = NULL);
+    int _WriteFIle(const char *filename = nullptr);
     void _ParseLine(const std::string& line);
     std::string _TrimSpace(const std::string& name);
+    
+    void LoadConfigToGlobal();
 
     bool m_load_ok;
     std::map<std::string, std::string> m_config_map;
