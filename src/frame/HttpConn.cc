@@ -8,40 +8,33 @@
 
 using namespace httpparser;
 
-
 HttpConn::HttpConn()
     : BaseSocket(),
       state(HttpState::Http_Header_Read),
-      last_recv(std::chrono::steady_clock::now()),
       isKeepAlive(false)
 {
-    // any other setup…
 }
 
-// Destructor
 HttpConn::~HttpConn() = default;
 
+static std::string BuildErrorResponse(int code, const std::string &reason)
+{
+    std::string body = "<html><body><h1>" + std::to_string(code) + " " + reason + "</h1></body></html>";
+    std::string resp = "HTTP/1.1 " + std::to_string(code) + " " + reason + "\r\n"
+                       "Content-Type: text/html; charset=UTF-8\r\n"
+                       "Content-Length: " +std::to_string(body.size()) + "\r\n"
+                       "Connection: close\r\n"
+                       "\r\n" +
+                       body;
+    return resp;
+}
 
-static int DispatchHttpRequest(int fd ,Request &req);
+static int DispatchHttpRequest(int fd, Request &req);
 
 // 每一次有读事件就会调用这个
 int HttpConn::Read_imp()
 {
-    last_recv = std::chrono::steady_clock::now();
-    int len = buffer_add_from_readv(in_buf,m_socket);
-    if (len == 0)
-    {
-        Close();
-        return 1;
-    }
-    if(len <0){
-        Close();
-        return -1;
-    }
-    // if (Global::Instance().get<int>("Debug") & 1)
-    // {
-    //     std::cout << "recv new msg:\n   " << buff << '\n';
-    // }
+    HttpServer::Instance().TouchConnection(this);
     HandleRead();
     return 0;
 }
@@ -52,20 +45,10 @@ int HttpConn::Connect_imp()
 }
 
 int HttpConn::Close_imp()
-{   
-    //如果正在处理请求
-    if(state == HttpState::HttpCallback){
-
-    }
-    // 如果发生错误要告诉客户端
-    if (state == HttpState::Http_Error)
-    {
-        // HttpManager::Instacn().create_404_responce(m_remote_ip.c_str,m_remote_port);
-    }
+{
+    HttpServer::Instance().RemoveFromConns(this);
     return 0;
 }
-
-
 
 int HttpConn::Write_imp()
 {
@@ -77,8 +60,8 @@ int HttpConn::Write_imp()
         if (isKeepAlive)
         {
             state = HttpState::Http_Header_Parser;
-            m_ev_dispatch->ModifyEvent(m_socket, EPOLLIN );
-            //防止读完不会触发
+            m_ev_dispatch->ModifyEvent(m_socket, EPOLLIN);
+            // 防止读完不会触发
             HandleRead();
         }
         else
@@ -92,11 +75,28 @@ int HttpConn::Write_imp()
 //-1 表示错误
 int HttpConn::SetResponse(std::string &&_resp)
 {
+    std::lock_guard<std::mutex>lk(b_lock);
+    if (m_state == SOCKET_STATE_CLOSED)
+        return -1;
     if (state != HttpState::HttpCallback)
         return -1;
     resp = std::move(_resp);
     sended_size = 0;
     m_ev_dispatch->ModifyEvent(m_socket, EPOLLIN | EPOLLOUT);
+    return 0;
+}
+
+int HttpConn::SetErrorResponse(int code, const std::string &reason)
+{
+    std::lock_guard<std::mutex>lk(b_lock);
+    if (m_state == SOCKET_STATE_CLOSED)
+        return -1;
+    if (state != HttpState::HttpCallback)
+        return -1;
+    resp = BuildErrorResponse(code, reason);
+    sended_size = 0;
+    m_ev_dispatch->ModifyEvent(m_socket, EPOLLIN | EPOLLOUT);
+    isKeepAlive = false;
     return 0;
 }
 
@@ -212,17 +212,15 @@ void HttpConn::HandleRead()
         {
             isKeepAlive = true;
         }
-        DispatchHttpRequest(m_socket,req);
+        DispatchHttpRequest(m_socket, req);
         break;
     }
     }
 }
 
-
 // 分发后,api使用connect请求
-static int DispatchHttpRequest(int fd ,Request &req)
+static int DispatchHttpRequest(int fd, Request &req)
 {
-    //api_dispatch(fd,req.uri,req.Content2String());
-    WorkPool::Instance().Submit( &api_dispatch,fd,req.uri,req.Content2String());
+    WorkPool::Instance().Submit(&api_dispatch, fd, req.uri, req.Content2String());
     return 0;
 }

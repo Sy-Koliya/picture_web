@@ -5,6 +5,7 @@
 #include "types.h"
 #include "HttpRequest.h"
 #include "HttpResponse.h"
+#include <mutex>
 
 constexpr int  recv_buf_len = 1024;
 constexpr int  send_buf_len = 1024;
@@ -19,11 +20,12 @@ public:
     HttpConn();
     ~HttpConn();
     int  SetResponse(std::string &&_resp);
+    int  SetErrorResponse(int code,const std::string& reason={});
 private:
     int Read_imp() override;
     int Write_imp() override;
     int Connect_imp() override;
-    int Close_imp() override; //not found 处理
+    int Close_imp() override; 
 
 public:
     void HandleRead();
@@ -31,11 +33,9 @@ public:
 private:
     friend class HttpServer;
     friend struct ConnCompare;
-    int server_socket;
     HttpState state;
     std::chrono::steady_clock::time_point last_recv;
     std::string  recv_str;
-    //std::function<>  此处为了扩展性，可以在callback调用状态调用func，为了方便我使用dispatch函数
     bool isKeepAlive;
     httpparser::Request req;  //解析之后传给api
     std::string resp ;    //api处理完之后返回
