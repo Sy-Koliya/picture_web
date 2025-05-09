@@ -6,10 +6,8 @@
 #include <iostream>
 
 #include <grpcpp/grpcpp.h>
-#include "mysql_rpc.grpc.pb.h"
 #include "Global.h"
 #include "RpcCalldata.h"
-#include "dbapi/commom.h"
 
 using grpc::Server;
 using grpc::ServerAsyncResponseWriter;
@@ -20,68 +18,53 @@ using grpc::Status;
 
 using rpc::DatabaseService;
 
+// 当该服务加入新方法时，需要哦在析构种加入该方法线程的析构
+// Run()函数加入对应的初始handle创建
 
-//当该服务加入新方法时，需要哦在析构种加入该方法线程的析构
-//Run()函数加入对应的初始handle创建
-
-class RpcServer
-{
+template <typename T>
+class RpcServer {
 public:
-    ~RpcServer()
-    {
-        // 安全释放所有线程
-        server_->Shutdown();
-        cq_->Shutdown();
-        RegisterUserCall::processor_stop_flag_.store(true);
-        LoginUserCall::processor_stop_flag_.store(true);
-        InstantUploadCall::processor_stop_flag_.store(true);
-        if (RegisterUserCall::processor_thread_.joinable())
-            RegisterUserCall::processor_thread_.join();
-        if (LoginUserCall::processor_thread_.joinable())
-            LoginUserCall::processor_thread_.join();
-        if (InstantUploadCall::processor_thread_.joinable())
-            InstantUploadCall::processor_thread_.join();
-    }
+    void Run(const std::string& address) {
+        grpc::ServerBuilder builder;
+        builder.AddListeningPort(address, grpc::InsecureServerCredentials());
 
-    void Run()
-    {
-        ServerBuilder builder;
-        builder.AddListeningPort(
-            // Global::Instance().get<std::string>("Mysql_Rpc_Server"),
-            "0.0.0.0:50051",
-            grpc::InsecureServerCredentials());
-        builder.RegisterService(&service_);
+        // 注册所有服务
+        dynamic_cast<T*>(this)->RegisterServices(builder);
+
         cq_ = builder.AddCompletionQueue();
         server_ = builder.BuildAndStart();
 
-        std::cout << "gRPC server listening on "
-                  << Global::Instance().get<std::string>("Mysql_Rpc_Server")
-                  << std::endl;
-
-        // 为每个 RPC spawn 第一个 handler
-        new LoginUserCall(&service_, cq_.get());
-        new RegisterUserCall(&service_, cq_.get());
-        new InstantUploadCall(&service_, cq_.get());
-
-        HandleRpcs();
+        // 启动处理器线程
+        dynamic_cast<T*>(this)->SpawnHandlers(cq_.get());
+        
+        // 统一事件循环
+        RunEventLoop();
     }
 
-private:
-    void HandleRpcs()
-    {
-        void *tag;
+    virtual ~RpcServer() {
+        server_->Shutdown();
+        cq_->Shutdown();
+    }
+
+protected:
+    void RunEventLoop() {
+        void* tag;
         bool ok;
-        while (cq_->Next(&tag, &ok))
-        {
-            GPR_ASSERT(ok);
-            // tag 就是我们 new 出来的 CallData 对象
-            static_cast<CallDataBase *>(tag)->Proceed();
+        while (cq_->Next(&tag, &ok)) {
+            if (ok) {
+                GPR_ASSERT(ok);
+                static_cast<CallDataBase*>(tag)->Proceed();
+            }
         }
     }
 
-    std::unique_ptr<ServerCompletionQueue> cq_;
-    DatabaseService::AsyncService service_;
-    std::unique_ptr<Server> server_;
+    std::unique_ptr<grpc::ServerCompletionQueue> cq_;
+    std::unique_ptr<grpc::Server> server_;
 };
 
+
+
+
+
+    
 #endif // SERVER_IMPL_H
