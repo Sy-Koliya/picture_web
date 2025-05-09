@@ -76,31 +76,6 @@ private:
 };
 
 
-// RefCount: 简单的引用计数基类
-class RefCount
-{
-public:
-    RefCount() : ref_count_(0) {}
-
-    // 增加引用计数
-    void AddRef() { ++ref_count_; }
-
-    // 减少引用计数，当计数归零时自动删除自身
-    void ReleaseRef()
-    {
-        if (--ref_count_ == 0)
-        {
-            delete this;
-        }
-    }
-
-protected:
-    virtual ~RefCount() = default;
-
-private:
-    int ref_count_;
-};
-
 inline uint64_t get_tick_count()
 {
     // 1. 获取当前 steady_clock 时间点
@@ -125,6 +100,9 @@ inline size_t align_pow_2(size_t n)
     }
     return p;
 }
+
+
+
 
 
 // void writePid()

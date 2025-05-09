@@ -30,18 +30,6 @@ enum
     SOCKET_ALL = 0x7
 };
 
-// // CallbackStatus
-// enum
-// {
-//     NETLIB_MSG_CONNECT = 1,
-//     NETLIB_MSG_CONFIRM,
-//     NETLIB_MSG_READ,
-//     NETLIB_MSG_WRITE,
-//     NETLIB_MSG_CLOSE,
-//     NETLIB_MSG_TIMER,
-//     NETLIB_MSG_LOOP
-// };
-
 // NetStat
 enum
 {
