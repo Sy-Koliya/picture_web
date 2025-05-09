@@ -26,7 +26,12 @@ public:
         std::optional<T> result;
         Notify<T>* nt; // 通过 CoroutineScheduler 注入
         std::suspend_always initial_suspend() noexcept { return {}; }
-        std::suspend_always final_suspend()   noexcept { return {}; }
+        std::suspend_always final_suspend()   noexcept { 
+            if (nt) {
+                Coroutine_finish(nt);
+            }
+            return {};
+         }
 
         RpcTask get_return_object() {
             return RpcTask{
@@ -35,9 +40,6 @@ public:
         }
 
         void return_value(T v) {
-            if (nt) {
-                Coroutine_finish(nt);
-            }
             result = std::move(v);
         }
 
@@ -99,7 +101,12 @@ public:
     struct promise_type {
         Notify<void>* nt;
         std::suspend_always initial_suspend() noexcept { return {}; }
-        std::suspend_always final_suspend()   noexcept { return {}; }
+        std::suspend_always final_suspend()   noexcept { 
+            if (nt) {
+                Coroutine_finish(nt);
+            }
+            return {};
+         }
 
         RpcTask get_return_object() {
             return RpcTask{
@@ -107,11 +114,7 @@ public:
             };
         }
 
-        void return_void() noexcept {
-            if (nt) {
-                Coroutine_finish(nt);
-            }
-        }
+        void return_void() noexcept {}
         void unhandled_exception() {
             std::terminate();
         }

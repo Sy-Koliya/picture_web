@@ -149,7 +149,7 @@ private:
         }
     }
 
-    MPSCQueue<NotifyBase*>      pending_;
+    MPSCQueue<NotifyBase>      pending_;
     std::mutex                  mutex_;
     std::condition_variable     cv_;
     std::thread                 thread_handle_;
