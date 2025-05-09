@@ -46,6 +46,13 @@ public:
         return true;
     }
 
+    bool empty() const noexcept
+    {
+
+        Node* tail = _tail.load(std::memory_order_acquire);
+        return tail->Next.load(std::memory_order_acquire) == nullptr;
+    }
+
 private:
     struct Node
     {
