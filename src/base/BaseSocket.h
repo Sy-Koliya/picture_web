@@ -10,32 +10,11 @@
 #include <string>
 #include <functional>
 #include <iostream>
-
-// template <class Dervied>
-// class Base {
-// protected:
-
-//     void  OnRead(){
-//         // 调用子类的实现函数。要求子类必须实现名为 impl() 的函数
-//         // 这个函数会被调用来执行具体的操作
-//         static_cast<Dervied*>(this)->read_impl();
-//     }
-
-//     void OnWrite(){
-//         static_cast<Dervied*>(this)->write_impl();
-//     }
-//     void OnClose(){
-//         static_cast<Dervied*>(this)->close_impl();
-//     }
-
-//      void _AcceptNewSocket(){
-//         static_cast<Derived*>(this)->accept_impl();
-//      }
-// };
+#include <atomic>
+#include <mutex>
 
 class BaseSocket
 {
-    // using callback_t = std::function<void()>;
 
 public:
     int GetSocket() { return m_socket; }
@@ -54,7 +33,7 @@ public:
     const char *GetLocalIP() { return m_local_ip.c_str(); }
     uint16_t GetLocalPort() { return m_local_port; }
     uint8_t GetState() { return m_state; }
-    bool IsAlive(){return m_state!=SOCKET_STATE_CLOSED&&m_state!=SOCKET_STATE_CLOSING;}
+    bool IsAlive() { return m_state != SOCKET_STATE_CLOSED; }
 
 public:
     int Listen(
@@ -70,6 +49,9 @@ public:
     int Recv(void *buf, int len);
 
     int Close();
+
+    void acquire();
+    void release();
 
 protected:
     void OnRead();
@@ -109,27 +91,37 @@ protected:
 
     buffer_t *in_buf;
     buffer_t *out_buf;
-    uint8_t m_state;
+    std::atomic<int> m_state;
 
     EventDispatch *m_ev_dispatch;
     int m_socket;
+    bool isptr = true;
+    std::atomic<int> ref;
+    std::mutex b_lock;
 };
 
-BaseSocket *FindBaseSocket(net_handle_t fd);
 
-class BaseSocketManager : public NoCopy
-{
-public:
-    static BaseSocketManager &Instance();
-    BaseSocket *Create();
-    void Destroy(BaseSocket *socket_ptr);
+class BaseCount {
+    public:
 
-private:
-    BaseSocketManager() = default;
-    ~BaseSocketManager();
+        explicit BaseCount(BaseSocket* p = nullptr);
 
-    mutable std::mutex m_lock;
-    std::unordered_set<BaseSocket *> socket_handle_;
-};
+        BaseCount(const BaseCount& other);
+
+        BaseCount& operator=(const BaseCount& other);
+
+        BaseCount(BaseCount&& other) noexcept;
+
+        BaseCount& operator=(BaseCount&& other) noexcept;
+    
+        ~BaseCount();
+    
+        BaseSocket* GetBasePtr() const;
+        operator bool() const noexcept { return ptr != nullptr; }
+    private:
+        BaseSocket* ptr;
+    };
+BaseCount
+FindBaseSocket(net_handle_t fd);
 
 #endif

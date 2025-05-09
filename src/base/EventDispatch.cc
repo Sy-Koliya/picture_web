@@ -5,6 +5,7 @@
 #include <sys/epoll.h>
 #include <unistd.h>
 #include <iostream>
+#include <memory>
 
 #define MIN_TIMER_DURATION 100
 
@@ -27,16 +28,18 @@ EventDispatch::~EventDispatch()
 
 void EventDispatch::AddTimer(TimerEvent *te)
 {
-    handle_te[te->te_id] = te;
+    std::lock_guard<std::mutex>lk(m_lock);
+    handle_te.insert(te);
     m_timer_list.push(te);
 }
 
-void EventDispatch::RemoveTimer(int handle_te_id)
+void EventDispatch::RemoveTimer(TimerEvent *te)
 {
-    if (handle_te.find(handle_te_id) == handle_te.end())
+    std::lock_guard<std::mutex>lk(m_lock);
+    auto it = handle_te.find(te);
+    if (it == handle_te.end())
         return;
-    TimerEvent *te = handle_te[handle_te_id];
-    handle_te.erase(handle_te_id);
+    handle_te.erase(it);
 }
 
 void EventDispatch::_CheckTimer()
@@ -45,10 +48,17 @@ void EventDispatch::_CheckTimer()
     while (!m_timer_list.empty())
     {
         TimerEvent *te = m_timer_list.top();
+        m_timer_list.pop();
         if (te == nullptr)
         {
-            m_timer_list.pop();
             continue;
+        }else{
+            std::lock_guard<std::mutex>lk(m_lock);
+            auto it = handle_te.find(te);
+            if(it==handle_te.end()){
+                delete te;
+                continue;
+            }
         }
         if (te->next_tick <= curr_tick)
         {
@@ -61,7 +71,8 @@ void EventDispatch::_CheckTimer()
             }
             else
             {
-                RemoveTimer(te->te_id);
+                RemoveTimer(te);
+                delete te;
             }
         }
         else
@@ -142,21 +153,15 @@ void EventDispatch::StartDispatch(uint32_t wait_timeout)
         for (int i = 0; i < nfds; i++)
         {
             int ev_fd = events[i].data.fd;
-            BaseSocket *pSocket = FindBaseSocket(ev_fd);
+            auto bs = FindBaseSocket(ev_fd);
+            BaseSocket* pSocket = bs.GetBasePtr(); 
             if (!pSocket)
                 continue;
-
-#ifdef EPOLLRDHUP
-            if (events[i].events & EPOLLRDHUP)
-            {
-                pSocket->OnClose();
-            }
-#endif
-            // Commit End
-
+                
             if (events[i].events & (EPOLLERR | EPOLLHUP))
             {
                 pSocket->OnClose();
+                goto End;
             }
             if (events[i].events & EPOLLIN)
             {
@@ -166,6 +171,8 @@ void EventDispatch::StartDispatch(uint32_t wait_timeout)
             {
                 pSocket->OnWrite();
             }
+            End:
+            ;
         }
 
         _CheckTimer();

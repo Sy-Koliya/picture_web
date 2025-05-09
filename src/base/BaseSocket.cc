@@ -12,22 +12,88 @@
 #include <map>
 #include <sys/epoll.h>
 #include <iostream>
+#include <exception>
+
+
+BaseCount::BaseCount(BaseSocket* p)
+  : ptr(p)
+{
+    if (ptr) {
+        ptr->acquire();
+    }
+}
+
+BaseCount::BaseCount(const BaseCount& other)
+  : ptr(other.ptr)
+{
+    if (ptr) {
+        ptr->acquire();
+    }
+}
+
+BaseCount& BaseCount::operator=(const BaseCount& other)
+{
+    if (this != &other) {
+        if (ptr) {
+            ptr->release();
+        }
+        ptr = other.ptr;
+        if (ptr) {
+            ptr->acquire();
+        }
+    }
+    return *this;
+}
+
+BaseCount::BaseCount(BaseCount&& other) noexcept
+  : ptr(other.ptr)
+{
+    other.ptr = nullptr;
+}
+
+BaseCount& BaseCount::operator=(BaseCount&& other) noexcept
+{
+    if (this != &other) {
+        if (ptr) {
+            ptr->release();
+        }
+        ptr = other.ptr;
+        other.ptr = nullptr;
+    }
+    return *this;
+}
+
+BaseCount::~BaseCount()
+{
+    if (ptr) {
+        ptr->release();
+    }
+}
+
+BaseSocket* BaseCount::GetBasePtr() const
+{
+    return ptr;
+}
 
 typedef std::map<net_handle_t, BaseSocket *> SocketMap;
 SocketMap g_socket_map;
+static std::mutex g_map_mutex;
 
 void AddBaseSocket(BaseSocket *pSocket)
 {
+    std::lock_guard<std::mutex> lk(g_map_mutex);
     g_socket_map.insert(std::make_pair((net_handle_t)pSocket->GetSocket(), pSocket));
 }
 
 void RemoveBaseSocket(BaseSocket *pSocket)
 {
+    std::lock_guard<std::mutex> lk(g_map_mutex);
     g_socket_map.erase((net_handle_t)pSocket->GetSocket());
 }
 
-BaseSocket *FindBaseSocket(net_handle_t fd)
+BaseCount FindBaseSocket(net_handle_t fd)
 {
+    std::lock_guard<std::mutex> lk(g_map_mutex);
     BaseSocket *pSocket = nullptr;
     SocketMap::iterator iter = g_socket_map.find(fd);
     if (iter != g_socket_map.end())
@@ -35,13 +101,14 @@ BaseSocket *FindBaseSocket(net_handle_t fd)
         pSocket = iter->second;
     }
 
-    return pSocket;
+    return BaseCount(pSocket);
 }
 
 BaseSocket::BaseSocket()
 {
     m_socket = _INVALID_SOCKET;
     m_state = SOCKET_STATE_IDLE;
+    ref = 1;
     in_buf = buffer_new(1);
     out_buf = buffer_new(1);
 }
@@ -56,19 +123,7 @@ BaseSocket::~BaseSocket()
 
 int BaseSocket::Read_imp()
 {
-    char buf[4096];
-    int ret = Recv(buf, sizeof(buf));
-    if (ret > 0)
-    {
-        // 收到 ret 字节，就原样发回去
-        Send(buf, ret);
-    }
-    else if (ret == 0)
-    {
-        // 对端关闭
-        std::cout << "Peer Close at ip : " << GetRemoteIP() << "  port :" << std::to_string((int)GetRemotePort()) << "\n";
-        Close();
-    }
+
     return 0;
 }
 
@@ -231,27 +286,41 @@ int BaseSocket::Recv(void *buf, int len)
     return recv(m_socket, (char *)buf, len, 0);
 }
 
+void BaseSocket::acquire()
+{
+    ref++;
+}
+
+void BaseSocket::release()
+{
+    ref--;
+    if (ref == 0)
+    {
+        if (isptr)
+            delete this;
+    }
+}
+
 int BaseSocket::Close()
 {
+    std::lock_guard<std::mutex> lk(b_lock);
     if (m_state == SOCKET_STATE_CLOSED)
     {
         return 1;
     }
+    m_state = SOCKET_STATE_CLOSED;
     Close_imp();
     if (m_ev_dispatch != nullptr)
         m_ev_dispatch->RemoveEvent(m_socket);
-    else
-    {
-        // loginfo
-        return -1;
-    }
     RemoveBaseSocket(this);
     ::close(m_socket);
-    m_state = SOCKET_STATE_CLOSED;
+    release();
     return 0;
 }
 void BaseSocket::OnRead()
 {
+    if (m_state == SOCKET_STATE_CLOSED)
+        return;
     if (m_state == SOCKET_STATE_LISTENING)
     {
         _AcceptNewSocket();
@@ -262,10 +331,11 @@ void BaseSocket::OnRead()
         int ret = ioctl(m_socket, FIONREAD, &avail);
         if ((SOCKET_ERROR == ret) || (avail == 0))
         {
-            Close_imp();
+            OnClose();
         }
         else
         {
+            buffer_add_from_readv(in_buf, m_socket);
             Read_imp();
         }
     }
@@ -273,6 +343,8 @@ void BaseSocket::OnRead()
 void BaseSocket::OnWrite()
 {
 
+    if (m_state == SOCKET_STATE_CLOSED)
+        return;
     if (m_state == SOCKET_STATE_CONNECTING)
     {
         int error = 0;
@@ -280,7 +352,7 @@ void BaseSocket::OnWrite()
         getsockopt(m_socket, SOL_SOCKET, SO_ERROR, (void *)&error, &len);
         if (error)
         {
-            Close_imp();
+            OnClose();
         }
         else
         {
@@ -292,9 +364,9 @@ void BaseSocket::OnWrite()
         Write_imp();
     }
 }
+
 void BaseSocket::OnClose()
 {
-    m_state = SOCKET_STATE_CLOSING;
     Close();
 }
 
@@ -439,51 +511,5 @@ void BaseSocket::_AcceptNewSocket()
         _SetNonblock(fd);
         AddBaseSocket(pSocket);
         SocketPool::Instance().AddSocketEvent(fd, EPOLLIN);
-    }
-}
-
-// =======================BaseSocketManager======================================================
-
- BaseSocketManager& BaseSocketManager::Instance()
-{
-    static BaseSocketManager inst;
-    return inst;
-}
-
-BaseSocket * BaseSocketManager:: Create()
-{
-    std::lock_guard<std::mutex> guard(m_lock);
-    BaseSocket *socket_ptr = new BaseSocket();
-    socket_handle_.insert(socket_ptr);
-    return socket_ptr;
-}
-void BaseSocketManager::Destroy(BaseSocket *socket_ptr)
-{
-    std::lock_guard<std::mutex> guard(m_lock);
-    if (!socket_ptr)
-        return;
-    auto it = socket_handle_.find(socket_ptr);
-    if (it != socket_handle_.end())
-    {
-        socket_ptr->Close();
-        delete socket_ptr;
-        socket_handle_.erase(it);
-    }
-    else
-    {
-        if(Global::Instance().get<int>("Debug")&Debug_std)
-        std::cout << "No tracked socket_ptr found!" << std::endl;
-    }
-}
-
-BaseSocketManager::~BaseSocketManager()
-{
-    for (auto socket_ptr : socket_handle_)
-    {
-        if (socket_ptr)
-        {
-            socket_ptr->Close();
-            delete socket_ptr; 
-        }
     }
 }

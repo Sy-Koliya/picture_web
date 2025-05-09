@@ -1,18 +1,3 @@
-/*
- * ThreadPool.h
- *
- * C++ wrapper around the Sogou C Workflow thrdpool API.
- * Provides a simple RAII-style thread pool base class, allowing
- * enqueueing of any callable returning void().
- *
- * Usage:
- *   // Derive or use directly
- *   ThreadPool pool(4);     // 4 worker threads
- *   pool.enqueue([]{ do_work(); });
- *   // tasks run asynchronously, destructor waits for termination
- *
- * Author: Adapted from Sogou Workflow C thread pool
- */
 
 extern "C"
 {
@@ -22,8 +7,7 @@ extern "C"
 #include "ThrdPool.h"
 #include "tools.h"
 #include <iostream>
-
-//===============================================================================================================
+#include <memory>
 
 
 static size_t getDeviceMaxThreads() {
@@ -111,14 +95,20 @@ void SocketPool::AddSocketEvent(int fd,uint32_t event){
     << "  fd " << fd
     << '\n';
     int target = fd&(nthreads-1);
-    FindBaseSocket(fd)->SetEventDispatch(ev_queue[target]);
+    FindBaseSocket(fd).GetBasePtr()->SetEventDispatch(ev_queue[target]);
     ev_queue[target]->AddEvent(fd,event);
 }
 
-void SocketPool::AddTimerEvent(TimerEvent* ev){
+void SocketPool::AddTimerEvent(TimerEvent* ev){  
     int fd =ev->te_id;
     int target = fd&(nthreads-1);
     ev_queue[target]->AddTimer(ev);
+}
+
+void SocketPool::RemoveTimerEvent(TimerEvent* ev){
+    int fd =ev->te_id;
+    int target = fd&(nthreads-1);
+    ev_queue[target]->RemoveTimer(ev);
 }
 
 //=========================================================================
