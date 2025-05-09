@@ -1,9 +1,0 @@
-/home/koliya/picture_web/src/dbserver/build/CMakeFiles/server_rpc.dir
-/home/koliya/picture_web/src/dbserver/build/CMakeFiles/edit_cache.dir
-/home/koliya/picture_web/src/dbserver/build/CMakeFiles/rebuild_cache.dir
-/home/koliya/picture_web/src/dbserver/build/dbimpl_build/CMakeFiles/dbimpl.dir
-/home/koliya/picture_web/src/dbserver/build/dbimpl_build/CMakeFiles/edit_cache.dir
-/home/koliya/picture_web/src/dbserver/build/dbimpl_build/CMakeFiles/rebuild_cache.dir
-/home/koliya/picture_web/src/dbserver/build/fmt_build/CMakeFiles/fmt.dir
-/home/koliya/picture_web/src/dbserver/build/fmt_build/CMakeFiles/edit_cache.dir
-/home/koliya/picture_web/src/dbserver/build/fmt_build/CMakeFiles/rebuild_cache.dir
