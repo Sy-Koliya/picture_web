@@ -115,7 +115,8 @@ BaseSocket::BaseSocket()
 
 BaseSocket::~BaseSocket()
 {
-    std::cout << "m_socket " << m_socket << "  closed" << '\n';
+    // if(Global::Instance().get<int>("Debug") & 1)
+    // std::cout << "m_socket " << m_socket << "  closed" << '\n';
     buffer_free(in_buf);
 }
 ////////////////////////
@@ -493,6 +494,7 @@ void BaseSocket::_AcceptNewSocket()
             perror("inet_ntop");
             return;
         }
+        if(Global::Instance().get<int>("Debug") & 1)
         std::cout
             << "AcceptNewSocket, socket=" << fd
             << " from " << ip_str

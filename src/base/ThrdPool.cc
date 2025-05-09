@@ -90,6 +90,7 @@ SocketPool::~SocketPool(){
 }
 
 void SocketPool::AddSocketEvent(int fd,uint32_t event){
+    if(Global::Instance().get<int>("Debug") & 1)
     std::cout
     << "AddEvent event " << event
     << "  fd " << fd

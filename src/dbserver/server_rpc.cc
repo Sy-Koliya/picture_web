@@ -23,7 +23,7 @@ int main(){
 
     MySqlRpcServer rpc_server{};
     rpc_server.Run(Global::Instance().get<std::string>("Mysql_Rpc_Server"));
-
+    
     SakilaDatabase.Close();
     MySQL::Library_End();
     return 0;
