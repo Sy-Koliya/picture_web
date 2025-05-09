@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package rpc;
+
+// 上传请求与响应
+message FdfsUploadRequest {
+  string path = 1;    // 本地文件路径
+}
+message FdfsUploadResponse {
+  string fileid = 1;  // 上传后返回的文件ID
+  string url =2 ;     // 上传后返回的完整url路径
+}
+
+// 删除请求与响应
+message FdfsDeleteRequest {
+  string fileid = 1;  // 要删除的文件ID
+}
+message FdfsDeleteResponse {
+  bool success = 1;   // 删除操作是否成功
+}
+
+service FdfsService {
+  rpc Upload  (FdfsUploadRequest)  returns (FdfsUploadResponse);
+  rpc Delete  (FdfsDeleteRequest)   returns (FdfsDeleteResponse);
+}
