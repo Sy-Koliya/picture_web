@@ -46,7 +46,7 @@ struct TableStruct_mysql_5frpc_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[8]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -72,6 +72,12 @@ extern RegisterRequestDefaultTypeInternal _RegisterRequest_default_instance_;
 class RegisterResponse;
 struct RegisterResponseDefaultTypeInternal;
 extern RegisterResponseDefaultTypeInternal _RegisterResponse_default_instance_;
+class UploadRequest;
+struct UploadRequestDefaultTypeInternal;
+extern UploadRequestDefaultTypeInternal _UploadRequest_default_instance_;
+class UploadResponse;
+struct UploadResponseDefaultTypeInternal;
+extern UploadResponseDefaultTypeInternal _UploadResponse_default_instance_;
 }  // namespace rpc
 PROTOBUF_NAMESPACE_OPEN
 template<> ::rpc::LoginRequest* Arena::CreateMaybeMessage<::rpc::LoginRequest>(Arena*);
@@ -80,6 +86,8 @@ template<> ::rpc::Md5Request* Arena::CreateMaybeMessage<::rpc::Md5Request>(Arena
 template<> ::rpc::Md5Response* Arena::CreateMaybeMessage<::rpc::Md5Response>(Arena*);
 template<> ::rpc::RegisterRequest* Arena::CreateMaybeMessage<::rpc::RegisterRequest>(Arena*);
 template<> ::rpc::RegisterResponse* Arena::CreateMaybeMessage<::rpc::RegisterResponse>(Arena*);
+template<> ::rpc::UploadRequest* Arena::CreateMaybeMessage<::rpc::UploadRequest>(Arena*);
+template<> ::rpc::UploadResponse* Arena::CreateMaybeMessage<::rpc::UploadResponse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace rpc {
 
@@ -1086,6 +1094,378 @@ class Md5Response final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mysql_5frpc_2eproto;
 };
+// -------------------------------------------------------------------
+
+class UploadRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.UploadRequest) */ {
+ public:
+  inline UploadRequest() : UploadRequest(nullptr) {}
+  ~UploadRequest() override;
+  explicit constexpr UploadRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  UploadRequest(const UploadRequest& from);
+  UploadRequest(UploadRequest&& from) noexcept
+    : UploadRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline UploadRequest& operator=(const UploadRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UploadRequest& operator=(UploadRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UploadRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UploadRequest* internal_default_instance() {
+    return reinterpret_cast<const UploadRequest*>(
+               &_UploadRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(UploadRequest& a, UploadRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UploadRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UploadRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  UploadRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UploadRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UploadRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const UploadRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UploadRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.UploadRequest";
+  }
+  protected:
+  explicit UploadRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserFieldNumber = 1,
+    kFilenameFieldNumber = 2,
+    kFileMd5FieldNumber = 3,
+    kFileidFieldNumber = 5,
+    kUrlFieldNumber = 6,
+    kFileSizeFieldNumber = 4,
+  };
+  // string user = 1;
+  void clear_user();
+  const std::string& user() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user();
+  PROTOBUF_NODISCARD std::string* release_user();
+  void set_allocated_user(std::string* user);
+  private:
+  const std::string& _internal_user() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user(const std::string& value);
+  std::string* _internal_mutable_user();
+  public:
+
+  // string filename = 2;
+  void clear_filename();
+  const std::string& filename() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_filename(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_filename();
+  PROTOBUF_NODISCARD std::string* release_filename();
+  void set_allocated_filename(std::string* filename);
+  private:
+  const std::string& _internal_filename() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_filename(const std::string& value);
+  std::string* _internal_mutable_filename();
+  public:
+
+  // string file_md5 = 3;
+  void clear_file_md5();
+  const std::string& file_md5() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_file_md5(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_file_md5();
+  PROTOBUF_NODISCARD std::string* release_file_md5();
+  void set_allocated_file_md5(std::string* file_md5);
+  private:
+  const std::string& _internal_file_md5() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_md5(const std::string& value);
+  std::string* _internal_mutable_file_md5();
+  public:
+
+  // string fileid = 5;
+  void clear_fileid();
+  const std::string& fileid() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_fileid(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_fileid();
+  PROTOBUF_NODISCARD std::string* release_fileid();
+  void set_allocated_fileid(std::string* fileid);
+  private:
+  const std::string& _internal_fileid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_fileid(const std::string& value);
+  std::string* _internal_mutable_fileid();
+  public:
+
+  // string url = 6;
+  void clear_url();
+  const std::string& url() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_url(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_url();
+  PROTOBUF_NODISCARD std::string* release_url();
+  void set_allocated_url(std::string* url);
+  private:
+  const std::string& _internal_url() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_url(const std::string& value);
+  std::string* _internal_mutable_url();
+  public:
+
+  // int64 file_size = 4;
+  void clear_file_size();
+  int64_t file_size() const;
+  void set_file_size(int64_t value);
+  private:
+  int64_t _internal_file_size() const;
+  void _internal_set_file_size(int64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.UploadRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filename_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_md5_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr fileid_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr url_;
+  int64_t file_size_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class UploadResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.UploadResponse) */ {
+ public:
+  inline UploadResponse() : UploadResponse(nullptr) {}
+  ~UploadResponse() override;
+  explicit constexpr UploadResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  UploadResponse(const UploadResponse& from);
+  UploadResponse(UploadResponse&& from) noexcept
+    : UploadResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline UploadResponse& operator=(const UploadResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UploadResponse& operator=(UploadResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UploadResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UploadResponse* internal_default_instance() {
+    return reinterpret_cast<const UploadResponse*>(
+               &_UploadResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  friend void swap(UploadResponse& a, UploadResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UploadResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UploadResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  UploadResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UploadResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UploadResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const UploadResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UploadResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.UploadResponse";
+  }
+  protected:
+  explicit UploadResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCodeFieldNumber = 1,
+  };
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.UploadResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t code_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
 // ===================================================================
 
 
@@ -1687,9 +2067,316 @@ inline void Md5Response::set_code(int32_t value) {
   // @@protoc_insertion_point(field_set:rpc.Md5Response.code)
 }
 
+// -------------------------------------------------------------------
+
+// UploadRequest
+
+// string user = 1;
+inline void UploadRequest::clear_user() {
+  user_.ClearToEmpty();
+}
+inline const std::string& UploadRequest::user() const {
+  // @@protoc_insertion_point(field_get:rpc.UploadRequest.user)
+  return _internal_user();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void UploadRequest::set_user(ArgT0&& arg0, ArgT... args) {
+ 
+ user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.UploadRequest.user)
+}
+inline std::string* UploadRequest::mutable_user() {
+  std::string* _s = _internal_mutable_user();
+  // @@protoc_insertion_point(field_mutable:rpc.UploadRequest.user)
+  return _s;
+}
+inline const std::string& UploadRequest::_internal_user() const {
+  return user_.Get();
+}
+inline void UploadRequest::_internal_set_user(const std::string& value) {
+  
+  user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::_internal_mutable_user() {
+  
+  return user_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::release_user() {
+  // @@protoc_insertion_point(field_release:rpc.UploadRequest.user)
+  return user_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void UploadRequest::set_allocated_user(std::string* user) {
+  if (user != nullptr) {
+    
+  } else {
+    
+  }
+  user_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.UploadRequest.user)
+}
+
+// string filename = 2;
+inline void UploadRequest::clear_filename() {
+  filename_.ClearToEmpty();
+}
+inline const std::string& UploadRequest::filename() const {
+  // @@protoc_insertion_point(field_get:rpc.UploadRequest.filename)
+  return _internal_filename();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void UploadRequest::set_filename(ArgT0&& arg0, ArgT... args) {
+ 
+ filename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.UploadRequest.filename)
+}
+inline std::string* UploadRequest::mutable_filename() {
+  std::string* _s = _internal_mutable_filename();
+  // @@protoc_insertion_point(field_mutable:rpc.UploadRequest.filename)
+  return _s;
+}
+inline const std::string& UploadRequest::_internal_filename() const {
+  return filename_.Get();
+}
+inline void UploadRequest::_internal_set_filename(const std::string& value) {
+  
+  filename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::_internal_mutable_filename() {
+  
+  return filename_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::release_filename() {
+  // @@protoc_insertion_point(field_release:rpc.UploadRequest.filename)
+  return filename_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void UploadRequest::set_allocated_filename(std::string* filename) {
+  if (filename != nullptr) {
+    
+  } else {
+    
+  }
+  filename_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), filename,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (filename_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    filename_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.UploadRequest.filename)
+}
+
+// string file_md5 = 3;
+inline void UploadRequest::clear_file_md5() {
+  file_md5_.ClearToEmpty();
+}
+inline const std::string& UploadRequest::file_md5() const {
+  // @@protoc_insertion_point(field_get:rpc.UploadRequest.file_md5)
+  return _internal_file_md5();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void UploadRequest::set_file_md5(ArgT0&& arg0, ArgT... args) {
+ 
+ file_md5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.UploadRequest.file_md5)
+}
+inline std::string* UploadRequest::mutable_file_md5() {
+  std::string* _s = _internal_mutable_file_md5();
+  // @@protoc_insertion_point(field_mutable:rpc.UploadRequest.file_md5)
+  return _s;
+}
+inline const std::string& UploadRequest::_internal_file_md5() const {
+  return file_md5_.Get();
+}
+inline void UploadRequest::_internal_set_file_md5(const std::string& value) {
+  
+  file_md5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::_internal_mutable_file_md5() {
+  
+  return file_md5_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::release_file_md5() {
+  // @@protoc_insertion_point(field_release:rpc.UploadRequest.file_md5)
+  return file_md5_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void UploadRequest::set_allocated_file_md5(std::string* file_md5) {
+  if (file_md5 != nullptr) {
+    
+  } else {
+    
+  }
+  file_md5_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), file_md5,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (file_md5_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    file_md5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.UploadRequest.file_md5)
+}
+
+// int64 file_size = 4;
+inline void UploadRequest::clear_file_size() {
+  file_size_ = int64_t{0};
+}
+inline int64_t UploadRequest::_internal_file_size() const {
+  return file_size_;
+}
+inline int64_t UploadRequest::file_size() const {
+  // @@protoc_insertion_point(field_get:rpc.UploadRequest.file_size)
+  return _internal_file_size();
+}
+inline void UploadRequest::_internal_set_file_size(int64_t value) {
+  
+  file_size_ = value;
+}
+inline void UploadRequest::set_file_size(int64_t value) {
+  _internal_set_file_size(value);
+  // @@protoc_insertion_point(field_set:rpc.UploadRequest.file_size)
+}
+
+// string fileid = 5;
+inline void UploadRequest::clear_fileid() {
+  fileid_.ClearToEmpty();
+}
+inline const std::string& UploadRequest::fileid() const {
+  // @@protoc_insertion_point(field_get:rpc.UploadRequest.fileid)
+  return _internal_fileid();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void UploadRequest::set_fileid(ArgT0&& arg0, ArgT... args) {
+ 
+ fileid_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.UploadRequest.fileid)
+}
+inline std::string* UploadRequest::mutable_fileid() {
+  std::string* _s = _internal_mutable_fileid();
+  // @@protoc_insertion_point(field_mutable:rpc.UploadRequest.fileid)
+  return _s;
+}
+inline const std::string& UploadRequest::_internal_fileid() const {
+  return fileid_.Get();
+}
+inline void UploadRequest::_internal_set_fileid(const std::string& value) {
+  
+  fileid_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::_internal_mutable_fileid() {
+  
+  return fileid_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::release_fileid() {
+  // @@protoc_insertion_point(field_release:rpc.UploadRequest.fileid)
+  return fileid_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void UploadRequest::set_allocated_fileid(std::string* fileid) {
+  if (fileid != nullptr) {
+    
+  } else {
+    
+  }
+  fileid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), fileid,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (fileid_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    fileid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.UploadRequest.fileid)
+}
+
+// string url = 6;
+inline void UploadRequest::clear_url() {
+  url_.ClearToEmpty();
+}
+inline const std::string& UploadRequest::url() const {
+  // @@protoc_insertion_point(field_get:rpc.UploadRequest.url)
+  return _internal_url();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void UploadRequest::set_url(ArgT0&& arg0, ArgT... args) {
+ 
+ url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.UploadRequest.url)
+}
+inline std::string* UploadRequest::mutable_url() {
+  std::string* _s = _internal_mutable_url();
+  // @@protoc_insertion_point(field_mutable:rpc.UploadRequest.url)
+  return _s;
+}
+inline const std::string& UploadRequest::_internal_url() const {
+  return url_.Get();
+}
+inline void UploadRequest::_internal_set_url(const std::string& value) {
+  
+  url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::_internal_mutable_url() {
+  
+  return url_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* UploadRequest::release_url() {
+  // @@protoc_insertion_point(field_release:rpc.UploadRequest.url)
+  return url_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void UploadRequest::set_allocated_url(std::string* url) {
+  if (url != nullptr) {
+    
+  } else {
+    
+  }
+  url_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), url,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (url_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    url_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.UploadRequest.url)
+}
+
+// -------------------------------------------------------------------
+
+// UploadResponse
+
+// int32 code = 1;
+inline void UploadResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t UploadResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t UploadResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.UploadResponse.code)
+  return _internal_code();
+}
+inline void UploadResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void UploadResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.UploadResponse.code)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

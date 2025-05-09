@@ -25,6 +25,7 @@ static const char* DatabaseService_method_names[] = {
   "/rpc.DatabaseService/registerUser",
   "/rpc.DatabaseService/loginUser",
   "/rpc.DatabaseService/InstantUpload",
+  "/rpc.DatabaseService/UploadFile",
 };
 
 std::unique_ptr< DatabaseService::Stub> DatabaseService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -37,6 +38,7 @@ DatabaseService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& ch
   : channel_(channel), rpcmethod_registerUser_(DatabaseService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_loginUser_(DatabaseService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_InstantUpload_(DatabaseService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_UploadFile_(DatabaseService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DatabaseService::Stub::registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::rpc::RegisterResponse* response) {
@@ -108,6 +110,29 @@ void DatabaseService::Stub::async::InstantUpload(::grpc::ClientContext* context,
   return result;
 }
 
+::grpc::Status DatabaseService::Stub::UploadFile(::grpc::ClientContext* context, const ::rpc::UploadRequest& request, ::rpc::UploadResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::UploadRequest, ::rpc::UploadResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_UploadFile_, context, request, response);
+}
+
+void DatabaseService::Stub::async::UploadFile(::grpc::ClientContext* context, const ::rpc::UploadRequest* request, ::rpc::UploadResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::UploadRequest, ::rpc::UploadResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UploadFile_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::UploadFile(::grpc::ClientContext* context, const ::rpc::UploadRequest* request, ::rpc::UploadResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UploadFile_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::UploadResponse>* DatabaseService::Stub::PrepareAsyncUploadFileRaw(::grpc::ClientContext* context, const ::rpc::UploadRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::UploadResponse, ::rpc::UploadRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_UploadFile_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::UploadResponse>* DatabaseService::Stub::AsyncUploadFileRaw(::grpc::ClientContext* context, const ::rpc::UploadRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncUploadFileRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 DatabaseService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DatabaseService_method_names[0],
@@ -139,6 +164,16 @@ DatabaseService::Service::Service() {
              ::rpc::Md5Response* resp) {
                return service->InstantUpload(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[3],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::UploadRequest, ::rpc::UploadResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::UploadRequest* req,
+             ::rpc::UploadResponse* resp) {
+               return service->UploadFile(ctx, req, resp);
+             }, this)));
 }
 
 DatabaseService::Service::~Service() {
@@ -159,6 +194,13 @@ DatabaseService::Service::~Service() {
 }
 
 ::grpc::Status DatabaseService::Service::InstantUpload(::grpc::ServerContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::UploadFile(::grpc::ServerContext* context, const ::rpc::UploadRequest* request, ::rpc::UploadResponse* response) {
   (void) context;
   (void) request;
   (void) response;

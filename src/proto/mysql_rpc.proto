@@ -33,8 +33,22 @@ message Md5Response {
   int32 code = 1;  // 0=Ok, 1=Failed, 4=TokenErr, 5=FileExist
 }
 
+message UploadRequest {
+  string user       = 1;
+  string filename   = 2;
+  string file_md5   = 3;
+  int64  file_size  = 4;
+  string fileid     = 5;
+  string url        = 6;
+}
+
+message UploadResponse {
+  int32 code        = 1; // 0=成功，1=失败
+}
+
 service DatabaseService {
   rpc registerUser(RegisterRequest) returns (RegisterResponse);
   rpc loginUser(LoginRequest)       returns (LoginResponse);
   rpc InstantUpload(Md5Request) returns (Md5Response);
+  rpc UploadFile(UploadRequest) returns (UploadResponse);
 }
