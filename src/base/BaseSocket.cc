@@ -109,15 +109,14 @@ BaseSocket::BaseSocket()
     m_socket = _INVALID_SOCKET;
     m_state = SOCKET_STATE_IDLE;
     ref = 1;
+    isptr = true;
     in_buf = buffer_new(1);
-    out_buf = buffer_new(1);
 }
 
 BaseSocket::~BaseSocket()
 {
     std::cout << "m_socket " << m_socket << "  closed" << '\n';
     buffer_free(in_buf);
-    buffer_free(out_buf);
 }
 ////////////////////////
 
@@ -317,6 +316,8 @@ int BaseSocket::Close()
     release();
     return 0;
 }
+
+//On 方法都在同一个dispatch线程中调用，不会出现竞态
 void BaseSocket::OnRead()
 {
     if (m_state == SOCKET_STATE_CLOSED)
@@ -342,7 +343,6 @@ void BaseSocket::OnRead()
 }
 void BaseSocket::OnWrite()
 {
-
     if (m_state == SOCKET_STATE_CLOSED)
         return;
     if (m_state == SOCKET_STATE_CONNECTING)

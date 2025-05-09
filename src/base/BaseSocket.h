@@ -90,7 +90,6 @@ protected:
     uint16_t m_local_port;
 
     buffer_t *in_buf;
-    buffer_t *out_buf;
     std::atomic<int> m_state;
 
     EventDispatch *m_ev_dispatch;
