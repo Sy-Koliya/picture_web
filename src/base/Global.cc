@@ -13,6 +13,7 @@ Global::Global()
     vars_["Redis_Port"]     = (int)6379;
     vars_["Redis_Password"] = std::string("");
     vars_["Redis_PoolSize"] = (size_t)1;
-
-    
+    vars_["Fdfs_Rpc_Server"]= std::string("127.0.0.1:50052");
+    vars_["s_dfs_path_client"] = std::string("/etc/fdfs/client.conf");
+    vars_["Fdfs_ConnPool_size"] = (size_t)4;
 }

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.23)
-project(async_server)
+project(async_server )
 
 set(CMAKE_CXX_STANDARD       20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -65,7 +65,7 @@ file(GLOB_RECURSE FDFS_SOURCES
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/)
-set(MY_TARGET HttpServer_test)
+set(MY_TARGET fdfs_rpc_test)
 
 add_executable(${MY_TARGET}
     ${CMAKE_CURRENT_LIST_DIR}/${MY_TARGET}.cc
@@ -85,6 +85,7 @@ target_include_directories(${MY_TARGET} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/../frame
     ${CMAKE_CURRENT_LIST_DIR}/../api
     ${CMAKE_CURRENT_LIST_DIR}/../proto
+    ${CMAKE_CURRENT_LIST_DIR}/../fdfs
 
     # 第三方
     ${Protobuf_INCLUDE_DIRS}
