@@ -27,5 +27,6 @@
 - **FastDFS**  
 - **Nginx** + FastDFS 模块  
 - **gRPC**  
-- **MySQL**  
+- **MySQL**
+- **nlohmann**
 
