@@ -59,6 +59,7 @@ private:
         ConnectionInfo *trackerConn;
         ConnectionInfo storageConn;  
         char group[FDFS_GROUP_NAME_MAX_LEN + 1];
+        int idx;
       };
       
 

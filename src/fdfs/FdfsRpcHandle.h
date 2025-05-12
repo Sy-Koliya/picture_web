@@ -45,6 +45,14 @@ public:
 //----------------------------------------------------------
 // Delete 处理器
 //----------------------------------------------------------
+
+inline std::string _trim(const std::string &s) {
+    auto b = s.find_first_not_of(" \t\n\r");
+    if (b == std::string::npos) return "";                      
+    auto e = s.find_last_not_of(" \t\n\r");
+    return s.substr(b, e - b + 1);
+}
+
 class DeleteCall : public CallData<rpc::FdfsDeleteRequest, DeleteCall, rpc::FdfsService::AsyncService>
 {
 public:
@@ -64,7 +72,7 @@ public:
         WorkPool::Instance().Submit(
             [this,&req,&resp](){
                 std::string fileid = req.fileid();
-                resp.set_success(FdfsConnectionPool::Instance().remove(fileid));
+                resp.set_success(FdfsConnectionPool::Instance().remove(_trim(fileid)));
                 this->rpc_finish();
         });
         }catch(const std::exception &e)
@@ -73,5 +81,7 @@ public:
         }
     }
 };
+
+
 
 #endif // FDFS_RPC_HANDLERS_H
