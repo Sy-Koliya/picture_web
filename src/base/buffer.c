@@ -5,6 +5,10 @@
 #include <sys/uio.h>
 #include "buffer.h"
 
+
+
+//伪线程安全，后续可能会更新
+
 // 链节点结构体：用于存储一段数据
 struct buf_chain_s
 {
@@ -303,9 +307,7 @@ static int buffer_drain(buffer_t *buf, uint32_t len)
         return 0;
     if (len >= old_len)
     {
-        buf_chain_free_all(buf->first);
-        ZERO_CHAIN(buf);
-        return old_len;
+        len = old_len;
     }
     buf->total_len -= len;
     uint32_t rem = len;
