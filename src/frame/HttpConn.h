@@ -33,6 +33,7 @@ public:
 private:
     friend class HttpServer;
     friend struct ConnCompare;
+    std::mutex h_lock;
     HttpState state;
     std::chrono::steady_clock::time_point last_recv;
     std::string  recv_str;

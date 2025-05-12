@@ -46,9 +46,9 @@ message UploadResponse {
   int32 code        = 1; // 0=成功，1=失败
 }
 
+
 service DatabaseService {
   rpc registerUser(RegisterRequest) returns (RegisterResponse);
   rpc loginUser(LoginRequest)       returns (LoginResponse);
   rpc InstantUpload(Md5Request) returns (Md5Response);
-  rpc UploadFile(UploadRequest) returns (UploadResponse);
 }

@@ -75,7 +75,7 @@ int HttpConn::Write_imp()
 //-1 表示错误
 int HttpConn::SetResponse(std::string &&_resp)
 {
-    std::lock_guard<std::mutex>lk(b_lock);
+    std::lock_guard<std::mutex>lk(h_lock);
     if (m_state == SOCKET_STATE_CLOSED)
         return -1;
     if (state != HttpState::HttpCallback)
@@ -88,7 +88,7 @@ int HttpConn::SetResponse(std::string &&_resp)
 
 int HttpConn::SetErrorResponse(int code, const std::string &reason)
 {
-    std::lock_guard<std::mutex>lk(b_lock);
+    std::lock_guard<std::mutex>lk(h_lock);
     if (m_state == SOCKET_STATE_CLOSED)
         return -1;
     if (state != HttpState::HttpCallback)

@@ -16,32 +16,6 @@ find_library(HIREDIS_LIB        hiredis)
 find_library(REDIS_PLUS_PLUS_LIB redis++)
 
 
-# FastDFS 客户端（libfdfsclient + libfastcommon）
-find_path(FASTDFS_INCLUDE_DIR
-  NAMES fdfs_client.h
-  PATHS
-    /usr/include
-    /usr/local/include
-    /usr/include/fastdfs
-    /usr/local/include/fastdfs
-)
-find_library(FASTDFS_CLIENT_LIB
-  NAMES fdfsclient
-  PATHS
-    /usr/lib
-    /usr/local/lib
-    /usr/lib/x86_64-linux-gnu
-    /usr/lib64
-)
-find_library(FASTCOMMON_LIB
-  NAMES fastcommon
-  PATHS
-    /usr/lib
-    /usr/local/lib
-    /usr/lib/x86_64-linux-gnu
-    /usr/lib64
-)
-
 # —— 源码文件收集 —— 
 file(GLOB_RECURSE BASE_SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/../base/*.cc"
@@ -59,13 +33,9 @@ file(GLOB_RECURSE FRAME_SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/../frame/*.cc"
     "${CMAKE_CURRENT_LIST_DIR}/../frame/*.c"
 )
-file(GLOB_RECURSE FDFS_SOURCES
-    "${CMAKE_CURRENT_LIST_DIR}/../fdfs/*.cc"
-    "${CMAKE_CURRENT_LIST_DIR}/../fdfs/*.c"
-)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/)
-set(MY_TARGET fdfs_rpc_test)
+set(MY_TARGET HttpServer_test)
 
 add_executable(${MY_TARGET}
     ${CMAKE_CURRENT_LIST_DIR}/${MY_TARGET}.cc
@@ -73,7 +43,6 @@ add_executable(${MY_TARGET}
     ${API_SOURCES}
     ${PROTO_SOURCES}
     ${FRAME_SOURCES}
-    ${FDFS_SOURCES}
 )
 
 # —— 包含路径 —— 
@@ -85,7 +54,6 @@ target_include_directories(${MY_TARGET} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/../frame
     ${CMAKE_CURRENT_LIST_DIR}/../api
     ${CMAKE_CURRENT_LIST_DIR}/../proto
-    ${CMAKE_CURRENT_LIST_DIR}/../fdfs
 
     # 第三方
     ${Protobuf_INCLUDE_DIRS}

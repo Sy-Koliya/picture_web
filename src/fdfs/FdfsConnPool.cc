@@ -102,62 +102,79 @@ void FdfsConnectionPool::release(std::unique_ptr<Connection> conn)
 }
 
 std::pair<std::string, std::string>
-FdfsConnectionPool::upload(const std::string &local_path)
-{
-    auto conn = acquire();
-    if (!conn)
-        throw std::runtime_error("upload failed: pool shutting down");
+ FdfsConnectionPool::upload(const std::string &local_path)
+ {
+     auto conn = acquire();
+     if (!conn)
+         throw std::runtime_error("upload failed: pool shutting down");
 
-    char fileid[__FDFS_FILE_BUF_LEN] = {0};
-    int ret = storage_upload_by_filename(
-        conn->trackerConn,
-        &conn->storageConn,
-        0,
-        local_path.c_str(),
-        nullptr,
-        nullptr,
-        0,
-        conn->group,
-        fileid);
+     char fileid_buf[__FDFS_FILE_BUF_LEN] = {0};
+     int ret = storage_upload_by_filename(
+         conn->trackerConn,
+         &conn->storageConn,
+         0,
+         local_path.c_str(),
+         nullptr,
+         nullptr,
+         0,
+         conn->group,
+         fileid_buf);
 
-    // 第一次失败，重连再试
-    if (ret != 0)
-    {
-        std::cerr << "[WARN] upload failed(ret=" << ret << "), reconnecting\n";
-        if (tracker_query_storage_store(
-                conn->trackerConn,
-                &conn->storageConn,
-                conn->group,
-                &conn->idx) != 0)
-        {
-            release(std::move(conn));
-            throw std::runtime_error("Failed to reconnect to storage");
-        }
-        ret = storage_upload_by_filename(
+     // 第一次失败，重连再试（保持不变）
+     if (ret != 0)
+     {
+         std::cerr << "[WARN] upload failed(ret=" << ret << "), reconnecting\n";
+         if (tracker_query_storage_store(
+                 conn->trackerConn,
+                 &conn->storageConn,
+                 conn->group,
+                 &conn->idx) != 0)
+         {
+             release(std::move(conn));
+             throw std::runtime_error("Failed to reconnect to storage");
+         }
+         ret = storage_upload_by_filename(
+             conn->trackerConn,
+             &conn->storageConn,
+             0,
+             local_path.c_str(),
+             nullptr,
+             nullptr,
+             0,
+             conn->group,
+             fileid_buf);
+         if (ret != 0)
+         {
+             release(std::move(conn));
+             throw std::runtime_error("Upload retry failed (ret=" + std::to_string(ret) + ")");
+         }
+     }
+
+
+     std::string fileid_{conn->group};
+        fileid_.push_back('/');
+        fileid_ += fileid_buf;
+
+    if (tracker_query_storage_update1(
             conn->trackerConn,
             &conn->storageConn,
-            0,
-            local_path.c_str(),
-            nullptr,
-            nullptr,
-            0,
-            conn->group,
-            fileid);
-        if (ret != 0)
-        {
-            release(std::move(conn));
-            throw std::runtime_error("Upload retry failed (ret=" + std::to_string(ret) + ")");
-        }
-    }
-    std::string fileid_ = std::string(conn->group)+"/" + fileid;
-    std::string host = conn->storageConn.ip_addr;       
-    host += ":" + std::to_string(conn->storageConn.port);
-    std::string addr = getUrl(fileid_,host);
+            const_cast<char*>(fileid_.c_str())) != 0)
+         {
+         std::cerr << "[WARN] tracker_query_storage_update1 failed for " << fileid_ << "\n";
+         }
 
-    release(std::move(conn));
-    return {fileid_, addr};
-}
 
+    std::string storage_ip = conn->storageConn.ip_addr;
+
+
+    std::string http_port = Global::Instance().get<std::string>("s_storage_web_server_port");
+
+
+    std::string addr = "http://" + storage_ip + ":" + http_port + "/" + fileid_;
+
+     release(std::move(conn));
+     return {fileid_, addr};
+ }
 
 
 bool FdfsConnectionPool::remove(const std::string &fileid) {
