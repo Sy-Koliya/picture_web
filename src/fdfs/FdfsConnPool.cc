@@ -5,7 +5,7 @@
 #include <memory>
 
 
-#define FDFS_FILE_BUF_LEN 128
+#define __FDFS_FILE_BUF_LEN 128
 
 FdfsConnectionPool &FdfsConnectionPool::Instance()
 {
@@ -37,12 +37,10 @@ FdfsConnectionPool::FdfsConnectionPool(const std::string &conf_file,
                 throw std::runtime_error("tracker_get_connection failed");
             }
 
-            // 查询storage连接
-            int store_path_index = 0;
             if (tracker_query_storage_store(conn->trackerConn,
                                             &conn->storageConn,
                                             conn->group,
-                                            &store_path_index) != 0)
+                                            &conn->idx) != 0)
             {
                 throw std::runtime_error("tracker_query_storage_store failed");
             }
@@ -67,7 +65,7 @@ FdfsConnectionPool::FdfsConnectionPool(const std::string &conf_file,
 FdfsConnectionPool::~FdfsConnectionPool()
 {
     {
-        std::lock_guard lock(mtx_);
+        std::lock_guard<std::mutex> lock(mtx_);
         shutting_down_ = true;
         cv_.notify_all();
     }
@@ -84,7 +82,7 @@ FdfsConnectionPool::~FdfsConnectionPool()
 std::unique_ptr<FdfsConnectionPool::Connection>
 FdfsConnectionPool::acquire()
 {
-    std::unique_lock lock(mtx_);
+    std::unique_lock<std::mutex> lock(mtx_);
     cv_.wait(lock, [this]
              { return !pool_.empty() || shutting_down_; });
     if (shutting_down_)
@@ -97,7 +95,7 @@ FdfsConnectionPool::acquire()
 void FdfsConnectionPool::release(std::unique_ptr<Connection> conn)
 {
     {
-        std::lock_guard lock(mtx_);
+        std::lock_guard<std::mutex> lock(mtx_);
         pool_.push(std::move(conn));
     }
     cv_.notify_one();
@@ -110,7 +108,7 @@ FdfsConnectionPool::upload(const std::string &local_path)
     if (!conn)
         throw std::runtime_error("upload failed: pool shutting down");
 
-    char fileid[FDFS_FILE_BUF_LEN] = {0};
+    char fileid[__FDFS_FILE_BUF_LEN] = {0};
     int ret = storage_upload_by_filename(
         conn->trackerConn,
         &conn->storageConn,
@@ -130,7 +128,7 @@ FdfsConnectionPool::upload(const std::string &local_path)
                 conn->trackerConn,
                 &conn->storageConn,
                 conn->group,
-                0) != 0)
+                &conn->idx) != 0)
         {
             release(std::move(conn));
             throw std::runtime_error("Failed to reconnect to storage");
@@ -151,51 +149,54 @@ FdfsConnectionPool::upload(const std::string &local_path)
             throw std::runtime_error("Upload retry failed (ret=" + std::to_string(ret) + ")");
         }
     }
+    std::string fileid_ = std::string(conn->group)+"/" + fileid;
     std::string host = conn->storageConn.ip_addr;       
     host += ":" + std::to_string(conn->storageConn.port);
-    std::string addr = getUrl(fileid,host);
+    std::string addr = getUrl(fileid_,host);
 
     release(std::move(conn));
-    return {fileid, addr};
+    return {fileid_, addr};
 }
 
 
 
-
-bool FdfsConnectionPool::remove(const std::string &fileid)
-{
-    auto conn = acquire(); 
-    if (!conn)
-    {
-        std::cerr << "[ERROR] Remove failed: connection pool shutdown\n";
+bool FdfsConnectionPool::remove(const std::string &fileid) {
+    // 1. 从连接池取出一个 Tracker 连接
+    auto conn = acquire();
+    if (!conn) {
+        std::cerr << "[ERROR] Remove failed: connection pool is shutting down\n";
         return false;
     }
 
-
-    ConnectionInfo storage;
-    if (tracker_query_storage_update1(conn->trackerConn,
-                                     &storage,
-                                     fileid.c_str()) != 0)
-    {
-        std::cerr << "[ERROR] tracker_query_storage_update failed\n";
+    //  查询对应 fileid 的 Storage 服务器信息
+    int ret = tracker_query_storage_update1(
+        conn->trackerConn,
+        &conn->storageConn,
+        const_cast<char*>(fileid.c_str())  
+    );
+    if (ret != 0) {
+        std::cerr << "[ERROR] tracker_query_storage_update1 failed, ret="
+                  << ret << ", fileid=" << fileid << "\n";
         release(std::move(conn));
         return false;
     }
-    // 调用 FastDFS 删除接口
-    int ret = storage_delete_file1(conn->trackerConn,
-                                   &storage,
-                                   fileid.c_str());
 
+    ret = storage_delete_file1(
+        conn->trackerConn,
+        &conn->storageConn,
+        fileid.c_str()                   
+    );
     bool success = (ret == 0);
-    if (!success)
-    {
-        std::cerr << "[ERROR] Delete failed (ret=" << ret
-                  << "), fileid: " << fileid << "\n";
+    if (!success) {
+        std::cerr << "[ERROR] storage_delete_file1 failed, ret="
+                  << ret << ", fileid=" << fileid << "\n";
     }
 
-    release(std::move(conn)); 
+    // 4. 归还连接
+    release(std::move(conn));
     return success;
 }
+
 
 std::string FdfsConnectionPool::getUrl(const std::string &fileid,
                                        const std::string &storage_addr) const

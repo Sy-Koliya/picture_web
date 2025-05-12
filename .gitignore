@@ -46,5 +46,6 @@ Thumbs.db
 # /data/*
 # !/data/README.md
 
-# ==== 忽略所有名为 build 的目录 ====
+
 build/
+test/

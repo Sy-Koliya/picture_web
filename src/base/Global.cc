@@ -16,4 +16,5 @@ Global::Global()
     vars_["Fdfs_Rpc_Server"]= std::string("127.0.0.1:50052");
     vars_["s_dfs_path_client"] = std::string("/etc/fdfs/client.conf");
     vars_["Fdfs_ConnPool_size"] = (size_t)4;
+    
 }
