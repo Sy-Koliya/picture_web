@@ -37,21 +37,19 @@ static void init_grpc_clients() {
 RpcTask<int> ApiMyfiles(int fd,
                         const std::string &post_data,
                         const std::string &url) {
-    // 1) 确保 gRPC 客户端只初始化一次
+
     std::call_once(grpc_init_flag, init_grpc_clients);
 
-    // 2) 从 URL 里取 cmd
     std::string cmd;
     QueryParseKeyValue(url, "cmd", cmd);
 
-    // 3) 准备 JSON 容器
+
     nlohmann::json in, out;
     int    code   = 0;
     int    start  = 0;
-    int    limit  = 0;      // 对应前端的 "count"
+    int    limit  = 0;      
     std::string user, token;
 
-    // —— JSON 解析 ——  
     try {
         in     = nlohmann::json::parse(post_data);
         user   = in.value("user", "");
@@ -64,14 +62,13 @@ RpcTask<int> ApiMyfiles(int fd,
         goto RESPOND;
     }
 
-    // —— Token 校验 ——  
+
     if (!VerifyToken(user, token)) {
         code        = 1;
         out["code"] = code;
         goto RESPOND;
     }
-    std::cout<<cmd<<'\n';
-    // —— count 分支 ——  
+
     if (cmd == "count") {
         auto &redis = get_redis();
         std::string key = user + ":file_count";
@@ -83,7 +80,7 @@ RpcTask<int> ApiMyfiles(int fd,
             goto RESPOND;
         }
 
-        // 构造并发起 RPC
+
         rpc::CountRequest  creq;
         creq.set_user(user);
         creq.set_token(token);
@@ -116,7 +113,6 @@ RpcTask<int> ApiMyfiles(int fd,
         lreq.set_start(start);
         lreq.set_limit(limit);
 
-        // URL cmd -> OrderBy 枚举
         rpc::OrderBy ob = rpc::OrderBy::NORMAL;
         if (cmd == "pvasc")      ob = rpc::OrderBy::PV_ASC;
         else if (cmd == "pvdesc") ob = rpc::OrderBy::PV_DESC;
@@ -132,7 +128,7 @@ RpcTask<int> ApiMyfiles(int fd,
             goto RESPOND;
         }
 
-        // 填充返回 JSON
+
         code          = lresp.code();
         out["code"]   = code;
         out["count"]  = lresp.count();
@@ -150,23 +146,11 @@ RpcTask<int> ApiMyfiles(int fd,
                 {"size",        f.file_size()},
                 {"type",        f.file_type()}
             });
-                //     std::cout
-                // << "user_id="    << f.user_id()
-                // << " md5="       << f.file_md5()
-                // << " created_at="<< f.created_at()
-                // << " filename="  << f.filename()
-                // << " is_shared=" << (f.is_shared() ? "true" : "false")
-                // << " view_count="<< f.view_count()
-                // << " file_url="  << f.file_url()
-                // << " file_size=" << f.file_size()
-                // << " file_type=" << f.file_type()
-                // << std::endl;
         }
     }
 
 RESPOND:
     {
-        // 统一构造 HTTP/JSON 响应
         std::string body = out.dump();
         std::string response =
             "HTTP/1.1 200 OK\r\n"
