@@ -46,9 +46,59 @@ message UploadResponse {
   int32 code        = 1; // 0=成功，1=失败
 }
 
+message CountRequest {
+  string user  = 1;
+  string token = 2;
+}
+message CountResponse {
+  int32  code  = 1; // 0 成功，其它失败
+  int32  count = 2;
+}
+
+enum OrderBy {
+  NORMAL   = 0;  // 不排序
+  PV_ASC   = 1;  // 按 view_count 升序
+  PV_DESC  = 2;  // 按 view_count 降序
+}
+
+// Rpc 方法请求：用户文件列表
+message FilesListRequest {
+  string   user_id   = 1;    // 对应 user_file_list.user_id
+  string   token     = 2;    // 鉴权令牌（如果有的话）
+  int32    start     = 3;    // OFFSET
+  int32    limit     = 4;    // 每页条数
+  OrderBy  order_by  = 5;    // 排序方式
+}
+
+// 单个文件信息
+message FileInfo {
+  string  user_id      = 1;  // user_file_list.user_id
+  string  file_md5     = 2;  // user_file_list.file_md5
+  string  created_at   = 3;  // user_file_list.created_at
+  string filename     = 4;  // user_file_list.filename
+  int32   is_shared    = 5;  // user_file_list.is_shared
+  int32   view_count   = 6;  // user_file_list.view_count
+  string  file_url     = 7;  // file_info.file_url
+  int64   file_size    = 8;  // file_info.file_size
+  string  file_type    = 9;  // file_info.file_type
+}
+
+// Rpc 方法响应：列表 + 分页信息
+message FilesListResponse {
+  int32          code    = 1;  // 0=成功，非0=错误码
+  repeated FileInfo files  = 2;  // 当前页记录
+  int32          count   = 3;  // 本页返回条数
+  int32          total   = 4;  // 用户总文件数
+}
+
+
+
 
 service DatabaseService {
   rpc registerUser(RegisterRequest) returns (RegisterResponse);
   rpc loginUser(LoginRequest)       returns (LoginResponse);
   rpc InstantUpload(Md5Request) returns (Md5Response);
+  rpc UploadFile(UploadRequest) returns (UploadResponse);
+  rpc GetUserFilesCount(CountRequest)    returns (CountResponse);
+  rpc GetUserFileList(FilesListRequest)  returns (FilesListResponse);
 }

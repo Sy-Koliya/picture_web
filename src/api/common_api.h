@@ -28,7 +28,9 @@ std::string RandomString(std::size_t len);
 bool VerifyToken(const std::string &user_name, const std::string &token);
 
 
-
+bool QueryParseKeyValue(const std::string &query,
+                        const std::string &key,
+                        std::string &value);
 
 
 

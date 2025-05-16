@@ -30,6 +30,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -46,7 +47,7 @@ struct TableStruct_mysql_5frpc_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[8]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[13]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -54,6 +55,21 @@ struct TableStruct_mysql_5frpc_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_mysql_5frpc_2eproto;
 namespace rpc {
+class CountRequest;
+struct CountRequestDefaultTypeInternal;
+extern CountRequestDefaultTypeInternal _CountRequest_default_instance_;
+class CountResponse;
+struct CountResponseDefaultTypeInternal;
+extern CountResponseDefaultTypeInternal _CountResponse_default_instance_;
+class FileInfo;
+struct FileInfoDefaultTypeInternal;
+extern FileInfoDefaultTypeInternal _FileInfo_default_instance_;
+class FilesListRequest;
+struct FilesListRequestDefaultTypeInternal;
+extern FilesListRequestDefaultTypeInternal _FilesListRequest_default_instance_;
+class FilesListResponse;
+struct FilesListResponseDefaultTypeInternal;
+extern FilesListResponseDefaultTypeInternal _FilesListResponse_default_instance_;
 class LoginRequest;
 struct LoginRequestDefaultTypeInternal;
 extern LoginRequestDefaultTypeInternal _LoginRequest_default_instance_;
@@ -80,6 +96,11 @@ struct UploadResponseDefaultTypeInternal;
 extern UploadResponseDefaultTypeInternal _UploadResponse_default_instance_;
 }  // namespace rpc
 PROTOBUF_NAMESPACE_OPEN
+template<> ::rpc::CountRequest* Arena::CreateMaybeMessage<::rpc::CountRequest>(Arena*);
+template<> ::rpc::CountResponse* Arena::CreateMaybeMessage<::rpc::CountResponse>(Arena*);
+template<> ::rpc::FileInfo* Arena::CreateMaybeMessage<::rpc::FileInfo>(Arena*);
+template<> ::rpc::FilesListRequest* Arena::CreateMaybeMessage<::rpc::FilesListRequest>(Arena*);
+template<> ::rpc::FilesListResponse* Arena::CreateMaybeMessage<::rpc::FilesListResponse>(Arena*);
 template<> ::rpc::LoginRequest* Arena::CreateMaybeMessage<::rpc::LoginRequest>(Arena*);
 template<> ::rpc::LoginResponse* Arena::CreateMaybeMessage<::rpc::LoginResponse>(Arena*);
 template<> ::rpc::Md5Request* Arena::CreateMaybeMessage<::rpc::Md5Request>(Arena*);
@@ -91,6 +112,32 @@ template<> ::rpc::UploadResponse* Arena::CreateMaybeMessage<::rpc::UploadRespons
 PROTOBUF_NAMESPACE_CLOSE
 namespace rpc {
 
+enum OrderBy : int {
+  NORMAL = 0,
+  PV_ASC = 1,
+  PV_DESC = 2,
+  OrderBy_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  OrderBy_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool OrderBy_IsValid(int value);
+constexpr OrderBy OrderBy_MIN = NORMAL;
+constexpr OrderBy OrderBy_MAX = PV_DESC;
+constexpr int OrderBy_ARRAYSIZE = OrderBy_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* OrderBy_descriptor();
+template<typename T>
+inline const std::string& OrderBy_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, OrderBy>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function OrderBy_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    OrderBy_descriptor(), enum_t_value);
+}
+inline bool OrderBy_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, OrderBy* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<OrderBy>(
+    OrderBy_descriptor(), name, value);
+}
 // ===================================================================
 
 class RegisterRequest final :
@@ -1466,6 +1513,982 @@ class UploadResponse final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mysql_5frpc_2eproto;
 };
+// -------------------------------------------------------------------
+
+class CountRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.CountRequest) */ {
+ public:
+  inline CountRequest() : CountRequest(nullptr) {}
+  ~CountRequest() override;
+  explicit constexpr CountRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CountRequest(const CountRequest& from);
+  CountRequest(CountRequest&& from) noexcept
+    : CountRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline CountRequest& operator=(const CountRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CountRequest& operator=(CountRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CountRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CountRequest* internal_default_instance() {
+    return reinterpret_cast<const CountRequest*>(
+               &_CountRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(CountRequest& a, CountRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CountRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CountRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CountRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CountRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CountRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const CountRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CountRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.CountRequest";
+  }
+  protected:
+  explicit CountRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserFieldNumber = 1,
+    kTokenFieldNumber = 2,
+  };
+  // string user = 1;
+  void clear_user();
+  const std::string& user() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user();
+  PROTOBUF_NODISCARD std::string* release_user();
+  void set_allocated_user(std::string* user);
+  private:
+  const std::string& _internal_user() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user(const std::string& value);
+  std::string* _internal_mutable_user();
+  public:
+
+  // string token = 2;
+  void clear_token();
+  const std::string& token() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_token(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_token();
+  PROTOBUF_NODISCARD std::string* release_token();
+  void set_allocated_token(std::string* token);
+  private:
+  const std::string& _internal_token() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_token(const std::string& value);
+  std::string* _internal_mutable_token();
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.CountRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CountResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.CountResponse) */ {
+ public:
+  inline CountResponse() : CountResponse(nullptr) {}
+  ~CountResponse() override;
+  explicit constexpr CountResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CountResponse(const CountResponse& from);
+  CountResponse(CountResponse&& from) noexcept
+    : CountResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline CountResponse& operator=(const CountResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CountResponse& operator=(CountResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CountResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CountResponse* internal_default_instance() {
+    return reinterpret_cast<const CountResponse*>(
+               &_CountResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  friend void swap(CountResponse& a, CountResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CountResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CountResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CountResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CountResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CountResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const CountResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CountResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.CountResponse";
+  }
+  protected:
+  explicit CountResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCodeFieldNumber = 1,
+    kCountFieldNumber = 2,
+  };
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // int32 count = 2;
+  void clear_count();
+  int32_t count() const;
+  void set_count(int32_t value);
+  private:
+  int32_t _internal_count() const;
+  void _internal_set_count(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.CountResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t code_;
+  int32_t count_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class FilesListRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.FilesListRequest) */ {
+ public:
+  inline FilesListRequest() : FilesListRequest(nullptr) {}
+  ~FilesListRequest() override;
+  explicit constexpr FilesListRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  FilesListRequest(const FilesListRequest& from);
+  FilesListRequest(FilesListRequest&& from) noexcept
+    : FilesListRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline FilesListRequest& operator=(const FilesListRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline FilesListRequest& operator=(FilesListRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const FilesListRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const FilesListRequest* internal_default_instance() {
+    return reinterpret_cast<const FilesListRequest*>(
+               &_FilesListRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(FilesListRequest& a, FilesListRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(FilesListRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(FilesListRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  FilesListRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<FilesListRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const FilesListRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const FilesListRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(FilesListRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.FilesListRequest";
+  }
+  protected:
+  explicit FilesListRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserIdFieldNumber = 1,
+    kTokenFieldNumber = 2,
+    kStartFieldNumber = 3,
+    kLimitFieldNumber = 4,
+    kOrderByFieldNumber = 5,
+  };
+  // string user_id = 1;
+  void clear_user_id();
+  const std::string& user_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user_id();
+  PROTOBUF_NODISCARD std::string* release_user_id();
+  void set_allocated_user_id(std::string* user_id);
+  private:
+  const std::string& _internal_user_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user_id(const std::string& value);
+  std::string* _internal_mutable_user_id();
+  public:
+
+  // string token = 2;
+  void clear_token();
+  const std::string& token() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_token(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_token();
+  PROTOBUF_NODISCARD std::string* release_token();
+  void set_allocated_token(std::string* token);
+  private:
+  const std::string& _internal_token() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_token(const std::string& value);
+  std::string* _internal_mutable_token();
+  public:
+
+  // int32 start = 3;
+  void clear_start();
+  int32_t start() const;
+  void set_start(int32_t value);
+  private:
+  int32_t _internal_start() const;
+  void _internal_set_start(int32_t value);
+  public:
+
+  // int32 limit = 4;
+  void clear_limit();
+  int32_t limit() const;
+  void set_limit(int32_t value);
+  private:
+  int32_t _internal_limit() const;
+  void _internal_set_limit(int32_t value);
+  public:
+
+  // .rpc.OrderBy order_by = 5;
+  void clear_order_by();
+  ::rpc::OrderBy order_by() const;
+  void set_order_by(::rpc::OrderBy value);
+  private:
+  ::rpc::OrderBy _internal_order_by() const;
+  void _internal_set_order_by(::rpc::OrderBy value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.FilesListRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_id_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_;
+  int32_t start_;
+  int32_t limit_;
+  int order_by_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class FileInfo final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.FileInfo) */ {
+ public:
+  inline FileInfo() : FileInfo(nullptr) {}
+  ~FileInfo() override;
+  explicit constexpr FileInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  FileInfo(const FileInfo& from);
+  FileInfo(FileInfo&& from) noexcept
+    : FileInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline FileInfo& operator=(const FileInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline FileInfo& operator=(FileInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const FileInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const FileInfo* internal_default_instance() {
+    return reinterpret_cast<const FileInfo*>(
+               &_FileInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(FileInfo& a, FileInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(FileInfo* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(FileInfo* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  FileInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<FileInfo>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const FileInfo& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const FileInfo& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(FileInfo* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.FileInfo";
+  }
+  protected:
+  explicit FileInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserIdFieldNumber = 1,
+    kFileMd5FieldNumber = 2,
+    kCreatedAtFieldNumber = 3,
+    kFilenameFieldNumber = 4,
+    kFileUrlFieldNumber = 7,
+    kFileTypeFieldNumber = 9,
+    kIsSharedFieldNumber = 5,
+    kViewCountFieldNumber = 6,
+    kFileSizeFieldNumber = 8,
+  };
+  // string user_id = 1;
+  void clear_user_id();
+  const std::string& user_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user_id();
+  PROTOBUF_NODISCARD std::string* release_user_id();
+  void set_allocated_user_id(std::string* user_id);
+  private:
+  const std::string& _internal_user_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user_id(const std::string& value);
+  std::string* _internal_mutable_user_id();
+  public:
+
+  // string file_md5 = 2;
+  void clear_file_md5();
+  const std::string& file_md5() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_file_md5(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_file_md5();
+  PROTOBUF_NODISCARD std::string* release_file_md5();
+  void set_allocated_file_md5(std::string* file_md5);
+  private:
+  const std::string& _internal_file_md5() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_md5(const std::string& value);
+  std::string* _internal_mutable_file_md5();
+  public:
+
+  // string created_at = 3;
+  void clear_created_at();
+  const std::string& created_at() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_created_at(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_created_at();
+  PROTOBUF_NODISCARD std::string* release_created_at();
+  void set_allocated_created_at(std::string* created_at);
+  private:
+  const std::string& _internal_created_at() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_created_at(const std::string& value);
+  std::string* _internal_mutable_created_at();
+  public:
+
+  // string filename = 4;
+  void clear_filename();
+  const std::string& filename() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_filename(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_filename();
+  PROTOBUF_NODISCARD std::string* release_filename();
+  void set_allocated_filename(std::string* filename);
+  private:
+  const std::string& _internal_filename() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_filename(const std::string& value);
+  std::string* _internal_mutable_filename();
+  public:
+
+  // string file_url = 7;
+  void clear_file_url();
+  const std::string& file_url() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_file_url(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_file_url();
+  PROTOBUF_NODISCARD std::string* release_file_url();
+  void set_allocated_file_url(std::string* file_url);
+  private:
+  const std::string& _internal_file_url() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_url(const std::string& value);
+  std::string* _internal_mutable_file_url();
+  public:
+
+  // string file_type = 9;
+  void clear_file_type();
+  const std::string& file_type() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_file_type(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_file_type();
+  PROTOBUF_NODISCARD std::string* release_file_type();
+  void set_allocated_file_type(std::string* file_type);
+  private:
+  const std::string& _internal_file_type() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_type(const std::string& value);
+  std::string* _internal_mutable_file_type();
+  public:
+
+  // int32 is_shared = 5;
+  void clear_is_shared();
+  int32_t is_shared() const;
+  void set_is_shared(int32_t value);
+  private:
+  int32_t _internal_is_shared() const;
+  void _internal_set_is_shared(int32_t value);
+  public:
+
+  // int32 view_count = 6;
+  void clear_view_count();
+  int32_t view_count() const;
+  void set_view_count(int32_t value);
+  private:
+  int32_t _internal_view_count() const;
+  void _internal_set_view_count(int32_t value);
+  public:
+
+  // int64 file_size = 8;
+  void clear_file_size();
+  int64_t file_size() const;
+  void set_file_size(int64_t value);
+  private:
+  int64_t _internal_file_size() const;
+  void _internal_set_file_size(int64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.FileInfo)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_id_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_md5_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr created_at_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filename_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_url_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_type_;
+  int32_t is_shared_;
+  int32_t view_count_;
+  int64_t file_size_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class FilesListResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.FilesListResponse) */ {
+ public:
+  inline FilesListResponse() : FilesListResponse(nullptr) {}
+  ~FilesListResponse() override;
+  explicit constexpr FilesListResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  FilesListResponse(const FilesListResponse& from);
+  FilesListResponse(FilesListResponse&& from) noexcept
+    : FilesListResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline FilesListResponse& operator=(const FilesListResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline FilesListResponse& operator=(FilesListResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const FilesListResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const FilesListResponse* internal_default_instance() {
+    return reinterpret_cast<const FilesListResponse*>(
+               &_FilesListResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  friend void swap(FilesListResponse& a, FilesListResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(FilesListResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(FilesListResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  FilesListResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<FilesListResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const FilesListResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const FilesListResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(FilesListResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.FilesListResponse";
+  }
+  protected:
+  explicit FilesListResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilesFieldNumber = 2,
+    kCodeFieldNumber = 1,
+    kCountFieldNumber = 3,
+    kTotalFieldNumber = 4,
+  };
+  // repeated .rpc.FileInfo files = 2;
+  int files_size() const;
+  private:
+  int _internal_files_size() const;
+  public:
+  void clear_files();
+  ::rpc::FileInfo* mutable_files(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::FileInfo >*
+      mutable_files();
+  private:
+  const ::rpc::FileInfo& _internal_files(int index) const;
+  ::rpc::FileInfo* _internal_add_files();
+  public:
+  const ::rpc::FileInfo& files(int index) const;
+  ::rpc::FileInfo* add_files();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::FileInfo >&
+      files() const;
+
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // int32 count = 3;
+  void clear_count();
+  int32_t count() const;
+  void set_count(int32_t value);
+  private:
+  int32_t _internal_count() const;
+  void _internal_set_count(int32_t value);
+  public:
+
+  // int32 total = 4;
+  void clear_total();
+  int32_t total() const;
+  void set_total(int32_t value);
+  private:
+  int32_t _internal_total() const;
+  void _internal_set_total(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.FilesListResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::FileInfo > files_;
+  int32_t code_;
+  int32_t count_;
+  int32_t total_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
 // ===================================================================
 
 
@@ -2370,9 +3393,809 @@ inline void UploadResponse::set_code(int32_t value) {
   // @@protoc_insertion_point(field_set:rpc.UploadResponse.code)
 }
 
+// -------------------------------------------------------------------
+
+// CountRequest
+
+// string user = 1;
+inline void CountRequest::clear_user() {
+  user_.ClearToEmpty();
+}
+inline const std::string& CountRequest::user() const {
+  // @@protoc_insertion_point(field_get:rpc.CountRequest.user)
+  return _internal_user();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CountRequest::set_user(ArgT0&& arg0, ArgT... args) {
+ 
+ user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.CountRequest.user)
+}
+inline std::string* CountRequest::mutable_user() {
+  std::string* _s = _internal_mutable_user();
+  // @@protoc_insertion_point(field_mutable:rpc.CountRequest.user)
+  return _s;
+}
+inline const std::string& CountRequest::_internal_user() const {
+  return user_.Get();
+}
+inline void CountRequest::_internal_set_user(const std::string& value) {
+  
+  user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* CountRequest::_internal_mutable_user() {
+  
+  return user_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* CountRequest::release_user() {
+  // @@protoc_insertion_point(field_release:rpc.CountRequest.user)
+  return user_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void CountRequest::set_allocated_user(std::string* user) {
+  if (user != nullptr) {
+    
+  } else {
+    
+  }
+  user_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.CountRequest.user)
+}
+
+// string token = 2;
+inline void CountRequest::clear_token() {
+  token_.ClearToEmpty();
+}
+inline const std::string& CountRequest::token() const {
+  // @@protoc_insertion_point(field_get:rpc.CountRequest.token)
+  return _internal_token();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CountRequest::set_token(ArgT0&& arg0, ArgT... args) {
+ 
+ token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.CountRequest.token)
+}
+inline std::string* CountRequest::mutable_token() {
+  std::string* _s = _internal_mutable_token();
+  // @@protoc_insertion_point(field_mutable:rpc.CountRequest.token)
+  return _s;
+}
+inline const std::string& CountRequest::_internal_token() const {
+  return token_.Get();
+}
+inline void CountRequest::_internal_set_token(const std::string& value) {
+  
+  token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* CountRequest::_internal_mutable_token() {
+  
+  return token_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* CountRequest::release_token() {
+  // @@protoc_insertion_point(field_release:rpc.CountRequest.token)
+  return token_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void CountRequest::set_allocated_token(std::string* token) {
+  if (token != nullptr) {
+    
+  } else {
+    
+  }
+  token_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), token,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (token_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.CountRequest.token)
+}
+
+// -------------------------------------------------------------------
+
+// CountResponse
+
+// int32 code = 1;
+inline void CountResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t CountResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t CountResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.CountResponse.code)
+  return _internal_code();
+}
+inline void CountResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void CountResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.CountResponse.code)
+}
+
+// int32 count = 2;
+inline void CountResponse::clear_count() {
+  count_ = 0;
+}
+inline int32_t CountResponse::_internal_count() const {
+  return count_;
+}
+inline int32_t CountResponse::count() const {
+  // @@protoc_insertion_point(field_get:rpc.CountResponse.count)
+  return _internal_count();
+}
+inline void CountResponse::_internal_set_count(int32_t value) {
+  
+  count_ = value;
+}
+inline void CountResponse::set_count(int32_t value) {
+  _internal_set_count(value);
+  // @@protoc_insertion_point(field_set:rpc.CountResponse.count)
+}
+
+// -------------------------------------------------------------------
+
+// FilesListRequest
+
+// string user_id = 1;
+inline void FilesListRequest::clear_user_id() {
+  user_id_.ClearToEmpty();
+}
+inline const std::string& FilesListRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:rpc.FilesListRequest.user_id)
+  return _internal_user_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FilesListRequest::set_user_id(ArgT0&& arg0, ArgT... args) {
+ 
+ user_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.FilesListRequest.user_id)
+}
+inline std::string* FilesListRequest::mutable_user_id() {
+  std::string* _s = _internal_mutable_user_id();
+  // @@protoc_insertion_point(field_mutable:rpc.FilesListRequest.user_id)
+  return _s;
+}
+inline const std::string& FilesListRequest::_internal_user_id() const {
+  return user_id_.Get();
+}
+inline void FilesListRequest::_internal_set_user_id(const std::string& value) {
+  
+  user_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FilesListRequest::_internal_mutable_user_id() {
+  
+  return user_id_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FilesListRequest::release_user_id() {
+  // @@protoc_insertion_point(field_release:rpc.FilesListRequest.user_id)
+  return user_id_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FilesListRequest::set_allocated_user_id(std::string* user_id) {
+  if (user_id != nullptr) {
+    
+  } else {
+    
+  }
+  user_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user_id,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_id_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.FilesListRequest.user_id)
+}
+
+// string token = 2;
+inline void FilesListRequest::clear_token() {
+  token_.ClearToEmpty();
+}
+inline const std::string& FilesListRequest::token() const {
+  // @@protoc_insertion_point(field_get:rpc.FilesListRequest.token)
+  return _internal_token();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FilesListRequest::set_token(ArgT0&& arg0, ArgT... args) {
+ 
+ token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.FilesListRequest.token)
+}
+inline std::string* FilesListRequest::mutable_token() {
+  std::string* _s = _internal_mutable_token();
+  // @@protoc_insertion_point(field_mutable:rpc.FilesListRequest.token)
+  return _s;
+}
+inline const std::string& FilesListRequest::_internal_token() const {
+  return token_.Get();
+}
+inline void FilesListRequest::_internal_set_token(const std::string& value) {
+  
+  token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FilesListRequest::_internal_mutable_token() {
+  
+  return token_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FilesListRequest::release_token() {
+  // @@protoc_insertion_point(field_release:rpc.FilesListRequest.token)
+  return token_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FilesListRequest::set_allocated_token(std::string* token) {
+  if (token != nullptr) {
+    
+  } else {
+    
+  }
+  token_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), token,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (token_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.FilesListRequest.token)
+}
+
+// int32 start = 3;
+inline void FilesListRequest::clear_start() {
+  start_ = 0;
+}
+inline int32_t FilesListRequest::_internal_start() const {
+  return start_;
+}
+inline int32_t FilesListRequest::start() const {
+  // @@protoc_insertion_point(field_get:rpc.FilesListRequest.start)
+  return _internal_start();
+}
+inline void FilesListRequest::_internal_set_start(int32_t value) {
+  
+  start_ = value;
+}
+inline void FilesListRequest::set_start(int32_t value) {
+  _internal_set_start(value);
+  // @@protoc_insertion_point(field_set:rpc.FilesListRequest.start)
+}
+
+// int32 limit = 4;
+inline void FilesListRequest::clear_limit() {
+  limit_ = 0;
+}
+inline int32_t FilesListRequest::_internal_limit() const {
+  return limit_;
+}
+inline int32_t FilesListRequest::limit() const {
+  // @@protoc_insertion_point(field_get:rpc.FilesListRequest.limit)
+  return _internal_limit();
+}
+inline void FilesListRequest::_internal_set_limit(int32_t value) {
+  
+  limit_ = value;
+}
+inline void FilesListRequest::set_limit(int32_t value) {
+  _internal_set_limit(value);
+  // @@protoc_insertion_point(field_set:rpc.FilesListRequest.limit)
+}
+
+// .rpc.OrderBy order_by = 5;
+inline void FilesListRequest::clear_order_by() {
+  order_by_ = 0;
+}
+inline ::rpc::OrderBy FilesListRequest::_internal_order_by() const {
+  return static_cast< ::rpc::OrderBy >(order_by_);
+}
+inline ::rpc::OrderBy FilesListRequest::order_by() const {
+  // @@protoc_insertion_point(field_get:rpc.FilesListRequest.order_by)
+  return _internal_order_by();
+}
+inline void FilesListRequest::_internal_set_order_by(::rpc::OrderBy value) {
+  
+  order_by_ = value;
+}
+inline void FilesListRequest::set_order_by(::rpc::OrderBy value) {
+  _internal_set_order_by(value);
+  // @@protoc_insertion_point(field_set:rpc.FilesListRequest.order_by)
+}
+
+// -------------------------------------------------------------------
+
+// FileInfo
+
+// string user_id = 1;
+inline void FileInfo::clear_user_id() {
+  user_id_.ClearToEmpty();
+}
+inline const std::string& FileInfo::user_id() const {
+  // @@protoc_insertion_point(field_get:rpc.FileInfo.user_id)
+  return _internal_user_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FileInfo::set_user_id(ArgT0&& arg0, ArgT... args) {
+ 
+ user_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.FileInfo.user_id)
+}
+inline std::string* FileInfo::mutable_user_id() {
+  std::string* _s = _internal_mutable_user_id();
+  // @@protoc_insertion_point(field_mutable:rpc.FileInfo.user_id)
+  return _s;
+}
+inline const std::string& FileInfo::_internal_user_id() const {
+  return user_id_.Get();
+}
+inline void FileInfo::_internal_set_user_id(const std::string& value) {
+  
+  user_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FileInfo::_internal_mutable_user_id() {
+  
+  return user_id_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FileInfo::release_user_id() {
+  // @@protoc_insertion_point(field_release:rpc.FileInfo.user_id)
+  return user_id_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FileInfo::set_allocated_user_id(std::string* user_id) {
+  if (user_id != nullptr) {
+    
+  } else {
+    
+  }
+  user_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user_id,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_id_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.FileInfo.user_id)
+}
+
+// string file_md5 = 2;
+inline void FileInfo::clear_file_md5() {
+  file_md5_.ClearToEmpty();
+}
+inline const std::string& FileInfo::file_md5() const {
+  // @@protoc_insertion_point(field_get:rpc.FileInfo.file_md5)
+  return _internal_file_md5();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FileInfo::set_file_md5(ArgT0&& arg0, ArgT... args) {
+ 
+ file_md5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.FileInfo.file_md5)
+}
+inline std::string* FileInfo::mutable_file_md5() {
+  std::string* _s = _internal_mutable_file_md5();
+  // @@protoc_insertion_point(field_mutable:rpc.FileInfo.file_md5)
+  return _s;
+}
+inline const std::string& FileInfo::_internal_file_md5() const {
+  return file_md5_.Get();
+}
+inline void FileInfo::_internal_set_file_md5(const std::string& value) {
+  
+  file_md5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FileInfo::_internal_mutable_file_md5() {
+  
+  return file_md5_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FileInfo::release_file_md5() {
+  // @@protoc_insertion_point(field_release:rpc.FileInfo.file_md5)
+  return file_md5_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FileInfo::set_allocated_file_md5(std::string* file_md5) {
+  if (file_md5 != nullptr) {
+    
+  } else {
+    
+  }
+  file_md5_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), file_md5,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (file_md5_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    file_md5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.FileInfo.file_md5)
+}
+
+// string created_at = 3;
+inline void FileInfo::clear_created_at() {
+  created_at_.ClearToEmpty();
+}
+inline const std::string& FileInfo::created_at() const {
+  // @@protoc_insertion_point(field_get:rpc.FileInfo.created_at)
+  return _internal_created_at();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FileInfo::set_created_at(ArgT0&& arg0, ArgT... args) {
+ 
+ created_at_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.FileInfo.created_at)
+}
+inline std::string* FileInfo::mutable_created_at() {
+  std::string* _s = _internal_mutable_created_at();
+  // @@protoc_insertion_point(field_mutable:rpc.FileInfo.created_at)
+  return _s;
+}
+inline const std::string& FileInfo::_internal_created_at() const {
+  return created_at_.Get();
+}
+inline void FileInfo::_internal_set_created_at(const std::string& value) {
+  
+  created_at_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FileInfo::_internal_mutable_created_at() {
+  
+  return created_at_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FileInfo::release_created_at() {
+  // @@protoc_insertion_point(field_release:rpc.FileInfo.created_at)
+  return created_at_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FileInfo::set_allocated_created_at(std::string* created_at) {
+  if (created_at != nullptr) {
+    
+  } else {
+    
+  }
+  created_at_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), created_at,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (created_at_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    created_at_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.FileInfo.created_at)
+}
+
+// string filename = 4;
+inline void FileInfo::clear_filename() {
+  filename_.ClearToEmpty();
+}
+inline const std::string& FileInfo::filename() const {
+  // @@protoc_insertion_point(field_get:rpc.FileInfo.filename)
+  return _internal_filename();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FileInfo::set_filename(ArgT0&& arg0, ArgT... args) {
+ 
+ filename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.FileInfo.filename)
+}
+inline std::string* FileInfo::mutable_filename() {
+  std::string* _s = _internal_mutable_filename();
+  // @@protoc_insertion_point(field_mutable:rpc.FileInfo.filename)
+  return _s;
+}
+inline const std::string& FileInfo::_internal_filename() const {
+  return filename_.Get();
+}
+inline void FileInfo::_internal_set_filename(const std::string& value) {
+  
+  filename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FileInfo::_internal_mutable_filename() {
+  
+  return filename_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FileInfo::release_filename() {
+  // @@protoc_insertion_point(field_release:rpc.FileInfo.filename)
+  return filename_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FileInfo::set_allocated_filename(std::string* filename) {
+  if (filename != nullptr) {
+    
+  } else {
+    
+  }
+  filename_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), filename,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (filename_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    filename_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.FileInfo.filename)
+}
+
+// int32 is_shared = 5;
+inline void FileInfo::clear_is_shared() {
+  is_shared_ = 0;
+}
+inline int32_t FileInfo::_internal_is_shared() const {
+  return is_shared_;
+}
+inline int32_t FileInfo::is_shared() const {
+  // @@protoc_insertion_point(field_get:rpc.FileInfo.is_shared)
+  return _internal_is_shared();
+}
+inline void FileInfo::_internal_set_is_shared(int32_t value) {
+  
+  is_shared_ = value;
+}
+inline void FileInfo::set_is_shared(int32_t value) {
+  _internal_set_is_shared(value);
+  // @@protoc_insertion_point(field_set:rpc.FileInfo.is_shared)
+}
+
+// int32 view_count = 6;
+inline void FileInfo::clear_view_count() {
+  view_count_ = 0;
+}
+inline int32_t FileInfo::_internal_view_count() const {
+  return view_count_;
+}
+inline int32_t FileInfo::view_count() const {
+  // @@protoc_insertion_point(field_get:rpc.FileInfo.view_count)
+  return _internal_view_count();
+}
+inline void FileInfo::_internal_set_view_count(int32_t value) {
+  
+  view_count_ = value;
+}
+inline void FileInfo::set_view_count(int32_t value) {
+  _internal_set_view_count(value);
+  // @@protoc_insertion_point(field_set:rpc.FileInfo.view_count)
+}
+
+// string file_url = 7;
+inline void FileInfo::clear_file_url() {
+  file_url_.ClearToEmpty();
+}
+inline const std::string& FileInfo::file_url() const {
+  // @@protoc_insertion_point(field_get:rpc.FileInfo.file_url)
+  return _internal_file_url();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FileInfo::set_file_url(ArgT0&& arg0, ArgT... args) {
+ 
+ file_url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.FileInfo.file_url)
+}
+inline std::string* FileInfo::mutable_file_url() {
+  std::string* _s = _internal_mutable_file_url();
+  // @@protoc_insertion_point(field_mutable:rpc.FileInfo.file_url)
+  return _s;
+}
+inline const std::string& FileInfo::_internal_file_url() const {
+  return file_url_.Get();
+}
+inline void FileInfo::_internal_set_file_url(const std::string& value) {
+  
+  file_url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FileInfo::_internal_mutable_file_url() {
+  
+  return file_url_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FileInfo::release_file_url() {
+  // @@protoc_insertion_point(field_release:rpc.FileInfo.file_url)
+  return file_url_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FileInfo::set_allocated_file_url(std::string* file_url) {
+  if (file_url != nullptr) {
+    
+  } else {
+    
+  }
+  file_url_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), file_url,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (file_url_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    file_url_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.FileInfo.file_url)
+}
+
+// int64 file_size = 8;
+inline void FileInfo::clear_file_size() {
+  file_size_ = int64_t{0};
+}
+inline int64_t FileInfo::_internal_file_size() const {
+  return file_size_;
+}
+inline int64_t FileInfo::file_size() const {
+  // @@protoc_insertion_point(field_get:rpc.FileInfo.file_size)
+  return _internal_file_size();
+}
+inline void FileInfo::_internal_set_file_size(int64_t value) {
+  
+  file_size_ = value;
+}
+inline void FileInfo::set_file_size(int64_t value) {
+  _internal_set_file_size(value);
+  // @@protoc_insertion_point(field_set:rpc.FileInfo.file_size)
+}
+
+// string file_type = 9;
+inline void FileInfo::clear_file_type() {
+  file_type_.ClearToEmpty();
+}
+inline const std::string& FileInfo::file_type() const {
+  // @@protoc_insertion_point(field_get:rpc.FileInfo.file_type)
+  return _internal_file_type();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FileInfo::set_file_type(ArgT0&& arg0, ArgT... args) {
+ 
+ file_type_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.FileInfo.file_type)
+}
+inline std::string* FileInfo::mutable_file_type() {
+  std::string* _s = _internal_mutable_file_type();
+  // @@protoc_insertion_point(field_mutable:rpc.FileInfo.file_type)
+  return _s;
+}
+inline const std::string& FileInfo::_internal_file_type() const {
+  return file_type_.Get();
+}
+inline void FileInfo::_internal_set_file_type(const std::string& value) {
+  
+  file_type_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FileInfo::_internal_mutable_file_type() {
+  
+  return file_type_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FileInfo::release_file_type() {
+  // @@protoc_insertion_point(field_release:rpc.FileInfo.file_type)
+  return file_type_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FileInfo::set_allocated_file_type(std::string* file_type) {
+  if (file_type != nullptr) {
+    
+  } else {
+    
+  }
+  file_type_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), file_type,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (file_type_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    file_type_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.FileInfo.file_type)
+}
+
+// -------------------------------------------------------------------
+
+// FilesListResponse
+
+// int32 code = 1;
+inline void FilesListResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t FilesListResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t FilesListResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.FilesListResponse.code)
+  return _internal_code();
+}
+inline void FilesListResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void FilesListResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.FilesListResponse.code)
+}
+
+// repeated .rpc.FileInfo files = 2;
+inline int FilesListResponse::_internal_files_size() const {
+  return files_.size();
+}
+inline int FilesListResponse::files_size() const {
+  return _internal_files_size();
+}
+inline void FilesListResponse::clear_files() {
+  files_.Clear();
+}
+inline ::rpc::FileInfo* FilesListResponse::mutable_files(int index) {
+  // @@protoc_insertion_point(field_mutable:rpc.FilesListResponse.files)
+  return files_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::FileInfo >*
+FilesListResponse::mutable_files() {
+  // @@protoc_insertion_point(field_mutable_list:rpc.FilesListResponse.files)
+  return &files_;
+}
+inline const ::rpc::FileInfo& FilesListResponse::_internal_files(int index) const {
+  return files_.Get(index);
+}
+inline const ::rpc::FileInfo& FilesListResponse::files(int index) const {
+  // @@protoc_insertion_point(field_get:rpc.FilesListResponse.files)
+  return _internal_files(index);
+}
+inline ::rpc::FileInfo* FilesListResponse::_internal_add_files() {
+  return files_.Add();
+}
+inline ::rpc::FileInfo* FilesListResponse::add_files() {
+  ::rpc::FileInfo* _add = _internal_add_files();
+  // @@protoc_insertion_point(field_add:rpc.FilesListResponse.files)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::FileInfo >&
+FilesListResponse::files() const {
+  // @@protoc_insertion_point(field_list:rpc.FilesListResponse.files)
+  return files_;
+}
+
+// int32 count = 3;
+inline void FilesListResponse::clear_count() {
+  count_ = 0;
+}
+inline int32_t FilesListResponse::_internal_count() const {
+  return count_;
+}
+inline int32_t FilesListResponse::count() const {
+  // @@protoc_insertion_point(field_get:rpc.FilesListResponse.count)
+  return _internal_count();
+}
+inline void FilesListResponse::_internal_set_count(int32_t value) {
+  
+  count_ = value;
+}
+inline void FilesListResponse::set_count(int32_t value) {
+  _internal_set_count(value);
+  // @@protoc_insertion_point(field_set:rpc.FilesListResponse.count)
+}
+
+// int32 total = 4;
+inline void FilesListResponse::clear_total() {
+  total_ = 0;
+}
+inline int32_t FilesListResponse::_internal_total() const {
+  return total_;
+}
+inline int32_t FilesListResponse::total() const {
+  // @@protoc_insertion_point(field_get:rpc.FilesListResponse.total)
+  return _internal_total();
+}
+inline void FilesListResponse::_internal_set_total(int32_t value) {
+  
+  total_ = value;
+}
+inline void FilesListResponse::set_total(int32_t value) {
+  _internal_set_total(value);
+  // @@protoc_insertion_point(field_set:rpc.FilesListResponse.total)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -2391,6 +4214,16 @@ inline void UploadResponse::set_code(int32_t value) {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace rpc
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::rpc::OrderBy> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::rpc::OrderBy>() {
+  return ::rpc::OrderBy_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

@@ -61,3 +61,33 @@ bool VerifyToken(const std::string &user_name,
         return false;
     }
 }
+
+
+/**
+ * @brief  解析url query 类似 abc=123&bbb=456 字符串
+ *          传入一个key,得到相应的value
+ * @returns
+ *          0 成功, -1 失败
+ */
+
+bool QueryParseKeyValue(const std::string &query,
+                        const std::string &key,
+                        std::string &value) {
+    size_t pos = 0;
+    const std::string pattern = key + "=";
+    while (pos < query.size()) {
+        // 找到下一个 '&' 界限
+        size_t amp = query.find('&', pos);
+        // 取出这段 token
+        size_t len = (amp == std::string::npos ? query.size() : amp) - pos;
+        if (len >= pattern.size() &&
+            query.compare(pos, pattern.size(), pattern) == 0) {
+            // 正好以 "key=" 开头
+            value = query.substr(pos + pattern.size(), len - pattern.size());
+            return true;
+        }
+        if (amp == std::string::npos) break;
+        pos = amp + 1;
+    }
+    return false;
+}

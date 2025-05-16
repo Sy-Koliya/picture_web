@@ -26,6 +26,8 @@ static const char* DatabaseService_method_names[] = {
   "/rpc.DatabaseService/loginUser",
   "/rpc.DatabaseService/InstantUpload",
   "/rpc.DatabaseService/UploadFile",
+  "/rpc.DatabaseService/GetUserFilesCount",
+  "/rpc.DatabaseService/GetUserFileList",
 };
 
 std::unique_ptr< DatabaseService::Stub> DatabaseService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -39,6 +41,8 @@ DatabaseService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& ch
   , rpcmethod_loginUser_(DatabaseService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_InstantUpload_(DatabaseService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_UploadFile_(DatabaseService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetUserFilesCount_(DatabaseService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetUserFileList_(DatabaseService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DatabaseService::Stub::registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::rpc::RegisterResponse* response) {
@@ -133,6 +137,52 @@ void DatabaseService::Stub::async::UploadFile(::grpc::ClientContext* context, co
   return result;
 }
 
+::grpc::Status DatabaseService::Stub::GetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::rpc::CountResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::CountRequest, ::rpc::CountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetUserFilesCount_, context, request, response);
+}
+
+void DatabaseService::Stub::async::GetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest* request, ::rpc::CountResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::CountRequest, ::rpc::CountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetUserFilesCount_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::GetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest* request, ::rpc::CountResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetUserFilesCount_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::CountResponse>* DatabaseService::Stub::PrepareAsyncGetUserFilesCountRaw(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::CountResponse, ::rpc::CountRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetUserFilesCount_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::CountResponse>* DatabaseService::Stub::AsyncGetUserFilesCountRaw(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetUserFilesCountRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::GetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::rpc::FilesListResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::FilesListRequest, ::rpc::FilesListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetUserFileList_, context, request, response);
+}
+
+void DatabaseService::Stub::async::GetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::FilesListRequest, ::rpc::FilesListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetUserFileList_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::GetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetUserFileList_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::FilesListResponse>* DatabaseService::Stub::PrepareAsyncGetUserFileListRaw(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::FilesListResponse, ::rpc::FilesListRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetUserFileList_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::FilesListResponse>* DatabaseService::Stub::AsyncGetUserFileListRaw(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetUserFileListRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 DatabaseService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DatabaseService_method_names[0],
@@ -174,6 +224,26 @@ DatabaseService::Service::Service() {
              ::rpc::UploadResponse* resp) {
                return service->UploadFile(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[4],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::CountRequest, ::rpc::CountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::CountRequest* req,
+             ::rpc::CountResponse* resp) {
+               return service->GetUserFilesCount(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[5],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::FilesListRequest, ::rpc::FilesListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::FilesListRequest* req,
+             ::rpc::FilesListResponse* resp) {
+               return service->GetUserFileList(ctx, req, resp);
+             }, this)));
 }
 
 DatabaseService::Service::~Service() {
@@ -201,6 +271,20 @@ DatabaseService::Service::~Service() {
 }
 
 ::grpc::Status DatabaseService::Service::UploadFile(::grpc::ServerContext* context, const ::rpc::UploadRequest* request, ::rpc::UploadResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::GetUserFilesCount(::grpc::ServerContext* context, const ::rpc::CountRequest* request, ::rpc::CountResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::GetUserFileList(::grpc::ServerContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response) {
   (void) context;
   (void) request;
   (void) response;

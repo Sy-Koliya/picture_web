@@ -44,6 +44,10 @@ enum SakilaDatabaseStatements : uint32
     UPDATE_USER_FILE_COUNT,          // UPDATE user_file_count SET count=? WHERE user=?
     INSERT_FILE_INFO,                // 插入 file_info
 
+    GET_USER_FILE_COUNT,      // SELECT count FROM user_file_count WHERE user = ?
+    GET_USER_FILES_LIST_NORMAL,
+    GET_USER_FILES_LIST_ASC,      
+    GET_USER_FILES_LIST_DESC,
     MAX_SAKILADATABASE_STATEMENTS,
 };
 

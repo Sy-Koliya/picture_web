@@ -63,6 +63,20 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::UploadResponse>> PrepareAsyncUploadFile(::grpc::ClientContext* context, const ::rpc::UploadRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::UploadResponse>>(PrepareAsyncUploadFileRaw(context, request, cq));
     }
+    virtual ::grpc::Status GetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::rpc::CountResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CountResponse>> AsyncGetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CountResponse>>(AsyncGetUserFilesCountRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CountResponse>> PrepareAsyncGetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CountResponse>>(PrepareAsyncGetUserFilesCountRaw(context, request, cq));
+    }
+    virtual ::grpc::Status GetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::rpc::FilesListResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::FilesListResponse>> AsyncGetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::FilesListResponse>>(AsyncGetUserFileListRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::FilesListResponse>> PrepareAsyncGetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::FilesListResponse>>(PrepareAsyncGetUserFileListRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -74,6 +88,10 @@ class DatabaseService final {
       virtual void InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void UploadFile(::grpc::ClientContext* context, const ::rpc::UploadRequest* request, ::rpc::UploadResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void UploadFile(::grpc::ClientContext* context, const ::rpc::UploadRequest* request, ::rpc::UploadResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest* request, ::rpc::CountResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest* request, ::rpc::CountResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -87,6 +105,10 @@ class DatabaseService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::Md5Response>* PrepareAsyncInstantUploadRaw(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::UploadResponse>* AsyncUploadFileRaw(::grpc::ClientContext* context, const ::rpc::UploadRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::UploadResponse>* PrepareAsyncUploadFileRaw(::grpc::ClientContext* context, const ::rpc::UploadRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CountResponse>* AsyncGetUserFilesCountRaw(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CountResponse>* PrepareAsyncGetUserFilesCountRaw(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::FilesListResponse>* AsyncGetUserFileListRaw(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::FilesListResponse>* PrepareAsyncGetUserFileListRaw(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -119,6 +141,20 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::UploadResponse>> PrepareAsyncUploadFile(::grpc::ClientContext* context, const ::rpc::UploadRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::UploadResponse>>(PrepareAsyncUploadFileRaw(context, request, cq));
     }
+    ::grpc::Status GetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::rpc::CountResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CountResponse>> AsyncGetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CountResponse>>(AsyncGetUserFilesCountRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CountResponse>> PrepareAsyncGetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CountResponse>>(PrepareAsyncGetUserFilesCountRaw(context, request, cq));
+    }
+    ::grpc::Status GetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::rpc::FilesListResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::FilesListResponse>> AsyncGetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::FilesListResponse>>(AsyncGetUserFileListRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::FilesListResponse>> PrepareAsyncGetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::FilesListResponse>>(PrepareAsyncGetUserFileListRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -130,6 +166,10 @@ class DatabaseService final {
       void InstantUpload(::grpc::ClientContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response, ::grpc::ClientUnaryReactor* reactor) override;
       void UploadFile(::grpc::ClientContext* context, const ::rpc::UploadRequest* request, ::rpc::UploadResponse* response, std::function<void(::grpc::Status)>) override;
       void UploadFile(::grpc::ClientContext* context, const ::rpc::UploadRequest* request, ::rpc::UploadResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest* request, ::rpc::CountResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetUserFilesCount(::grpc::ClientContext* context, const ::rpc::CountRequest* request, ::rpc::CountResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetUserFileList(::grpc::ClientContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -149,10 +189,16 @@ class DatabaseService final {
     ::grpc::ClientAsyncResponseReader< ::rpc::Md5Response>* PrepareAsyncInstantUploadRaw(::grpc::ClientContext* context, const ::rpc::Md5Request& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rpc::UploadResponse>* AsyncUploadFileRaw(::grpc::ClientContext* context, const ::rpc::UploadRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rpc::UploadResponse>* PrepareAsyncUploadFileRaw(::grpc::ClientContext* context, const ::rpc::UploadRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::CountResponse>* AsyncGetUserFilesCountRaw(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::CountResponse>* PrepareAsyncGetUserFilesCountRaw(::grpc::ClientContext* context, const ::rpc::CountRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::FilesListResponse>* AsyncGetUserFileListRaw(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::FilesListResponse>* PrepareAsyncGetUserFileListRaw(::grpc::ClientContext* context, const ::rpc::FilesListRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_registerUser_;
     const ::grpc::internal::RpcMethod rpcmethod_loginUser_;
     const ::grpc::internal::RpcMethod rpcmethod_InstantUpload_;
     const ::grpc::internal::RpcMethod rpcmethod_UploadFile_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetUserFilesCount_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetUserFileList_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -164,6 +210,8 @@ class DatabaseService final {
     virtual ::grpc::Status loginUser(::grpc::ServerContext* context, const ::rpc::LoginRequest* request, ::rpc::LoginResponse* response);
     virtual ::grpc::Status InstantUpload(::grpc::ServerContext* context, const ::rpc::Md5Request* request, ::rpc::Md5Response* response);
     virtual ::grpc::Status UploadFile(::grpc::ServerContext* context, const ::rpc::UploadRequest* request, ::rpc::UploadResponse* response);
+    virtual ::grpc::Status GetUserFilesCount(::grpc::ServerContext* context, const ::rpc::CountRequest* request, ::rpc::CountResponse* response);
+    virtual ::grpc::Status GetUserFileList(::grpc::ServerContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_registerUser : public BaseClass {
@@ -245,7 +293,47 @@ class DatabaseService final {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_registerUser<WithAsyncMethod_loginUser<WithAsyncMethod_InstantUpload<WithAsyncMethod_UploadFile<Service > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_GetUserFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetUserFilesCount() {
+      ::grpc::Service::MarkMethodAsync(4);
+    }
+    ~WithAsyncMethod_GetUserFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::CountRequest* /*request*/, ::rpc::CountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetUserFilesCount(::grpc::ServerContext* context, ::rpc::CountRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::CountResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetUserFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetUserFileList() {
+      ::grpc::Service::MarkMethodAsync(5);
+    }
+    ~WithAsyncMethod_GetUserFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFileList(::grpc::ServerContext* /*context*/, const ::rpc::FilesListRequest* /*request*/, ::rpc::FilesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetUserFileList(::grpc::ServerContext* context, ::rpc::FilesListRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::FilesListResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_registerUser<WithAsyncMethod_loginUser<WithAsyncMethod_InstantUpload<WithAsyncMethod_UploadFile<WithAsyncMethod_GetUserFilesCount<WithAsyncMethod_GetUserFileList<Service > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_registerUser : public BaseClass {
    private:
@@ -354,7 +442,61 @@ class DatabaseService final {
     virtual ::grpc::ServerUnaryReactor* UploadFile(
       ::grpc::CallbackServerContext* /*context*/, const ::rpc::UploadRequest* /*request*/, ::rpc::UploadResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_registerUser<WithCallbackMethod_loginUser<WithCallbackMethod_InstantUpload<WithCallbackMethod_UploadFile<Service > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetUserFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetUserFilesCount() {
+      ::grpc::Service::MarkMethodCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::CountRequest, ::rpc::CountResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::CountRequest* request, ::rpc::CountResponse* response) { return this->GetUserFilesCount(context, request, response); }));}
+    void SetMessageAllocatorFor_GetUserFilesCount(
+        ::grpc::MessageAllocator< ::rpc::CountRequest, ::rpc::CountResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::CountRequest, ::rpc::CountResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetUserFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::CountRequest* /*request*/, ::rpc::CountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetUserFilesCount(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::CountRequest* /*request*/, ::rpc::CountResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_GetUserFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetUserFileList() {
+      ::grpc::Service::MarkMethodCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::FilesListRequest, ::rpc::FilesListResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response) { return this->GetUserFileList(context, request, response); }));}
+    void SetMessageAllocatorFor_GetUserFileList(
+        ::grpc::MessageAllocator< ::rpc::FilesListRequest, ::rpc::FilesListResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::FilesListRequest, ::rpc::FilesListResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetUserFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFileList(::grpc::ServerContext* /*context*/, const ::rpc::FilesListRequest* /*request*/, ::rpc::FilesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetUserFileList(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::FilesListRequest* /*request*/, ::rpc::FilesListResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_registerUser<WithCallbackMethod_loginUser<WithCallbackMethod_InstantUpload<WithCallbackMethod_UploadFile<WithCallbackMethod_GetUserFilesCount<WithCallbackMethod_GetUserFileList<Service > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_registerUser : public BaseClass {
@@ -420,6 +562,40 @@ class DatabaseService final {
     }
     // disable synchronous version of this method
     ::grpc::Status UploadFile(::grpc::ServerContext* /*context*/, const ::rpc::UploadRequest* /*request*/, ::rpc::UploadResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetUserFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetUserFilesCount() {
+      ::grpc::Service::MarkMethodGeneric(4);
+    }
+    ~WithGenericMethod_GetUserFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::CountRequest* /*request*/, ::rpc::CountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetUserFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetUserFileList() {
+      ::grpc::Service::MarkMethodGeneric(5);
+    }
+    ~WithGenericMethod_GetUserFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFileList(::grpc::ServerContext* /*context*/, const ::rpc::FilesListRequest* /*request*/, ::rpc::FilesListResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -502,6 +678,46 @@ class DatabaseService final {
     }
     void RequestUploadFile(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetUserFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetUserFilesCount() {
+      ::grpc::Service::MarkMethodRaw(4);
+    }
+    ~WithRawMethod_GetUserFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::CountRequest* /*request*/, ::rpc::CountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetUserFilesCount(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetUserFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetUserFileList() {
+      ::grpc::Service::MarkMethodRaw(5);
+    }
+    ~WithRawMethod_GetUserFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFileList(::grpc::ServerContext* /*context*/, const ::rpc::FilesListRequest* /*request*/, ::rpc::FilesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetUserFileList(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -590,6 +806,50 @@ class DatabaseService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* UploadFile(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetUserFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetUserFilesCount() {
+      ::grpc::Service::MarkMethodRawCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetUserFilesCount(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetUserFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::CountRequest* /*request*/, ::rpc::CountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetUserFilesCount(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetUserFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetUserFileList() {
+      ::grpc::Service::MarkMethodRawCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetUserFileList(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetUserFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetUserFileList(::grpc::ServerContext* /*context*/, const ::rpc::FilesListRequest* /*request*/, ::rpc::FilesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetUserFileList(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -700,9 +960,63 @@ class DatabaseService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedUploadFile(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::UploadRequest,::rpc::UploadResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<Service > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetUserFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetUserFilesCount() {
+      ::grpc::Service::MarkMethodStreamed(4,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::CountRequest, ::rpc::CountResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::CountRequest, ::rpc::CountResponse>* streamer) {
+                       return this->StreamedGetUserFilesCount(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetUserFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetUserFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::CountRequest* /*request*/, ::rpc::CountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetUserFilesCount(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::CountRequest,::rpc::CountResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetUserFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetUserFileList() {
+      ::grpc::Service::MarkMethodStreamed(5,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::FilesListRequest, ::rpc::FilesListResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::FilesListRequest, ::rpc::FilesListResponse>* streamer) {
+                       return this->StreamedGetUserFileList(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetUserFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetUserFileList(::grpc::ServerContext* /*context*/, const ::rpc::FilesListRequest* /*request*/, ::rpc::FilesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetUserFileList(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::FilesListRequest,::rpc::FilesListResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<Service > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<Service > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<Service > > > > > > StreamedService;
 };
 
 }  // namespace rpc

@@ -168,9 +168,24 @@ inline auto MysqlUploadFileCall(GrpcClient<rpc::DatabaseService, Req, Resp> *cli
 }
 
 template <typename Req, typename Resp>
+inline auto MysqlGetUserFilesCountCall(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncGetUserFilesCount>{client, std::move(req)};
+}
+
+template <typename Req, typename Resp>
+inline auto MysqlGetUserFileListCall(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncGetUserFileList>{client, std::move(req)};
+}
+
+
+template <typename Req, typename Resp>
 inline auto FdfslUploadFileCall(GrpcClient<rpc::FdfsService, Req, Resp> *client, Req req)
 {
     return RpcAwaitable<GrpcClient<rpc::FdfsService, Req, Resp>, Req, Resp, &rpc::FdfsService::Stub::PrepareAsyncUpload>{client, std::move(req)};
 }
+
+
 
 #endif

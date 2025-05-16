@@ -6,6 +6,7 @@
 #include "api_register.h"
 #include "api_instant_upload.h"
 #include "api_upload.h"
+#include "api_myfiles.h"
 #include "Global.h"
 #include "CoroutineCompeleteQueue.h"
 

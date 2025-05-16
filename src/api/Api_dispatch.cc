@@ -89,6 +89,7 @@ public:
                            getTrie().insert("/api/md5", ApiInstantUpload);
                            getTrie().insert("/api/login", ApiUserLogin);
                            getTrie().insert("/api/upload",ApiUploadFile);
+                           getTrie().insert("/api/myfiles",ApiMyfiles);
                        });
         // 动态添加:
     }
