@@ -221,6 +221,6 @@ void HttpConn::HandleRead()
 // 分发后,api使用connect请求
 static int DispatchHttpRequest(int fd, Request &req)
 {
-    WorkPool::Instance().Submit(&api_dispatch, fd, req.uri, req.Content2String());
+    api_dispatch(fd, req.uri, req.Content2String());
     return 0;
 }
