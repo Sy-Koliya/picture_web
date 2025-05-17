@@ -27,6 +27,7 @@ struct buffer_s
     buf_chain_t **last_with_datap; // 指向最近一次写入数据的节点指针引用，优化插入和清理
     uint32_t total_len;            // 缓冲区中所有链节点的有效数据总长度
     uint32_t last_read_pos;        // 上次搜索时匹配停留的全局偏移
+    pthread_mutex_t lock;
 };
 
 // 计算链节点可写剩余空间
@@ -60,7 +61,10 @@ ZERO_CHAIN(buffer_t *dst)
 uint32_t
 buffer_len(buffer_t *buf)
 {
-    return buf->total_len;
+    pthread_mutex_lock(&buf->lock);
+    uint32_t len = buf->total_len;
+    pthread_mutex_unlock(&buf->lock);
+    return len;
 }
 
 /**
@@ -78,6 +82,7 @@ buffer_new(uint32_t sz)
     }
     memset(buf, 0, sizeof(*buf));
     buf->last_with_datap = &buf->first;
+    pthread_mutex_init(&buf->lock, NULL);
     return buf;
 }
 
@@ -140,6 +145,7 @@ void buffer_free(buffer_t *buf)
     {
         buf_chain_free_all(buf->first);
         ZERO_CHAIN(buf);
+        pthread_mutex_destroy(&buf->lock);
         free(buf);
     }
 }
@@ -208,11 +214,13 @@ buf_chain_align(buf_chain_t *chain)
  */
 int buffer_add(buffer_t *buf, const void *data_in, uint32_t datlen)
 {
+    pthread_mutex_lock(&buf->lock);
     buf_chain_t *chain, *tmp;
     const char *data = (char *)data_in;
     uint32_t remain, to_alloc;
     if (datlen > BUFFER_CHAIN_MAX - buf->total_len)
     {
+    pthread_mutex_unlock(&buf->lock);
         return -1; // 超出最大容量
     }
     // 定位写入节点
@@ -220,8 +228,10 @@ int buffer_add(buffer_t *buf, const void *data_in, uint32_t datlen)
     if (!chain)
     {
         chain = buf_chain_new(datlen);
-        if (!chain)
+        if (!chain){
+          pthread_mutex_unlock(&buf->lock);
             return -1;
+        }
         buf_chain_insert(buf, chain);
     }
     // 剩余空间
@@ -232,6 +242,7 @@ int buffer_add(buffer_t *buf, const void *data_in, uint32_t datlen)
         memcpy(chain->buffer + chain->misalign + chain->off, data, datlen);
         chain->off += datlen;
         buf->total_len += datlen;
+         pthread_mutex_unlock(&buf->lock);
         return 0;
     }
     // 可重排则前移
@@ -241,6 +252,7 @@ int buffer_add(buffer_t *buf, const void *data_in, uint32_t datlen)
         memcpy(chain->buffer + chain->off, data, datlen);
         chain->off += datlen;
         buf->total_len += datlen;
+         pthread_mutex_unlock(&buf->lock);
         return 0;
     }
     // 否则新建扩容节点
@@ -250,8 +262,10 @@ int buffer_add(buffer_t *buf, const void *data_in, uint32_t datlen)
     if (datlen > to_alloc)
         to_alloc = datlen;
     tmp = buf_chain_new(to_alloc);
-    if (!tmp)
+    if (!tmp){
+      pthread_mutex_unlock(&buf->lock);
         return -1;
+    }
     if (remain)
     {
         memcpy(chain->buffer + chain->misalign + chain->off, data, remain);
@@ -263,6 +277,7 @@ int buffer_add(buffer_t *buf, const void *data_in, uint32_t datlen)
     memcpy(tmp->buffer, data, datlen);
     tmp->off = datlen;
     buf_chain_insert(buf, tmp);
+    pthread_mutex_unlock(&buf->lock);
     return 0;
 }
 
@@ -337,9 +352,11 @@ static int buffer_drain(buffer_t *buf, uint32_t len)
  */
 int buffer_remove(buffer_t *buf, void *data_out, uint32_t datlen)
 {
+    pthread_mutex_lock(&buf->lock);
     uint32_t n = buf_copyout(buf, data_out, datlen);
     if (n > 0)
         buffer_drain(buf, n);
+     pthread_mutex_unlock(&buf->lock);
     return (int)n;
 }
 
@@ -416,23 +433,33 @@ static bool check_sep(buf_chain_t *chain, int from, const char *sep, int seplen)
 
 int buffer_search(buffer_t *buf, const char *sep, const int seplen)
 {
-    if (seplen <= 0 || buf == NULL || buf->total_len < (uint32_t)seplen)
+    pthread_mutex_lock(&buf->lock);
+    if (seplen <= 0 || buf == NULL || buf->total_len < (uint32_t)seplen){
+        pthread_mutex_unlock(&buf->lock);
         return -1;
+    }
     if (seplen >= REQURIEDLEN_WITH_KMP)
     {
-        return buffer_search_kmp(buf, sep, seplen);
+
+        int ans = buffer_search_kmp(buf, sep, seplen);
+        pthread_mutex_unlock(&buf->lock);
+        return ans;
     }
     buf_chain_t *chain;
     int i;
     chain = buf->first;
-    if (chain == NULL)
+    if (chain == NULL){
+       pthread_mutex_unlock(&buf->lock);   
         return 0;
+    }
     int bytes = chain->off;
     while (bytes <= buf->last_read_pos)
     {
         chain = chain->next;
-        if (chain == NULL)
+        if (chain == NULL){
+          pthread_mutex_unlock(&buf->lock);   
             return 0;
+        }
         bytes += chain->off;
     }
     bytes -= buf->last_read_pos;
@@ -442,6 +469,7 @@ int buffer_search(buffer_t *buf, const char *sep, const int seplen)
         if (check_sep(chain, from, sep, seplen))
         {
             buf->last_read_pos = 0;
+            pthread_mutex_unlock(&buf->lock);   
             return i + seplen;
         }
         ++from;
@@ -456,6 +484,7 @@ int buffer_search(buffer_t *buf, const char *sep, const int seplen)
         }
     }
     buf->last_read_pos = i;
+    pthread_mutex_unlock(&buf->lock);
     return 0;
 }
 
@@ -520,18 +549,22 @@ static int buffer_get_write_iov(buffer_t *buf,
         iov[cnt].iov_len = newch->buffer_len;
         ++cnt;
     }
+   
     return cnt;
 }
 
-int buffer_add_from_readv(buffer_t * in_buf,int  sock_fd)
+int buffer_add_from_readv(buffer_t * buf,int  sock_fd)
 {
+    pthread_mutex_lock(&buf->lock);
     struct iovec iovs[IOV_NUMS];
-    int niov = buffer_get_write_iov(in_buf, iovs, IOV_NUMS);
+    int niov = buffer_get_write_iov(buf, iovs, IOV_NUMS);
 
     ssize_t n = readv(sock_fd, iovs, niov);
     if (n <= 0){
+        pthread_mutex_unlock(&buf->lock);
         return n;
     }
-    buffer_update_written(in_buf, n);
+    buffer_update_written(buf, n);
+    pthread_mutex_unlock(&buf->lock);
     return n;
 }
