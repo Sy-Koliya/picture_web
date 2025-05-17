@@ -91,6 +91,37 @@ message FilesListResponse {
   int32          total   = 4;  // 用户总文件数
 }
 
+message ShareFileRequest {
+  string user     = 1;
+  string token    = 2;
+  string md5      = 3;
+  string filename = 4;
+}
+message ShareFileResponse {
+  int32 code = 1;  
+}
+
+message DeleteFileRequest {
+  string user     = 1;
+  string token    = 2;
+  string md5      = 3;
+  string filename = 4;
+}
+message DeleteFileResponse {
+  int32 code = 1;
+  string file_id = 2;  //如果code为2 返回要删除的文件id
+}
+
+message PvFileRequest {
+  string user     = 1;
+  string md5      = 2;
+  string filename = 3;
+}
+message PvFileResponse {
+  int32 code = 1;
+}
+
+
 
 
 
@@ -101,4 +132,7 @@ service DatabaseService {
   rpc UploadFile(UploadRequest) returns (UploadResponse);
   rpc GetUserFilesCount(CountRequest)    returns (CountResponse);
   rpc GetUserFileList(FilesListRequest)  returns (FilesListResponse);
+  rpc ShareFile (ShareFileRequest)  returns (ShareFileResponse);
+  rpc DeleteFile(DeleteFileRequest) returns (DeleteFileResponse);
+  rpc PvFile    (PvFileRequest)    returns (PvFileResponse);
 }

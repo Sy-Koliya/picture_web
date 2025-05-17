@@ -21,6 +21,7 @@ public:
         new UploadFileCall(&db_service_, cq_.get());
         new CountCall(&db_service_, cq_.get());
         new ListCall(&db_service_, cq_.get());
+        new DeleteFileCall(&db_service_, cq_.get());
     }
     ~MySqlRpcServer()
     {
@@ -30,7 +31,8 @@ public:
         UploadFileCall::processor_stop_flag_.store(true);
         CountCall::processor_stop_flag_.store(true);
         ListCall::processor_stop_flag_.store(true);
-
+        DeleteFileCall::processor_stop_flag_.store(true);
+        // 等待所有处理器线程结束
         if (RegisterUserCall::processor_thread_.joinable())
             RegisterUserCall::processor_thread_.join();
         if (LoginUserCall::processor_thread_.joinable())
@@ -43,6 +45,8 @@ public:
             CountCall::processor_thread_.join();
         if (ListCall::processor_thread_.joinable())
             ListCall::processor_thread_.join();
+        if (DeleteFileCall::processor_thread_.joinable())
+            DeleteFileCall::processor_thread_.join();
     }
 
 private:

@@ -158,7 +158,6 @@ RESPOND:
             "Content-Type: application/json; charset=utf-8\r\n"
             "Content-Length: " + std::to_string(body.size()) + "\r\n\r\n" +
             body;
-        std::cout<<response<<'\n';
         if (auto sock = FindBaseSocket(fd); sock) {
             if (auto *h = dynamic_cast<HttpConn*>(sock.GetBasePtr())) {
                 h->SetResponse(std::move(response));

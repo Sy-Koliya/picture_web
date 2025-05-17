@@ -27,28 +27,47 @@ enum SakilaDatabaseStatements : uint32
         When updating more than one field, consider looking at the calling function
         name for a suiting suffix.
     */
-    //注册相关
+    // 注册相关
     CHECK_REGISTER_INFO_EXIST,
     REGISTER_INTO_USER_INFO,
 
-    //登录相关
+    // 登录相关
     CHECK_LOGIN_PASSWORD,
 
     // 秒传相关
-    CHECK_MD5_FILE_REF_COUNT,        // SELECT count FROM file_info WHERE md5=?
-    CHECK_USER_FILE_LIST_EXIST,      // SELECT md5 FROM user_file_list WHERE user=? AND md5=? AND file_name=?
-    UPDATE_FILE_INFO_COUNT,          // UPDATE file_info SET count=? WHERE md5=?
+    CHECK_MD5_FILE_REF_COUNT,        // SELECT count FROM file_info WHERE md5 = ?
+    CHECK_USER_FILE_LIST_EXIST,      // SELECT md5 FROM user_file_list WHERE user = ? AND md5 = ? AND file_name = ?
+    UPDATE_FILE_INFO_COUNT,          // UPDATE file_info SET count = ? WHERE md5 = ?
     INSERT_USER_FILE_LIST,           // INSERT INTO user_file_list(...)
-    SELECT_USER_FILE_COUNT,          // SELECT count FROM user_file_count WHERE user=?
+    SELECT_USER_FILE_COUNT,          // SELECT count FROM user_file_count WHERE user = ?
     INSERT_USER_FILE_COUNT,          // INSERT INTO user_file_count(...)
-    UPDATE_USER_FILE_COUNT,          // UPDATE user_file_count SET count=? WHERE user=?
-    INSERT_FILE_INFO,                // 插入 file_info
+    UPDATE_USER_FILE_COUNT,          // UPDATE user_file_count SET count = ? WHERE user = ?
+    INSERT_FILE_INFO,                // INSERT INTO file_info(...)
 
-    GET_USER_FILE_COUNT,      // SELECT count FROM user_file_count WHERE user = ?
+    // 分页查询
+    GET_USER_FILE_COUNT,             // SELECT count FROM user_file_count WHERE user = ?
     GET_USER_FILES_LIST_NORMAL,
-    GET_USER_FILES_LIST_ASC,      
+    GET_USER_FILES_LIST_ASC,
     GET_USER_FILES_LIST_DESC,
+
+    // —— ShareFile 相关 —— 
+    CHECK_SHARE_FILE_EXIST,          // SELECT 1 FROM share_file_list WHERE md5 = ? AND file_name = ?
+    INSERT_SHARE_FILE,               // INSERT INTO share_file_list(...)
+    UPDATE_USER_FILE_LIST_SHARE_STATUS, // UPDATE user_file_list SET shared_status = 1 WHERE user = ? AND md5 = ? AND file_name = ?
+    GET_SHARE_FILE_COUNT,            // SELECT count FROM user_file_count WHERE user = ?
+    INSERT_SHARE_FILE_COUNT,         // INSERT INTO user_file_count(...)
+    UPDATE_SHARE_FILE_COUNT,         // UPDATE user_file_count SET count = ? WHERE user = ?
+
+    // —— DeleteFile 相关 —— 
+    DELETE_SHARE_FILE,               // DELETE FROM share_file_list WHERE user = ? AND md5 = ? AND file_name = ?
+    DELETE_USER_FILE_LIST,           // DELETE FROM user_file_list WHERE user = ? AND md5 = ? AND file_name = ?
+    GET_FILE_REF_COUNT,              // SELECT count FROM file_info WHERE md5 = ?
+    UPDATE_FILE_REF_COUNT,           // UPDATE file_info SET count = ? WHERE md5 = ?
+    DELETE_FILE_INFO,                // DELETE FROM file_info WHERE md5 = ?
+    GET_USER_FILE_ID,
+    
     MAX_SAKILADATABASE_STATEMENTS,
+    
 };
 
 class TC_DATABASE_API SakilaDatabaseConnection : public MySQLConnection

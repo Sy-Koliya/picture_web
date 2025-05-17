@@ -1,4 +1,5 @@
 #include "common_api.h"
+#include "HttpConn.h"
 #include <iostream>
 std::string RandomString(std::size_t len)
 {
@@ -70,19 +71,22 @@ bool VerifyToken(const std::string &user_name,
  *          0 成功, -1 失败
  */
 
-bool QueryParseKeyValue(const std::string &query,
+bool QueryParseKeyValue(const std::string &query_in,
                         const std::string &key,
                         std::string &value) {
+    // 先剥离 path 部分
+    auto qpos = query_in.find('?');
+    const std::string query = (qpos == std::string::npos)
+                              ? query_in
+                              : query_in.substr(qpos + 1);
+
     size_t pos = 0;
     const std::string pattern = key + "=";
     while (pos < query.size()) {
-        // 找到下一个 '&' 界限
         size_t amp = query.find('&', pos);
-        // 取出这段 token
         size_t len = (amp == std::string::npos ? query.size() : amp) - pos;
         if (len >= pattern.size() &&
             query.compare(pos, pattern.size(), pattern) == 0) {
-            // 正好以 "key=" 开头
             value = query.substr(pos + pattern.size(), len - pattern.size());
             return true;
         }
@@ -90,4 +94,24 @@ bool QueryParseKeyValue(const std::string &query,
         pos = amp + 1;
     }
     return false;
+}
+
+
+bool SetRespToHttpConn(int fd, std::string &&  body){
+   std:: string response =
+      "HTTP/1.1 200 OK\r\n"
+      "Connection: close\r\n"
+      "Content-Type: application/json; charset=utf-8\r\n"
+      "Content-Length: " +
+      std::to_string(body.size()) +
+      "\r\n\r\n" + body;
+  if (auto b = FindBaseSocket(fd); b)
+  {
+    if (auto *h = dynamic_cast<HttpConn *>(b.GetBasePtr()))
+    {
+      h->SetResponse(std::move(response));
+      return true;
+    }
+  }
+  return false;
 }

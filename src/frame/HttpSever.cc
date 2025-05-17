@@ -16,7 +16,7 @@ HttpServer::HttpServer()
     instance = this;
     isptr=false;
     // 注册 SIGINT 处理函数
-    std::signal(SIGINT, HttpServer::handle_sigint);
+   // std::signal(SIGINT, HttpServer::handle_sigint);
 }
 
 HttpServer::~HttpServer() {

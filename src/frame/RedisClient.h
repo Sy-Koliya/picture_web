@@ -4,6 +4,12 @@
 #include <sw/redis++/redis++.h>
 #include "Global.h"
 
+
+#define FILE_PUBLIC_ZSET "FILE_PUBLIC_ZSET"
+
+#define FILE_NAME_HASH "FILE_NAME_HASH"
+
+
 inline sw::redis::Redis& get_redis() {
     static sw::redis::Redis redis = [](){
         // 从配置里读各项（带默认值）

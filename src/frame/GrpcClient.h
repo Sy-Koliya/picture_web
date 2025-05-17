@@ -179,6 +179,24 @@ inline auto MysqlGetUserFileListCall(GrpcClient<rpc::DatabaseService, Req, Resp>
     return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncGetUserFileList>{client, std::move(req)};
 }
 
+template <typename Req, typename Resp>
+inline auto MysqlShareFile(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncShareFile>{client, std::move(req)};
+}
+
+template <typename Req, typename Resp>
+inline auto MysqlDeleteFile(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncDeleteFile>{client, std::move(req)};
+}
+
+template <typename Req, typename Resp>
+inline auto MysqlPvFile(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncPvFile>{client, std::move(req)};
+}
+
 
 template <typename Req, typename Resp>
 inline auto FdfslUploadFileCall(GrpcClient<rpc::FdfsService, Req, Resp> *client, Req req)
@@ -186,6 +204,12 @@ inline auto FdfslUploadFileCall(GrpcClient<rpc::FdfsService, Req, Resp> *client,
     return RpcAwaitable<GrpcClient<rpc::FdfsService, Req, Resp>, Req, Resp, &rpc::FdfsService::Stub::PrepareAsyncUpload>{client, std::move(req)};
 }
 
+
+template <typename Req, typename Resp>
+inline auto FdfslDeleteFileCall(GrpcClient<rpc::FdfsService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::FdfsService, Req, Resp>, Req, Resp, &rpc::FdfsService::Stub::PrepareAsyncDelete>{client, std::move(req)};
+}
 
 
 #endif

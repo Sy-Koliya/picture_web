@@ -33,7 +33,7 @@ bool QueryParseKeyValue(const std::string &query,
                         std::string &value);
 
 
-
+bool SetRespToHttpConn(int fd, std::string &&  body);
 
 
 

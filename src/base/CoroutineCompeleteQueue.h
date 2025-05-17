@@ -38,8 +38,9 @@ struct Notify : NotifyBase
             return false;
         if (cb)
         {
-            WorkPool::Instance().Submit([cb_ = std::move(cb), v_ = task.get()]()
-                                        { cb_(v_); });
+            T v = task.get();
+            WorkPool::Instance().Submit([cb_ = std::move(cb), v]()
+                                        { cb_(v); });
         }
         return true;
     }

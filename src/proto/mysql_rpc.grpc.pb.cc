@@ -28,6 +28,9 @@ static const char* DatabaseService_method_names[] = {
   "/rpc.DatabaseService/UploadFile",
   "/rpc.DatabaseService/GetUserFilesCount",
   "/rpc.DatabaseService/GetUserFileList",
+  "/rpc.DatabaseService/ShareFile",
+  "/rpc.DatabaseService/DeleteFile",
+  "/rpc.DatabaseService/PvFile",
 };
 
 std::unique_ptr< DatabaseService::Stub> DatabaseService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -43,6 +46,9 @@ DatabaseService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& ch
   , rpcmethod_UploadFile_(DatabaseService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetUserFilesCount_(DatabaseService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetUserFileList_(DatabaseService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ShareFile_(DatabaseService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DeleteFile_(DatabaseService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_PvFile_(DatabaseService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DatabaseService::Stub::registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::rpc::RegisterResponse* response) {
@@ -183,6 +189,75 @@ void DatabaseService::Stub::async::GetUserFileList(::grpc::ClientContext* contex
   return result;
 }
 
+::grpc::Status DatabaseService::Stub::ShareFile(::grpc::ClientContext* context, const ::rpc::ShareFileRequest& request, ::rpc::ShareFileResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::ShareFileRequest, ::rpc::ShareFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ShareFile_, context, request, response);
+}
+
+void DatabaseService::Stub::async::ShareFile(::grpc::ClientContext* context, const ::rpc::ShareFileRequest* request, ::rpc::ShareFileResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::ShareFileRequest, ::rpc::ShareFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ShareFile_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::ShareFile(::grpc::ClientContext* context, const ::rpc::ShareFileRequest* request, ::rpc::ShareFileResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ShareFile_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::ShareFileResponse>* DatabaseService::Stub::PrepareAsyncShareFileRaw(::grpc::ClientContext* context, const ::rpc::ShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::ShareFileResponse, ::rpc::ShareFileRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ShareFile_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::ShareFileResponse>* DatabaseService::Stub::AsyncShareFileRaw(::grpc::ClientContext* context, const ::rpc::ShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncShareFileRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::DeleteFile(::grpc::ClientContext* context, const ::rpc::DeleteFileRequest& request, ::rpc::DeleteFileResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::DeleteFileRequest, ::rpc::DeleteFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DeleteFile_, context, request, response);
+}
+
+void DatabaseService::Stub::async::DeleteFile(::grpc::ClientContext* context, const ::rpc::DeleteFileRequest* request, ::rpc::DeleteFileResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::DeleteFileRequest, ::rpc::DeleteFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DeleteFile_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::DeleteFile(::grpc::ClientContext* context, const ::rpc::DeleteFileRequest* request, ::rpc::DeleteFileResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DeleteFile_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::DeleteFileResponse>* DatabaseService::Stub::PrepareAsyncDeleteFileRaw(::grpc::ClientContext* context, const ::rpc::DeleteFileRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::DeleteFileResponse, ::rpc::DeleteFileRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DeleteFile_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::DeleteFileResponse>* DatabaseService::Stub::AsyncDeleteFileRaw(::grpc::ClientContext* context, const ::rpc::DeleteFileRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncDeleteFileRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::PvFile(::grpc::ClientContext* context, const ::rpc::PvFileRequest& request, ::rpc::PvFileResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::PvFileRequest, ::rpc::PvFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PvFile_, context, request, response);
+}
+
+void DatabaseService::Stub::async::PvFile(::grpc::ClientContext* context, const ::rpc::PvFileRequest* request, ::rpc::PvFileResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::PvFileRequest, ::rpc::PvFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PvFile_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::PvFile(::grpc::ClientContext* context, const ::rpc::PvFileRequest* request, ::rpc::PvFileResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PvFile_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::PvFileResponse>* DatabaseService::Stub::PrepareAsyncPvFileRaw(::grpc::ClientContext* context, const ::rpc::PvFileRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::PvFileResponse, ::rpc::PvFileRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PvFile_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::PvFileResponse>* DatabaseService::Stub::AsyncPvFileRaw(::grpc::ClientContext* context, const ::rpc::PvFileRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncPvFileRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 DatabaseService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DatabaseService_method_names[0],
@@ -244,6 +319,36 @@ DatabaseService::Service::Service() {
              ::rpc::FilesListResponse* resp) {
                return service->GetUserFileList(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[6],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::ShareFileRequest, ::rpc::ShareFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::ShareFileRequest* req,
+             ::rpc::ShareFileResponse* resp) {
+               return service->ShareFile(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[7],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::DeleteFileRequest, ::rpc::DeleteFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::DeleteFileRequest* req,
+             ::rpc::DeleteFileResponse* resp) {
+               return service->DeleteFile(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[8],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::PvFileRequest, ::rpc::PvFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::PvFileRequest* req,
+             ::rpc::PvFileResponse* resp) {
+               return service->PvFile(ctx, req, resp);
+             }, this)));
 }
 
 DatabaseService::Service::~Service() {
@@ -285,6 +390,27 @@ DatabaseService::Service::~Service() {
 }
 
 ::grpc::Status DatabaseService::Service::GetUserFileList(::grpc::ServerContext* context, const ::rpc::FilesListRequest* request, ::rpc::FilesListResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::ShareFile(::grpc::ServerContext* context, const ::rpc::ShareFileRequest* request, ::rpc::ShareFileResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::DeleteFile(::grpc::ServerContext* context, const ::rpc::DeleteFileRequest* request, ::rpc::DeleteFileResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::PvFile(::grpc::ServerContext* context, const ::rpc::PvFileRequest* request, ::rpc::PvFileResponse* response) {
   (void) context;
   (void) request;
   (void) response;

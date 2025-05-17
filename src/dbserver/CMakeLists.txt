@@ -13,6 +13,11 @@ find_package(gRPC       REQUIRED)
 find_package(MySQL      REQUIRED)
 find_package(Threads    REQUIRED)
 
+find_path(REDIS_PLUS_PLUS_HEADER sw)
+find_path(HIREDIS_HEADER        hiredis)
+find_library(HIREDIS_LIB        hiredis)
+find_library(REDIS_PLUS_PLUS_LIB redis++)
+
 # 子模块（相对于 src/dbserver 目录）
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/dbimpl   dbimpl_build)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/fmt      fmt_build)
@@ -43,6 +48,8 @@ add_executable(server_rpc
     ${DBAPI_SOURCES}
     ${API_SOURCES}
     ${PROTO_SOURCES}
+    ${REDIS_PLUS_PLUS_HEADER}
+    ${HIREDIS_HEADER}
 )
 
 # 包含路径：上一级根目录 + 子模块
@@ -74,4 +81,6 @@ target_link_libraries(server_rpc PRIVATE
     gRPC::grpc++_unsecure 
     Threads::Threads
     ${MYSQL_LIBRARIES}
+    ${HIREDIS_LIB}
+    ${REDIS_PLUS_PLUS_LIB}
 )

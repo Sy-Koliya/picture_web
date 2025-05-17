@@ -79,17 +79,18 @@ private:
     }
 
 public:
-    // 路由注册入口（线程安全）
+    // 路由注册入口
     static void Register(const std::string &uri = "", Handler handle_ = nullptr)
     {
         std::call_once(getFlag(), [&]()
                        {
-                           // 基础路由示例
                            getTrie().insert("/api/reg", ApiRegisterUser);
                            getTrie().insert("/api/md5", ApiInstantUpload);
                            getTrie().insert("/api/login", ApiUserLogin);
                            getTrie().insert("/api/upload",ApiUploadFile);
                            getTrie().insert("/api/myfiles",ApiMyfiles);
+                           getTrie().insert("/api/dealfile",ApiDealfile);
+
                        });
         // 动态添加:
     }

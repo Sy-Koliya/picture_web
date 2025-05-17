@@ -6,6 +6,7 @@
 #include "dbapi/api_upload_db.h"
 #include "dbapi/api_list_userfile_db.h"
 #include "dbapi/api_file_count_db.h"
+#include "dbapi/api_delete_file_db.h"
 
 
 #endif
