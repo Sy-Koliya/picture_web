@@ -173,6 +173,7 @@ std::pair<std::string, std::string>
     std::string addr = "http://" + storage_ip + ":" + http_port + "/" + fileid_;
 
      release(std::move(conn));
+     std::cout << "[INFO] upload success, fileid=" << fileid_ << ", addr=" << addr << "\n";
      return {fileid_, addr};
  }
 
@@ -211,6 +212,8 @@ bool FdfsConnectionPool::remove(const std::string &fileid) {
 
     // 4. 归还连接
     release(std::move(conn));
+    std::cout << "[INFO] Remove fileid=" << fileid
+              << (success ? " success" : " failed") << "\n";
     return success;
 }
 
