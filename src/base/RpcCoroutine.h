@@ -16,7 +16,8 @@ template <typename T>
 struct Notify;
 
 template <typename T>
-void Coroutine_finish(Notify<T> *nt);
+void Coroutine_finish(std::shared_ptr<Notify<T>>nt);
+static std::atomic<int> cnt={0};
 
 // RpcTask 模板及 void 特化
 
@@ -25,7 +26,7 @@ class RpcTask {
 public:
     struct promise_type {
         std::optional<T> result;
-        Notify<T> *nt = nullptr; // 通过 CoroutineScheduler 注入
+        std::shared_ptr<Notify<T>> nt; // 通过 CoroutineScheduler 注入
         std::atomic<bool> enqueued_{false};
 
         std::suspend_always initial_suspend() noexcept { return {}; }
@@ -33,6 +34,7 @@ public:
         std::suspend_always final_suspend() noexcept {
             bool expected = false;
             if (nt && enqueued_.compare_exchange_strong(expected, true)) { // 原子操作
+                std::cout << "CoroutineScheduler::final_suspend() enqueued=" << expected << std::endl;
                 Coroutine_finish(nt);
             }
             return {};
@@ -110,7 +112,7 @@ template <>
 class RpcTask<void> {
 public:
     struct promise_type {
-        Notify<void> *nt = nullptr;
+        std::shared_ptr<Notify<void>> nt;
         std::atomic<bool> enqueued_{false};
 
         std::suspend_always initial_suspend() noexcept { return {}; }
