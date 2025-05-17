@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/uio.h>
+#include <pthread.h>
 #include "buffer.h"
 
 
