@@ -89,7 +89,6 @@ public:
                            stmt_check_user->setString(1, ctx->md5);
                            stmt_check_user->setString(2, ctx->filename);
 
-                           // 设置下一查询
                            callback.SetNextQuery(
                                SakilaDatabase.AsyncQuery(stmt_check_user));
                          })
@@ -144,7 +143,7 @@ public:
                          })
                      // —— 第 5 步回调：插入或更新 user_file_count
                      .WithChainingPreparedCallback(
-                         [ctx, this](QueryCallback & /*callback*/,
+                         [ctx, this](QueryCallback & callback,
                                      PreparedQueryResult query_result)
                          {
                            if (!query_result || query_result->GetRowCount() == 0)
@@ -155,14 +154,8 @@ public:
                                  SakilaDatabase.GetPreparedStatement(INSERT_USER_FILE_COUNT);
                              stmt_ins_count->setString(0, ctx->user);
                              stmt_ins_count->setUInt32(1, ctx->user_file_count);
-                             // 直接执行，不再链式调用
-                             SakilaDatabase.AsyncQuery(stmt_ins_count)
-                                 .WithChainingPreparedCallback(
-                                     [this](QueryCallback &, PreparedQueryResult)
-                                     {
-                                       this->reply_.set_code(0);
-                                       this->finish(this->reply_);
-                                     });
+                             callback.SetNextQuery(
+                             SakilaDatabase.AsyncQuery(stmt_ins_count));
                            }
                            else
                            {
@@ -173,14 +166,13 @@ public:
                                  SakilaDatabase.GetPreparedStatement(UPDATE_USER_FILE_COUNT);
                              stmt_upd_count->setUInt32(0, ctx->user_file_count);
                              stmt_upd_count->setString(1, ctx->user);
-                             SakilaDatabase.AsyncQuery(stmt_upd_count)
-                                 .WithChainingPreparedCallback(
-                                     [this](QueryCallback &, PreparedQueryResult)
-                                     {
-                                       this->reply_.set_code(0);
-                                       this->finish(this->reply_);
-                                     });
-                           }
+                             callback.SetNextQuery(
+                             SakilaDatabase.AsyncQuery(stmt_upd_count));
+                          }
+                         }).WithChainingPreparedCallback([this](QueryCallback &/*ignored*/,
+                                     PreparedQueryResult /*ignored*/){
+                                      this->reply_.set_code(0);
+                                      this->rpc_finish();
                          });
 
     processor_.AddCallback(std::move(chain));
