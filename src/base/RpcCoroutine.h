@@ -16,7 +16,7 @@ template <typename T>
 struct Notify;
 
 template <typename T>
-void Coroutine_finish(std::shared_ptr<Notify<T>>nt);
+void Coroutine_finish(std::shared_ptr<Notify<T>> nt );
 static std::atomic<int> cnt={0};
 
 // RpcTask 模板及 void 特化
@@ -32,10 +32,8 @@ public:
         std::suspend_always initial_suspend() noexcept { return {}; }
         
         std::suspend_always final_suspend() noexcept {
-            bool expected = false;
-            if (nt && enqueued_.compare_exchange_strong(expected, true)) { // 原子操作
-                std::cout << "CoroutineScheduler::final_suspend() enqueued=" << expected << std::endl;
-                Coroutine_finish(nt);
+            if (nt && !enqueued_.exchange(true)) { 
+                Coroutine_finish(std::move(nt));
             }
             return {};
         }
@@ -60,7 +58,10 @@ public:
 
     ~RpcTask() {
         if (coro_ && !destroyed_) {
-             if (coro_.done()) coro_.destroy();
+             if (coro_.done()) {
+                coro_.destroy();
+                coro_ = nullptr;
+            }
              destroyed_ = true;
         }
     }
@@ -118,9 +119,8 @@ public:
         std::suspend_always initial_suspend() noexcept { return {}; }
         
         std::suspend_always final_suspend() noexcept {
-            bool expected = false;
-            if (nt && enqueued_.compare_exchange_strong(expected, true)) {
-                Coroutine_finish(nt);
+            if (nt &&!enqueued_.exchange(true)) {
+                Coroutine_finish(std::move(nt));
             }
             return {};
         }
@@ -140,6 +140,16 @@ public:
     using handle_type = std::coroutine_handle<promise_type>;
 
     explicit RpcTask(handle_type h) noexcept : coro_(h), destroyed_(false) {}
+
+    ~RpcTask() {
+    if (coro_ && !destroyed_) {
+            if (coro_.done()) {
+            coro_.destroy();
+            coro_ = nullptr;
+        }
+            destroyed_ = true;
+     }   
+    }
 
     RpcTask(const RpcTask &) = delete;
     RpcTask &operator=(const RpcTask &) = delete;

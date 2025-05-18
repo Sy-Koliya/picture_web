@@ -33,9 +33,11 @@ struct Notify : NotifyBase,public std::enable_shared_from_this<Notify<T>> {
     bool try_notify() override {
         if (!task.is_ready()) return false;
         if (cb) {
+            //  auto &nt_ref = task.handle().promise().nt;
+            //  auto self = std::move(nt_ref);
             auto self = this->shared_from_this();
             WorkPool::Instance().Submit([self] {
-                T value = self->task.get(); // 安全访问
+                T value = self->task.get(); 
                 self->cb(value);
             });
         }
@@ -119,7 +121,6 @@ private:
             std::shared_ptr<NotifyBase> nb;
             while (pending_.Dequeue(nb)) {
                 if (nb->try_notify()) {
-                    // 无需手动释放，shared_ptr 自动管理
                 } else {
                     for (int i = 0; i < try_again_times; ++i) {
                         if (nb->try_notify()) break;
