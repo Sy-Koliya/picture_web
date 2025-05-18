@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <sys/uio.h>
 #include <pthread.h>
-#include <unistd.h>
 #include "buffer.h"
 
 
@@ -77,20 +76,14 @@ buffer_t *
 buffer_new(uint32_t sz)
 {
     (void)sz;
-    buffer_t *buf = malloc(sizeof(*buf));
-    if (!buf) {
+    buffer_t *buf = (buffer_t *)malloc(sizeof(buffer_t));
+    if (!buf)
+    {
         return NULL;
     }
-    // 清 0 所有字段
     memset(buf, 0, sizeof(*buf));
-
-    // 必要的初始值
-    buf->first = NULL;
-    buf->last  = NULL;
-    buf->total_len = 0;
     buf->last_with_datap = &buf->first;
     pthread_mutex_init(&buf->lock, NULL);
-
     return buf;
 }
 
@@ -179,24 +172,25 @@ free_empty_chains(buffer_t *buf)
 /**
  * buf_chain_insert: 将节点插入 buffer 链中，并更新统计
  */
-static 
-void buf_chain_insert(buffer_t *buf, buf_chain_t *chain)
+static void
+buf_chain_insert(buffer_t *buf, buf_chain_t *chain)
 {
-    if (chain == NULL) return;
-
-    // 如果链表目前是空的
-    if (*buf->last_with_datap == NULL) {
-        buf->first = chain;
-    } else {
-        // 把 chain 接到上一个有数据链的 next 上
-        (*buf->last_with_datap)->next = chain;
+    if (*buf->last_with_datap == NULL)
+    {
+        // 首次插入
+        buf->first = buf->last = chain;
     }
-
-    buf->last = chain;
-    // 下一次插入，还应该挂在这个 chain->next 上
-    buf->last_with_datap = &chain->next;
+    else
+    {
+        // 清理空链后插入
+        buf_chain_t **chp = free_empty_chains(buf);
+        *chp = chain;
+        if (chain->off)
+            buf->last_with_datap = chp;
+        buf->last = chain;
+    }
+    buf->total_len += chain->off;
 }
-
 
 static int
 buf_chain_should_realign(buf_chain_t *chain, uint32_t datlen)
@@ -495,61 +489,83 @@ int buffer_search(buffer_t *buf, const char *sep, const int seplen)
     return 0;
 }
 
-/**
- * buffer_read_single_chain: 从 fd 读取数据到 buffer
- * 1) 定位当前尾链（上次写入的链或 buf->last）
- * 2) 计算尾链剩余可写空间
- * 3) 如果没有链块或空间用尽，就分配一个新链
- * 4) 从 fd 读入最多 free_space 字节
- */
-int buffer_read_single_chain(buffer_t *buf, int fd)
+static void buffer_update_written(buffer_t *buf, ssize_t nbytes)
+{
+    // pp 指向当前写入段在链表中的“指针域”
+    // （&first 或者 &prev->next）
+    buf_chain_t **pp = *buf->last_with_datap
+                           ? buf->last_with_datap
+                           : &buf->first;
+    buf_chain_t *ch = *pp ? *pp : buf->first;
+    ssize_t rem = nbytes;
+
+    while (ch && rem > 0)
+    {
+        size_t space = CHAIN_SPACE_LEN(ch);
+        size_t used = rem < (ssize_t)space ? rem : space;
+
+        // 写入
+        ch->off += used;
+        buf->total_len += used;
+        rem -= used;
+
+        if (used > 0)
+        {
+            // 记录本次写入的段
+            buf->last_with_datap = pp;
+        }
+
+        // 如果本段写满了，就移动到下一段
+        if ((size_t)used == space)
+        {
+            pp = &ch->next;
+            ch = ch->next;
+        }
+    }
+}
+
+static int buffer_get_write_iov(buffer_t *buf,
+                                struct iovec *iov, int max_iov)
+{
+    buf_chain_t *ch = *buf->last_with_datap ? *buf->last_with_datap
+                                            : buf->last;
+    int cnt = 0;
+    while (ch && cnt < max_iov)
+    {
+        size_t space = CHAIN_SPACE_LEN(ch);
+        if (space > 0)
+        {
+            iov[cnt].iov_base = ch->buffer + ch->misalign + ch->off;
+            iov[cnt].iov_len = space;
+            ++cnt;
+        }
+        ch = ch->next;
+    }
+    // 如果都没有可写段，或者 iovec 不够，可新建一个段
+    if (cnt == 0)
+    {
+        buf_chain_t *newch = buf_chain_new(MIN_BUFFER_SIZE);
+        buf_chain_insert(buf, newch);
+        iov[cnt].iov_base = newch->buffer;
+        iov[cnt].iov_len = newch->buffer_len;
+        ++cnt;
+    }
+   
+    return cnt;
+}
+
+int buffer_add_from_readv(buffer_t * buf,int  sock_fd)
 {
     pthread_mutex_lock(&buf->lock);
+    struct iovec iovs[IOV_NUMS];
+    int niov = buffer_get_write_iov(buf, iovs, IOV_NUMS);
 
-    /* 1. 定位当前尾链（上次写入的链或 buf->last） */
-    buf_chain_t *chain = *buf->last_with_datap
-                        ? *buf->last_with_datap
-                        : buf->last;
-
-    /* 2. 计算尾链剩余可写空间 */
-    uint32_t free_space = 0;
-    if (chain) {
-        free_space = chain->buffer_len
-                     - chain->misalign
-                     - chain->off;
+    ssize_t n = readv(sock_fd, iovs, niov);
+    if (n <= 0){
+        pthread_mutex_unlock(&buf->lock);
+        return n;
     }
-
-    /* 3. 如果没有链块或空间用尽，就分配一个新链 */
-    if (!chain || free_space == 0) {
-        /* 新链大小：沿用指数扩容策略，但至少要有 MIN_BUFFER_SIZE 大小 */
-        uint32_t alloc = chain
-            ? chain->buffer_len * 2
-            : MIN_BUFFER_SIZE;
-        if (alloc < MIN_BUFFER_SIZE) alloc = MIN_BUFFER_SIZE;
-        if (alloc > BUFFER_CHAIN_MAX_AUTO_SIZE)
-            alloc = BUFFER_CHAIN_MAX_AUTO_SIZE;
-
-        chain = buf_chain_new(alloc);
-        if (!chain) {
-            pthread_mutex_unlock(&buf->lock);
-            return -1;
-        }
-        buf_chain_insert(buf, chain);
-
-        /* 更新剩余空间 */
-        free_space = chain->buffer_len - chain->misalign;
-    }
-
-    /* 4. 从 fd 读入最多 free_space 字节 */
-    int n = read(fd,
-                     chain->buffer + chain->misalign + chain->off,
-                     free_space);
-    if (n > 0) {
-        chain->off     += (uint32_t)n;
-        buf->total_len += (uint32_t)n;
-        buf->last_with_datap = &chain;
-    }
-
+    buffer_update_written(buf, n);
     pthread_mutex_unlock(&buf->lock);
     return n;
 }
