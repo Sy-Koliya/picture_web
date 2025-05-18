@@ -3,9 +3,8 @@
 
 #include "RpcCoroutine.h"
 #include "CoroutineCompeleteQueue.h"
-template<typename T>
-void Coroutine_finish(std::shared_ptr<Notify<T>> nt) {
-    CoroutineScheduler::Instance().finish(nt);
+void Coroutine_finish(int nid) {
+    CoroutineScheduler::Instance().finish(nid);
 }
 
 #endif // RPCCOROUTINE_HPP

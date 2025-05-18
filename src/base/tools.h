@@ -14,6 +14,7 @@
 #include <vector>
 #include <chrono>
 #include <memory>
+#include <mutex>
 #include "types.h"
 
 // wrap_arg_: 左值引用使用 std::ref，右值按值传递
@@ -46,35 +47,38 @@ std::function<void()> Package2FVV(Func &&f, Args &&...args)
             std::apply(func, tup);
         });
 }
-// no threads empty
-class IDhelper
-{
+
+class IDhelper {
 public:
-    IDhelper() : idx(0) {}
-    int Get()
-    {
-        if (!stk.empty())
-        {
-            int tmp = stk.back();
-            stk.pop_back();
-            return tmp;
+    IDhelper() : next_id(0) {}
+
+    int Get() {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if (!free_ids_.empty()) {
+            int id = free_ids_.back();
+            free_ids_.pop_back();
+            return id;
         }
-        return ++idx;
+        return ++next_id;
     }
-    void Del(int id)
-    {
-        if (id > idx)
+
+
+    void Del(int id) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if (id > next_id)
             return;
-        if (id == idx)
-            idx--;
-        stk.push_back(id);
+        if (id == next_id) {
+
+            --next_id;
+        } 
+        free_ids_.push_back(id);
     }
 
 private:
-    std::vector<int> stk;
-    int idx;
+    std::mutex             mutex_;
+    std::vector<int>       free_ids_;
+    int                    next_id;
 };
-
 
 inline uint64_t get_tick_count()
 {
