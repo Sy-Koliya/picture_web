@@ -66,6 +66,8 @@ enum SakilaDatabaseStatements : uint32
     DELETE_FILE_INFO,                // DELETE FROM file_info WHERE md5 = ?
     GET_USER_FILE_ID,
     
+
+    
     MAX_SAKILADATABASE_STATEMENTS,
     
 };

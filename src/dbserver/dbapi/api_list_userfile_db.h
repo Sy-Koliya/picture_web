@@ -89,9 +89,8 @@
             )
         .WithChainingPreparedCallback(
                 [this](QueryCallback& cb, PreparedQueryResult result) {
-                    if (!result) {
-                        this->reply_.set_code(1);
-                    } else {
+                    if (result) {
+                    
                     uint64_t totalRows = result->GetRowCount();
                         for (uint64_t i = 0; i < totalRows; ++i) {
                             auto row = result->Fetch();  // 先取当前行
@@ -107,13 +106,15 @@
                             f->set_file_type  (row[8].GetString());
                             result->NextRow();
                         }
+                    this->reply_.set_count(totalRows);
+                    }else{
+                        this->reply_.set_count(0);
+                    }
 
                     // 完成 RPC
-                    this->reply_.set_count(totalRows);
                     this->status_ = FINISH;
                     this->responder_.Finish(this->reply_, grpc::Status::OK, this);
                 }
-            }
             );
 
         // 5) 提交给后台线程处理

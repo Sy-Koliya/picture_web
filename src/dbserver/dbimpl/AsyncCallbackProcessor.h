@@ -21,6 +21,7 @@
 #include "Define.h"
 #include <algorithm>
 #include <vector>
+#include <mutex>
 
 //template <class T>
 //concept AsyncCallback = requires(T t) { { t.InvokeIfReady() } -> std::convertible_to<bool> };
@@ -34,12 +35,14 @@ public:
 
     T& AddCallback(T&& query)
     {
+        std::lock_guard<std::mutex> lock(_mutex);
         _callbacks.emplace_back(std::move(query));
         return _callbacks.back();
     }
 
     void ProcessReadyCallbacks()
     {
+        std::lock_guard<std::mutex> lock(_mutex);
         if (_callbacks.empty())
             return;
 
@@ -58,6 +61,7 @@ private:
     AsyncCallbackProcessor& operator=(AsyncCallbackProcessor const&) = delete;
 
     std::vector<T> _callbacks;
+    std::mutex _mutex;
 };
 
 #endif // AsyncCallbackProcessor_h__
