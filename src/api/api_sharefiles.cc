@@ -27,6 +27,7 @@ static std::unique_ptr<GrpcClient<DatabaseService,
     GetRankingFileListRequest, GetRankingFileListResponse>>
     db_rank_client;
 
+
 static std::once_flag grpc_init_flag;
 static void init_clients() {
     auto addr = Global::Instance().get<std::string>("Mysql_Rpc_Server");
@@ -46,6 +47,9 @@ static bool parse_list_args(const json &in, int &start, int &count) {
     return true;
 }
 
+
+static constexpr int debug =1;
+
 RpcTask<int> ApiSharefiles(int fd,
                            const std::string &post_data,
                            const std::string &url) 
@@ -63,11 +67,17 @@ RpcTask<int> ApiSharefiles(int fd,
 
     if (cmd == "count") {
         // 获取共享文件总数
+        if(debug==1){
+            std::cout<<"[Debug]  api_sharefiles: count"<<std::endl;
+        }
         GetShareFilesCountRequest req;
-        auto resp = co_await MysqlGetShareFilesCountCall(db_count_client.get(), req);
+        auto resp = co_await MysqlGetShareFilesCountCall(db_count_client.get(), std::move(req));
         code = resp.code();
         out["code"]  = code;
         out["total"] = resp.total();
+        if(debug==1){
+            std::cout<<"[Debug]  api_sharefiles: count end"<<std::endl;
+        }
     }
     else {
         int start=0, cnt=0;
@@ -75,10 +85,16 @@ RpcTask<int> ApiSharefiles(int fd,
             out["code"] = 1;
         } 
         else if (cmd == "normal") {
+            if(debug==1){
+                std::cout<<"[Debug]  api_sharefiles: normal"<<std::endl;
+            }
             GetShareFileListRequest req;
             req.set_start(start);
             req.set_count(cnt);
             auto resp = co_await MysqlGetShareFileListCall(db_list_client.get(), req);
+            if(debug==1){
+                std::cout<<"[Debug]  api_[sharefiles]: rpc end"<<std::endl;
+            }
             code = resp.code();
             out["code"]  = code;
             out["total"] = resp.total();
@@ -100,8 +116,14 @@ RpcTask<int> ApiSharefiles(int fd,
                 }
                 out["files"] = std::move(arr);
             }
+            if(debug==1){
+                std::cout<<"[Debug]  api_sharefiles: normal end"<<std::endl;
+            }
         }
         else if (cmd == "pvdesc") {
+            if(debug==1){
+                std::cout<<"[Debug]  api_sharefiles: pvdesc"<<std::endl;
+            }
             GetRankingFileListRequest req;
             req.set_start(start);
             req.set_count(cnt);
@@ -122,6 +144,9 @@ RpcTask<int> ApiSharefiles(int fd,
             }
         }else {
             out["code"] = 1;
+        }
+        if(debug==1){
+            std::cout<<"[Debug]  api_sharefiles: normal end"<<std::endl;
         }
     }
     // 输出 HTTP 响应

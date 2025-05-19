@@ -92,6 +92,7 @@ public:
                            getTrie().insert("/api/dealfile",ApiDealfile);
                            getTrie().insert("/api/dealsharefile",ApiDealsharefile);
                            getTrie().insert("/api/sharefiles",ApiSharefiles);
+                           getTrie().insert("/api/sharepic",ApiSharepicture);
 
                        });
         // 动态添加:

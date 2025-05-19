@@ -19,7 +19,7 @@ using rpc::PvFileResponse;
 using rpc::ShareFileRequest;
 using rpc::ShareFileResponse;
 
-static constexpr int debug = 1;
+static constexpr int debug = 0;
 
 static std::unique_ptr<GrpcClient<DatabaseService, ShareFileRequest, ShareFileResponse>>
     db_share_client;

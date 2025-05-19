@@ -11,6 +11,7 @@
 #include "api_dealfile.h"
 #include "api_dealsharedfile.h"
 #include "api_sharefiles.h"
+#include "api_sharepicture.h"
 #include "CoroutineCompeleteQueue.h"
 
 void api_dispatch(int fd,
