@@ -1,4 +1,4 @@
-#include "api_dealfile.h"
+#include "api_dealsharedfile.h"
 #include "common_api.h"
 #include "RedisClient.h"
 #include <nlohmann/json.hpp>
@@ -79,7 +79,7 @@ RpcTask<int> ApiDealsharefile(int fd,
                               const std::string &url) {
     std::string cmd, user, md5, filename;
     int code = 1;
-    // 1) 解析 URL 和 JSON（保留原有函数）
+
     if(decodeDealsharefileJson(post_data, user, md5, filename)==-1){
         std::cerr << "json parser error" << '\n';
         code = 1;
@@ -119,8 +119,8 @@ RpcTask<int> ApiDealsharefile(int fd,
         std::cerr << "gRPC error: " << e.what() << std::endl;
         code = 1; // gRPC 错误
     }
-RSEP:
-    // 2) 返回 HTTP 响应
+RESP:
+
     json ht_resp;
     ht_resp["code"] = code;
     SetRespToHttpConn(fd, ht_resp.dump());

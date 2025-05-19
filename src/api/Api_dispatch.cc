@@ -90,6 +90,7 @@ public:
                            getTrie().insert("/api/upload",ApiUploadFile);
                            getTrie().insert("/api/myfiles",ApiMyfiles);
                            getTrie().insert("/api/dealfile",ApiDealfile);
+                           getTrie().insert("/api/dealsharefile",ApiDealsharefile);
 
                        });
         // 动态添加:

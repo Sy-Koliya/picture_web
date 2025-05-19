@@ -9,6 +9,7 @@
 #include "api_upload.h"
 #include "api_myfiles.h"
 #include "api_dealfile.h"
+#include "api_dealsharedfile.h"
 #include "CoroutineCompeleteQueue.h"
 
 void api_dispatch(int fd,
