@@ -23,6 +23,7 @@
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/arena.h>
 #include <google/protobuf/arenastring.h>
+#include <google/protobuf/generated_message_bases.h>
 #include <google/protobuf/generated_message_table_driven.h>
 #include <google/protobuf/generated_message_util.h>
 #include <google/protobuf/metadata_lite.h>
@@ -47,7 +48,7 @@ struct TableStruct_mysql_5frpc_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[25]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[33]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -82,6 +83,24 @@ extern FilesListRequestDefaultTypeInternal _FilesListRequest_default_instance_;
 class FilesListResponse;
 struct FilesListResponseDefaultTypeInternal;
 extern FilesListResponseDefaultTypeInternal _FilesListResponse_default_instance_;
+class GetRankingFileListRequest;
+struct GetRankingFileListRequestDefaultTypeInternal;
+extern GetRankingFileListRequestDefaultTypeInternal _GetRankingFileListRequest_default_instance_;
+class GetRankingFileListResponse;
+struct GetRankingFileListResponseDefaultTypeInternal;
+extern GetRankingFileListResponseDefaultTypeInternal _GetRankingFileListResponse_default_instance_;
+class GetShareFileListRequest;
+struct GetShareFileListRequestDefaultTypeInternal;
+extern GetShareFileListRequestDefaultTypeInternal _GetShareFileListRequest_default_instance_;
+class GetShareFileListResponse;
+struct GetShareFileListResponseDefaultTypeInternal;
+extern GetShareFileListResponseDefaultTypeInternal _GetShareFileListResponse_default_instance_;
+class GetShareFilesCountRequest;
+struct GetShareFilesCountRequestDefaultTypeInternal;
+extern GetShareFilesCountRequestDefaultTypeInternal _GetShareFilesCountRequest_default_instance_;
+class GetShareFilesCountResponse;
+struct GetShareFilesCountResponseDefaultTypeInternal;
+extern GetShareFilesCountResponseDefaultTypeInternal _GetShareFilesCountResponse_default_instance_;
 class LoginRequest;
 struct LoginRequestDefaultTypeInternal;
 extern LoginRequestDefaultTypeInternal _LoginRequest_default_instance_;
@@ -106,6 +125,9 @@ extern PvShareFileRequestDefaultTypeInternal _PvShareFileRequest_default_instanc
 class PvShareFileResponse;
 struct PvShareFileResponseDefaultTypeInternal;
 extern PvShareFileResponseDefaultTypeInternal _PvShareFileResponse_default_instance_;
+class RankingFileInfo;
+struct RankingFileInfoDefaultTypeInternal;
+extern RankingFileInfoDefaultTypeInternal _RankingFileInfo_default_instance_;
 class RegisterRequest;
 struct RegisterRequestDefaultTypeInternal;
 extern RegisterRequestDefaultTypeInternal _RegisterRequest_default_instance_;
@@ -118,6 +140,9 @@ extern SaveFileRequestDefaultTypeInternal _SaveFileRequest_default_instance_;
 class SaveFileResponse;
 struct SaveFileResponseDefaultTypeInternal;
 extern SaveFileResponseDefaultTypeInternal _SaveFileResponse_default_instance_;
+class ShareFileInfo;
+struct ShareFileInfoDefaultTypeInternal;
+extern ShareFileInfoDefaultTypeInternal _ShareFileInfo_default_instance_;
 class ShareFileRequest;
 struct ShareFileRequestDefaultTypeInternal;
 extern ShareFileRequestDefaultTypeInternal _ShareFileRequest_default_instance_;
@@ -141,6 +166,12 @@ template<> ::rpc::DeleteFileResponse* Arena::CreateMaybeMessage<::rpc::DeleteFil
 template<> ::rpc::FileInfo* Arena::CreateMaybeMessage<::rpc::FileInfo>(Arena*);
 template<> ::rpc::FilesListRequest* Arena::CreateMaybeMessage<::rpc::FilesListRequest>(Arena*);
 template<> ::rpc::FilesListResponse* Arena::CreateMaybeMessage<::rpc::FilesListResponse>(Arena*);
+template<> ::rpc::GetRankingFileListRequest* Arena::CreateMaybeMessage<::rpc::GetRankingFileListRequest>(Arena*);
+template<> ::rpc::GetRankingFileListResponse* Arena::CreateMaybeMessage<::rpc::GetRankingFileListResponse>(Arena*);
+template<> ::rpc::GetShareFileListRequest* Arena::CreateMaybeMessage<::rpc::GetShareFileListRequest>(Arena*);
+template<> ::rpc::GetShareFileListResponse* Arena::CreateMaybeMessage<::rpc::GetShareFileListResponse>(Arena*);
+template<> ::rpc::GetShareFilesCountRequest* Arena::CreateMaybeMessage<::rpc::GetShareFilesCountRequest>(Arena*);
+template<> ::rpc::GetShareFilesCountResponse* Arena::CreateMaybeMessage<::rpc::GetShareFilesCountResponse>(Arena*);
 template<> ::rpc::LoginRequest* Arena::CreateMaybeMessage<::rpc::LoginRequest>(Arena*);
 template<> ::rpc::LoginResponse* Arena::CreateMaybeMessage<::rpc::LoginResponse>(Arena*);
 template<> ::rpc::Md5Request* Arena::CreateMaybeMessage<::rpc::Md5Request>(Arena*);
@@ -149,10 +180,12 @@ template<> ::rpc::PvFileRequest* Arena::CreateMaybeMessage<::rpc::PvFileRequest>
 template<> ::rpc::PvFileResponse* Arena::CreateMaybeMessage<::rpc::PvFileResponse>(Arena*);
 template<> ::rpc::PvShareFileRequest* Arena::CreateMaybeMessage<::rpc::PvShareFileRequest>(Arena*);
 template<> ::rpc::PvShareFileResponse* Arena::CreateMaybeMessage<::rpc::PvShareFileResponse>(Arena*);
+template<> ::rpc::RankingFileInfo* Arena::CreateMaybeMessage<::rpc::RankingFileInfo>(Arena*);
 template<> ::rpc::RegisterRequest* Arena::CreateMaybeMessage<::rpc::RegisterRequest>(Arena*);
 template<> ::rpc::RegisterResponse* Arena::CreateMaybeMessage<::rpc::RegisterResponse>(Arena*);
 template<> ::rpc::SaveFileRequest* Arena::CreateMaybeMessage<::rpc::SaveFileRequest>(Arena*);
 template<> ::rpc::SaveFileResponse* Arena::CreateMaybeMessage<::rpc::SaveFileResponse>(Arena*);
+template<> ::rpc::ShareFileInfo* Arena::CreateMaybeMessage<::rpc::ShareFileInfo>(Arena*);
 template<> ::rpc::ShareFileRequest* Arena::CreateMaybeMessage<::rpc::ShareFileRequest>(Arena*);
 template<> ::rpc::ShareFileResponse* Arena::CreateMaybeMessage<::rpc::ShareFileResponse>(Arena*);
 template<> ::rpc::UploadRequest* Arena::CreateMaybeMessage<::rpc::UploadRequest>(Arena*);
@@ -4495,6 +4528,1397 @@ class PvShareFileResponse final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mysql_5frpc_2eproto;
 };
+// -------------------------------------------------------------------
+
+class GetShareFilesCountRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:rpc.GetShareFilesCountRequest) */ {
+ public:
+  inline GetShareFilesCountRequest() : GetShareFilesCountRequest(nullptr) {}
+  explicit constexpr GetShareFilesCountRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetShareFilesCountRequest(const GetShareFilesCountRequest& from);
+  GetShareFilesCountRequest(GetShareFilesCountRequest&& from) noexcept
+    : GetShareFilesCountRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetShareFilesCountRequest& operator=(const GetShareFilesCountRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetShareFilesCountRequest& operator=(GetShareFilesCountRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetShareFilesCountRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetShareFilesCountRequest* internal_default_instance() {
+    return reinterpret_cast<const GetShareFilesCountRequest*>(
+               &_GetShareFilesCountRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  friend void swap(GetShareFilesCountRequest& a, GetShareFilesCountRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetShareFilesCountRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetShareFilesCountRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetShareFilesCountRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetShareFilesCountRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const GetShareFilesCountRequest& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const GetShareFilesCountRequest& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
+  }
+  public:
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetShareFilesCountRequest";
+  }
+  protected:
+  explicit GetShareFilesCountRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:rpc.GetShareFilesCountRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetShareFilesCountResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.GetShareFilesCountResponse) */ {
+ public:
+  inline GetShareFilesCountResponse() : GetShareFilesCountResponse(nullptr) {}
+  ~GetShareFilesCountResponse() override;
+  explicit constexpr GetShareFilesCountResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetShareFilesCountResponse(const GetShareFilesCountResponse& from);
+  GetShareFilesCountResponse(GetShareFilesCountResponse&& from) noexcept
+    : GetShareFilesCountResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline GetShareFilesCountResponse& operator=(const GetShareFilesCountResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetShareFilesCountResponse& operator=(GetShareFilesCountResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetShareFilesCountResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetShareFilesCountResponse* internal_default_instance() {
+    return reinterpret_cast<const GetShareFilesCountResponse*>(
+               &_GetShareFilesCountResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    26;
+
+  friend void swap(GetShareFilesCountResponse& a, GetShareFilesCountResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetShareFilesCountResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetShareFilesCountResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetShareFilesCountResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetShareFilesCountResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetShareFilesCountResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GetShareFilesCountResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetShareFilesCountResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetShareFilesCountResponse";
+  }
+  protected:
+  explicit GetShareFilesCountResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCodeFieldNumber = 1,
+    kTotalFieldNumber = 2,
+  };
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // int32 total = 2;
+  void clear_total();
+  int32_t total() const;
+  void set_total(int32_t value);
+  private:
+  int32_t _internal_total() const;
+  void _internal_set_total(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.GetShareFilesCountResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t code_;
+  int32_t total_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ShareFileInfo final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.ShareFileInfo) */ {
+ public:
+  inline ShareFileInfo() : ShareFileInfo(nullptr) {}
+  ~ShareFileInfo() override;
+  explicit constexpr ShareFileInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ShareFileInfo(const ShareFileInfo& from);
+  ShareFileInfo(ShareFileInfo&& from) noexcept
+    : ShareFileInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline ShareFileInfo& operator=(const ShareFileInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ShareFileInfo& operator=(ShareFileInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ShareFileInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ShareFileInfo* internal_default_instance() {
+    return reinterpret_cast<const ShareFileInfo*>(
+               &_ShareFileInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    27;
+
+  friend void swap(ShareFileInfo& a, ShareFileInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ShareFileInfo* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ShareFileInfo* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ShareFileInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ShareFileInfo>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ShareFileInfo& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const ShareFileInfo& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ShareFileInfo* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.ShareFileInfo";
+  }
+  protected:
+  explicit ShareFileInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserFieldNumber = 1,
+    kMd5FieldNumber = 2,
+    kFileNameFieldNumber = 3,
+    kCreateTimeFieldNumber = 6,
+    kUrlFieldNumber = 7,
+    kTypeFieldNumber = 9,
+    kShareStatusFieldNumber = 4,
+    kPvFieldNumber = 5,
+    kSizeFieldNumber = 8,
+  };
+  // string user = 1;
+  void clear_user();
+  const std::string& user() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user();
+  PROTOBUF_NODISCARD std::string* release_user();
+  void set_allocated_user(std::string* user);
+  private:
+  const std::string& _internal_user() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user(const std::string& value);
+  std::string* _internal_mutable_user();
+  public:
+
+  // string md5 = 2;
+  void clear_md5();
+  const std::string& md5() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_md5(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_md5();
+  PROTOBUF_NODISCARD std::string* release_md5();
+  void set_allocated_md5(std::string* md5);
+  private:
+  const std::string& _internal_md5() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_md5(const std::string& value);
+  std::string* _internal_mutable_md5();
+  public:
+
+  // string file_name = 3;
+  void clear_file_name();
+  const std::string& file_name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_file_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_file_name();
+  PROTOBUF_NODISCARD std::string* release_file_name();
+  void set_allocated_file_name(std::string* file_name);
+  private:
+  const std::string& _internal_file_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_name(const std::string& value);
+  std::string* _internal_mutable_file_name();
+  public:
+
+  // string create_time = 6;
+  void clear_create_time();
+  const std::string& create_time() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_create_time(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_create_time();
+  PROTOBUF_NODISCARD std::string* release_create_time();
+  void set_allocated_create_time(std::string* create_time);
+  private:
+  const std::string& _internal_create_time() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_create_time(const std::string& value);
+  std::string* _internal_mutable_create_time();
+  public:
+
+  // string url = 7;
+  void clear_url();
+  const std::string& url() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_url(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_url();
+  PROTOBUF_NODISCARD std::string* release_url();
+  void set_allocated_url(std::string* url);
+  private:
+  const std::string& _internal_url() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_url(const std::string& value);
+  std::string* _internal_mutable_url();
+  public:
+
+  // string type = 9;
+  void clear_type();
+  const std::string& type() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_type(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_type();
+  PROTOBUF_NODISCARD std::string* release_type();
+  void set_allocated_type(std::string* type);
+  private:
+  const std::string& _internal_type() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_type(const std::string& value);
+  std::string* _internal_mutable_type();
+  public:
+
+  // int32 share_status = 4;
+  void clear_share_status();
+  int32_t share_status() const;
+  void set_share_status(int32_t value);
+  private:
+  int32_t _internal_share_status() const;
+  void _internal_set_share_status(int32_t value);
+  public:
+
+  // int32 pv = 5;
+  void clear_pv();
+  int32_t pv() const;
+  void set_pv(int32_t value);
+  private:
+  int32_t _internal_pv() const;
+  void _internal_set_pv(int32_t value);
+  public:
+
+  // int32 size = 8;
+  void clear_size();
+  int32_t size() const;
+  void set_size(int32_t value);
+  private:
+  int32_t _internal_size() const;
+  void _internal_set_size(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.ShareFileInfo)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr md5_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr create_time_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr url_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr type_;
+  int32_t share_status_;
+  int32_t pv_;
+  int32_t size_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetShareFileListRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.GetShareFileListRequest) */ {
+ public:
+  inline GetShareFileListRequest() : GetShareFileListRequest(nullptr) {}
+  ~GetShareFileListRequest() override;
+  explicit constexpr GetShareFileListRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetShareFileListRequest(const GetShareFileListRequest& from);
+  GetShareFileListRequest(GetShareFileListRequest&& from) noexcept
+    : GetShareFileListRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetShareFileListRequest& operator=(const GetShareFileListRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetShareFileListRequest& operator=(GetShareFileListRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetShareFileListRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetShareFileListRequest* internal_default_instance() {
+    return reinterpret_cast<const GetShareFileListRequest*>(
+               &_GetShareFileListRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    28;
+
+  friend void swap(GetShareFileListRequest& a, GetShareFileListRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetShareFileListRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetShareFileListRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetShareFileListRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetShareFileListRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetShareFileListRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GetShareFileListRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetShareFileListRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetShareFileListRequest";
+  }
+  protected:
+  explicit GetShareFileListRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kStartFieldNumber = 1,
+    kCountFieldNumber = 2,
+  };
+  // int32 start = 1;
+  void clear_start();
+  int32_t start() const;
+  void set_start(int32_t value);
+  private:
+  int32_t _internal_start() const;
+  void _internal_set_start(int32_t value);
+  public:
+
+  // int32 count = 2;
+  void clear_count();
+  int32_t count() const;
+  void set_count(int32_t value);
+  private:
+  int32_t _internal_count() const;
+  void _internal_set_count(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.GetShareFileListRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t start_;
+  int32_t count_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetShareFileListResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.GetShareFileListResponse) */ {
+ public:
+  inline GetShareFileListResponse() : GetShareFileListResponse(nullptr) {}
+  ~GetShareFileListResponse() override;
+  explicit constexpr GetShareFileListResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetShareFileListResponse(const GetShareFileListResponse& from);
+  GetShareFileListResponse(GetShareFileListResponse&& from) noexcept
+    : GetShareFileListResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline GetShareFileListResponse& operator=(const GetShareFileListResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetShareFileListResponse& operator=(GetShareFileListResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetShareFileListResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetShareFileListResponse* internal_default_instance() {
+    return reinterpret_cast<const GetShareFileListResponse*>(
+               &_GetShareFileListResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    29;
+
+  friend void swap(GetShareFileListResponse& a, GetShareFileListResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetShareFileListResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetShareFileListResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetShareFileListResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetShareFileListResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetShareFileListResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GetShareFileListResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetShareFileListResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetShareFileListResponse";
+  }
+  protected:
+  explicit GetShareFileListResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilesFieldNumber = 4,
+    kCodeFieldNumber = 1,
+    kTotalFieldNumber = 2,
+    kCountFieldNumber = 3,
+  };
+  // repeated .rpc.ShareFileInfo files = 4;
+  int files_size() const;
+  private:
+  int _internal_files_size() const;
+  public:
+  void clear_files();
+  ::rpc::ShareFileInfo* mutable_files(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::ShareFileInfo >*
+      mutable_files();
+  private:
+  const ::rpc::ShareFileInfo& _internal_files(int index) const;
+  ::rpc::ShareFileInfo* _internal_add_files();
+  public:
+  const ::rpc::ShareFileInfo& files(int index) const;
+  ::rpc::ShareFileInfo* add_files();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::ShareFileInfo >&
+      files() const;
+
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // int32 total = 2;
+  void clear_total();
+  int32_t total() const;
+  void set_total(int32_t value);
+  private:
+  int32_t _internal_total() const;
+  void _internal_set_total(int32_t value);
+  public:
+
+  // int32 count = 3;
+  void clear_count();
+  int32_t count() const;
+  void set_count(int32_t value);
+  private:
+  int32_t _internal_count() const;
+  void _internal_set_count(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.GetShareFileListResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::ShareFileInfo > files_;
+  int32_t code_;
+  int32_t total_;
+  int32_t count_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class RankingFileInfo final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.RankingFileInfo) */ {
+ public:
+  inline RankingFileInfo() : RankingFileInfo(nullptr) {}
+  ~RankingFileInfo() override;
+  explicit constexpr RankingFileInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  RankingFileInfo(const RankingFileInfo& from);
+  RankingFileInfo(RankingFileInfo&& from) noexcept
+    : RankingFileInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline RankingFileInfo& operator=(const RankingFileInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RankingFileInfo& operator=(RankingFileInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RankingFileInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RankingFileInfo* internal_default_instance() {
+    return reinterpret_cast<const RankingFileInfo*>(
+               &_RankingFileInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    30;
+
+  friend void swap(RankingFileInfo& a, RankingFileInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RankingFileInfo* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RankingFileInfo* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RankingFileInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RankingFileInfo>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RankingFileInfo& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const RankingFileInfo& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RankingFileInfo* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.RankingFileInfo";
+  }
+  protected:
+  explicit RankingFileInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilenameFieldNumber = 1,
+    kPvFieldNumber = 2,
+  };
+  // string filename = 1;
+  void clear_filename();
+  const std::string& filename() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_filename(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_filename();
+  PROTOBUF_NODISCARD std::string* release_filename();
+  void set_allocated_filename(std::string* filename);
+  private:
+  const std::string& _internal_filename() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_filename(const std::string& value);
+  std::string* _internal_mutable_filename();
+  public:
+
+  // int32 pv = 2;
+  void clear_pv();
+  int32_t pv() const;
+  void set_pv(int32_t value);
+  private:
+  int32_t _internal_pv() const;
+  void _internal_set_pv(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.RankingFileInfo)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filename_;
+  int32_t pv_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRankingFileListRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.GetRankingFileListRequest) */ {
+ public:
+  inline GetRankingFileListRequest() : GetRankingFileListRequest(nullptr) {}
+  ~GetRankingFileListRequest() override;
+  explicit constexpr GetRankingFileListRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRankingFileListRequest(const GetRankingFileListRequest& from);
+  GetRankingFileListRequest(GetRankingFileListRequest&& from) noexcept
+    : GetRankingFileListRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRankingFileListRequest& operator=(const GetRankingFileListRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRankingFileListRequest& operator=(GetRankingFileListRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRankingFileListRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRankingFileListRequest* internal_default_instance() {
+    return reinterpret_cast<const GetRankingFileListRequest*>(
+               &_GetRankingFileListRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  friend void swap(GetRankingFileListRequest& a, GetRankingFileListRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRankingFileListRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRankingFileListRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRankingFileListRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRankingFileListRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRankingFileListRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GetRankingFileListRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRankingFileListRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetRankingFileListRequest";
+  }
+  protected:
+  explicit GetRankingFileListRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kStartFieldNumber = 1,
+    kCountFieldNumber = 2,
+  };
+  // int32 start = 1;
+  void clear_start();
+  int32_t start() const;
+  void set_start(int32_t value);
+  private:
+  int32_t _internal_start() const;
+  void _internal_set_start(int32_t value);
+  public:
+
+  // int32 count = 2;
+  void clear_count();
+  int32_t count() const;
+  void set_count(int32_t value);
+  private:
+  int32_t _internal_count() const;
+  void _internal_set_count(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.GetRankingFileListRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t start_;
+  int32_t count_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRankingFileListResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.GetRankingFileListResponse) */ {
+ public:
+  inline GetRankingFileListResponse() : GetRankingFileListResponse(nullptr) {}
+  ~GetRankingFileListResponse() override;
+  explicit constexpr GetRankingFileListResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRankingFileListResponse(const GetRankingFileListResponse& from);
+  GetRankingFileListResponse(GetRankingFileListResponse&& from) noexcept
+    : GetRankingFileListResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRankingFileListResponse& operator=(const GetRankingFileListResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRankingFileListResponse& operator=(GetRankingFileListResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRankingFileListResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRankingFileListResponse* internal_default_instance() {
+    return reinterpret_cast<const GetRankingFileListResponse*>(
+               &_GetRankingFileListResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  friend void swap(GetRankingFileListResponse& a, GetRankingFileListResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRankingFileListResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRankingFileListResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRankingFileListResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRankingFileListResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRankingFileListResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GetRankingFileListResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRankingFileListResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetRankingFileListResponse";
+  }
+  protected:
+  explicit GetRankingFileListResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilesFieldNumber = 4,
+    kCodeFieldNumber = 1,
+    kTotalFieldNumber = 2,
+    kCountFieldNumber = 3,
+  };
+  // repeated .rpc.RankingFileInfo files = 4;
+  int files_size() const;
+  private:
+  int _internal_files_size() const;
+  public:
+  void clear_files();
+  ::rpc::RankingFileInfo* mutable_files(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::RankingFileInfo >*
+      mutable_files();
+  private:
+  const ::rpc::RankingFileInfo& _internal_files(int index) const;
+  ::rpc::RankingFileInfo* _internal_add_files();
+  public:
+  const ::rpc::RankingFileInfo& files(int index) const;
+  ::rpc::RankingFileInfo* add_files();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::RankingFileInfo >&
+      files() const;
+
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // int32 total = 2;
+  void clear_total();
+  int32_t total() const;
+  void set_total(int32_t value);
+  private:
+  int32_t _internal_total() const;
+  void _internal_set_total(int32_t value);
+  public:
+
+  // int32 count = 3;
+  void clear_count();
+  int32_t count() const;
+  void set_count(int32_t value);
+  private:
+  int32_t _internal_count() const;
+  void _internal_set_count(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.GetRankingFileListResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::RankingFileInfo > files_;
+  int32_t code_;
+  int32_t total_;
+  int32_t count_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
 // ===================================================================
 
 
@@ -7224,9 +8648,814 @@ inline void PvShareFileResponse::set_code(int32_t value) {
   // @@protoc_insertion_point(field_set:rpc.PvShareFileResponse.code)
 }
 
+// -------------------------------------------------------------------
+
+// GetShareFilesCountRequest
+
+// -------------------------------------------------------------------
+
+// GetShareFilesCountResponse
+
+// int32 code = 1;
+inline void GetShareFilesCountResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t GetShareFilesCountResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t GetShareFilesCountResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.GetShareFilesCountResponse.code)
+  return _internal_code();
+}
+inline void GetShareFilesCountResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void GetShareFilesCountResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.GetShareFilesCountResponse.code)
+}
+
+// int32 total = 2;
+inline void GetShareFilesCountResponse::clear_total() {
+  total_ = 0;
+}
+inline int32_t GetShareFilesCountResponse::_internal_total() const {
+  return total_;
+}
+inline int32_t GetShareFilesCountResponse::total() const {
+  // @@protoc_insertion_point(field_get:rpc.GetShareFilesCountResponse.total)
+  return _internal_total();
+}
+inline void GetShareFilesCountResponse::_internal_set_total(int32_t value) {
+  
+  total_ = value;
+}
+inline void GetShareFilesCountResponse::set_total(int32_t value) {
+  _internal_set_total(value);
+  // @@protoc_insertion_point(field_set:rpc.GetShareFilesCountResponse.total)
+}
+
+// -------------------------------------------------------------------
+
+// ShareFileInfo
+
+// string user = 1;
+inline void ShareFileInfo::clear_user() {
+  user_.ClearToEmpty();
+}
+inline const std::string& ShareFileInfo::user() const {
+  // @@protoc_insertion_point(field_get:rpc.ShareFileInfo.user)
+  return _internal_user();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ShareFileInfo::set_user(ArgT0&& arg0, ArgT... args) {
+ 
+ user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.ShareFileInfo.user)
+}
+inline std::string* ShareFileInfo::mutable_user() {
+  std::string* _s = _internal_mutable_user();
+  // @@protoc_insertion_point(field_mutable:rpc.ShareFileInfo.user)
+  return _s;
+}
+inline const std::string& ShareFileInfo::_internal_user() const {
+  return user_.Get();
+}
+inline void ShareFileInfo::_internal_set_user(const std::string& value) {
+  
+  user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::_internal_mutable_user() {
+  
+  return user_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::release_user() {
+  // @@protoc_insertion_point(field_release:rpc.ShareFileInfo.user)
+  return user_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void ShareFileInfo::set_allocated_user(std::string* user) {
+  if (user != nullptr) {
+    
+  } else {
+    
+  }
+  user_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.ShareFileInfo.user)
+}
+
+// string md5 = 2;
+inline void ShareFileInfo::clear_md5() {
+  md5_.ClearToEmpty();
+}
+inline const std::string& ShareFileInfo::md5() const {
+  // @@protoc_insertion_point(field_get:rpc.ShareFileInfo.md5)
+  return _internal_md5();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ShareFileInfo::set_md5(ArgT0&& arg0, ArgT... args) {
+ 
+ md5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.ShareFileInfo.md5)
+}
+inline std::string* ShareFileInfo::mutable_md5() {
+  std::string* _s = _internal_mutable_md5();
+  // @@protoc_insertion_point(field_mutable:rpc.ShareFileInfo.md5)
+  return _s;
+}
+inline const std::string& ShareFileInfo::_internal_md5() const {
+  return md5_.Get();
+}
+inline void ShareFileInfo::_internal_set_md5(const std::string& value) {
+  
+  md5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::_internal_mutable_md5() {
+  
+  return md5_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::release_md5() {
+  // @@protoc_insertion_point(field_release:rpc.ShareFileInfo.md5)
+  return md5_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void ShareFileInfo::set_allocated_md5(std::string* md5) {
+  if (md5 != nullptr) {
+    
+  } else {
+    
+  }
+  md5_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), md5,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (md5_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    md5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.ShareFileInfo.md5)
+}
+
+// string file_name = 3;
+inline void ShareFileInfo::clear_file_name() {
+  file_name_.ClearToEmpty();
+}
+inline const std::string& ShareFileInfo::file_name() const {
+  // @@protoc_insertion_point(field_get:rpc.ShareFileInfo.file_name)
+  return _internal_file_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ShareFileInfo::set_file_name(ArgT0&& arg0, ArgT... args) {
+ 
+ file_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.ShareFileInfo.file_name)
+}
+inline std::string* ShareFileInfo::mutable_file_name() {
+  std::string* _s = _internal_mutable_file_name();
+  // @@protoc_insertion_point(field_mutable:rpc.ShareFileInfo.file_name)
+  return _s;
+}
+inline const std::string& ShareFileInfo::_internal_file_name() const {
+  return file_name_.Get();
+}
+inline void ShareFileInfo::_internal_set_file_name(const std::string& value) {
+  
+  file_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::_internal_mutable_file_name() {
+  
+  return file_name_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::release_file_name() {
+  // @@protoc_insertion_point(field_release:rpc.ShareFileInfo.file_name)
+  return file_name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void ShareFileInfo::set_allocated_file_name(std::string* file_name) {
+  if (file_name != nullptr) {
+    
+  } else {
+    
+  }
+  file_name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), file_name,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (file_name_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    file_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.ShareFileInfo.file_name)
+}
+
+// int32 share_status = 4;
+inline void ShareFileInfo::clear_share_status() {
+  share_status_ = 0;
+}
+inline int32_t ShareFileInfo::_internal_share_status() const {
+  return share_status_;
+}
+inline int32_t ShareFileInfo::share_status() const {
+  // @@protoc_insertion_point(field_get:rpc.ShareFileInfo.share_status)
+  return _internal_share_status();
+}
+inline void ShareFileInfo::_internal_set_share_status(int32_t value) {
+  
+  share_status_ = value;
+}
+inline void ShareFileInfo::set_share_status(int32_t value) {
+  _internal_set_share_status(value);
+  // @@protoc_insertion_point(field_set:rpc.ShareFileInfo.share_status)
+}
+
+// int32 pv = 5;
+inline void ShareFileInfo::clear_pv() {
+  pv_ = 0;
+}
+inline int32_t ShareFileInfo::_internal_pv() const {
+  return pv_;
+}
+inline int32_t ShareFileInfo::pv() const {
+  // @@protoc_insertion_point(field_get:rpc.ShareFileInfo.pv)
+  return _internal_pv();
+}
+inline void ShareFileInfo::_internal_set_pv(int32_t value) {
+  
+  pv_ = value;
+}
+inline void ShareFileInfo::set_pv(int32_t value) {
+  _internal_set_pv(value);
+  // @@protoc_insertion_point(field_set:rpc.ShareFileInfo.pv)
+}
+
+// string create_time = 6;
+inline void ShareFileInfo::clear_create_time() {
+  create_time_.ClearToEmpty();
+}
+inline const std::string& ShareFileInfo::create_time() const {
+  // @@protoc_insertion_point(field_get:rpc.ShareFileInfo.create_time)
+  return _internal_create_time();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ShareFileInfo::set_create_time(ArgT0&& arg0, ArgT... args) {
+ 
+ create_time_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.ShareFileInfo.create_time)
+}
+inline std::string* ShareFileInfo::mutable_create_time() {
+  std::string* _s = _internal_mutable_create_time();
+  // @@protoc_insertion_point(field_mutable:rpc.ShareFileInfo.create_time)
+  return _s;
+}
+inline const std::string& ShareFileInfo::_internal_create_time() const {
+  return create_time_.Get();
+}
+inline void ShareFileInfo::_internal_set_create_time(const std::string& value) {
+  
+  create_time_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::_internal_mutable_create_time() {
+  
+  return create_time_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::release_create_time() {
+  // @@protoc_insertion_point(field_release:rpc.ShareFileInfo.create_time)
+  return create_time_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void ShareFileInfo::set_allocated_create_time(std::string* create_time) {
+  if (create_time != nullptr) {
+    
+  } else {
+    
+  }
+  create_time_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), create_time,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (create_time_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    create_time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.ShareFileInfo.create_time)
+}
+
+// string url = 7;
+inline void ShareFileInfo::clear_url() {
+  url_.ClearToEmpty();
+}
+inline const std::string& ShareFileInfo::url() const {
+  // @@protoc_insertion_point(field_get:rpc.ShareFileInfo.url)
+  return _internal_url();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ShareFileInfo::set_url(ArgT0&& arg0, ArgT... args) {
+ 
+ url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.ShareFileInfo.url)
+}
+inline std::string* ShareFileInfo::mutable_url() {
+  std::string* _s = _internal_mutable_url();
+  // @@protoc_insertion_point(field_mutable:rpc.ShareFileInfo.url)
+  return _s;
+}
+inline const std::string& ShareFileInfo::_internal_url() const {
+  return url_.Get();
+}
+inline void ShareFileInfo::_internal_set_url(const std::string& value) {
+  
+  url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::_internal_mutable_url() {
+  
+  return url_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::release_url() {
+  // @@protoc_insertion_point(field_release:rpc.ShareFileInfo.url)
+  return url_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void ShareFileInfo::set_allocated_url(std::string* url) {
+  if (url != nullptr) {
+    
+  } else {
+    
+  }
+  url_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), url,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (url_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    url_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.ShareFileInfo.url)
+}
+
+// int32 size = 8;
+inline void ShareFileInfo::clear_size() {
+  size_ = 0;
+}
+inline int32_t ShareFileInfo::_internal_size() const {
+  return size_;
+}
+inline int32_t ShareFileInfo::size() const {
+  // @@protoc_insertion_point(field_get:rpc.ShareFileInfo.size)
+  return _internal_size();
+}
+inline void ShareFileInfo::_internal_set_size(int32_t value) {
+  
+  size_ = value;
+}
+inline void ShareFileInfo::set_size(int32_t value) {
+  _internal_set_size(value);
+  // @@protoc_insertion_point(field_set:rpc.ShareFileInfo.size)
+}
+
+// string type = 9;
+inline void ShareFileInfo::clear_type() {
+  type_.ClearToEmpty();
+}
+inline const std::string& ShareFileInfo::type() const {
+  // @@protoc_insertion_point(field_get:rpc.ShareFileInfo.type)
+  return _internal_type();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ShareFileInfo::set_type(ArgT0&& arg0, ArgT... args) {
+ 
+ type_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.ShareFileInfo.type)
+}
+inline std::string* ShareFileInfo::mutable_type() {
+  std::string* _s = _internal_mutable_type();
+  // @@protoc_insertion_point(field_mutable:rpc.ShareFileInfo.type)
+  return _s;
+}
+inline const std::string& ShareFileInfo::_internal_type() const {
+  return type_.Get();
+}
+inline void ShareFileInfo::_internal_set_type(const std::string& value) {
+  
+  type_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::_internal_mutable_type() {
+  
+  return type_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* ShareFileInfo::release_type() {
+  // @@protoc_insertion_point(field_release:rpc.ShareFileInfo.type)
+  return type_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void ShareFileInfo::set_allocated_type(std::string* type) {
+  if (type != nullptr) {
+    
+  } else {
+    
+  }
+  type_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), type,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (type_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    type_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.ShareFileInfo.type)
+}
+
+// -------------------------------------------------------------------
+
+// GetShareFileListRequest
+
+// int32 start = 1;
+inline void GetShareFileListRequest::clear_start() {
+  start_ = 0;
+}
+inline int32_t GetShareFileListRequest::_internal_start() const {
+  return start_;
+}
+inline int32_t GetShareFileListRequest::start() const {
+  // @@protoc_insertion_point(field_get:rpc.GetShareFileListRequest.start)
+  return _internal_start();
+}
+inline void GetShareFileListRequest::_internal_set_start(int32_t value) {
+  
+  start_ = value;
+}
+inline void GetShareFileListRequest::set_start(int32_t value) {
+  _internal_set_start(value);
+  // @@protoc_insertion_point(field_set:rpc.GetShareFileListRequest.start)
+}
+
+// int32 count = 2;
+inline void GetShareFileListRequest::clear_count() {
+  count_ = 0;
+}
+inline int32_t GetShareFileListRequest::_internal_count() const {
+  return count_;
+}
+inline int32_t GetShareFileListRequest::count() const {
+  // @@protoc_insertion_point(field_get:rpc.GetShareFileListRequest.count)
+  return _internal_count();
+}
+inline void GetShareFileListRequest::_internal_set_count(int32_t value) {
+  
+  count_ = value;
+}
+inline void GetShareFileListRequest::set_count(int32_t value) {
+  _internal_set_count(value);
+  // @@protoc_insertion_point(field_set:rpc.GetShareFileListRequest.count)
+}
+
+// -------------------------------------------------------------------
+
+// GetShareFileListResponse
+
+// int32 code = 1;
+inline void GetShareFileListResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t GetShareFileListResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t GetShareFileListResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.GetShareFileListResponse.code)
+  return _internal_code();
+}
+inline void GetShareFileListResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void GetShareFileListResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.GetShareFileListResponse.code)
+}
+
+// int32 total = 2;
+inline void GetShareFileListResponse::clear_total() {
+  total_ = 0;
+}
+inline int32_t GetShareFileListResponse::_internal_total() const {
+  return total_;
+}
+inline int32_t GetShareFileListResponse::total() const {
+  // @@protoc_insertion_point(field_get:rpc.GetShareFileListResponse.total)
+  return _internal_total();
+}
+inline void GetShareFileListResponse::_internal_set_total(int32_t value) {
+  
+  total_ = value;
+}
+inline void GetShareFileListResponse::set_total(int32_t value) {
+  _internal_set_total(value);
+  // @@protoc_insertion_point(field_set:rpc.GetShareFileListResponse.total)
+}
+
+// int32 count = 3;
+inline void GetShareFileListResponse::clear_count() {
+  count_ = 0;
+}
+inline int32_t GetShareFileListResponse::_internal_count() const {
+  return count_;
+}
+inline int32_t GetShareFileListResponse::count() const {
+  // @@protoc_insertion_point(field_get:rpc.GetShareFileListResponse.count)
+  return _internal_count();
+}
+inline void GetShareFileListResponse::_internal_set_count(int32_t value) {
+  
+  count_ = value;
+}
+inline void GetShareFileListResponse::set_count(int32_t value) {
+  _internal_set_count(value);
+  // @@protoc_insertion_point(field_set:rpc.GetShareFileListResponse.count)
+}
+
+// repeated .rpc.ShareFileInfo files = 4;
+inline int GetShareFileListResponse::_internal_files_size() const {
+  return files_.size();
+}
+inline int GetShareFileListResponse::files_size() const {
+  return _internal_files_size();
+}
+inline void GetShareFileListResponse::clear_files() {
+  files_.Clear();
+}
+inline ::rpc::ShareFileInfo* GetShareFileListResponse::mutable_files(int index) {
+  // @@protoc_insertion_point(field_mutable:rpc.GetShareFileListResponse.files)
+  return files_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::ShareFileInfo >*
+GetShareFileListResponse::mutable_files() {
+  // @@protoc_insertion_point(field_mutable_list:rpc.GetShareFileListResponse.files)
+  return &files_;
+}
+inline const ::rpc::ShareFileInfo& GetShareFileListResponse::_internal_files(int index) const {
+  return files_.Get(index);
+}
+inline const ::rpc::ShareFileInfo& GetShareFileListResponse::files(int index) const {
+  // @@protoc_insertion_point(field_get:rpc.GetShareFileListResponse.files)
+  return _internal_files(index);
+}
+inline ::rpc::ShareFileInfo* GetShareFileListResponse::_internal_add_files() {
+  return files_.Add();
+}
+inline ::rpc::ShareFileInfo* GetShareFileListResponse::add_files() {
+  ::rpc::ShareFileInfo* _add = _internal_add_files();
+  // @@protoc_insertion_point(field_add:rpc.GetShareFileListResponse.files)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::ShareFileInfo >&
+GetShareFileListResponse::files() const {
+  // @@protoc_insertion_point(field_list:rpc.GetShareFileListResponse.files)
+  return files_;
+}
+
+// -------------------------------------------------------------------
+
+// RankingFileInfo
+
+// string filename = 1;
+inline void RankingFileInfo::clear_filename() {
+  filename_.ClearToEmpty();
+}
+inline const std::string& RankingFileInfo::filename() const {
+  // @@protoc_insertion_point(field_get:rpc.RankingFileInfo.filename)
+  return _internal_filename();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void RankingFileInfo::set_filename(ArgT0&& arg0, ArgT... args) {
+ 
+ filename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.RankingFileInfo.filename)
+}
+inline std::string* RankingFileInfo::mutable_filename() {
+  std::string* _s = _internal_mutable_filename();
+  // @@protoc_insertion_point(field_mutable:rpc.RankingFileInfo.filename)
+  return _s;
+}
+inline const std::string& RankingFileInfo::_internal_filename() const {
+  return filename_.Get();
+}
+inline void RankingFileInfo::_internal_set_filename(const std::string& value) {
+  
+  filename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* RankingFileInfo::_internal_mutable_filename() {
+  
+  return filename_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* RankingFileInfo::release_filename() {
+  // @@protoc_insertion_point(field_release:rpc.RankingFileInfo.filename)
+  return filename_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void RankingFileInfo::set_allocated_filename(std::string* filename) {
+  if (filename != nullptr) {
+    
+  } else {
+    
+  }
+  filename_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), filename,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (filename_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    filename_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.RankingFileInfo.filename)
+}
+
+// int32 pv = 2;
+inline void RankingFileInfo::clear_pv() {
+  pv_ = 0;
+}
+inline int32_t RankingFileInfo::_internal_pv() const {
+  return pv_;
+}
+inline int32_t RankingFileInfo::pv() const {
+  // @@protoc_insertion_point(field_get:rpc.RankingFileInfo.pv)
+  return _internal_pv();
+}
+inline void RankingFileInfo::_internal_set_pv(int32_t value) {
+  
+  pv_ = value;
+}
+inline void RankingFileInfo::set_pv(int32_t value) {
+  _internal_set_pv(value);
+  // @@protoc_insertion_point(field_set:rpc.RankingFileInfo.pv)
+}
+
+// -------------------------------------------------------------------
+
+// GetRankingFileListRequest
+
+// int32 start = 1;
+inline void GetRankingFileListRequest::clear_start() {
+  start_ = 0;
+}
+inline int32_t GetRankingFileListRequest::_internal_start() const {
+  return start_;
+}
+inline int32_t GetRankingFileListRequest::start() const {
+  // @@protoc_insertion_point(field_get:rpc.GetRankingFileListRequest.start)
+  return _internal_start();
+}
+inline void GetRankingFileListRequest::_internal_set_start(int32_t value) {
+  
+  start_ = value;
+}
+inline void GetRankingFileListRequest::set_start(int32_t value) {
+  _internal_set_start(value);
+  // @@protoc_insertion_point(field_set:rpc.GetRankingFileListRequest.start)
+}
+
+// int32 count = 2;
+inline void GetRankingFileListRequest::clear_count() {
+  count_ = 0;
+}
+inline int32_t GetRankingFileListRequest::_internal_count() const {
+  return count_;
+}
+inline int32_t GetRankingFileListRequest::count() const {
+  // @@protoc_insertion_point(field_get:rpc.GetRankingFileListRequest.count)
+  return _internal_count();
+}
+inline void GetRankingFileListRequest::_internal_set_count(int32_t value) {
+  
+  count_ = value;
+}
+inline void GetRankingFileListRequest::set_count(int32_t value) {
+  _internal_set_count(value);
+  // @@protoc_insertion_point(field_set:rpc.GetRankingFileListRequest.count)
+}
+
+// -------------------------------------------------------------------
+
+// GetRankingFileListResponse
+
+// int32 code = 1;
+inline void GetRankingFileListResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t GetRankingFileListResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t GetRankingFileListResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.GetRankingFileListResponse.code)
+  return _internal_code();
+}
+inline void GetRankingFileListResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void GetRankingFileListResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.GetRankingFileListResponse.code)
+}
+
+// int32 total = 2;
+inline void GetRankingFileListResponse::clear_total() {
+  total_ = 0;
+}
+inline int32_t GetRankingFileListResponse::_internal_total() const {
+  return total_;
+}
+inline int32_t GetRankingFileListResponse::total() const {
+  // @@protoc_insertion_point(field_get:rpc.GetRankingFileListResponse.total)
+  return _internal_total();
+}
+inline void GetRankingFileListResponse::_internal_set_total(int32_t value) {
+  
+  total_ = value;
+}
+inline void GetRankingFileListResponse::set_total(int32_t value) {
+  _internal_set_total(value);
+  // @@protoc_insertion_point(field_set:rpc.GetRankingFileListResponse.total)
+}
+
+// int32 count = 3;
+inline void GetRankingFileListResponse::clear_count() {
+  count_ = 0;
+}
+inline int32_t GetRankingFileListResponse::_internal_count() const {
+  return count_;
+}
+inline int32_t GetRankingFileListResponse::count() const {
+  // @@protoc_insertion_point(field_get:rpc.GetRankingFileListResponse.count)
+  return _internal_count();
+}
+inline void GetRankingFileListResponse::_internal_set_count(int32_t value) {
+  
+  count_ = value;
+}
+inline void GetRankingFileListResponse::set_count(int32_t value) {
+  _internal_set_count(value);
+  // @@protoc_insertion_point(field_set:rpc.GetRankingFileListResponse.count)
+}
+
+// repeated .rpc.RankingFileInfo files = 4;
+inline int GetRankingFileListResponse::_internal_files_size() const {
+  return files_.size();
+}
+inline int GetRankingFileListResponse::files_size() const {
+  return _internal_files_size();
+}
+inline void GetRankingFileListResponse::clear_files() {
+  files_.Clear();
+}
+inline ::rpc::RankingFileInfo* GetRankingFileListResponse::mutable_files(int index) {
+  // @@protoc_insertion_point(field_mutable:rpc.GetRankingFileListResponse.files)
+  return files_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::RankingFileInfo >*
+GetRankingFileListResponse::mutable_files() {
+  // @@protoc_insertion_point(field_mutable_list:rpc.GetRankingFileListResponse.files)
+  return &files_;
+}
+inline const ::rpc::RankingFileInfo& GetRankingFileListResponse::_internal_files(int index) const {
+  return files_.Get(index);
+}
+inline const ::rpc::RankingFileInfo& GetRankingFileListResponse::files(int index) const {
+  // @@protoc_insertion_point(field_get:rpc.GetRankingFileListResponse.files)
+  return _internal_files(index);
+}
+inline ::rpc::RankingFileInfo* GetRankingFileListResponse::_internal_add_files() {
+  return files_.Add();
+}
+inline ::rpc::RankingFileInfo* GetRankingFileListResponse::add_files() {
+  ::rpc::RankingFileInfo* _add = _internal_add_files();
+  // @@protoc_insertion_point(field_add:rpc.GetRankingFileListResponse.files)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::RankingFileInfo >&
+GetRankingFileListResponse::files() const {
+  // @@protoc_insertion_point(field_list:rpc.GetRankingFileListResponse.files)
+  return files_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

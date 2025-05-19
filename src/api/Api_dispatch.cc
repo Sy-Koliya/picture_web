@@ -91,6 +91,7 @@ public:
                            getTrie().insert("/api/myfiles",ApiMyfiles);
                            getTrie().insert("/api/dealfile",ApiDealfile);
                            getTrie().insert("/api/dealsharefile",ApiDealsharefile);
+                           getTrie().insert("/api/sharefiles",ApiSharefiles);
 
                        });
         // 动态添加:
@@ -118,6 +119,7 @@ void api_dispatch(int fd,
         BaseCount sock = FindBaseSocket(fd);
         if(!sock)return ;
         auto task = UriDispatcher::FindHandler(uri);
+        std::cout << "uri:" << uri << '\n';
         if (task == nullptr)
         {
                 if (auto *h = dynamic_cast<HttpConn *>(sock.GetBasePtr()))
@@ -126,7 +128,6 @@ void api_dispatch(int fd,
                 }
             return;
         }
-        std::cout<<"New task uri:"<<uri<<'\n';
         coro_register<int>(std::move(task(fd, content, uri)),
                            [fd,sock](int code)
                            {

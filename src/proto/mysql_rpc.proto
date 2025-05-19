@@ -146,7 +146,53 @@ message PvShareFileResponse {
   int32 code = 1; // 0=OK, 1=FAIL
 }
 
+message GetShareFilesCountRequest {}
 
+message GetShareFilesCountResponse {
+  int32 code  = 1; // 0=OK, 1=FAIL
+  int32 total = 2; // 共享文件总数
+}
+
+message ShareFileInfo {
+  string user        = 1;
+  string md5         = 2;
+  string file_name   = 3;
+  int32  share_status= 4;
+  int32  pv          = 5;
+  string create_time = 6;
+  string url         = 7;
+  int32  size        = 8;
+  string type        = 9;
+}
+
+message GetShareFileListRequest {
+  int32 start = 1;
+  int32 count = 2;
+}
+
+message GetShareFileListResponse {
+  int32 code  = 1; // 0=OK, 1=FAIL
+  int32 total = 2; // 与 GetShareFilesCountResponse.total 保持一致
+  int32 count = 3; // 本次返回的文件数
+  repeated ShareFileInfo files = 4;
+}
+
+message RankingFileInfo {
+  string filename = 1;
+  int32  pv       = 2;
+}
+
+message GetRankingFileListRequest {
+  int32 start = 1;
+  int32 count = 2;
+}
+
+message GetRankingFileListResponse {
+  int32 code  = 1; // 0=OK, 1=FAIL
+  int32 total = 2;
+  int32 count = 3;
+  repeated RankingFileInfo files = 4;
+}
 
 
 service DatabaseService {
@@ -162,4 +208,7 @@ service DatabaseService {
   rpc CancelShareFile(CancelShareFileRequest) returns (CancelShareFileResponse);
   rpc SaveFile        (SaveFileRequest)        returns (SaveFileResponse);
   rpc PvShareFile     (PvShareFileRequest)     returns (PvShareFileResponse);
+  rpc GetShareFilesCount   (GetShareFilesCountRequest)   returns (GetShareFilesCountResponse);
+  rpc GetShareFileList     (GetShareFileListRequest)     returns (GetShareFileListResponse);
+  rpc GetRankingFileList   (GetRankingFileListRequest)   returns (GetRankingFileListResponse);
 }

@@ -29,7 +29,7 @@ static std::unique_ptr<GrpcClient<DatabaseService,
 static std::once_flag grpc_init_flag;
 
 static void init_sharefile_clients() {
-    auto addr = Global::Instance().get<std::string>("Rpc_Mysql_Server");
+    auto addr = Global::Instance().get<std::string>("Mysql_Rpc_Server");
     auto chan = grpc::CreateChannel(addr, grpc::InsecureChannelCredentials());
     db_cancel_client.reset(new GrpcClient<DatabaseService,
                                           CancelShareFileRequest,

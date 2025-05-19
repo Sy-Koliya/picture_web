@@ -34,6 +34,9 @@ static const char* DatabaseService_method_names[] = {
   "/rpc.DatabaseService/CancelShareFile",
   "/rpc.DatabaseService/SaveFile",
   "/rpc.DatabaseService/PvShareFile",
+  "/rpc.DatabaseService/GetShareFilesCount",
+  "/rpc.DatabaseService/GetShareFileList",
+  "/rpc.DatabaseService/GetRankingFileList",
 };
 
 std::unique_ptr< DatabaseService::Stub> DatabaseService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -55,6 +58,9 @@ DatabaseService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& ch
   , rpcmethod_CancelShareFile_(DatabaseService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_SaveFile_(DatabaseService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_PvShareFile_(DatabaseService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetShareFilesCount_(DatabaseService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetShareFileList_(DatabaseService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetRankingFileList_(DatabaseService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DatabaseService::Stub::registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::rpc::RegisterResponse* response) {
@@ -333,6 +339,75 @@ void DatabaseService::Stub::async::PvShareFile(::grpc::ClientContext* context, c
   return result;
 }
 
+::grpc::Status DatabaseService::Stub::GetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::rpc::GetShareFilesCountResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::GetShareFilesCountRequest, ::rpc::GetShareFilesCountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetShareFilesCount_, context, request, response);
+}
+
+void DatabaseService::Stub::async::GetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::GetShareFilesCountRequest, ::rpc::GetShareFilesCountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetShareFilesCount_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::GetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetShareFilesCount_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetShareFilesCountResponse>* DatabaseService::Stub::PrepareAsyncGetShareFilesCountRaw(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::GetShareFilesCountResponse, ::rpc::GetShareFilesCountRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetShareFilesCount_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetShareFilesCountResponse>* DatabaseService::Stub::AsyncGetShareFilesCountRaw(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetShareFilesCountRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::rpc::GetShareFileListResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::GetShareFileListRequest, ::rpc::GetShareFileListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetShareFileList_, context, request, response);
+}
+
+void DatabaseService::Stub::async::GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::GetShareFileListRequest, ::rpc::GetShareFileListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetShareFileList_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetShareFileList_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetShareFileListResponse>* DatabaseService::Stub::PrepareAsyncGetShareFileListRaw(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::GetShareFileListResponse, ::rpc::GetShareFileListRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetShareFileList_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetShareFileListResponse>* DatabaseService::Stub::AsyncGetShareFileListRaw(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetShareFileListRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::rpc::GetRankingFileListResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::GetRankingFileListRequest, ::rpc::GetRankingFileListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetRankingFileList_, context, request, response);
+}
+
+void DatabaseService::Stub::async::GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::GetRankingFileListRequest, ::rpc::GetRankingFileListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRankingFileList_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRankingFileList_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>* DatabaseService::Stub::PrepareAsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::GetRankingFileListResponse, ::rpc::GetRankingFileListRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetRankingFileList_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>* DatabaseService::Stub::AsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetRankingFileListRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 DatabaseService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DatabaseService_method_names[0],
@@ -454,6 +529,36 @@ DatabaseService::Service::Service() {
              ::rpc::PvShareFileResponse* resp) {
                return service->PvShareFile(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[12],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::GetShareFilesCountRequest, ::rpc::GetShareFilesCountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::GetShareFilesCountRequest* req,
+             ::rpc::GetShareFilesCountResponse* resp) {
+               return service->GetShareFilesCount(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[13],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::GetShareFileListRequest, ::rpc::GetShareFileListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::GetShareFileListRequest* req,
+             ::rpc::GetShareFileListResponse* resp) {
+               return service->GetShareFileList(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[14],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::GetRankingFileListRequest, ::rpc::GetRankingFileListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::GetRankingFileListRequest* req,
+             ::rpc::GetRankingFileListResponse* resp) {
+               return service->GetRankingFileList(ctx, req, resp);
+             }, this)));
 }
 
 DatabaseService::Service::~Service() {
@@ -537,6 +642,27 @@ DatabaseService::Service::~Service() {
 }
 
 ::grpc::Status DatabaseService::Service::PvShareFile(::grpc::ServerContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::GetShareFilesCount(::grpc::ServerContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::GetShareFileList(::grpc::ServerContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::GetRankingFileList(::grpc::ServerContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response) {
   (void) context;
   (void) request;
   (void) response;

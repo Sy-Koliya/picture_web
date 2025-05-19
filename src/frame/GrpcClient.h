@@ -215,7 +215,24 @@ inline auto MysqlSaveFile(GrpcClient<rpc::DatabaseService, Req, Resp> *client, R
     return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncSaveFile>{client, std::move(req)};
 }
 
-
+template <typename Req, typename Resp>
+inline auto MysqlGetShareFilesCountCall( GrpcClient<rpc::DatabaseService, Req, Resp>* client,Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>,Req, Resp,&rpc::DatabaseService::Stub::PrepareAsyncGetShareFilesCount>(client, std::move(req));
+}
+template <typename Req, typename Resp>
+inline auto MysqlGetShareFileListCall( GrpcClient<rpc::DatabaseService, Req, Resp>* client,Req req)
+{
+   return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>,Req, Resp,&rpc::DatabaseService::Stub::PrepareAsyncGetShareFileList>(client, std::move(req));
+}
+        
+template <typename Req, typename Resp>
+inline auto MysqlGetRankingFileListCall(
+GrpcClient<rpc::DatabaseService, Req, Resp>* client,Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>,Req, Resp,&rpc::DatabaseService::Stub::PrepareAsyncGetRankingFileList>(client, std::move(req));
+}
+// 在模板调用区段后追加：
 
 
 

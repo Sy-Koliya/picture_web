@@ -119,6 +119,27 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>> PrepareAsyncPvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>>(PrepareAsyncPvShareFileRaw(context, request, cq));
     }
+    virtual ::grpc::Status GetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::rpc::GetShareFilesCountResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFilesCountResponse>> AsyncGetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFilesCountResponse>>(AsyncGetShareFilesCountRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFilesCountResponse>> PrepareAsyncGetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFilesCountResponse>>(PrepareAsyncGetShareFilesCountRaw(context, request, cq));
+    }
+    virtual ::grpc::Status GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::rpc::GetShareFileListResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFileListResponse>> AsyncGetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFileListResponse>>(AsyncGetShareFileListRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFileListResponse>> PrepareAsyncGetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFileListResponse>>(PrepareAsyncGetShareFileListRaw(context, request, cq));
+    }
+    virtual ::grpc::Status GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::rpc::GetRankingFileListResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>> AsyncGetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>>(AsyncGetRankingFileListRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>> PrepareAsyncGetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>>(PrepareAsyncGetRankingFileListRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -146,6 +167,12 @@ class DatabaseService final {
       virtual void SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -175,6 +202,12 @@ class DatabaseService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SaveFileResponse>* PrepareAsyncSaveFileRaw(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>* AsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>* PrepareAsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFilesCountResponse>* AsyncGetShareFilesCountRaw(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFilesCountResponse>* PrepareAsyncGetShareFilesCountRaw(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFileListResponse>* AsyncGetShareFileListRaw(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFileListResponse>* PrepareAsyncGetShareFileListRaw(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>* AsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>* PrepareAsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -263,6 +296,27 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>> PrepareAsyncPvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>>(PrepareAsyncPvShareFileRaw(context, request, cq));
     }
+    ::grpc::Status GetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::rpc::GetShareFilesCountResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFilesCountResponse>> AsyncGetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFilesCountResponse>>(AsyncGetShareFilesCountRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFilesCountResponse>> PrepareAsyncGetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFilesCountResponse>>(PrepareAsyncGetShareFilesCountRaw(context, request, cq));
+    }
+    ::grpc::Status GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::rpc::GetShareFileListResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFileListResponse>> AsyncGetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFileListResponse>>(AsyncGetShareFileListRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFileListResponse>> PrepareAsyncGetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFileListResponse>>(PrepareAsyncGetShareFileListRaw(context, request, cq));
+    }
+    ::grpc::Status GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::rpc::GetRankingFileListResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>> AsyncGetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>>(AsyncGetRankingFileListRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>> PrepareAsyncGetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>>(PrepareAsyncGetRankingFileListRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -290,6 +344,12 @@ class DatabaseService final {
       void SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, std::function<void(::grpc::Status)>) override;
       void PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetShareFilesCount(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -325,6 +385,12 @@ class DatabaseService final {
     ::grpc::ClientAsyncResponseReader< ::rpc::SaveFileResponse>* PrepareAsyncSaveFileRaw(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>* AsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>* PrepareAsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFilesCountResponse>* AsyncGetShareFilesCountRaw(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFilesCountResponse>* PrepareAsyncGetShareFilesCountRaw(::grpc::ClientContext* context, const ::rpc::GetShareFilesCountRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFileListResponse>* AsyncGetShareFileListRaw(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFileListResponse>* PrepareAsyncGetShareFileListRaw(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>* AsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>* PrepareAsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_registerUser_;
     const ::grpc::internal::RpcMethod rpcmethod_loginUser_;
     const ::grpc::internal::RpcMethod rpcmethod_InstantUpload_;
@@ -337,6 +403,9 @@ class DatabaseService final {
     const ::grpc::internal::RpcMethod rpcmethod_CancelShareFile_;
     const ::grpc::internal::RpcMethod rpcmethod_SaveFile_;
     const ::grpc::internal::RpcMethod rpcmethod_PvShareFile_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetShareFilesCount_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetShareFileList_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetRankingFileList_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -356,6 +425,9 @@ class DatabaseService final {
     virtual ::grpc::Status CancelShareFile(::grpc::ServerContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response);
     virtual ::grpc::Status SaveFile(::grpc::ServerContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response);
     virtual ::grpc::Status PvShareFile(::grpc::ServerContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response);
+    virtual ::grpc::Status GetShareFilesCount(::grpc::ServerContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response);
+    virtual ::grpc::Status GetShareFileList(::grpc::ServerContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response);
+    virtual ::grpc::Status GetRankingFileList(::grpc::ServerContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_registerUser : public BaseClass {
@@ -597,7 +669,67 @@ class DatabaseService final {
       ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_registerUser<WithAsyncMethod_loginUser<WithAsyncMethod_InstantUpload<WithAsyncMethod_UploadFile<WithAsyncMethod_GetUserFilesCount<WithAsyncMethod_GetUserFileList<WithAsyncMethod_ShareFile<WithAsyncMethod_DeleteFile<WithAsyncMethod_PvFile<WithAsyncMethod_CancelShareFile<WithAsyncMethod_SaveFile<WithAsyncMethod_PvShareFile<Service > > > > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_GetShareFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetShareFilesCount() {
+      ::grpc::Service::MarkMethodAsync(12);
+    }
+    ~WithAsyncMethod_GetShareFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFilesCountRequest* /*request*/, ::rpc::GetShareFilesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetShareFilesCount(::grpc::ServerContext* context, ::rpc::GetShareFilesCountRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::GetShareFilesCountResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetShareFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetShareFileList() {
+      ::grpc::Service::MarkMethodAsync(13);
+    }
+    ~WithAsyncMethod_GetShareFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFileListRequest* /*request*/, ::rpc::GetShareFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetShareFileList(::grpc::ServerContext* context, ::rpc::GetShareFileListRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::GetShareFileListResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetRankingFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetRankingFileList() {
+      ::grpc::Service::MarkMethodAsync(14);
+    }
+    ~WithAsyncMethod_GetRankingFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetRankingFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetRankingFileListRequest* /*request*/, ::rpc::GetRankingFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetRankingFileList(::grpc::ServerContext* context, ::rpc::GetRankingFileListRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::GetRankingFileListResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_registerUser<WithAsyncMethod_loginUser<WithAsyncMethod_InstantUpload<WithAsyncMethod_UploadFile<WithAsyncMethod_GetUserFilesCount<WithAsyncMethod_GetUserFileList<WithAsyncMethod_ShareFile<WithAsyncMethod_DeleteFile<WithAsyncMethod_PvFile<WithAsyncMethod_CancelShareFile<WithAsyncMethod_SaveFile<WithAsyncMethod_PvShareFile<WithAsyncMethod_GetShareFilesCount<WithAsyncMethod_GetShareFileList<WithAsyncMethod_GetRankingFileList<Service > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_registerUser : public BaseClass {
    private:
@@ -922,7 +1054,88 @@ class DatabaseService final {
     virtual ::grpc::ServerUnaryReactor* PvShareFile(
       ::grpc::CallbackServerContext* /*context*/, const ::rpc::PvShareFileRequest* /*request*/, ::rpc::PvShareFileResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_registerUser<WithCallbackMethod_loginUser<WithCallbackMethod_InstantUpload<WithCallbackMethod_UploadFile<WithCallbackMethod_GetUserFilesCount<WithCallbackMethod_GetUserFileList<WithCallbackMethod_ShareFile<WithCallbackMethod_DeleteFile<WithCallbackMethod_PvFile<WithCallbackMethod_CancelShareFile<WithCallbackMethod_SaveFile<WithCallbackMethod_PvShareFile<Service > > > > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetShareFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetShareFilesCount() {
+      ::grpc::Service::MarkMethodCallback(12,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::GetShareFilesCountRequest, ::rpc::GetShareFilesCountResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response) { return this->GetShareFilesCount(context, request, response); }));}
+    void SetMessageAllocatorFor_GetShareFilesCount(
+        ::grpc::MessageAllocator< ::rpc::GetShareFilesCountRequest, ::rpc::GetShareFilesCountResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(12);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::GetShareFilesCountRequest, ::rpc::GetShareFilesCountResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetShareFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFilesCountRequest* /*request*/, ::rpc::GetShareFilesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetShareFilesCount(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::GetShareFilesCountRequest* /*request*/, ::rpc::GetShareFilesCountResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_GetShareFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetShareFileList() {
+      ::grpc::Service::MarkMethodCallback(13,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::GetShareFileListRequest, ::rpc::GetShareFileListResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response) { return this->GetShareFileList(context, request, response); }));}
+    void SetMessageAllocatorFor_GetShareFileList(
+        ::grpc::MessageAllocator< ::rpc::GetShareFileListRequest, ::rpc::GetShareFileListResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(13);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::GetShareFileListRequest, ::rpc::GetShareFileListResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetShareFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFileListRequest* /*request*/, ::rpc::GetShareFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetShareFileList(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::GetShareFileListRequest* /*request*/, ::rpc::GetShareFileListResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_GetRankingFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetRankingFileList() {
+      ::grpc::Service::MarkMethodCallback(14,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::GetRankingFileListRequest, ::rpc::GetRankingFileListResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response) { return this->GetRankingFileList(context, request, response); }));}
+    void SetMessageAllocatorFor_GetRankingFileList(
+        ::grpc::MessageAllocator< ::rpc::GetRankingFileListRequest, ::rpc::GetRankingFileListResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(14);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::GetRankingFileListRequest, ::rpc::GetRankingFileListResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetRankingFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetRankingFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetRankingFileListRequest* /*request*/, ::rpc::GetRankingFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetRankingFileList(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::GetRankingFileListRequest* /*request*/, ::rpc::GetRankingFileListResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_registerUser<WithCallbackMethod_loginUser<WithCallbackMethod_InstantUpload<WithCallbackMethod_UploadFile<WithCallbackMethod_GetUserFilesCount<WithCallbackMethod_GetUserFileList<WithCallbackMethod_ShareFile<WithCallbackMethod_DeleteFile<WithCallbackMethod_PvFile<WithCallbackMethod_CancelShareFile<WithCallbackMethod_SaveFile<WithCallbackMethod_PvShareFile<WithCallbackMethod_GetShareFilesCount<WithCallbackMethod_GetShareFileList<WithCallbackMethod_GetRankingFileList<Service > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_registerUser : public BaseClass {
@@ -1124,6 +1337,57 @@ class DatabaseService final {
     }
     // disable synchronous version of this method
     ::grpc::Status PvShareFile(::grpc::ServerContext* /*context*/, const ::rpc::PvShareFileRequest* /*request*/, ::rpc::PvShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetShareFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetShareFilesCount() {
+      ::grpc::Service::MarkMethodGeneric(12);
+    }
+    ~WithGenericMethod_GetShareFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFilesCountRequest* /*request*/, ::rpc::GetShareFilesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetShareFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetShareFileList() {
+      ::grpc::Service::MarkMethodGeneric(13);
+    }
+    ~WithGenericMethod_GetShareFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFileListRequest* /*request*/, ::rpc::GetShareFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetRankingFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetRankingFileList() {
+      ::grpc::Service::MarkMethodGeneric(14);
+    }
+    ~WithGenericMethod_GetRankingFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetRankingFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetRankingFileListRequest* /*request*/, ::rpc::GetRankingFileListResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1366,6 +1630,66 @@ class DatabaseService final {
     }
     void RequestPvShareFile(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetShareFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetShareFilesCount() {
+      ::grpc::Service::MarkMethodRaw(12);
+    }
+    ~WithRawMethod_GetShareFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFilesCountRequest* /*request*/, ::rpc::GetShareFilesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetShareFilesCount(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetShareFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetShareFileList() {
+      ::grpc::Service::MarkMethodRaw(13);
+    }
+    ~WithRawMethod_GetShareFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFileListRequest* /*request*/, ::rpc::GetShareFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetShareFileList(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetRankingFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetRankingFileList() {
+      ::grpc::Service::MarkMethodRaw(14);
+    }
+    ~WithRawMethod_GetRankingFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetRankingFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetRankingFileListRequest* /*request*/, ::rpc::GetRankingFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetRankingFileList(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1630,6 +1954,72 @@ class DatabaseService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* PvShareFile(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetShareFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetShareFilesCount() {
+      ::grpc::Service::MarkMethodRawCallback(12,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetShareFilesCount(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetShareFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFilesCountRequest* /*request*/, ::rpc::GetShareFilesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetShareFilesCount(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetShareFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetShareFileList() {
+      ::grpc::Service::MarkMethodRawCallback(13,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetShareFileList(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetShareFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetShareFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFileListRequest* /*request*/, ::rpc::GetShareFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetShareFileList(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetRankingFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetRankingFileList() {
+      ::grpc::Service::MarkMethodRawCallback(14,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetRankingFileList(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetRankingFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetRankingFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetRankingFileListRequest* /*request*/, ::rpc::GetRankingFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetRankingFileList(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1956,9 +2346,90 @@ class DatabaseService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedPvShareFile(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::PvShareFileRequest,::rpc::PvShareFileResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<Service > > > > > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetShareFilesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetShareFilesCount() {
+      ::grpc::Service::MarkMethodStreamed(12,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::GetShareFilesCountRequest, ::rpc::GetShareFilesCountResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::GetShareFilesCountRequest, ::rpc::GetShareFilesCountResponse>* streamer) {
+                       return this->StreamedGetShareFilesCount(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetShareFilesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetShareFilesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFilesCountRequest* /*request*/, ::rpc::GetShareFilesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetShareFilesCount(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::GetShareFilesCountRequest,::rpc::GetShareFilesCountResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetShareFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetShareFileList() {
+      ::grpc::Service::MarkMethodStreamed(13,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::GetShareFileListRequest, ::rpc::GetShareFileListResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::GetShareFileListRequest, ::rpc::GetShareFileListResponse>* streamer) {
+                       return this->StreamedGetShareFileList(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetShareFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetShareFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetShareFileListRequest* /*request*/, ::rpc::GetShareFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetShareFileList(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::GetShareFileListRequest,::rpc::GetShareFileListResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetRankingFileList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetRankingFileList() {
+      ::grpc::Service::MarkMethodStreamed(14,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::GetRankingFileListRequest, ::rpc::GetRankingFileListResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::GetRankingFileListRequest, ::rpc::GetRankingFileListResponse>* streamer) {
+                       return this->StreamedGetRankingFileList(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetRankingFileList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetRankingFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetRankingFileListRequest* /*request*/, ::rpc::GetRankingFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetRankingFileList(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::GetRankingFileListRequest,::rpc::GetRankingFileListResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<WithStreamedUnaryMethod_GetShareFilesCount<WithStreamedUnaryMethod_GetShareFileList<WithStreamedUnaryMethod_GetRankingFileList<Service > > > > > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<Service > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<WithStreamedUnaryMethod_GetShareFilesCount<WithStreamedUnaryMethod_GetShareFileList<WithStreamedUnaryMethod_GetRankingFileList<Service > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace rpc
