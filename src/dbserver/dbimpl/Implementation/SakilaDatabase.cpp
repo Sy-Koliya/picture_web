@@ -206,6 +206,24 @@ void SakilaDatabaseConnection::DoPrepareStatements()
     PrepareStatement(DELETE_FILE_INFO_SYNC,
         "DELETE FROM file_info WHERE md5 = ?",
         CONNECTION_SYNCH);
+    PrepareStatement(SHARED_FILE_LIST_SYNC,
+        R"SQL(
+        SELECT u.`user`       AS user_id,
+               u.md5          AS file_md5,
+               CAST(u.create_time AS CHAR) AS created_at,
+               u.file_name    AS filename,
+               u.shared_status AS is_shared,
+               u.pv           AS view_count,
+               f.url          AS file_url,
+               f.size         AS file_size,
+               f.type         AS file_type
+        FROM user_file_list u
+        JOIN file_info f ON u.md5 = f.md5
+        WHERE u.`user` = 'xxx_share_xxx_file_xxx_list_xxx_count_xxx'
+        ORDER BY u.pv DESC
+        LIMIT ?, ?
+    )SQL",
+        CONNECTION_SYNCH);
 
 }
 

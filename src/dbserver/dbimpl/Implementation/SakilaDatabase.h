@@ -79,6 +79,8 @@ enum SakilaDatabaseStatements : uint32
     UPDATE_FILE_INFO_COUNT_SYNC,
     DELETE_FILE_INFO_SYNC,
 
+
+    SHARED_FILE_LIST_SYNC,
     MAX_SAKILADATABASE_STATEMENTS
     
 };

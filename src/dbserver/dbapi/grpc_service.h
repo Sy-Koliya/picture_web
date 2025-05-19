@@ -21,13 +21,32 @@ public:
         new UploadFileCall(&db_service_, cq_.get());
         new CountCall(&db_service_, cq_.get());
         new ListCall(&db_service_, cq_.get());
-        new DeleteFileCall(&db_service_, cq_.get());
-        new ShareFileCall(&db_service_, cq_.get());
-        new PvFileCall(&db_service_, cq_.get());
+
         new CancelShareFileCall(&db_service_, cq_.get());
         new SaveFileCall        (&db_service_, cq_.get());
         new PvShareFileCall     (&db_service_, cq_.get());
+
+
+
+        new DeleteFileCall(&db_service_, cq_.get());
+        new ShareFileCall(&db_service_, cq_.get());
+        new PvFileCall(&db_service_, cq_.get());
+
+        
+        new SharePictureCall(&db_service_, cq_.get());
+        new GetSharePicturesCountCall(&db_service_, cq_.get());
+        new GetSharePicturesListCall(&db_service_, cq_.get());
+        new CancelSharePictureCall(&db_service_, cq_.get());
+        new BrowsePictureCall(&db_service_, cq_.get());
+
+        
+        new GetShareFilesCountCall(&db_service_, cq_.get());
+        new GetShareFileListCall(&db_service_,   cq_.get());
+        new GetRankingFileListCall(&db_service_, cq_.get());
     }
+
+
+
     ~MySqlRpcServer()
     {
         RegisterUserCall::processor_stop_flag_.store(true);

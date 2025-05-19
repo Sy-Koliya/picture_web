@@ -15,6 +15,8 @@ using rpc::SaveFileResponse;
 using rpc::PvShareFileRequest;
 using rpc::PvShareFileResponse;
 
+static constexpr int debug=1;
+
 // 1) CancelShareFile
 template<>
 struct ServiceMethodTraits<CancelShareFileRequest> {
@@ -27,9 +29,11 @@ class CancelShareFileCall
 public:
     CancelShareFileCall(DatabaseService::AsyncService* svc,
                         grpc::ServerCompletionQueue* cq)
-      : CallData(svc, cq) {}
+      : CallData<CancelShareFileRequest, CancelShareFileCall>(svc, cq) {}
     void OnRequest(const CancelShareFileRequest& req,
                    CancelShareFileResponse& reply) {
+        if (debug==1)
+        std::cout<<"[DEBUG] CancelShareFileCall::OnRequest()"<<std::endl;
         reply.set_code(SyncCancel(req.user(), req.md5(), req.filename()));
         rpc_finish();
     }
@@ -81,9 +85,10 @@ class SaveFileCall
 public:
     SaveFileCall(DatabaseService::AsyncService* svc,
                  grpc::ServerCompletionQueue* cq)
-      : CallData(svc, cq) {}
+      : CallData<SaveFileRequest, SaveFileCall>(svc, cq) {}
     void OnRequest(const SaveFileRequest& req,
                    SaveFileResponse& reply) {
+        if (debug==1)std::cout<<"[DEBUG] SaveFileCall::OnRequest()"<<std::endl;
         reply.set_code(SyncSave(req.user(), req.md5(), req.filename()));
         rpc_finish();
     }
@@ -138,9 +143,10 @@ class PvShareFileCall
 public:
     PvShareFileCall(DatabaseService::AsyncService* svc,
                     grpc::ServerCompletionQueue* cq)
-      : CallData(svc, cq) {}
+      : CallData<PvShareFileRequest, PvShareFileCall>(svc, cq) {}
     void OnRequest(const PvShareFileRequest& req,
                    PvShareFileResponse& reply) {
+        if (debug==1)std::cout<<"[DEBUG] PvShareFileCall::OnRequest()"<<std::endl;
         reply.set_code(SyncPv(req.user(), req.md5(), req.filename()));
         rpc_finish();
     }
