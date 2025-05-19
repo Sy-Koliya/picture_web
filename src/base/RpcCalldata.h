@@ -74,7 +74,11 @@ public:
           new Derived(service_, cq_);
           // 执行用户业务逻辑
           //OnRequest 中需要使用Finish
+          try{
           static_cast<Derived*>(this)->OnRequest(request_, reply_);
+          } catch (const std::exception& e) {
+              std::cerr << "Exception in OnRequest: " << e.what() << std::endl;
+          }
           // 标记状态为 FINISH，等待回复完成
           status_ = FINISH;
       } else {

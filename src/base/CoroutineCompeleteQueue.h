@@ -16,7 +16,6 @@
 
 static constexpr int try_again_times = 2;
 
-// 抽象基类，只作多态
 struct NotifyBase {
     virtual ~NotifyBase() = default;
     virtual bool try_notify() = 0;
@@ -93,7 +92,7 @@ public:
             std::lock_guard<std::mutex> lk(holders_mutex_);
             auto it = holders_.find(key);
             if (it == holders_.end()) return;
-            nt = std::move(it->second);
+            nt = it->second;
             holders_.erase(it);
         }
         // 推入 MPSC 队列，由队列管理生命周期
@@ -148,7 +147,6 @@ private:
     std::atomic<bool>           running_;
 };
 
-// 简化接口：用户只需 coro_register(...)
 template <typename T>
 inline void coro_register(RpcTask<T>&& task, std::function<void(T)> cb = {}) {
     CoroutineScheduler::Instance().schedule(std::move(task), std::move(cb));

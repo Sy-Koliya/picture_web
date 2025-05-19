@@ -338,7 +338,9 @@ void BaseSocket::OnRead()
         else
         {
             //std::lock_guard<std::mutex>lk(b_lock);
-            buffer_add_from_readv(in_buf, m_socket);
+            char tmp_buf[4096];
+            int len = recv(m_socket, tmp_buf, sizeof(tmp_buf), 0);
+            buffer_add(in_buf, tmp_buf, len);
             Read_imp();
         }
     }
