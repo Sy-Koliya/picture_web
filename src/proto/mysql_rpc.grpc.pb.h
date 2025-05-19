@@ -140,6 +140,41 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>> PrepareAsyncGetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>>(PrepareAsyncGetRankingFileListRaw(context, request, cq));
     }
+    virtual ::grpc::Status SharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::rpc::SharePictureResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SharePictureResponse>> AsyncSharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SharePictureResponse>>(AsyncSharePictureRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SharePictureResponse>> PrepareAsyncSharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SharePictureResponse>>(PrepareAsyncSharePictureRaw(context, request, cq));
+    }
+    virtual ::grpc::Status GetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::rpc::GetSharePicturesCountResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesCountResponse>> AsyncGetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesCountResponse>>(AsyncGetSharePicturesCountRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesCountResponse>> PrepareAsyncGetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesCountResponse>>(PrepareAsyncGetSharePicturesCountRaw(context, request, cq));
+    }
+    virtual ::grpc::Status GetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::rpc::GetSharePicturesListResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesListResponse>> AsyncGetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesListResponse>>(AsyncGetSharePicturesListRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesListResponse>> PrepareAsyncGetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesListResponse>>(PrepareAsyncGetSharePicturesListRaw(context, request, cq));
+    }
+    virtual ::grpc::Status CancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::rpc::CancelSharePictureResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelSharePictureResponse>> AsyncCancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelSharePictureResponse>>(AsyncCancelSharePictureRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelSharePictureResponse>> PrepareAsyncCancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelSharePictureResponse>>(PrepareAsyncCancelSharePictureRaw(context, request, cq));
+    }
+    virtual ::grpc::Status BrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::rpc::BrowsePictureResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::BrowsePictureResponse>> AsyncBrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::BrowsePictureResponse>>(AsyncBrowsePictureRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::BrowsePictureResponse>> PrepareAsyncBrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::BrowsePictureResponse>>(PrepareAsyncBrowsePictureRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -173,6 +208,16 @@ class DatabaseService final {
       virtual void GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void SharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest* request, ::rpc::SharePictureResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest* request, ::rpc::SharePictureResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest* request, ::rpc::GetSharePicturesCountResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest* request, ::rpc::GetSharePicturesCountResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest* request, ::rpc::GetSharePicturesListResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest* request, ::rpc::GetSharePicturesListResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void CancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest* request, ::rpc::CancelSharePictureResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void CancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest* request, ::rpc::CancelSharePictureResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void BrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest* request, ::rpc::BrowsePictureResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void BrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest* request, ::rpc::BrowsePictureResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -208,6 +253,16 @@ class DatabaseService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetShareFileListResponse>* PrepareAsyncGetShareFileListRaw(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>* AsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetRankingFileListResponse>* PrepareAsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SharePictureResponse>* AsyncSharePictureRaw(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SharePictureResponse>* PrepareAsyncSharePictureRaw(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesCountResponse>* AsyncGetSharePicturesCountRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesCountResponse>* PrepareAsyncGetSharePicturesCountRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesListResponse>* AsyncGetSharePicturesListRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::GetSharePicturesListResponse>* PrepareAsyncGetSharePicturesListRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelSharePictureResponse>* AsyncCancelSharePictureRaw(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelSharePictureResponse>* PrepareAsyncCancelSharePictureRaw(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::BrowsePictureResponse>* AsyncBrowsePictureRaw(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::BrowsePictureResponse>* PrepareAsyncBrowsePictureRaw(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -317,6 +372,41 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>> PrepareAsyncGetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>>(PrepareAsyncGetRankingFileListRaw(context, request, cq));
     }
+    ::grpc::Status SharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::rpc::SharePictureResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::SharePictureResponse>> AsyncSharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::SharePictureResponse>>(AsyncSharePictureRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::SharePictureResponse>> PrepareAsyncSharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::SharePictureResponse>>(PrepareAsyncSharePictureRaw(context, request, cq));
+    }
+    ::grpc::Status GetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::rpc::GetSharePicturesCountResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesCountResponse>> AsyncGetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesCountResponse>>(AsyncGetSharePicturesCountRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesCountResponse>> PrepareAsyncGetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesCountResponse>>(PrepareAsyncGetSharePicturesCountRaw(context, request, cq));
+    }
+    ::grpc::Status GetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::rpc::GetSharePicturesListResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesListResponse>> AsyncGetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesListResponse>>(AsyncGetSharePicturesListRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesListResponse>> PrepareAsyncGetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesListResponse>>(PrepareAsyncGetSharePicturesListRaw(context, request, cq));
+    }
+    ::grpc::Status CancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::rpc::CancelSharePictureResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CancelSharePictureResponse>> AsyncCancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CancelSharePictureResponse>>(AsyncCancelSharePictureRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CancelSharePictureResponse>> PrepareAsyncCancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CancelSharePictureResponse>>(PrepareAsyncCancelSharePictureRaw(context, request, cq));
+    }
+    ::grpc::Status BrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::rpc::BrowsePictureResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::BrowsePictureResponse>> AsyncBrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::BrowsePictureResponse>>(AsyncBrowsePictureRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::BrowsePictureResponse>> PrepareAsyncBrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::BrowsePictureResponse>>(PrepareAsyncBrowsePictureRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -350,6 +440,16 @@ class DatabaseService final {
       void GetShareFileList(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, std::function<void(::grpc::Status)>) override;
       void GetRankingFileList(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest* request, ::rpc::SharePictureResponse* response, std::function<void(::grpc::Status)>) override;
+      void SharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest* request, ::rpc::SharePictureResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest* request, ::rpc::GetSharePicturesCountResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest* request, ::rpc::GetSharePicturesCountResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest* request, ::rpc::GetSharePicturesListResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest* request, ::rpc::GetSharePicturesListResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void CancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest* request, ::rpc::CancelSharePictureResponse* response, std::function<void(::grpc::Status)>) override;
+      void CancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest* request, ::rpc::CancelSharePictureResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void BrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest* request, ::rpc::BrowsePictureResponse* response, std::function<void(::grpc::Status)>) override;
+      void BrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest* request, ::rpc::BrowsePictureResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -391,6 +491,16 @@ class DatabaseService final {
     ::grpc::ClientAsyncResponseReader< ::rpc::GetShareFileListResponse>* PrepareAsyncGetShareFileListRaw(::grpc::ClientContext* context, const ::rpc::GetShareFileListRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>* AsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rpc::GetRankingFileListResponse>* PrepareAsyncGetRankingFileListRaw(::grpc::ClientContext* context, const ::rpc::GetRankingFileListRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::SharePictureResponse>* AsyncSharePictureRaw(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::SharePictureResponse>* PrepareAsyncSharePictureRaw(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesCountResponse>* AsyncGetSharePicturesCountRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesCountResponse>* PrepareAsyncGetSharePicturesCountRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesListResponse>* AsyncGetSharePicturesListRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesListResponse>* PrepareAsyncGetSharePicturesListRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::CancelSharePictureResponse>* AsyncCancelSharePictureRaw(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::CancelSharePictureResponse>* PrepareAsyncCancelSharePictureRaw(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::BrowsePictureResponse>* AsyncBrowsePictureRaw(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::BrowsePictureResponse>* PrepareAsyncBrowsePictureRaw(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_registerUser_;
     const ::grpc::internal::RpcMethod rpcmethod_loginUser_;
     const ::grpc::internal::RpcMethod rpcmethod_InstantUpload_;
@@ -406,6 +516,11 @@ class DatabaseService final {
     const ::grpc::internal::RpcMethod rpcmethod_GetShareFilesCount_;
     const ::grpc::internal::RpcMethod rpcmethod_GetShareFileList_;
     const ::grpc::internal::RpcMethod rpcmethod_GetRankingFileList_;
+    const ::grpc::internal::RpcMethod rpcmethod_SharePicture_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetSharePicturesCount_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetSharePicturesList_;
+    const ::grpc::internal::RpcMethod rpcmethod_CancelSharePicture_;
+    const ::grpc::internal::RpcMethod rpcmethod_BrowsePicture_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -428,6 +543,11 @@ class DatabaseService final {
     virtual ::grpc::Status GetShareFilesCount(::grpc::ServerContext* context, const ::rpc::GetShareFilesCountRequest* request, ::rpc::GetShareFilesCountResponse* response);
     virtual ::grpc::Status GetShareFileList(::grpc::ServerContext* context, const ::rpc::GetShareFileListRequest* request, ::rpc::GetShareFileListResponse* response);
     virtual ::grpc::Status GetRankingFileList(::grpc::ServerContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response);
+    virtual ::grpc::Status SharePicture(::grpc::ServerContext* context, const ::rpc::SharePictureRequest* request, ::rpc::SharePictureResponse* response);
+    virtual ::grpc::Status GetSharePicturesCount(::grpc::ServerContext* context, const ::rpc::GetSharePicturesCountRequest* request, ::rpc::GetSharePicturesCountResponse* response);
+    virtual ::grpc::Status GetSharePicturesList(::grpc::ServerContext* context, const ::rpc::GetSharePicturesListRequest* request, ::rpc::GetSharePicturesListResponse* response);
+    virtual ::grpc::Status CancelSharePicture(::grpc::ServerContext* context, const ::rpc::CancelSharePictureRequest* request, ::rpc::CancelSharePictureResponse* response);
+    virtual ::grpc::Status BrowsePicture(::grpc::ServerContext* context, const ::rpc::BrowsePictureRequest* request, ::rpc::BrowsePictureResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_registerUser : public BaseClass {
@@ -729,7 +849,107 @@ class DatabaseService final {
       ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_registerUser<WithAsyncMethod_loginUser<WithAsyncMethod_InstantUpload<WithAsyncMethod_UploadFile<WithAsyncMethod_GetUserFilesCount<WithAsyncMethod_GetUserFileList<WithAsyncMethod_ShareFile<WithAsyncMethod_DeleteFile<WithAsyncMethod_PvFile<WithAsyncMethod_CancelShareFile<WithAsyncMethod_SaveFile<WithAsyncMethod_PvShareFile<WithAsyncMethod_GetShareFilesCount<WithAsyncMethod_GetShareFileList<WithAsyncMethod_GetRankingFileList<Service > > > > > > > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_SharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SharePicture() {
+      ::grpc::Service::MarkMethodAsync(15);
+    }
+    ~WithAsyncMethod_SharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SharePicture(::grpc::ServerContext* /*context*/, const ::rpc::SharePictureRequest* /*request*/, ::rpc::SharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSharePicture(::grpc::ServerContext* context, ::rpc::SharePictureRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::SharePictureResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetSharePicturesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetSharePicturesCount() {
+      ::grpc::Service::MarkMethodAsync(16);
+    }
+    ~WithAsyncMethod_GetSharePicturesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesCountRequest* /*request*/, ::rpc::GetSharePicturesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSharePicturesCount(::grpc::ServerContext* context, ::rpc::GetSharePicturesCountRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::GetSharePicturesCountResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetSharePicturesList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetSharePicturesList() {
+      ::grpc::Service::MarkMethodAsync(17);
+    }
+    ~WithAsyncMethod_GetSharePicturesList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesList(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesListRequest* /*request*/, ::rpc::GetSharePicturesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSharePicturesList(::grpc::ServerContext* context, ::rpc::GetSharePicturesListRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::GetSharePicturesListResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(17, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_CancelSharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_CancelSharePicture() {
+      ::grpc::Service::MarkMethodAsync(18);
+    }
+    ~WithAsyncMethod_CancelSharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSharePicture(::grpc::ServerContext* /*context*/, const ::rpc::CancelSharePictureRequest* /*request*/, ::rpc::CancelSharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestCancelSharePicture(::grpc::ServerContext* context, ::rpc::CancelSharePictureRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::CancelSharePictureResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(18, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_BrowsePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_BrowsePicture() {
+      ::grpc::Service::MarkMethodAsync(19);
+    }
+    ~WithAsyncMethod_BrowsePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status BrowsePicture(::grpc::ServerContext* /*context*/, const ::rpc::BrowsePictureRequest* /*request*/, ::rpc::BrowsePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestBrowsePicture(::grpc::ServerContext* context, ::rpc::BrowsePictureRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::BrowsePictureResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(19, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_registerUser<WithAsyncMethod_loginUser<WithAsyncMethod_InstantUpload<WithAsyncMethod_UploadFile<WithAsyncMethod_GetUserFilesCount<WithAsyncMethod_GetUserFileList<WithAsyncMethod_ShareFile<WithAsyncMethod_DeleteFile<WithAsyncMethod_PvFile<WithAsyncMethod_CancelShareFile<WithAsyncMethod_SaveFile<WithAsyncMethod_PvShareFile<WithAsyncMethod_GetShareFilesCount<WithAsyncMethod_GetShareFileList<WithAsyncMethod_GetRankingFileList<WithAsyncMethod_SharePicture<WithAsyncMethod_GetSharePicturesCount<WithAsyncMethod_GetSharePicturesList<WithAsyncMethod_CancelSharePicture<WithAsyncMethod_BrowsePicture<Service > > > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_registerUser : public BaseClass {
    private:
@@ -1135,7 +1355,142 @@ class DatabaseService final {
     virtual ::grpc::ServerUnaryReactor* GetRankingFileList(
       ::grpc::CallbackServerContext* /*context*/, const ::rpc::GetRankingFileListRequest* /*request*/, ::rpc::GetRankingFileListResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_registerUser<WithCallbackMethod_loginUser<WithCallbackMethod_InstantUpload<WithCallbackMethod_UploadFile<WithCallbackMethod_GetUserFilesCount<WithCallbackMethod_GetUserFileList<WithCallbackMethod_ShareFile<WithCallbackMethod_DeleteFile<WithCallbackMethod_PvFile<WithCallbackMethod_CancelShareFile<WithCallbackMethod_SaveFile<WithCallbackMethod_PvShareFile<WithCallbackMethod_GetShareFilesCount<WithCallbackMethod_GetShareFileList<WithCallbackMethod_GetRankingFileList<Service > > > > > > > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_SharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SharePicture() {
+      ::grpc::Service::MarkMethodCallback(15,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::SharePictureRequest, ::rpc::SharePictureResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::SharePictureRequest* request, ::rpc::SharePictureResponse* response) { return this->SharePicture(context, request, response); }));}
+    void SetMessageAllocatorFor_SharePicture(
+        ::grpc::MessageAllocator< ::rpc::SharePictureRequest, ::rpc::SharePictureResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(15);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::SharePictureRequest, ::rpc::SharePictureResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SharePicture(::grpc::ServerContext* /*context*/, const ::rpc::SharePictureRequest* /*request*/, ::rpc::SharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SharePicture(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::SharePictureRequest* /*request*/, ::rpc::SharePictureResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_GetSharePicturesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetSharePicturesCount() {
+      ::grpc::Service::MarkMethodCallback(16,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::GetSharePicturesCountRequest, ::rpc::GetSharePicturesCountResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::GetSharePicturesCountRequest* request, ::rpc::GetSharePicturesCountResponse* response) { return this->GetSharePicturesCount(context, request, response); }));}
+    void SetMessageAllocatorFor_GetSharePicturesCount(
+        ::grpc::MessageAllocator< ::rpc::GetSharePicturesCountRequest, ::rpc::GetSharePicturesCountResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(16);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::GetSharePicturesCountRequest, ::rpc::GetSharePicturesCountResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetSharePicturesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesCountRequest* /*request*/, ::rpc::GetSharePicturesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSharePicturesCount(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::GetSharePicturesCountRequest* /*request*/, ::rpc::GetSharePicturesCountResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_GetSharePicturesList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetSharePicturesList() {
+      ::grpc::Service::MarkMethodCallback(17,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::GetSharePicturesListRequest, ::rpc::GetSharePicturesListResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::GetSharePicturesListRequest* request, ::rpc::GetSharePicturesListResponse* response) { return this->GetSharePicturesList(context, request, response); }));}
+    void SetMessageAllocatorFor_GetSharePicturesList(
+        ::grpc::MessageAllocator< ::rpc::GetSharePicturesListRequest, ::rpc::GetSharePicturesListResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(17);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::GetSharePicturesListRequest, ::rpc::GetSharePicturesListResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetSharePicturesList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesList(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesListRequest* /*request*/, ::rpc::GetSharePicturesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSharePicturesList(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::GetSharePicturesListRequest* /*request*/, ::rpc::GetSharePicturesListResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_CancelSharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_CancelSharePicture() {
+      ::grpc::Service::MarkMethodCallback(18,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::CancelSharePictureRequest, ::rpc::CancelSharePictureResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::CancelSharePictureRequest* request, ::rpc::CancelSharePictureResponse* response) { return this->CancelSharePicture(context, request, response); }));}
+    void SetMessageAllocatorFor_CancelSharePicture(
+        ::grpc::MessageAllocator< ::rpc::CancelSharePictureRequest, ::rpc::CancelSharePictureResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(18);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::CancelSharePictureRequest, ::rpc::CancelSharePictureResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_CancelSharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSharePicture(::grpc::ServerContext* /*context*/, const ::rpc::CancelSharePictureRequest* /*request*/, ::rpc::CancelSharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* CancelSharePicture(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::CancelSharePictureRequest* /*request*/, ::rpc::CancelSharePictureResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_BrowsePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_BrowsePicture() {
+      ::grpc::Service::MarkMethodCallback(19,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::BrowsePictureRequest, ::rpc::BrowsePictureResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::BrowsePictureRequest* request, ::rpc::BrowsePictureResponse* response) { return this->BrowsePicture(context, request, response); }));}
+    void SetMessageAllocatorFor_BrowsePicture(
+        ::grpc::MessageAllocator< ::rpc::BrowsePictureRequest, ::rpc::BrowsePictureResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(19);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::BrowsePictureRequest, ::rpc::BrowsePictureResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_BrowsePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status BrowsePicture(::grpc::ServerContext* /*context*/, const ::rpc::BrowsePictureRequest* /*request*/, ::rpc::BrowsePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* BrowsePicture(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::BrowsePictureRequest* /*request*/, ::rpc::BrowsePictureResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_registerUser<WithCallbackMethod_loginUser<WithCallbackMethod_InstantUpload<WithCallbackMethod_UploadFile<WithCallbackMethod_GetUserFilesCount<WithCallbackMethod_GetUserFileList<WithCallbackMethod_ShareFile<WithCallbackMethod_DeleteFile<WithCallbackMethod_PvFile<WithCallbackMethod_CancelShareFile<WithCallbackMethod_SaveFile<WithCallbackMethod_PvShareFile<WithCallbackMethod_GetShareFilesCount<WithCallbackMethod_GetShareFileList<WithCallbackMethod_GetRankingFileList<WithCallbackMethod_SharePicture<WithCallbackMethod_GetSharePicturesCount<WithCallbackMethod_GetSharePicturesList<WithCallbackMethod_CancelSharePicture<WithCallbackMethod_BrowsePicture<Service > > > > > > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_registerUser : public BaseClass {
@@ -1388,6 +1743,91 @@ class DatabaseService final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetRankingFileList(::grpc::ServerContext* /*context*/, const ::rpc::GetRankingFileListRequest* /*request*/, ::rpc::GetRankingFileListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SharePicture() {
+      ::grpc::Service::MarkMethodGeneric(15);
+    }
+    ~WithGenericMethod_SharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SharePicture(::grpc::ServerContext* /*context*/, const ::rpc::SharePictureRequest* /*request*/, ::rpc::SharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetSharePicturesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetSharePicturesCount() {
+      ::grpc::Service::MarkMethodGeneric(16);
+    }
+    ~WithGenericMethod_GetSharePicturesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesCountRequest* /*request*/, ::rpc::GetSharePicturesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetSharePicturesList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetSharePicturesList() {
+      ::grpc::Service::MarkMethodGeneric(17);
+    }
+    ~WithGenericMethod_GetSharePicturesList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesList(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesListRequest* /*request*/, ::rpc::GetSharePicturesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_CancelSharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_CancelSharePicture() {
+      ::grpc::Service::MarkMethodGeneric(18);
+    }
+    ~WithGenericMethod_CancelSharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSharePicture(::grpc::ServerContext* /*context*/, const ::rpc::CancelSharePictureRequest* /*request*/, ::rpc::CancelSharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_BrowsePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_BrowsePicture() {
+      ::grpc::Service::MarkMethodGeneric(19);
+    }
+    ~WithGenericMethod_BrowsePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status BrowsePicture(::grpc::ServerContext* /*context*/, const ::rpc::BrowsePictureRequest* /*request*/, ::rpc::BrowsePictureResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1690,6 +2130,106 @@ class DatabaseService final {
     }
     void RequestGetRankingFileList(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SharePicture() {
+      ::grpc::Service::MarkMethodRaw(15);
+    }
+    ~WithRawMethod_SharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SharePicture(::grpc::ServerContext* /*context*/, const ::rpc::SharePictureRequest* /*request*/, ::rpc::SharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSharePicture(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetSharePicturesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetSharePicturesCount() {
+      ::grpc::Service::MarkMethodRaw(16);
+    }
+    ~WithRawMethod_GetSharePicturesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesCountRequest* /*request*/, ::rpc::GetSharePicturesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSharePicturesCount(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetSharePicturesList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetSharePicturesList() {
+      ::grpc::Service::MarkMethodRaw(17);
+    }
+    ~WithRawMethod_GetSharePicturesList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesList(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesListRequest* /*request*/, ::rpc::GetSharePicturesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSharePicturesList(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(17, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_CancelSharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_CancelSharePicture() {
+      ::grpc::Service::MarkMethodRaw(18);
+    }
+    ~WithRawMethod_CancelSharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSharePicture(::grpc::ServerContext* /*context*/, const ::rpc::CancelSharePictureRequest* /*request*/, ::rpc::CancelSharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestCancelSharePicture(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(18, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_BrowsePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_BrowsePicture() {
+      ::grpc::Service::MarkMethodRaw(19);
+    }
+    ~WithRawMethod_BrowsePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status BrowsePicture(::grpc::ServerContext* /*context*/, const ::rpc::BrowsePictureRequest* /*request*/, ::rpc::BrowsePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestBrowsePicture(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(19, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -2020,6 +2560,116 @@ class DatabaseService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetRankingFileList(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SharePicture() {
+      ::grpc::Service::MarkMethodRawCallback(15,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SharePicture(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SharePicture(::grpc::ServerContext* /*context*/, const ::rpc::SharePictureRequest* /*request*/, ::rpc::SharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SharePicture(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetSharePicturesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetSharePicturesCount() {
+      ::grpc::Service::MarkMethodRawCallback(16,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetSharePicturesCount(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetSharePicturesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesCountRequest* /*request*/, ::rpc::GetSharePicturesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSharePicturesCount(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetSharePicturesList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetSharePicturesList() {
+      ::grpc::Service::MarkMethodRawCallback(17,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetSharePicturesList(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetSharePicturesList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSharePicturesList(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesListRequest* /*request*/, ::rpc::GetSharePicturesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSharePicturesList(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_CancelSharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_CancelSharePicture() {
+      ::grpc::Service::MarkMethodRawCallback(18,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->CancelSharePicture(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_CancelSharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelSharePicture(::grpc::ServerContext* /*context*/, const ::rpc::CancelSharePictureRequest* /*request*/, ::rpc::CancelSharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* CancelSharePicture(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_BrowsePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_BrowsePicture() {
+      ::grpc::Service::MarkMethodRawCallback(19,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->BrowsePicture(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_BrowsePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status BrowsePicture(::grpc::ServerContext* /*context*/, const ::rpc::BrowsePictureRequest* /*request*/, ::rpc::BrowsePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* BrowsePicture(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -2427,9 +3077,144 @@ class DatabaseService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetRankingFileList(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::GetRankingFileListRequest,::rpc::GetRankingFileListResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<WithStreamedUnaryMethod_GetShareFilesCount<WithStreamedUnaryMethod_GetShareFileList<WithStreamedUnaryMethod_GetRankingFileList<Service > > > > > > > > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SharePicture() {
+      ::grpc::Service::MarkMethodStreamed(15,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::SharePictureRequest, ::rpc::SharePictureResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::SharePictureRequest, ::rpc::SharePictureResponse>* streamer) {
+                       return this->StreamedSharePicture(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SharePicture(::grpc::ServerContext* /*context*/, const ::rpc::SharePictureRequest* /*request*/, ::rpc::SharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSharePicture(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::SharePictureRequest,::rpc::SharePictureResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetSharePicturesCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetSharePicturesCount() {
+      ::grpc::Service::MarkMethodStreamed(16,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::GetSharePicturesCountRequest, ::rpc::GetSharePicturesCountResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::GetSharePicturesCountRequest, ::rpc::GetSharePicturesCountResponse>* streamer) {
+                       return this->StreamedGetSharePicturesCount(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetSharePicturesCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetSharePicturesCount(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesCountRequest* /*request*/, ::rpc::GetSharePicturesCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetSharePicturesCount(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::GetSharePicturesCountRequest,::rpc::GetSharePicturesCountResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetSharePicturesList : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetSharePicturesList() {
+      ::grpc::Service::MarkMethodStreamed(17,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::GetSharePicturesListRequest, ::rpc::GetSharePicturesListResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::GetSharePicturesListRequest, ::rpc::GetSharePicturesListResponse>* streamer) {
+                       return this->StreamedGetSharePicturesList(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetSharePicturesList() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetSharePicturesList(::grpc::ServerContext* /*context*/, const ::rpc::GetSharePicturesListRequest* /*request*/, ::rpc::GetSharePicturesListResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetSharePicturesList(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::GetSharePicturesListRequest,::rpc::GetSharePicturesListResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_CancelSharePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_CancelSharePicture() {
+      ::grpc::Service::MarkMethodStreamed(18,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::CancelSharePictureRequest, ::rpc::CancelSharePictureResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::CancelSharePictureRequest, ::rpc::CancelSharePictureResponse>* streamer) {
+                       return this->StreamedCancelSharePicture(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_CancelSharePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status CancelSharePicture(::grpc::ServerContext* /*context*/, const ::rpc::CancelSharePictureRequest* /*request*/, ::rpc::CancelSharePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedCancelSharePicture(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::CancelSharePictureRequest,::rpc::CancelSharePictureResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_BrowsePicture : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_BrowsePicture() {
+      ::grpc::Service::MarkMethodStreamed(19,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::BrowsePictureRequest, ::rpc::BrowsePictureResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::BrowsePictureRequest, ::rpc::BrowsePictureResponse>* streamer) {
+                       return this->StreamedBrowsePicture(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_BrowsePicture() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status BrowsePicture(::grpc::ServerContext* /*context*/, const ::rpc::BrowsePictureRequest* /*request*/, ::rpc::BrowsePictureResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedBrowsePicture(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::BrowsePictureRequest,::rpc::BrowsePictureResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<WithStreamedUnaryMethod_GetShareFilesCount<WithStreamedUnaryMethod_GetShareFileList<WithStreamedUnaryMethod_GetRankingFileList<WithStreamedUnaryMethod_SharePicture<WithStreamedUnaryMethod_GetSharePicturesCount<WithStreamedUnaryMethod_GetSharePicturesList<WithStreamedUnaryMethod_CancelSharePicture<WithStreamedUnaryMethod_BrowsePicture<Service > > > > > > > > > > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<WithStreamedUnaryMethod_GetShareFilesCount<WithStreamedUnaryMethod_GetShareFileList<WithStreamedUnaryMethod_GetRankingFileList<Service > > > > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<WithStreamedUnaryMethod_GetShareFilesCount<WithStreamedUnaryMethod_GetShareFileList<WithStreamedUnaryMethod_GetRankingFileList<WithStreamedUnaryMethod_SharePicture<WithStreamedUnaryMethod_GetSharePicturesCount<WithStreamedUnaryMethod_GetSharePicturesList<WithStreamedUnaryMethod_CancelSharePicture<WithStreamedUnaryMethod_BrowsePicture<Service > > > > > > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace rpc

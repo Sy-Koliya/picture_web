@@ -233,7 +233,31 @@ GrpcClient<rpc::DatabaseService, Req, Resp>* client,Req req)
     return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>,Req, Resp,&rpc::DatabaseService::Stub::PrepareAsyncGetRankingFileList>(client, std::move(req));
 }
 // 在模板调用区段后追加：
-
+template <typename Req, typename Resp>
+inline auto MysqlSharePicture(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncSharePicture>{client, std::move(req)};
+}
+template <typename Req, typename Resp>
+inline auto MysqlBrowsePicture(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncBrowsePicture>{client, std::move(req)};
+}
+template <typename Req, typename Resp>
+inline auto MysqlCancelSharePicture(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncCancelSharePicture>{client, std::move(req)};
+}
+template <typename Req, typename Resp>
+inline auto MysqlGetSharePicturesCount(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncGetSharePicturesCount>{client, std::move(req)};
+}
+template <typename Req, typename Resp>
+inline auto MysqlGetSharePicturesList(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncGetSharePicturesList>{client, std::move(req)};
+}
 
 
 

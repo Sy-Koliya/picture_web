@@ -37,6 +37,11 @@ static const char* DatabaseService_method_names[] = {
   "/rpc.DatabaseService/GetShareFilesCount",
   "/rpc.DatabaseService/GetShareFileList",
   "/rpc.DatabaseService/GetRankingFileList",
+  "/rpc.DatabaseService/SharePicture",
+  "/rpc.DatabaseService/GetSharePicturesCount",
+  "/rpc.DatabaseService/GetSharePicturesList",
+  "/rpc.DatabaseService/CancelSharePicture",
+  "/rpc.DatabaseService/BrowsePicture",
 };
 
 std::unique_ptr< DatabaseService::Stub> DatabaseService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -61,6 +66,11 @@ DatabaseService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& ch
   , rpcmethod_GetShareFilesCount_(DatabaseService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetShareFileList_(DatabaseService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetRankingFileList_(DatabaseService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SharePicture_(DatabaseService_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSharePicturesCount_(DatabaseService_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSharePicturesList_(DatabaseService_method_names[17], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CancelSharePicture_(DatabaseService_method_names[18], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_BrowsePicture_(DatabaseService_method_names[19], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DatabaseService::Stub::registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::rpc::RegisterResponse* response) {
@@ -408,6 +418,121 @@ void DatabaseService::Stub::async::GetRankingFileList(::grpc::ClientContext* con
   return result;
 }
 
+::grpc::Status DatabaseService::Stub::SharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::rpc::SharePictureResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::SharePictureRequest, ::rpc::SharePictureResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SharePicture_, context, request, response);
+}
+
+void DatabaseService::Stub::async::SharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest* request, ::rpc::SharePictureResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::SharePictureRequest, ::rpc::SharePictureResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SharePicture_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::SharePicture(::grpc::ClientContext* context, const ::rpc::SharePictureRequest* request, ::rpc::SharePictureResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SharePicture_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::SharePictureResponse>* DatabaseService::Stub::PrepareAsyncSharePictureRaw(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::SharePictureResponse, ::rpc::SharePictureRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SharePicture_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::SharePictureResponse>* DatabaseService::Stub::AsyncSharePictureRaw(::grpc::ClientContext* context, const ::rpc::SharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSharePictureRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::GetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::rpc::GetSharePicturesCountResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::GetSharePicturesCountRequest, ::rpc::GetSharePicturesCountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSharePicturesCount_, context, request, response);
+}
+
+void DatabaseService::Stub::async::GetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest* request, ::rpc::GetSharePicturesCountResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::GetSharePicturesCountRequest, ::rpc::GetSharePicturesCountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSharePicturesCount_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::GetSharePicturesCount(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest* request, ::rpc::GetSharePicturesCountResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSharePicturesCount_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesCountResponse>* DatabaseService::Stub::PrepareAsyncGetSharePicturesCountRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::GetSharePicturesCountResponse, ::rpc::GetSharePicturesCountRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSharePicturesCount_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesCountResponse>* DatabaseService::Stub::AsyncGetSharePicturesCountRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesCountRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetSharePicturesCountRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::GetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::rpc::GetSharePicturesListResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::GetSharePicturesListRequest, ::rpc::GetSharePicturesListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSharePicturesList_, context, request, response);
+}
+
+void DatabaseService::Stub::async::GetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest* request, ::rpc::GetSharePicturesListResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::GetSharePicturesListRequest, ::rpc::GetSharePicturesListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSharePicturesList_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::GetSharePicturesList(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest* request, ::rpc::GetSharePicturesListResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSharePicturesList_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesListResponse>* DatabaseService::Stub::PrepareAsyncGetSharePicturesListRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::GetSharePicturesListResponse, ::rpc::GetSharePicturesListRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSharePicturesList_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::GetSharePicturesListResponse>* DatabaseService::Stub::AsyncGetSharePicturesListRaw(::grpc::ClientContext* context, const ::rpc::GetSharePicturesListRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetSharePicturesListRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::CancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::rpc::CancelSharePictureResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::CancelSharePictureRequest, ::rpc::CancelSharePictureResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_CancelSharePicture_, context, request, response);
+}
+
+void DatabaseService::Stub::async::CancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest* request, ::rpc::CancelSharePictureResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::CancelSharePictureRequest, ::rpc::CancelSharePictureResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CancelSharePicture_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::CancelSharePicture(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest* request, ::rpc::CancelSharePictureResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CancelSharePicture_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::CancelSharePictureResponse>* DatabaseService::Stub::PrepareAsyncCancelSharePictureRaw(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::CancelSharePictureResponse, ::rpc::CancelSharePictureRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_CancelSharePicture_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::CancelSharePictureResponse>* DatabaseService::Stub::AsyncCancelSharePictureRaw(::grpc::ClientContext* context, const ::rpc::CancelSharePictureRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncCancelSharePictureRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::BrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::rpc::BrowsePictureResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::BrowsePictureRequest, ::rpc::BrowsePictureResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_BrowsePicture_, context, request, response);
+}
+
+void DatabaseService::Stub::async::BrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest* request, ::rpc::BrowsePictureResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::BrowsePictureRequest, ::rpc::BrowsePictureResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_BrowsePicture_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::BrowsePicture(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest* request, ::rpc::BrowsePictureResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_BrowsePicture_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::BrowsePictureResponse>* DatabaseService::Stub::PrepareAsyncBrowsePictureRaw(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::BrowsePictureResponse, ::rpc::BrowsePictureRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_BrowsePicture_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::BrowsePictureResponse>* DatabaseService::Stub::AsyncBrowsePictureRaw(::grpc::ClientContext* context, const ::rpc::BrowsePictureRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncBrowsePictureRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 DatabaseService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DatabaseService_method_names[0],
@@ -559,6 +684,56 @@ DatabaseService::Service::Service() {
              ::rpc::GetRankingFileListResponse* resp) {
                return service->GetRankingFileList(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[15],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::SharePictureRequest, ::rpc::SharePictureResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::SharePictureRequest* req,
+             ::rpc::SharePictureResponse* resp) {
+               return service->SharePicture(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[16],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::GetSharePicturesCountRequest, ::rpc::GetSharePicturesCountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::GetSharePicturesCountRequest* req,
+             ::rpc::GetSharePicturesCountResponse* resp) {
+               return service->GetSharePicturesCount(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[17],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::GetSharePicturesListRequest, ::rpc::GetSharePicturesListResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::GetSharePicturesListRequest* req,
+             ::rpc::GetSharePicturesListResponse* resp) {
+               return service->GetSharePicturesList(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[18],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::CancelSharePictureRequest, ::rpc::CancelSharePictureResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::CancelSharePictureRequest* req,
+             ::rpc::CancelSharePictureResponse* resp) {
+               return service->CancelSharePicture(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[19],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::BrowsePictureRequest, ::rpc::BrowsePictureResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::BrowsePictureRequest* req,
+             ::rpc::BrowsePictureResponse* resp) {
+               return service->BrowsePicture(ctx, req, resp);
+             }, this)));
 }
 
 DatabaseService::Service::~Service() {
@@ -663,6 +838,41 @@ DatabaseService::Service::~Service() {
 }
 
 ::grpc::Status DatabaseService::Service::GetRankingFileList(::grpc::ServerContext* context, const ::rpc::GetRankingFileListRequest* request, ::rpc::GetRankingFileListResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::SharePicture(::grpc::ServerContext* context, const ::rpc::SharePictureRequest* request, ::rpc::SharePictureResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::GetSharePicturesCount(::grpc::ServerContext* context, const ::rpc::GetSharePicturesCountRequest* request, ::rpc::GetSharePicturesCountResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::GetSharePicturesList(::grpc::ServerContext* context, const ::rpc::GetSharePicturesListRequest* request, ::rpc::GetSharePicturesListResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::CancelSharePicture(::grpc::ServerContext* context, const ::rpc::CancelSharePictureRequest* request, ::rpc::CancelSharePictureResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::BrowsePicture(::grpc::ServerContext* context, const ::rpc::BrowsePictureRequest* request, ::rpc::BrowsePictureResponse* response) {
   (void) context;
   (void) request;
   (void) response;

@@ -36,8 +36,7 @@ public:
 
         // 启动处理器线程
         dynamic_cast<T*>(this)->SpawnHandlers(cq_.get());
-        
-        // 统一事件循环
+
         RunEventLoop();
     }
 

@@ -48,7 +48,7 @@ struct TableStruct_mysql_5frpc_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[33]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[44]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -56,12 +56,24 @@ struct TableStruct_mysql_5frpc_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_mysql_5frpc_2eproto;
 namespace rpc {
+class BrowsePictureRequest;
+struct BrowsePictureRequestDefaultTypeInternal;
+extern BrowsePictureRequestDefaultTypeInternal _BrowsePictureRequest_default_instance_;
+class BrowsePictureResponse;
+struct BrowsePictureResponseDefaultTypeInternal;
+extern BrowsePictureResponseDefaultTypeInternal _BrowsePictureResponse_default_instance_;
 class CancelShareFileRequest;
 struct CancelShareFileRequestDefaultTypeInternal;
 extern CancelShareFileRequestDefaultTypeInternal _CancelShareFileRequest_default_instance_;
 class CancelShareFileResponse;
 struct CancelShareFileResponseDefaultTypeInternal;
 extern CancelShareFileResponseDefaultTypeInternal _CancelShareFileResponse_default_instance_;
+class CancelSharePictureRequest;
+struct CancelSharePictureRequestDefaultTypeInternal;
+extern CancelSharePictureRequestDefaultTypeInternal _CancelSharePictureRequest_default_instance_;
+class CancelSharePictureResponse;
+struct CancelSharePictureResponseDefaultTypeInternal;
+extern CancelSharePictureResponseDefaultTypeInternal _CancelSharePictureResponse_default_instance_;
 class CountRequest;
 struct CountRequestDefaultTypeInternal;
 extern CountRequestDefaultTypeInternal _CountRequest_default_instance_;
@@ -101,6 +113,18 @@ extern GetShareFilesCountRequestDefaultTypeInternal _GetShareFilesCountRequest_d
 class GetShareFilesCountResponse;
 struct GetShareFilesCountResponseDefaultTypeInternal;
 extern GetShareFilesCountResponseDefaultTypeInternal _GetShareFilesCountResponse_default_instance_;
+class GetSharePicturesCountRequest;
+struct GetSharePicturesCountRequestDefaultTypeInternal;
+extern GetSharePicturesCountRequestDefaultTypeInternal _GetSharePicturesCountRequest_default_instance_;
+class GetSharePicturesCountResponse;
+struct GetSharePicturesCountResponseDefaultTypeInternal;
+extern GetSharePicturesCountResponseDefaultTypeInternal _GetSharePicturesCountResponse_default_instance_;
+class GetSharePicturesListRequest;
+struct GetSharePicturesListRequestDefaultTypeInternal;
+extern GetSharePicturesListRequestDefaultTypeInternal _GetSharePicturesListRequest_default_instance_;
+class GetSharePicturesListResponse;
+struct GetSharePicturesListResponseDefaultTypeInternal;
+extern GetSharePicturesListResponseDefaultTypeInternal _GetSharePicturesListResponse_default_instance_;
 class LoginRequest;
 struct LoginRequestDefaultTypeInternal;
 extern LoginRequestDefaultTypeInternal _LoginRequest_default_instance_;
@@ -149,6 +173,15 @@ extern ShareFileRequestDefaultTypeInternal _ShareFileRequest_default_instance_;
 class ShareFileResponse;
 struct ShareFileResponseDefaultTypeInternal;
 extern ShareFileResponseDefaultTypeInternal _ShareFileResponse_default_instance_;
+class SharePictureRequest;
+struct SharePictureRequestDefaultTypeInternal;
+extern SharePictureRequestDefaultTypeInternal _SharePictureRequest_default_instance_;
+class SharePictureResponse;
+struct SharePictureResponseDefaultTypeInternal;
+extern SharePictureResponseDefaultTypeInternal _SharePictureResponse_default_instance_;
+class SharedPictureInfo;
+struct SharedPictureInfoDefaultTypeInternal;
+extern SharedPictureInfoDefaultTypeInternal _SharedPictureInfo_default_instance_;
 class UploadRequest;
 struct UploadRequestDefaultTypeInternal;
 extern UploadRequestDefaultTypeInternal _UploadRequest_default_instance_;
@@ -157,8 +190,12 @@ struct UploadResponseDefaultTypeInternal;
 extern UploadResponseDefaultTypeInternal _UploadResponse_default_instance_;
 }  // namespace rpc
 PROTOBUF_NAMESPACE_OPEN
+template<> ::rpc::BrowsePictureRequest* Arena::CreateMaybeMessage<::rpc::BrowsePictureRequest>(Arena*);
+template<> ::rpc::BrowsePictureResponse* Arena::CreateMaybeMessage<::rpc::BrowsePictureResponse>(Arena*);
 template<> ::rpc::CancelShareFileRequest* Arena::CreateMaybeMessage<::rpc::CancelShareFileRequest>(Arena*);
 template<> ::rpc::CancelShareFileResponse* Arena::CreateMaybeMessage<::rpc::CancelShareFileResponse>(Arena*);
+template<> ::rpc::CancelSharePictureRequest* Arena::CreateMaybeMessage<::rpc::CancelSharePictureRequest>(Arena*);
+template<> ::rpc::CancelSharePictureResponse* Arena::CreateMaybeMessage<::rpc::CancelSharePictureResponse>(Arena*);
 template<> ::rpc::CountRequest* Arena::CreateMaybeMessage<::rpc::CountRequest>(Arena*);
 template<> ::rpc::CountResponse* Arena::CreateMaybeMessage<::rpc::CountResponse>(Arena*);
 template<> ::rpc::DeleteFileRequest* Arena::CreateMaybeMessage<::rpc::DeleteFileRequest>(Arena*);
@@ -172,6 +209,10 @@ template<> ::rpc::GetShareFileListRequest* Arena::CreateMaybeMessage<::rpc::GetS
 template<> ::rpc::GetShareFileListResponse* Arena::CreateMaybeMessage<::rpc::GetShareFileListResponse>(Arena*);
 template<> ::rpc::GetShareFilesCountRequest* Arena::CreateMaybeMessage<::rpc::GetShareFilesCountRequest>(Arena*);
 template<> ::rpc::GetShareFilesCountResponse* Arena::CreateMaybeMessage<::rpc::GetShareFilesCountResponse>(Arena*);
+template<> ::rpc::GetSharePicturesCountRequest* Arena::CreateMaybeMessage<::rpc::GetSharePicturesCountRequest>(Arena*);
+template<> ::rpc::GetSharePicturesCountResponse* Arena::CreateMaybeMessage<::rpc::GetSharePicturesCountResponse>(Arena*);
+template<> ::rpc::GetSharePicturesListRequest* Arena::CreateMaybeMessage<::rpc::GetSharePicturesListRequest>(Arena*);
+template<> ::rpc::GetSharePicturesListResponse* Arena::CreateMaybeMessage<::rpc::GetSharePicturesListResponse>(Arena*);
 template<> ::rpc::LoginRequest* Arena::CreateMaybeMessage<::rpc::LoginRequest>(Arena*);
 template<> ::rpc::LoginResponse* Arena::CreateMaybeMessage<::rpc::LoginResponse>(Arena*);
 template<> ::rpc::Md5Request* Arena::CreateMaybeMessage<::rpc::Md5Request>(Arena*);
@@ -188,6 +229,9 @@ template<> ::rpc::SaveFileResponse* Arena::CreateMaybeMessage<::rpc::SaveFileRes
 template<> ::rpc::ShareFileInfo* Arena::CreateMaybeMessage<::rpc::ShareFileInfo>(Arena*);
 template<> ::rpc::ShareFileRequest* Arena::CreateMaybeMessage<::rpc::ShareFileRequest>(Arena*);
 template<> ::rpc::ShareFileResponse* Arena::CreateMaybeMessage<::rpc::ShareFileResponse>(Arena*);
+template<> ::rpc::SharePictureRequest* Arena::CreateMaybeMessage<::rpc::SharePictureRequest>(Arena*);
+template<> ::rpc::SharePictureResponse* Arena::CreateMaybeMessage<::rpc::SharePictureResponse>(Arena*);
+template<> ::rpc::SharedPictureInfo* Arena::CreateMaybeMessage<::rpc::SharedPictureInfo>(Arena*);
 template<> ::rpc::UploadRequest* Arena::CreateMaybeMessage<::rpc::UploadRequest>(Arena*);
 template<> ::rpc::UploadResponse* Arena::CreateMaybeMessage<::rpc::UploadResponse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -5919,6 +5963,1915 @@ class GetRankingFileListResponse final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mysql_5frpc_2eproto;
 };
+// -------------------------------------------------------------------
+
+class SharePictureRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.SharePictureRequest) */ {
+ public:
+  inline SharePictureRequest() : SharePictureRequest(nullptr) {}
+  ~SharePictureRequest() override;
+  explicit constexpr SharePictureRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SharePictureRequest(const SharePictureRequest& from);
+  SharePictureRequest(SharePictureRequest&& from) noexcept
+    : SharePictureRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline SharePictureRequest& operator=(const SharePictureRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SharePictureRequest& operator=(SharePictureRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SharePictureRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SharePictureRequest* internal_default_instance() {
+    return reinterpret_cast<const SharePictureRequest*>(
+               &_SharePictureRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    33;
+
+  friend void swap(SharePictureRequest& a, SharePictureRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SharePictureRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SharePictureRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SharePictureRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SharePictureRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SharePictureRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const SharePictureRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SharePictureRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.SharePictureRequest";
+  }
+  protected:
+  explicit SharePictureRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserFieldNumber = 1,
+    kMd5FieldNumber = 2,
+    kFilenameFieldNumber = 3,
+  };
+  // string user = 1;
+  void clear_user();
+  const std::string& user() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user();
+  PROTOBUF_NODISCARD std::string* release_user();
+  void set_allocated_user(std::string* user);
+  private:
+  const std::string& _internal_user() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user(const std::string& value);
+  std::string* _internal_mutable_user();
+  public:
+
+  // string md5 = 2;
+  void clear_md5();
+  const std::string& md5() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_md5(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_md5();
+  PROTOBUF_NODISCARD std::string* release_md5();
+  void set_allocated_md5(std::string* md5);
+  private:
+  const std::string& _internal_md5() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_md5(const std::string& value);
+  std::string* _internal_mutable_md5();
+  public:
+
+  // string filename = 3;
+  void clear_filename();
+  const std::string& filename() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_filename(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_filename();
+  PROTOBUF_NODISCARD std::string* release_filename();
+  void set_allocated_filename(std::string* filename);
+  private:
+  const std::string& _internal_filename() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_filename(const std::string& value);
+  std::string* _internal_mutable_filename();
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.SharePictureRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr md5_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filename_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SharePictureResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.SharePictureResponse) */ {
+ public:
+  inline SharePictureResponse() : SharePictureResponse(nullptr) {}
+  ~SharePictureResponse() override;
+  explicit constexpr SharePictureResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SharePictureResponse(const SharePictureResponse& from);
+  SharePictureResponse(SharePictureResponse&& from) noexcept
+    : SharePictureResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline SharePictureResponse& operator=(const SharePictureResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SharePictureResponse& operator=(SharePictureResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SharePictureResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SharePictureResponse* internal_default_instance() {
+    return reinterpret_cast<const SharePictureResponse*>(
+               &_SharePictureResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    34;
+
+  friend void swap(SharePictureResponse& a, SharePictureResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SharePictureResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SharePictureResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SharePictureResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SharePictureResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SharePictureResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const SharePictureResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SharePictureResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.SharePictureResponse";
+  }
+  protected:
+  explicit SharePictureResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUrlmd5FieldNumber = 2,
+    kCodeFieldNumber = 1,
+  };
+  // string urlmd5 = 2;
+  void clear_urlmd5();
+  const std::string& urlmd5() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_urlmd5(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_urlmd5();
+  PROTOBUF_NODISCARD std::string* release_urlmd5();
+  void set_allocated_urlmd5(std::string* urlmd5);
+  private:
+  const std::string& _internal_urlmd5() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_urlmd5(const std::string& value);
+  std::string* _internal_mutable_urlmd5();
+  public:
+
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.SharePictureResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr urlmd5_;
+  int32_t code_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetSharePicturesCountRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.GetSharePicturesCountRequest) */ {
+ public:
+  inline GetSharePicturesCountRequest() : GetSharePicturesCountRequest(nullptr) {}
+  ~GetSharePicturesCountRequest() override;
+  explicit constexpr GetSharePicturesCountRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetSharePicturesCountRequest(const GetSharePicturesCountRequest& from);
+  GetSharePicturesCountRequest(GetSharePicturesCountRequest&& from) noexcept
+    : GetSharePicturesCountRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetSharePicturesCountRequest& operator=(const GetSharePicturesCountRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetSharePicturesCountRequest& operator=(GetSharePicturesCountRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetSharePicturesCountRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetSharePicturesCountRequest* internal_default_instance() {
+    return reinterpret_cast<const GetSharePicturesCountRequest*>(
+               &_GetSharePicturesCountRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    35;
+
+  friend void swap(GetSharePicturesCountRequest& a, GetSharePicturesCountRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetSharePicturesCountRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetSharePicturesCountRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetSharePicturesCountRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetSharePicturesCountRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetSharePicturesCountRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GetSharePicturesCountRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetSharePicturesCountRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetSharePicturesCountRequest";
+  }
+  protected:
+  explicit GetSharePicturesCountRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserFieldNumber = 1,
+  };
+  // string user = 1;
+  void clear_user();
+  const std::string& user() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user();
+  PROTOBUF_NODISCARD std::string* release_user();
+  void set_allocated_user(std::string* user);
+  private:
+  const std::string& _internal_user() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user(const std::string& value);
+  std::string* _internal_mutable_user();
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.GetSharePicturesCountRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetSharePicturesCountResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.GetSharePicturesCountResponse) */ {
+ public:
+  inline GetSharePicturesCountResponse() : GetSharePicturesCountResponse(nullptr) {}
+  ~GetSharePicturesCountResponse() override;
+  explicit constexpr GetSharePicturesCountResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetSharePicturesCountResponse(const GetSharePicturesCountResponse& from);
+  GetSharePicturesCountResponse(GetSharePicturesCountResponse&& from) noexcept
+    : GetSharePicturesCountResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline GetSharePicturesCountResponse& operator=(const GetSharePicturesCountResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetSharePicturesCountResponse& operator=(GetSharePicturesCountResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetSharePicturesCountResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetSharePicturesCountResponse* internal_default_instance() {
+    return reinterpret_cast<const GetSharePicturesCountResponse*>(
+               &_GetSharePicturesCountResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    36;
+
+  friend void swap(GetSharePicturesCountResponse& a, GetSharePicturesCountResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetSharePicturesCountResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetSharePicturesCountResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetSharePicturesCountResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetSharePicturesCountResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetSharePicturesCountResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GetSharePicturesCountResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetSharePicturesCountResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetSharePicturesCountResponse";
+  }
+  protected:
+  explicit GetSharePicturesCountResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCodeFieldNumber = 1,
+    kTotalFieldNumber = 2,
+  };
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // int32 total = 2;
+  void clear_total();
+  int32_t total() const;
+  void set_total(int32_t value);
+  private:
+  int32_t _internal_total() const;
+  void _internal_set_total(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.GetSharePicturesCountResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t code_;
+  int32_t total_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetSharePicturesListRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.GetSharePicturesListRequest) */ {
+ public:
+  inline GetSharePicturesListRequest() : GetSharePicturesListRequest(nullptr) {}
+  ~GetSharePicturesListRequest() override;
+  explicit constexpr GetSharePicturesListRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetSharePicturesListRequest(const GetSharePicturesListRequest& from);
+  GetSharePicturesListRequest(GetSharePicturesListRequest&& from) noexcept
+    : GetSharePicturesListRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetSharePicturesListRequest& operator=(const GetSharePicturesListRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetSharePicturesListRequest& operator=(GetSharePicturesListRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetSharePicturesListRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetSharePicturesListRequest* internal_default_instance() {
+    return reinterpret_cast<const GetSharePicturesListRequest*>(
+               &_GetSharePicturesListRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    37;
+
+  friend void swap(GetSharePicturesListRequest& a, GetSharePicturesListRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetSharePicturesListRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetSharePicturesListRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetSharePicturesListRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetSharePicturesListRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetSharePicturesListRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GetSharePicturesListRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetSharePicturesListRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetSharePicturesListRequest";
+  }
+  protected:
+  explicit GetSharePicturesListRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserFieldNumber = 1,
+    kStartFieldNumber = 2,
+    kCountFieldNumber = 3,
+  };
+  // string user = 1;
+  void clear_user();
+  const std::string& user() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user();
+  PROTOBUF_NODISCARD std::string* release_user();
+  void set_allocated_user(std::string* user);
+  private:
+  const std::string& _internal_user() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user(const std::string& value);
+  std::string* _internal_mutable_user();
+  public:
+
+  // int32 start = 2;
+  void clear_start();
+  int32_t start() const;
+  void set_start(int32_t value);
+  private:
+  int32_t _internal_start() const;
+  void _internal_set_start(int32_t value);
+  public:
+
+  // int32 count = 3;
+  void clear_count();
+  int32_t count() const;
+  void set_count(int32_t value);
+  private:
+  int32_t _internal_count() const;
+  void _internal_set_count(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.GetSharePicturesListRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
+  int32_t start_;
+  int32_t count_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SharedPictureInfo final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.SharedPictureInfo) */ {
+ public:
+  inline SharedPictureInfo() : SharedPictureInfo(nullptr) {}
+  ~SharedPictureInfo() override;
+  explicit constexpr SharedPictureInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SharedPictureInfo(const SharedPictureInfo& from);
+  SharedPictureInfo(SharedPictureInfo&& from) noexcept
+    : SharedPictureInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline SharedPictureInfo& operator=(const SharedPictureInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SharedPictureInfo& operator=(SharedPictureInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SharedPictureInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SharedPictureInfo* internal_default_instance() {
+    return reinterpret_cast<const SharedPictureInfo*>(
+               &_SharedPictureInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    38;
+
+  friend void swap(SharedPictureInfo& a, SharedPictureInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SharedPictureInfo* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SharedPictureInfo* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SharedPictureInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SharedPictureInfo>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SharedPictureInfo& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const SharedPictureInfo& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SharedPictureInfo* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.SharedPictureInfo";
+  }
+  protected:
+  explicit SharedPictureInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserFieldNumber = 1,
+    kFilemd5FieldNumber = 2,
+    kFileNameFieldNumber = 3,
+    kUrlmd5FieldNumber = 4,
+    kCreateTimeFieldNumber = 6,
+    kSizeFieldNumber = 7,
+    kPvFieldNumber = 5,
+  };
+  // string user = 1;
+  void clear_user();
+  const std::string& user() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user();
+  PROTOBUF_NODISCARD std::string* release_user();
+  void set_allocated_user(std::string* user);
+  private:
+  const std::string& _internal_user() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user(const std::string& value);
+  std::string* _internal_mutable_user();
+  public:
+
+  // string filemd5 = 2;
+  void clear_filemd5();
+  const std::string& filemd5() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_filemd5(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_filemd5();
+  PROTOBUF_NODISCARD std::string* release_filemd5();
+  void set_allocated_filemd5(std::string* filemd5);
+  private:
+  const std::string& _internal_filemd5() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_filemd5(const std::string& value);
+  std::string* _internal_mutable_filemd5();
+  public:
+
+  // string file_name = 3;
+  void clear_file_name();
+  const std::string& file_name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_file_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_file_name();
+  PROTOBUF_NODISCARD std::string* release_file_name();
+  void set_allocated_file_name(std::string* file_name);
+  private:
+  const std::string& _internal_file_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_name(const std::string& value);
+  std::string* _internal_mutable_file_name();
+  public:
+
+  // string urlmd5 = 4;
+  void clear_urlmd5();
+  const std::string& urlmd5() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_urlmd5(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_urlmd5();
+  PROTOBUF_NODISCARD std::string* release_urlmd5();
+  void set_allocated_urlmd5(std::string* urlmd5);
+  private:
+  const std::string& _internal_urlmd5() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_urlmd5(const std::string& value);
+  std::string* _internal_mutable_urlmd5();
+  public:
+
+  // string create_time = 6;
+  void clear_create_time();
+  const std::string& create_time() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_create_time(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_create_time();
+  PROTOBUF_NODISCARD std::string* release_create_time();
+  void set_allocated_create_time(std::string* create_time);
+  private:
+  const std::string& _internal_create_time() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_create_time(const std::string& value);
+  std::string* _internal_mutable_create_time();
+  public:
+
+  // int64 size = 7;
+  void clear_size();
+  int64_t size() const;
+  void set_size(int64_t value);
+  private:
+  int64_t _internal_size() const;
+  void _internal_set_size(int64_t value);
+  public:
+
+  // int32 pv = 5;
+  void clear_pv();
+  int32_t pv() const;
+  void set_pv(int32_t value);
+  private:
+  int32_t _internal_pv() const;
+  void _internal_set_pv(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.SharedPictureInfo)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filemd5_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr urlmd5_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr create_time_;
+  int64_t size_;
+  int32_t pv_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetSharePicturesListResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.GetSharePicturesListResponse) */ {
+ public:
+  inline GetSharePicturesListResponse() : GetSharePicturesListResponse(nullptr) {}
+  ~GetSharePicturesListResponse() override;
+  explicit constexpr GetSharePicturesListResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetSharePicturesListResponse(const GetSharePicturesListResponse& from);
+  GetSharePicturesListResponse(GetSharePicturesListResponse&& from) noexcept
+    : GetSharePicturesListResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline GetSharePicturesListResponse& operator=(const GetSharePicturesListResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetSharePicturesListResponse& operator=(GetSharePicturesListResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetSharePicturesListResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetSharePicturesListResponse* internal_default_instance() {
+    return reinterpret_cast<const GetSharePicturesListResponse*>(
+               &_GetSharePicturesListResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    39;
+
+  friend void swap(GetSharePicturesListResponse& a, GetSharePicturesListResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetSharePicturesListResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetSharePicturesListResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetSharePicturesListResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetSharePicturesListResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetSharePicturesListResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GetSharePicturesListResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetSharePicturesListResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.GetSharePicturesListResponse";
+  }
+  protected:
+  explicit GetSharePicturesListResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilesFieldNumber = 3,
+    kCodeFieldNumber = 1,
+    kTotalFieldNumber = 2,
+  };
+  // repeated .rpc.SharedPictureInfo files = 3;
+  int files_size() const;
+  private:
+  int _internal_files_size() const;
+  public:
+  void clear_files();
+  ::rpc::SharedPictureInfo* mutable_files(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::SharedPictureInfo >*
+      mutable_files();
+  private:
+  const ::rpc::SharedPictureInfo& _internal_files(int index) const;
+  ::rpc::SharedPictureInfo* _internal_add_files();
+  public:
+  const ::rpc::SharedPictureInfo& files(int index) const;
+  ::rpc::SharedPictureInfo* add_files();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::SharedPictureInfo >&
+      files() const;
+
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // int32 total = 2;
+  void clear_total();
+  int32_t total() const;
+  void set_total(int32_t value);
+  private:
+  int32_t _internal_total() const;
+  void _internal_set_total(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.GetSharePicturesListResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::SharedPictureInfo > files_;
+  int32_t code_;
+  int32_t total_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CancelSharePictureRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.CancelSharePictureRequest) */ {
+ public:
+  inline CancelSharePictureRequest() : CancelSharePictureRequest(nullptr) {}
+  ~CancelSharePictureRequest() override;
+  explicit constexpr CancelSharePictureRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CancelSharePictureRequest(const CancelSharePictureRequest& from);
+  CancelSharePictureRequest(CancelSharePictureRequest&& from) noexcept
+    : CancelSharePictureRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline CancelSharePictureRequest& operator=(const CancelSharePictureRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CancelSharePictureRequest& operator=(CancelSharePictureRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CancelSharePictureRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CancelSharePictureRequest* internal_default_instance() {
+    return reinterpret_cast<const CancelSharePictureRequest*>(
+               &_CancelSharePictureRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    40;
+
+  friend void swap(CancelSharePictureRequest& a, CancelSharePictureRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CancelSharePictureRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CancelSharePictureRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CancelSharePictureRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CancelSharePictureRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CancelSharePictureRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const CancelSharePictureRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CancelSharePictureRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.CancelSharePictureRequest";
+  }
+  protected:
+  explicit CancelSharePictureRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserFieldNumber = 1,
+    kUrlmd5FieldNumber = 2,
+  };
+  // string user = 1;
+  void clear_user();
+  const std::string& user() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user();
+  PROTOBUF_NODISCARD std::string* release_user();
+  void set_allocated_user(std::string* user);
+  private:
+  const std::string& _internal_user() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user(const std::string& value);
+  std::string* _internal_mutable_user();
+  public:
+
+  // string urlmd5 = 2;
+  void clear_urlmd5();
+  const std::string& urlmd5() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_urlmd5(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_urlmd5();
+  PROTOBUF_NODISCARD std::string* release_urlmd5();
+  void set_allocated_urlmd5(std::string* urlmd5);
+  private:
+  const std::string& _internal_urlmd5() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_urlmd5(const std::string& value);
+  std::string* _internal_mutable_urlmd5();
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.CancelSharePictureRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr urlmd5_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CancelSharePictureResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.CancelSharePictureResponse) */ {
+ public:
+  inline CancelSharePictureResponse() : CancelSharePictureResponse(nullptr) {}
+  ~CancelSharePictureResponse() override;
+  explicit constexpr CancelSharePictureResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CancelSharePictureResponse(const CancelSharePictureResponse& from);
+  CancelSharePictureResponse(CancelSharePictureResponse&& from) noexcept
+    : CancelSharePictureResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline CancelSharePictureResponse& operator=(const CancelSharePictureResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CancelSharePictureResponse& operator=(CancelSharePictureResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CancelSharePictureResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CancelSharePictureResponse* internal_default_instance() {
+    return reinterpret_cast<const CancelSharePictureResponse*>(
+               &_CancelSharePictureResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    41;
+
+  friend void swap(CancelSharePictureResponse& a, CancelSharePictureResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CancelSharePictureResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CancelSharePictureResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CancelSharePictureResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CancelSharePictureResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CancelSharePictureResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const CancelSharePictureResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CancelSharePictureResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.CancelSharePictureResponse";
+  }
+  protected:
+  explicit CancelSharePictureResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCodeFieldNumber = 1,
+  };
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.CancelSharePictureResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t code_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class BrowsePictureRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.BrowsePictureRequest) */ {
+ public:
+  inline BrowsePictureRequest() : BrowsePictureRequest(nullptr) {}
+  ~BrowsePictureRequest() override;
+  explicit constexpr BrowsePictureRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  BrowsePictureRequest(const BrowsePictureRequest& from);
+  BrowsePictureRequest(BrowsePictureRequest&& from) noexcept
+    : BrowsePictureRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline BrowsePictureRequest& operator=(const BrowsePictureRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline BrowsePictureRequest& operator=(BrowsePictureRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const BrowsePictureRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const BrowsePictureRequest* internal_default_instance() {
+    return reinterpret_cast<const BrowsePictureRequest*>(
+               &_BrowsePictureRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    42;
+
+  friend void swap(BrowsePictureRequest& a, BrowsePictureRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(BrowsePictureRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(BrowsePictureRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  BrowsePictureRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<BrowsePictureRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const BrowsePictureRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const BrowsePictureRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(BrowsePictureRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.BrowsePictureRequest";
+  }
+  protected:
+  explicit BrowsePictureRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUrlmd5FieldNumber = 1,
+  };
+  // string urlmd5 = 1;
+  void clear_urlmd5();
+  const std::string& urlmd5() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_urlmd5(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_urlmd5();
+  PROTOBUF_NODISCARD std::string* release_urlmd5();
+  void set_allocated_urlmd5(std::string* urlmd5);
+  private:
+  const std::string& _internal_urlmd5() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_urlmd5(const std::string& value);
+  std::string* _internal_mutable_urlmd5();
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.BrowsePictureRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr urlmd5_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class BrowsePictureResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc.BrowsePictureResponse) */ {
+ public:
+  inline BrowsePictureResponse() : BrowsePictureResponse(nullptr) {}
+  ~BrowsePictureResponse() override;
+  explicit constexpr BrowsePictureResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  BrowsePictureResponse(const BrowsePictureResponse& from);
+  BrowsePictureResponse(BrowsePictureResponse&& from) noexcept
+    : BrowsePictureResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline BrowsePictureResponse& operator=(const BrowsePictureResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline BrowsePictureResponse& operator=(BrowsePictureResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const BrowsePictureResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const BrowsePictureResponse* internal_default_instance() {
+    return reinterpret_cast<const BrowsePictureResponse*>(
+               &_BrowsePictureResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    43;
+
+  friend void swap(BrowsePictureResponse& a, BrowsePictureResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(BrowsePictureResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(BrowsePictureResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  BrowsePictureResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<BrowsePictureResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const BrowsePictureResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const BrowsePictureResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(BrowsePictureResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rpc.BrowsePictureResponse";
+  }
+  protected:
+  explicit BrowsePictureResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUrlFieldNumber = 3,
+    kUserFieldNumber = 4,
+    kTimeFieldNumber = 5,
+    kCodeFieldNumber = 1,
+    kPvFieldNumber = 2,
+  };
+  // string url = 3;
+  void clear_url();
+  const std::string& url() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_url(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_url();
+  PROTOBUF_NODISCARD std::string* release_url();
+  void set_allocated_url(std::string* url);
+  private:
+  const std::string& _internal_url() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_url(const std::string& value);
+  std::string* _internal_mutable_url();
+  public:
+
+  // string user = 4;
+  void clear_user();
+  const std::string& user() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_user(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_user();
+  PROTOBUF_NODISCARD std::string* release_user();
+  void set_allocated_user(std::string* user);
+  private:
+  const std::string& _internal_user() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_user(const std::string& value);
+  std::string* _internal_mutable_user();
+  public:
+
+  // string time = 5;
+  void clear_time();
+  const std::string& time() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_time(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_time();
+  PROTOBUF_NODISCARD std::string* release_time();
+  void set_allocated_time(std::string* time);
+  private:
+  const std::string& _internal_time() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_time(const std::string& value);
+  std::string* _internal_mutable_time();
+  public:
+
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // int32 pv = 2;
+  void clear_pv();
+  int32_t pv() const;
+  void set_pv(int32_t value);
+  private:
+  int32_t _internal_pv() const;
+  void _internal_set_pv(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rpc.BrowsePictureResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr url_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr time_;
+  int32_t code_;
+  int32_t pv_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mysql_5frpc_2eproto;
+};
 // ===================================================================
 
 
@@ -9437,9 +11390,1222 @@ GetRankingFileListResponse::files() const {
   return files_;
 }
 
+// -------------------------------------------------------------------
+
+// SharePictureRequest
+
+// string user = 1;
+inline void SharePictureRequest::clear_user() {
+  user_.ClearToEmpty();
+}
+inline const std::string& SharePictureRequest::user() const {
+  // @@protoc_insertion_point(field_get:rpc.SharePictureRequest.user)
+  return _internal_user();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SharePictureRequest::set_user(ArgT0&& arg0, ArgT... args) {
+ 
+ user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.SharePictureRequest.user)
+}
+inline std::string* SharePictureRequest::mutable_user() {
+  std::string* _s = _internal_mutable_user();
+  // @@protoc_insertion_point(field_mutable:rpc.SharePictureRequest.user)
+  return _s;
+}
+inline const std::string& SharePictureRequest::_internal_user() const {
+  return user_.Get();
+}
+inline void SharePictureRequest::_internal_set_user(const std::string& value) {
+  
+  user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SharePictureRequest::_internal_mutable_user() {
+  
+  return user_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SharePictureRequest::release_user() {
+  // @@protoc_insertion_point(field_release:rpc.SharePictureRequest.user)
+  return user_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SharePictureRequest::set_allocated_user(std::string* user) {
+  if (user != nullptr) {
+    
+  } else {
+    
+  }
+  user_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.SharePictureRequest.user)
+}
+
+// string md5 = 2;
+inline void SharePictureRequest::clear_md5() {
+  md5_.ClearToEmpty();
+}
+inline const std::string& SharePictureRequest::md5() const {
+  // @@protoc_insertion_point(field_get:rpc.SharePictureRequest.md5)
+  return _internal_md5();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SharePictureRequest::set_md5(ArgT0&& arg0, ArgT... args) {
+ 
+ md5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.SharePictureRequest.md5)
+}
+inline std::string* SharePictureRequest::mutable_md5() {
+  std::string* _s = _internal_mutable_md5();
+  // @@protoc_insertion_point(field_mutable:rpc.SharePictureRequest.md5)
+  return _s;
+}
+inline const std::string& SharePictureRequest::_internal_md5() const {
+  return md5_.Get();
+}
+inline void SharePictureRequest::_internal_set_md5(const std::string& value) {
+  
+  md5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SharePictureRequest::_internal_mutable_md5() {
+  
+  return md5_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SharePictureRequest::release_md5() {
+  // @@protoc_insertion_point(field_release:rpc.SharePictureRequest.md5)
+  return md5_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SharePictureRequest::set_allocated_md5(std::string* md5) {
+  if (md5 != nullptr) {
+    
+  } else {
+    
+  }
+  md5_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), md5,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (md5_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    md5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.SharePictureRequest.md5)
+}
+
+// string filename = 3;
+inline void SharePictureRequest::clear_filename() {
+  filename_.ClearToEmpty();
+}
+inline const std::string& SharePictureRequest::filename() const {
+  // @@protoc_insertion_point(field_get:rpc.SharePictureRequest.filename)
+  return _internal_filename();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SharePictureRequest::set_filename(ArgT0&& arg0, ArgT... args) {
+ 
+ filename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.SharePictureRequest.filename)
+}
+inline std::string* SharePictureRequest::mutable_filename() {
+  std::string* _s = _internal_mutable_filename();
+  // @@protoc_insertion_point(field_mutable:rpc.SharePictureRequest.filename)
+  return _s;
+}
+inline const std::string& SharePictureRequest::_internal_filename() const {
+  return filename_.Get();
+}
+inline void SharePictureRequest::_internal_set_filename(const std::string& value) {
+  
+  filename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SharePictureRequest::_internal_mutable_filename() {
+  
+  return filename_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SharePictureRequest::release_filename() {
+  // @@protoc_insertion_point(field_release:rpc.SharePictureRequest.filename)
+  return filename_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SharePictureRequest::set_allocated_filename(std::string* filename) {
+  if (filename != nullptr) {
+    
+  } else {
+    
+  }
+  filename_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), filename,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (filename_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    filename_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.SharePictureRequest.filename)
+}
+
+// -------------------------------------------------------------------
+
+// SharePictureResponse
+
+// int32 code = 1;
+inline void SharePictureResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t SharePictureResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t SharePictureResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.SharePictureResponse.code)
+  return _internal_code();
+}
+inline void SharePictureResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void SharePictureResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.SharePictureResponse.code)
+}
+
+// string urlmd5 = 2;
+inline void SharePictureResponse::clear_urlmd5() {
+  urlmd5_.ClearToEmpty();
+}
+inline const std::string& SharePictureResponse::urlmd5() const {
+  // @@protoc_insertion_point(field_get:rpc.SharePictureResponse.urlmd5)
+  return _internal_urlmd5();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SharePictureResponse::set_urlmd5(ArgT0&& arg0, ArgT... args) {
+ 
+ urlmd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.SharePictureResponse.urlmd5)
+}
+inline std::string* SharePictureResponse::mutable_urlmd5() {
+  std::string* _s = _internal_mutable_urlmd5();
+  // @@protoc_insertion_point(field_mutable:rpc.SharePictureResponse.urlmd5)
+  return _s;
+}
+inline const std::string& SharePictureResponse::_internal_urlmd5() const {
+  return urlmd5_.Get();
+}
+inline void SharePictureResponse::_internal_set_urlmd5(const std::string& value) {
+  
+  urlmd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SharePictureResponse::_internal_mutable_urlmd5() {
+  
+  return urlmd5_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SharePictureResponse::release_urlmd5() {
+  // @@protoc_insertion_point(field_release:rpc.SharePictureResponse.urlmd5)
+  return urlmd5_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SharePictureResponse::set_allocated_urlmd5(std::string* urlmd5) {
+  if (urlmd5 != nullptr) {
+    
+  } else {
+    
+  }
+  urlmd5_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), urlmd5,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (urlmd5_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    urlmd5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.SharePictureResponse.urlmd5)
+}
+
+// -------------------------------------------------------------------
+
+// GetSharePicturesCountRequest
+
+// string user = 1;
+inline void GetSharePicturesCountRequest::clear_user() {
+  user_.ClearToEmpty();
+}
+inline const std::string& GetSharePicturesCountRequest::user() const {
+  // @@protoc_insertion_point(field_get:rpc.GetSharePicturesCountRequest.user)
+  return _internal_user();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetSharePicturesCountRequest::set_user(ArgT0&& arg0, ArgT... args) {
+ 
+ user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.GetSharePicturesCountRequest.user)
+}
+inline std::string* GetSharePicturesCountRequest::mutable_user() {
+  std::string* _s = _internal_mutable_user();
+  // @@protoc_insertion_point(field_mutable:rpc.GetSharePicturesCountRequest.user)
+  return _s;
+}
+inline const std::string& GetSharePicturesCountRequest::_internal_user() const {
+  return user_.Get();
+}
+inline void GetSharePicturesCountRequest::_internal_set_user(const std::string& value) {
+  
+  user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* GetSharePicturesCountRequest::_internal_mutable_user() {
+  
+  return user_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* GetSharePicturesCountRequest::release_user() {
+  // @@protoc_insertion_point(field_release:rpc.GetSharePicturesCountRequest.user)
+  return user_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void GetSharePicturesCountRequest::set_allocated_user(std::string* user) {
+  if (user != nullptr) {
+    
+  } else {
+    
+  }
+  user_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.GetSharePicturesCountRequest.user)
+}
+
+// -------------------------------------------------------------------
+
+// GetSharePicturesCountResponse
+
+// int32 code = 1;
+inline void GetSharePicturesCountResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t GetSharePicturesCountResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t GetSharePicturesCountResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.GetSharePicturesCountResponse.code)
+  return _internal_code();
+}
+inline void GetSharePicturesCountResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void GetSharePicturesCountResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.GetSharePicturesCountResponse.code)
+}
+
+// int32 total = 2;
+inline void GetSharePicturesCountResponse::clear_total() {
+  total_ = 0;
+}
+inline int32_t GetSharePicturesCountResponse::_internal_total() const {
+  return total_;
+}
+inline int32_t GetSharePicturesCountResponse::total() const {
+  // @@protoc_insertion_point(field_get:rpc.GetSharePicturesCountResponse.total)
+  return _internal_total();
+}
+inline void GetSharePicturesCountResponse::_internal_set_total(int32_t value) {
+  
+  total_ = value;
+}
+inline void GetSharePicturesCountResponse::set_total(int32_t value) {
+  _internal_set_total(value);
+  // @@protoc_insertion_point(field_set:rpc.GetSharePicturesCountResponse.total)
+}
+
+// -------------------------------------------------------------------
+
+// GetSharePicturesListRequest
+
+// string user = 1;
+inline void GetSharePicturesListRequest::clear_user() {
+  user_.ClearToEmpty();
+}
+inline const std::string& GetSharePicturesListRequest::user() const {
+  // @@protoc_insertion_point(field_get:rpc.GetSharePicturesListRequest.user)
+  return _internal_user();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetSharePicturesListRequest::set_user(ArgT0&& arg0, ArgT... args) {
+ 
+ user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.GetSharePicturesListRequest.user)
+}
+inline std::string* GetSharePicturesListRequest::mutable_user() {
+  std::string* _s = _internal_mutable_user();
+  // @@protoc_insertion_point(field_mutable:rpc.GetSharePicturesListRequest.user)
+  return _s;
+}
+inline const std::string& GetSharePicturesListRequest::_internal_user() const {
+  return user_.Get();
+}
+inline void GetSharePicturesListRequest::_internal_set_user(const std::string& value) {
+  
+  user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* GetSharePicturesListRequest::_internal_mutable_user() {
+  
+  return user_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* GetSharePicturesListRequest::release_user() {
+  // @@protoc_insertion_point(field_release:rpc.GetSharePicturesListRequest.user)
+  return user_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void GetSharePicturesListRequest::set_allocated_user(std::string* user) {
+  if (user != nullptr) {
+    
+  } else {
+    
+  }
+  user_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.GetSharePicturesListRequest.user)
+}
+
+// int32 start = 2;
+inline void GetSharePicturesListRequest::clear_start() {
+  start_ = 0;
+}
+inline int32_t GetSharePicturesListRequest::_internal_start() const {
+  return start_;
+}
+inline int32_t GetSharePicturesListRequest::start() const {
+  // @@protoc_insertion_point(field_get:rpc.GetSharePicturesListRequest.start)
+  return _internal_start();
+}
+inline void GetSharePicturesListRequest::_internal_set_start(int32_t value) {
+  
+  start_ = value;
+}
+inline void GetSharePicturesListRequest::set_start(int32_t value) {
+  _internal_set_start(value);
+  // @@protoc_insertion_point(field_set:rpc.GetSharePicturesListRequest.start)
+}
+
+// int32 count = 3;
+inline void GetSharePicturesListRequest::clear_count() {
+  count_ = 0;
+}
+inline int32_t GetSharePicturesListRequest::_internal_count() const {
+  return count_;
+}
+inline int32_t GetSharePicturesListRequest::count() const {
+  // @@protoc_insertion_point(field_get:rpc.GetSharePicturesListRequest.count)
+  return _internal_count();
+}
+inline void GetSharePicturesListRequest::_internal_set_count(int32_t value) {
+  
+  count_ = value;
+}
+inline void GetSharePicturesListRequest::set_count(int32_t value) {
+  _internal_set_count(value);
+  // @@protoc_insertion_point(field_set:rpc.GetSharePicturesListRequest.count)
+}
+
+// -------------------------------------------------------------------
+
+// SharedPictureInfo
+
+// string user = 1;
+inline void SharedPictureInfo::clear_user() {
+  user_.ClearToEmpty();
+}
+inline const std::string& SharedPictureInfo::user() const {
+  // @@protoc_insertion_point(field_get:rpc.SharedPictureInfo.user)
+  return _internal_user();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SharedPictureInfo::set_user(ArgT0&& arg0, ArgT... args) {
+ 
+ user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.SharedPictureInfo.user)
+}
+inline std::string* SharedPictureInfo::mutable_user() {
+  std::string* _s = _internal_mutable_user();
+  // @@protoc_insertion_point(field_mutable:rpc.SharedPictureInfo.user)
+  return _s;
+}
+inline const std::string& SharedPictureInfo::_internal_user() const {
+  return user_.Get();
+}
+inline void SharedPictureInfo::_internal_set_user(const std::string& value) {
+  
+  user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::_internal_mutable_user() {
+  
+  return user_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::release_user() {
+  // @@protoc_insertion_point(field_release:rpc.SharedPictureInfo.user)
+  return user_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SharedPictureInfo::set_allocated_user(std::string* user) {
+  if (user != nullptr) {
+    
+  } else {
+    
+  }
+  user_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.SharedPictureInfo.user)
+}
+
+// string filemd5 = 2;
+inline void SharedPictureInfo::clear_filemd5() {
+  filemd5_.ClearToEmpty();
+}
+inline const std::string& SharedPictureInfo::filemd5() const {
+  // @@protoc_insertion_point(field_get:rpc.SharedPictureInfo.filemd5)
+  return _internal_filemd5();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SharedPictureInfo::set_filemd5(ArgT0&& arg0, ArgT... args) {
+ 
+ filemd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.SharedPictureInfo.filemd5)
+}
+inline std::string* SharedPictureInfo::mutable_filemd5() {
+  std::string* _s = _internal_mutable_filemd5();
+  // @@protoc_insertion_point(field_mutable:rpc.SharedPictureInfo.filemd5)
+  return _s;
+}
+inline const std::string& SharedPictureInfo::_internal_filemd5() const {
+  return filemd5_.Get();
+}
+inline void SharedPictureInfo::_internal_set_filemd5(const std::string& value) {
+  
+  filemd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::_internal_mutable_filemd5() {
+  
+  return filemd5_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::release_filemd5() {
+  // @@protoc_insertion_point(field_release:rpc.SharedPictureInfo.filemd5)
+  return filemd5_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SharedPictureInfo::set_allocated_filemd5(std::string* filemd5) {
+  if (filemd5 != nullptr) {
+    
+  } else {
+    
+  }
+  filemd5_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), filemd5,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (filemd5_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    filemd5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.SharedPictureInfo.filemd5)
+}
+
+// string file_name = 3;
+inline void SharedPictureInfo::clear_file_name() {
+  file_name_.ClearToEmpty();
+}
+inline const std::string& SharedPictureInfo::file_name() const {
+  // @@protoc_insertion_point(field_get:rpc.SharedPictureInfo.file_name)
+  return _internal_file_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SharedPictureInfo::set_file_name(ArgT0&& arg0, ArgT... args) {
+ 
+ file_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.SharedPictureInfo.file_name)
+}
+inline std::string* SharedPictureInfo::mutable_file_name() {
+  std::string* _s = _internal_mutable_file_name();
+  // @@protoc_insertion_point(field_mutable:rpc.SharedPictureInfo.file_name)
+  return _s;
+}
+inline const std::string& SharedPictureInfo::_internal_file_name() const {
+  return file_name_.Get();
+}
+inline void SharedPictureInfo::_internal_set_file_name(const std::string& value) {
+  
+  file_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::_internal_mutable_file_name() {
+  
+  return file_name_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::release_file_name() {
+  // @@protoc_insertion_point(field_release:rpc.SharedPictureInfo.file_name)
+  return file_name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SharedPictureInfo::set_allocated_file_name(std::string* file_name) {
+  if (file_name != nullptr) {
+    
+  } else {
+    
+  }
+  file_name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), file_name,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (file_name_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    file_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.SharedPictureInfo.file_name)
+}
+
+// string urlmd5 = 4;
+inline void SharedPictureInfo::clear_urlmd5() {
+  urlmd5_.ClearToEmpty();
+}
+inline const std::string& SharedPictureInfo::urlmd5() const {
+  // @@protoc_insertion_point(field_get:rpc.SharedPictureInfo.urlmd5)
+  return _internal_urlmd5();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SharedPictureInfo::set_urlmd5(ArgT0&& arg0, ArgT... args) {
+ 
+ urlmd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.SharedPictureInfo.urlmd5)
+}
+inline std::string* SharedPictureInfo::mutable_urlmd5() {
+  std::string* _s = _internal_mutable_urlmd5();
+  // @@protoc_insertion_point(field_mutable:rpc.SharedPictureInfo.urlmd5)
+  return _s;
+}
+inline const std::string& SharedPictureInfo::_internal_urlmd5() const {
+  return urlmd5_.Get();
+}
+inline void SharedPictureInfo::_internal_set_urlmd5(const std::string& value) {
+  
+  urlmd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::_internal_mutable_urlmd5() {
+  
+  return urlmd5_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::release_urlmd5() {
+  // @@protoc_insertion_point(field_release:rpc.SharedPictureInfo.urlmd5)
+  return urlmd5_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SharedPictureInfo::set_allocated_urlmd5(std::string* urlmd5) {
+  if (urlmd5 != nullptr) {
+    
+  } else {
+    
+  }
+  urlmd5_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), urlmd5,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (urlmd5_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    urlmd5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.SharedPictureInfo.urlmd5)
+}
+
+// int32 pv = 5;
+inline void SharedPictureInfo::clear_pv() {
+  pv_ = 0;
+}
+inline int32_t SharedPictureInfo::_internal_pv() const {
+  return pv_;
+}
+inline int32_t SharedPictureInfo::pv() const {
+  // @@protoc_insertion_point(field_get:rpc.SharedPictureInfo.pv)
+  return _internal_pv();
+}
+inline void SharedPictureInfo::_internal_set_pv(int32_t value) {
+  
+  pv_ = value;
+}
+inline void SharedPictureInfo::set_pv(int32_t value) {
+  _internal_set_pv(value);
+  // @@protoc_insertion_point(field_set:rpc.SharedPictureInfo.pv)
+}
+
+// string create_time = 6;
+inline void SharedPictureInfo::clear_create_time() {
+  create_time_.ClearToEmpty();
+}
+inline const std::string& SharedPictureInfo::create_time() const {
+  // @@protoc_insertion_point(field_get:rpc.SharedPictureInfo.create_time)
+  return _internal_create_time();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SharedPictureInfo::set_create_time(ArgT0&& arg0, ArgT... args) {
+ 
+ create_time_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.SharedPictureInfo.create_time)
+}
+inline std::string* SharedPictureInfo::mutable_create_time() {
+  std::string* _s = _internal_mutable_create_time();
+  // @@protoc_insertion_point(field_mutable:rpc.SharedPictureInfo.create_time)
+  return _s;
+}
+inline const std::string& SharedPictureInfo::_internal_create_time() const {
+  return create_time_.Get();
+}
+inline void SharedPictureInfo::_internal_set_create_time(const std::string& value) {
+  
+  create_time_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::_internal_mutable_create_time() {
+  
+  return create_time_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SharedPictureInfo::release_create_time() {
+  // @@protoc_insertion_point(field_release:rpc.SharedPictureInfo.create_time)
+  return create_time_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SharedPictureInfo::set_allocated_create_time(std::string* create_time) {
+  if (create_time != nullptr) {
+    
+  } else {
+    
+  }
+  create_time_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), create_time,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (create_time_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    create_time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.SharedPictureInfo.create_time)
+}
+
+// int64 size = 7;
+inline void SharedPictureInfo::clear_size() {
+  size_ = int64_t{0};
+}
+inline int64_t SharedPictureInfo::_internal_size() const {
+  return size_;
+}
+inline int64_t SharedPictureInfo::size() const {
+  // @@protoc_insertion_point(field_get:rpc.SharedPictureInfo.size)
+  return _internal_size();
+}
+inline void SharedPictureInfo::_internal_set_size(int64_t value) {
+  
+  size_ = value;
+}
+inline void SharedPictureInfo::set_size(int64_t value) {
+  _internal_set_size(value);
+  // @@protoc_insertion_point(field_set:rpc.SharedPictureInfo.size)
+}
+
+// -------------------------------------------------------------------
+
+// GetSharePicturesListResponse
+
+// int32 code = 1;
+inline void GetSharePicturesListResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t GetSharePicturesListResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t GetSharePicturesListResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.GetSharePicturesListResponse.code)
+  return _internal_code();
+}
+inline void GetSharePicturesListResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void GetSharePicturesListResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.GetSharePicturesListResponse.code)
+}
+
+// int32 total = 2;
+inline void GetSharePicturesListResponse::clear_total() {
+  total_ = 0;
+}
+inline int32_t GetSharePicturesListResponse::_internal_total() const {
+  return total_;
+}
+inline int32_t GetSharePicturesListResponse::total() const {
+  // @@protoc_insertion_point(field_get:rpc.GetSharePicturesListResponse.total)
+  return _internal_total();
+}
+inline void GetSharePicturesListResponse::_internal_set_total(int32_t value) {
+  
+  total_ = value;
+}
+inline void GetSharePicturesListResponse::set_total(int32_t value) {
+  _internal_set_total(value);
+  // @@protoc_insertion_point(field_set:rpc.GetSharePicturesListResponse.total)
+}
+
+// repeated .rpc.SharedPictureInfo files = 3;
+inline int GetSharePicturesListResponse::_internal_files_size() const {
+  return files_.size();
+}
+inline int GetSharePicturesListResponse::files_size() const {
+  return _internal_files_size();
+}
+inline void GetSharePicturesListResponse::clear_files() {
+  files_.Clear();
+}
+inline ::rpc::SharedPictureInfo* GetSharePicturesListResponse::mutable_files(int index) {
+  // @@protoc_insertion_point(field_mutable:rpc.GetSharePicturesListResponse.files)
+  return files_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::SharedPictureInfo >*
+GetSharePicturesListResponse::mutable_files() {
+  // @@protoc_insertion_point(field_mutable_list:rpc.GetSharePicturesListResponse.files)
+  return &files_;
+}
+inline const ::rpc::SharedPictureInfo& GetSharePicturesListResponse::_internal_files(int index) const {
+  return files_.Get(index);
+}
+inline const ::rpc::SharedPictureInfo& GetSharePicturesListResponse::files(int index) const {
+  // @@protoc_insertion_point(field_get:rpc.GetSharePicturesListResponse.files)
+  return _internal_files(index);
+}
+inline ::rpc::SharedPictureInfo* GetSharePicturesListResponse::_internal_add_files() {
+  return files_.Add();
+}
+inline ::rpc::SharedPictureInfo* GetSharePicturesListResponse::add_files() {
+  ::rpc::SharedPictureInfo* _add = _internal_add_files();
+  // @@protoc_insertion_point(field_add:rpc.GetSharePicturesListResponse.files)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rpc::SharedPictureInfo >&
+GetSharePicturesListResponse::files() const {
+  // @@protoc_insertion_point(field_list:rpc.GetSharePicturesListResponse.files)
+  return files_;
+}
+
+// -------------------------------------------------------------------
+
+// CancelSharePictureRequest
+
+// string user = 1;
+inline void CancelSharePictureRequest::clear_user() {
+  user_.ClearToEmpty();
+}
+inline const std::string& CancelSharePictureRequest::user() const {
+  // @@protoc_insertion_point(field_get:rpc.CancelSharePictureRequest.user)
+  return _internal_user();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CancelSharePictureRequest::set_user(ArgT0&& arg0, ArgT... args) {
+ 
+ user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.CancelSharePictureRequest.user)
+}
+inline std::string* CancelSharePictureRequest::mutable_user() {
+  std::string* _s = _internal_mutable_user();
+  // @@protoc_insertion_point(field_mutable:rpc.CancelSharePictureRequest.user)
+  return _s;
+}
+inline const std::string& CancelSharePictureRequest::_internal_user() const {
+  return user_.Get();
+}
+inline void CancelSharePictureRequest::_internal_set_user(const std::string& value) {
+  
+  user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* CancelSharePictureRequest::_internal_mutable_user() {
+  
+  return user_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* CancelSharePictureRequest::release_user() {
+  // @@protoc_insertion_point(field_release:rpc.CancelSharePictureRequest.user)
+  return user_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void CancelSharePictureRequest::set_allocated_user(std::string* user) {
+  if (user != nullptr) {
+    
+  } else {
+    
+  }
+  user_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.CancelSharePictureRequest.user)
+}
+
+// string urlmd5 = 2;
+inline void CancelSharePictureRequest::clear_urlmd5() {
+  urlmd5_.ClearToEmpty();
+}
+inline const std::string& CancelSharePictureRequest::urlmd5() const {
+  // @@protoc_insertion_point(field_get:rpc.CancelSharePictureRequest.urlmd5)
+  return _internal_urlmd5();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CancelSharePictureRequest::set_urlmd5(ArgT0&& arg0, ArgT... args) {
+ 
+ urlmd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.CancelSharePictureRequest.urlmd5)
+}
+inline std::string* CancelSharePictureRequest::mutable_urlmd5() {
+  std::string* _s = _internal_mutable_urlmd5();
+  // @@protoc_insertion_point(field_mutable:rpc.CancelSharePictureRequest.urlmd5)
+  return _s;
+}
+inline const std::string& CancelSharePictureRequest::_internal_urlmd5() const {
+  return urlmd5_.Get();
+}
+inline void CancelSharePictureRequest::_internal_set_urlmd5(const std::string& value) {
+  
+  urlmd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* CancelSharePictureRequest::_internal_mutable_urlmd5() {
+  
+  return urlmd5_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* CancelSharePictureRequest::release_urlmd5() {
+  // @@protoc_insertion_point(field_release:rpc.CancelSharePictureRequest.urlmd5)
+  return urlmd5_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void CancelSharePictureRequest::set_allocated_urlmd5(std::string* urlmd5) {
+  if (urlmd5 != nullptr) {
+    
+  } else {
+    
+  }
+  urlmd5_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), urlmd5,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (urlmd5_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    urlmd5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.CancelSharePictureRequest.urlmd5)
+}
+
+// -------------------------------------------------------------------
+
+// CancelSharePictureResponse
+
+// int32 code = 1;
+inline void CancelSharePictureResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t CancelSharePictureResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t CancelSharePictureResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.CancelSharePictureResponse.code)
+  return _internal_code();
+}
+inline void CancelSharePictureResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void CancelSharePictureResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.CancelSharePictureResponse.code)
+}
+
+// -------------------------------------------------------------------
+
+// BrowsePictureRequest
+
+// string urlmd5 = 1;
+inline void BrowsePictureRequest::clear_urlmd5() {
+  urlmd5_.ClearToEmpty();
+}
+inline const std::string& BrowsePictureRequest::urlmd5() const {
+  // @@protoc_insertion_point(field_get:rpc.BrowsePictureRequest.urlmd5)
+  return _internal_urlmd5();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void BrowsePictureRequest::set_urlmd5(ArgT0&& arg0, ArgT... args) {
+ 
+ urlmd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.BrowsePictureRequest.urlmd5)
+}
+inline std::string* BrowsePictureRequest::mutable_urlmd5() {
+  std::string* _s = _internal_mutable_urlmd5();
+  // @@protoc_insertion_point(field_mutable:rpc.BrowsePictureRequest.urlmd5)
+  return _s;
+}
+inline const std::string& BrowsePictureRequest::_internal_urlmd5() const {
+  return urlmd5_.Get();
+}
+inline void BrowsePictureRequest::_internal_set_urlmd5(const std::string& value) {
+  
+  urlmd5_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* BrowsePictureRequest::_internal_mutable_urlmd5() {
+  
+  return urlmd5_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* BrowsePictureRequest::release_urlmd5() {
+  // @@protoc_insertion_point(field_release:rpc.BrowsePictureRequest.urlmd5)
+  return urlmd5_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void BrowsePictureRequest::set_allocated_urlmd5(std::string* urlmd5) {
+  if (urlmd5 != nullptr) {
+    
+  } else {
+    
+  }
+  urlmd5_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), urlmd5,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (urlmd5_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    urlmd5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.BrowsePictureRequest.urlmd5)
+}
+
+// -------------------------------------------------------------------
+
+// BrowsePictureResponse
+
+// int32 code = 1;
+inline void BrowsePictureResponse::clear_code() {
+  code_ = 0;
+}
+inline int32_t BrowsePictureResponse::_internal_code() const {
+  return code_;
+}
+inline int32_t BrowsePictureResponse::code() const {
+  // @@protoc_insertion_point(field_get:rpc.BrowsePictureResponse.code)
+  return _internal_code();
+}
+inline void BrowsePictureResponse::_internal_set_code(int32_t value) {
+  
+  code_ = value;
+}
+inline void BrowsePictureResponse::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:rpc.BrowsePictureResponse.code)
+}
+
+// int32 pv = 2;
+inline void BrowsePictureResponse::clear_pv() {
+  pv_ = 0;
+}
+inline int32_t BrowsePictureResponse::_internal_pv() const {
+  return pv_;
+}
+inline int32_t BrowsePictureResponse::pv() const {
+  // @@protoc_insertion_point(field_get:rpc.BrowsePictureResponse.pv)
+  return _internal_pv();
+}
+inline void BrowsePictureResponse::_internal_set_pv(int32_t value) {
+  
+  pv_ = value;
+}
+inline void BrowsePictureResponse::set_pv(int32_t value) {
+  _internal_set_pv(value);
+  // @@protoc_insertion_point(field_set:rpc.BrowsePictureResponse.pv)
+}
+
+// string url = 3;
+inline void BrowsePictureResponse::clear_url() {
+  url_.ClearToEmpty();
+}
+inline const std::string& BrowsePictureResponse::url() const {
+  // @@protoc_insertion_point(field_get:rpc.BrowsePictureResponse.url)
+  return _internal_url();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void BrowsePictureResponse::set_url(ArgT0&& arg0, ArgT... args) {
+ 
+ url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.BrowsePictureResponse.url)
+}
+inline std::string* BrowsePictureResponse::mutable_url() {
+  std::string* _s = _internal_mutable_url();
+  // @@protoc_insertion_point(field_mutable:rpc.BrowsePictureResponse.url)
+  return _s;
+}
+inline const std::string& BrowsePictureResponse::_internal_url() const {
+  return url_.Get();
+}
+inline void BrowsePictureResponse::_internal_set_url(const std::string& value) {
+  
+  url_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* BrowsePictureResponse::_internal_mutable_url() {
+  
+  return url_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* BrowsePictureResponse::release_url() {
+  // @@protoc_insertion_point(field_release:rpc.BrowsePictureResponse.url)
+  return url_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void BrowsePictureResponse::set_allocated_url(std::string* url) {
+  if (url != nullptr) {
+    
+  } else {
+    
+  }
+  url_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), url,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (url_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    url_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.BrowsePictureResponse.url)
+}
+
+// string user = 4;
+inline void BrowsePictureResponse::clear_user() {
+  user_.ClearToEmpty();
+}
+inline const std::string& BrowsePictureResponse::user() const {
+  // @@protoc_insertion_point(field_get:rpc.BrowsePictureResponse.user)
+  return _internal_user();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void BrowsePictureResponse::set_user(ArgT0&& arg0, ArgT... args) {
+ 
+ user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.BrowsePictureResponse.user)
+}
+inline std::string* BrowsePictureResponse::mutable_user() {
+  std::string* _s = _internal_mutable_user();
+  // @@protoc_insertion_point(field_mutable:rpc.BrowsePictureResponse.user)
+  return _s;
+}
+inline const std::string& BrowsePictureResponse::_internal_user() const {
+  return user_.Get();
+}
+inline void BrowsePictureResponse::_internal_set_user(const std::string& value) {
+  
+  user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* BrowsePictureResponse::_internal_mutable_user() {
+  
+  return user_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* BrowsePictureResponse::release_user() {
+  // @@protoc_insertion_point(field_release:rpc.BrowsePictureResponse.user)
+  return user_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void BrowsePictureResponse::set_allocated_user(std::string* user) {
+  if (user != nullptr) {
+    
+  } else {
+    
+  }
+  user_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), user,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (user_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.BrowsePictureResponse.user)
+}
+
+// string time = 5;
+inline void BrowsePictureResponse::clear_time() {
+  time_.ClearToEmpty();
+}
+inline const std::string& BrowsePictureResponse::time() const {
+  // @@protoc_insertion_point(field_get:rpc.BrowsePictureResponse.time)
+  return _internal_time();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void BrowsePictureResponse::set_time(ArgT0&& arg0, ArgT... args) {
+ 
+ time_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.BrowsePictureResponse.time)
+}
+inline std::string* BrowsePictureResponse::mutable_time() {
+  std::string* _s = _internal_mutable_time();
+  // @@protoc_insertion_point(field_mutable:rpc.BrowsePictureResponse.time)
+  return _s;
+}
+inline const std::string& BrowsePictureResponse::_internal_time() const {
+  return time_.Get();
+}
+inline void BrowsePictureResponse::_internal_set_time(const std::string& value) {
+  
+  time_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* BrowsePictureResponse::_internal_mutable_time() {
+  
+  return time_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* BrowsePictureResponse::release_time() {
+  // @@protoc_insertion_point(field_release:rpc.BrowsePictureResponse.time)
+  return time_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void BrowsePictureResponse::set_allocated_time(std::string* time) {
+  if (time != nullptr) {
+    
+  } else {
+    
+  }
+  time_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), time,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (time_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.BrowsePictureResponse.time)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

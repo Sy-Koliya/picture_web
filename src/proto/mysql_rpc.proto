@@ -194,6 +194,68 @@ message GetRankingFileListResponse {
   repeated RankingFileInfo files = 4;
 }
 
+message SharePictureRequest {
+  string user     = 1;
+  string md5      = 2;
+  string filename = 3;
+}
+
+message SharePictureResponse {
+  int32  code   = 1;  // 0=OK, 1=FAIL
+  string urlmd5 = 2;  // 成功时返回的分享链接
+}
+
+message GetSharePicturesCountRequest {
+  string user = 1;
+}
+
+message GetSharePicturesCountResponse {
+  int32 code  = 1;  // 0=OK, 1=FAIL
+  int32 total = 2;  // 用户的分享图片总数
+}
+
+message GetSharePicturesListRequest {
+  string user  = 1;
+  int32  start = 2;
+  int32  count = 3;
+}
+
+message SharedPictureInfo {
+   string user        = 1;
+   string filemd5     = 2;
+   string file_name   = 3;
+   string urlmd5      = 4;
+   int32  pv          = 5;
+   string create_time = 6;
+   int64  size        = 7;
+ }
+message GetSharePicturesListResponse {
+  int32       code  = 1;  // 0=OK, 1=FAIL
+  int32       total = 2;  
+  repeated SharedPictureInfo files = 3;
+}
+
+message CancelSharePictureRequest {
+  string user   = 1;
+  string urlmd5 = 2;
+}
+
+message CancelSharePictureResponse {
+  int32 code = 1;  // 0=OK, 1=FAIL
+}
+
+message BrowsePictureRequest {
+  string urlmd5 = 1;
+}
+
+message BrowsePictureResponse {
+  int32  code = 1;  // 0=OK, 1=FAIL
+  int32  pv   = 2;
+  string url  = 3;
+  string user = 4;
+  string time = 5;
+}
+
 
 service DatabaseService {
   rpc registerUser(RegisterRequest) returns (RegisterResponse);
@@ -211,4 +273,9 @@ service DatabaseService {
   rpc GetShareFilesCount   (GetShareFilesCountRequest)   returns (GetShareFilesCountResponse);
   rpc GetShareFileList     (GetShareFileListRequest)     returns (GetShareFileListResponse);
   rpc GetRankingFileList   (GetRankingFileListRequest)   returns (GetRankingFileListResponse);
+  rpc SharePicture(SharePictureRequest) returns (SharePictureResponse);
+  rpc GetSharePicturesCount(GetSharePicturesCountRequest) returns (GetSharePicturesCountResponse);
+  rpc GetSharePicturesList(GetSharePicturesListRequest) returns (GetSharePicturesListResponse);
+  rpc CancelSharePicture(CancelSharePictureRequest) returns (CancelSharePictureResponse);
+  rpc BrowsePicture(BrowsePictureRequest) returns (BrowsePictureResponse);
 }
