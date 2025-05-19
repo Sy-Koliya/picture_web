@@ -92,11 +92,39 @@ RpcTask<int> ApiDealfile(int fd,
             std::cout << "url parser error: " << '\n';
         goto RESP;
     }
+    if(VerifyToken(user, token) == false)
+    {
+        if (debug == 1)
+            std::cout << "token error" << '\n';
+        code = 4;
+        goto RESP;
+    }
 
     std::call_once(grpc_init_flag, init_clients);
 
     if (cmd == "share")
     {
+        if (debug == 1)
+            std::cout << "share file" << '\n';
+        ShareFileRequest req;
+        req.set_user(user);
+        req.set_md5(md5);
+        req.set_filename(filename);
+        ShareFileResponse resp;
+        try
+        {
+            if(debug == 1)
+                std::cout << "share rpc start" << '\n';
+            resp = co_await MysqlShareFile(db_share_client.get(), std::move(req));
+            code = resp.code(); // 0成功 1 失败
+            if(debug==1)
+                std::cout << "share rpc end" << '\n';
+        }
+        catch (...)
+        {
+            // grpc error;
+            throw std::runtime_error("api_dealfile share grpc fail!");
+        }
     }
     else if (cmd == "del")
     {
@@ -104,19 +132,18 @@ RpcTask<int> ApiDealfile(int fd,
             std::cout << "del file" << '\n';
         DeleteFileRequest req;
         req.set_user(user);
-        req.set_token(token);
         req.set_md5(md5);
         req.set_filename(filename);
         DeleteFileResponse resp;
         try
         {
             if(debug == 1)
-                std::cout << "rpc start" << '\n';
+                std::cout << "del rpc start" << '\n';
             resp = co_await MysqlDeleteFile(db_del_client.get(), std::move(req));
             code = resp.code(); // 0成功 1 失败 2需要成功且需要从fdfs中删除
             if(debug==1){
                 std::cout<<code<<'\n';
-                std::cout << "rpc end" << '\n';
+                std::cout << "del rpc end" << '\n';
             }
         }
         catch (...)
@@ -143,6 +170,7 @@ RpcTask<int> ApiDealfile(int fd,
             if (!f_resp.success())
             {
                 code = 1;
+                if(debug==1)
                 std::cout << "fdfs delete file error" << '\n';
             }
             else
@@ -153,6 +181,28 @@ RpcTask<int> ApiDealfile(int fd,
     }
     else if (cmd == "pv")
     {
+        if (debug == 1)
+        std::cout << "pv file" << '\n';
+        PvFileRequest req;
+        req.set_user(user);
+        req.set_md5(md5);
+        req.set_filename(filename);
+        PvFileResponse resp;
+        try
+        {
+            if(debug == 1)
+                std::cout << "share rpc start" << '\n';
+            resp = co_await MysqlPvFile(db_pv_client.get(), std::move(req));
+            code = resp.code(); // 0成功 1 失败
+            if(debug==1)
+                std::cout << "share rpc end" << '\n';
+        }
+        catch (...)
+        {
+            // grpc error;
+            throw std::runtime_error("api_dealfile share grpc fail!");
+        }
+
     }
 
 RESP:

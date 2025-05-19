@@ -83,7 +83,6 @@ RpcTask<int> ApiMyfiles(int fd,
 
         rpc::CountRequest  creq;
         creq.set_user(user);
-        creq.set_token(token);
         rpc::CountResponse cresp;
         try {
             cresp = co_await MysqlGetUserFilesCountCall(
@@ -109,7 +108,6 @@ RpcTask<int> ApiMyfiles(int fd,
     else{
         rpc::FilesListRequest lreq;
         lreq.set_user_id(user);
-        lreq.set_token(token);
         lreq.set_start(start);
         lreq.set_limit(limit);
 

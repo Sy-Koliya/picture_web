@@ -125,6 +125,7 @@ void api_dispatch(int fd,
                 }
             return;
         }
+        std::cout<<"New task uri:"<<uri<<'\n';
         coro_register<int>(std::move(task(fd, content, uri)),
                            [fd,sock](int code)
                            {

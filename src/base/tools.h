@@ -15,6 +15,8 @@
 #include <chrono>
 #include <memory>
 #include <mutex>
+#include <sstream>
+#include <iomanip>
 #include "types.h"
 
 // wrap_arg_: 左值引用使用 std::ref，右值按值传递
@@ -91,6 +93,15 @@ inline uint64_t get_tick_count()
                   .count();
 
     return static_cast<uint64_t>(ns);
+}
+static std::string _now_str() {
+    auto now = std::chrono::system_clock::now();
+    std::time_t t = std::chrono::system_clock::to_time_t(now);
+    std::tm tm;
+    localtime_r(&t, &tm);
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%Y-%m-%d %H:%M:%S");
+    return oss.str();
 }
 
 inline size_t align_pow_2(size_t n)

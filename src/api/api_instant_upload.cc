@@ -89,8 +89,6 @@ RpcTask<int> ApiInstantUpload(int fd, const string &post_data,const string& /*ur
         if (ret < 0) {
             code = 1;  // 解析失败
         } else {
-            // 验证 Token（可自行替换 Redis/DB 验证逻辑）
-           
             if (!VerifyToken(user,token)) {
                 code = 4; // Token 错误
             } else {

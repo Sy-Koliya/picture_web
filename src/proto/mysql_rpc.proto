@@ -4,8 +4,8 @@ package rpc;
 
 
 message RegisterRequest {
-  string nick_name  = 1;
   string user_name  = 2;
+  string nick_name  = 1;
   string password   = 3;
   string phone      = 4;
   string email      = 5;
@@ -48,7 +48,6 @@ message UploadResponse {
 
 message CountRequest {
   string user  = 1;
-  string token = 2;
 }
 message CountResponse {
   int32  code  = 1; // 0 成功，其它失败
@@ -64,7 +63,6 @@ enum OrderBy {
 // Rpc 方法请求：用户文件列表
 message FilesListRequest {
   string   user_id   = 1;    // 对应 user_file_list.user_id
-  string   token     = 2;    // 鉴权令牌（如果有的话）
   int32    start     = 3;    // OFFSET
   int32    limit     = 4;    // 每页条数
   OrderBy  order_by  = 5;    // 排序方式
@@ -93,9 +91,8 @@ message FilesListResponse {
 
 message ShareFileRequest {
   string user     = 1;
-  string token    = 2;
-  string md5      = 3;
-  string filename = 4;
+  string md5      = 2;
+  string filename = 3;
 }
 message ShareFileResponse {
   int32 code = 1;  
@@ -103,9 +100,8 @@ message ShareFileResponse {
 
 message DeleteFileRequest {
   string user     = 1;
-  string token    = 2;
-  string md5      = 3;
-  string filename = 4;
+  string md5      = 2;
+  string filename = 3;
 }
 message DeleteFileResponse {
   int32 code = 1;

@@ -127,8 +127,7 @@ struct UploadResponseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT UploadResponseDefaultTypeInternal _UploadResponse_default_instance_;
 constexpr CountRequest::CountRequest(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : user_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , token_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+  : user_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
 struct CountRequestDefaultTypeInternal {
   constexpr CountRequestDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -154,7 +153,6 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT CountResponseDefaultTypeInterna
 constexpr FilesListRequest::FilesListRequest(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : user_id_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , token_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , start_(0)
   , limit_(0)
   , order_by_(0)
@@ -206,7 +204,6 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT FilesListResponseDefaultTypeInt
 constexpr ShareFileRequest::ShareFileRequest(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : user_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , token_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , md5_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , filename_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
 struct ShareFileRequestDefaultTypeInternal {
@@ -233,7 +230,6 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ShareFileResponseDefaultTypeInt
 constexpr DeleteFileRequest::DeleteFileRequest(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : user_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , token_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , md5_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , filename_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
 struct DeleteFileRequestDefaultTypeInternal {
@@ -296,8 +292,8 @@ const uint32_t TableStruct_mysql_5frpc_2eproto::offsets[] PROTOBUF_SECTION_VARIA
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::rpc::RegisterRequest, nick_name_),
   PROTOBUF_FIELD_OFFSET(::rpc::RegisterRequest, user_name_),
+  PROTOBUF_FIELD_OFFSET(::rpc::RegisterRequest, nick_name_),
   PROTOBUF_FIELD_OFFSET(::rpc::RegisterRequest, password_),
   PROTOBUF_FIELD_OFFSET(::rpc::RegisterRequest, phone_),
   PROTOBUF_FIELD_OFFSET(::rpc::RegisterRequest, email_),
@@ -365,7 +361,6 @@ const uint32_t TableStruct_mysql_5frpc_2eproto::offsets[] PROTOBUF_SECTION_VARIA
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::rpc::CountRequest, user_),
-  PROTOBUF_FIELD_OFFSET(::rpc::CountRequest, token_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc::CountResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -381,7 +376,6 @@ const uint32_t TableStruct_mysql_5frpc_2eproto::offsets[] PROTOBUF_SECTION_VARIA
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::rpc::FilesListRequest, user_id_),
-  PROTOBUF_FIELD_OFFSET(::rpc::FilesListRequest, token_),
   PROTOBUF_FIELD_OFFSET(::rpc::FilesListRequest, start_),
   PROTOBUF_FIELD_OFFSET(::rpc::FilesListRequest, limit_),
   PROTOBUF_FIELD_OFFSET(::rpc::FilesListRequest, order_by_),
@@ -417,7 +411,6 @@ const uint32_t TableStruct_mysql_5frpc_2eproto::offsets[] PROTOBUF_SECTION_VARIA
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::rpc::ShareFileRequest, user_),
-  PROTOBUF_FIELD_OFFSET(::rpc::ShareFileRequest, token_),
   PROTOBUF_FIELD_OFFSET(::rpc::ShareFileRequest, md5_),
   PROTOBUF_FIELD_OFFSET(::rpc::ShareFileRequest, filename_),
   ~0u,  // no _has_bits_
@@ -434,7 +427,6 @@ const uint32_t TableStruct_mysql_5frpc_2eproto::offsets[] PROTOBUF_SECTION_VARIA
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::rpc::DeleteFileRequest, user_),
-  PROTOBUF_FIELD_OFFSET(::rpc::DeleteFileRequest, token_),
   PROTOBUF_FIELD_OFFSET(::rpc::DeleteFileRequest, md5_),
   PROTOBUF_FIELD_OFFSET(::rpc::DeleteFileRequest, filename_),
   ~0u,  // no _has_bits_
@@ -472,16 +464,16 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 49, -1, -1, sizeof(::rpc::UploadRequest)},
   { 61, -1, -1, sizeof(::rpc::UploadResponse)},
   { 68, -1, -1, sizeof(::rpc::CountRequest)},
-  { 76, -1, -1, sizeof(::rpc::CountResponse)},
-  { 84, -1, -1, sizeof(::rpc::FilesListRequest)},
-  { 95, -1, -1, sizeof(::rpc::FileInfo)},
-  { 110, -1, -1, sizeof(::rpc::FilesListResponse)},
-  { 120, -1, -1, sizeof(::rpc::ShareFileRequest)},
-  { 130, -1, -1, sizeof(::rpc::ShareFileResponse)},
-  { 137, -1, -1, sizeof(::rpc::DeleteFileRequest)},
-  { 147, -1, -1, sizeof(::rpc::DeleteFileResponse)},
-  { 155, -1, -1, sizeof(::rpc::PvFileRequest)},
-  { 164, -1, -1, sizeof(::rpc::PvFileResponse)},
+  { 75, -1, -1, sizeof(::rpc::CountResponse)},
+  { 83, -1, -1, sizeof(::rpc::FilesListRequest)},
+  { 93, -1, -1, sizeof(::rpc::FileInfo)},
+  { 108, -1, -1, sizeof(::rpc::FilesListResponse)},
+  { 118, -1, -1, sizeof(::rpc::ShareFileRequest)},
+  { 127, -1, -1, sizeof(::rpc::ShareFileResponse)},
+  { 134, -1, -1, sizeof(::rpc::DeleteFileRequest)},
+  { 143, -1, -1, sizeof(::rpc::DeleteFileResponse)},
+  { 151, -1, -1, sizeof(::rpc::PvFileRequest)},
+  { 160, -1, -1, sizeof(::rpc::PvFileResponse)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -508,7 +500,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_mysql_5frpc_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\017mysql_rpc.proto\022\003rpc\"g\n\017RegisterReques"
-  "t\022\021\n\tnick_name\030\001 \001(\t\022\021\n\tuser_name\030\002 \001(\t\022"
+  "t\022\021\n\tuser_name\030\002 \001(\t\022\021\n\tnick_name\030\001 \001(\t\022"
   "\020\n\010password\030\003 \001(\t\022\r\n\005phone\030\004 \001(\t\022\r\n\005emai"
   "l\030\005 \001(\t\" \n\020RegisterResponse\022\014\n\004code\030\001 \001("
   "\005\"3\n\014LoginRequest\022\021\n\tuser_name\030\001 \001(\t\022\020\n\010"
@@ -519,46 +511,44 @@ const char descriptor_table_protodef_mysql_5frpc_2eproto[] PROTOBUF_SECTION_VARI
   " \001(\t\022\020\n\010filename\030\002 \001(\t\022\020\n\010file_md5\030\003 \001(\t"
   "\022\021\n\tfile_size\030\004 \001(\003\022\016\n\006fileid\030\005 \001(\t\022\013\n\003u"
   "rl\030\006 \001(\t\"\036\n\016UploadResponse\022\014\n\004code\030\001 \001(\005"
-  "\"+\n\014CountRequest\022\014\n\004user\030\001 \001(\t\022\r\n\005token\030"
-  "\002 \001(\t\",\n\rCountResponse\022\014\n\004code\030\001 \001(\005\022\r\n\005"
-  "count\030\002 \001(\005\"p\n\020FilesListRequest\022\017\n\007user_"
-  "id\030\001 \001(\t\022\r\n\005token\030\002 \001(\t\022\r\n\005start\030\003 \001(\005\022\r"
-  "\n\005limit\030\004 \001(\005\022\036\n\010order_by\030\005 \001(\0162\014.rpc.Or"
-  "derBy\"\262\001\n\010FileInfo\022\017\n\007user_id\030\001 \001(\t\022\020\n\010f"
-  "ile_md5\030\002 \001(\t\022\022\n\ncreated_at\030\003 \001(\t\022\020\n\010fil"
-  "ename\030\004 \001(\t\022\021\n\tis_shared\030\005 \001(\005\022\022\n\nview_c"
-  "ount\030\006 \001(\005\022\020\n\010file_url\030\007 \001(\t\022\021\n\tfile_siz"
-  "e\030\010 \001(\003\022\021\n\tfile_type\030\t \001(\t\"]\n\021FilesListR"
-  "esponse\022\014\n\004code\030\001 \001(\005\022\034\n\005files\030\002 \003(\0132\r.r"
-  "pc.FileInfo\022\r\n\005count\030\003 \001(\005\022\r\n\005total\030\004 \001("
-  "\005\"N\n\020ShareFileRequest\022\014\n\004user\030\001 \001(\t\022\r\n\005t"
-  "oken\030\002 \001(\t\022\013\n\003md5\030\003 \001(\t\022\020\n\010filename\030\004 \001("
-  "\t\"!\n\021ShareFileResponse\022\014\n\004code\030\001 \001(\005\"O\n\021"
-  "DeleteFileRequest\022\014\n\004user\030\001 \001(\t\022\r\n\005token"
-  "\030\002 \001(\t\022\013\n\003md5\030\003 \001(\t\022\020\n\010filename\030\004 \001(\t\"3\n"
-  "\022DeleteFileResponse\022\014\n\004code\030\001 \001(\005\022\017\n\007fil"
-  "e_id\030\002 \001(\t\"<\n\rPvFileRequest\022\014\n\004user\030\001 \001("
-  "\t\022\013\n\003md5\030\002 \001(\t\022\020\n\010filename\030\003 \001(\t\"\036\n\016PvFi"
-  "leResponse\022\014\n\004code\030\001 \001(\005*.\n\007OrderBy\022\n\n\006N"
-  "ORMAL\020\000\022\n\n\006PV_ASC\020\001\022\013\n\007PV_DESC\020\0022\231\004\n\017Dat"
-  "abaseService\022;\n\014registerUser\022\024.rpc.Regis"
-  "terRequest\032\025.rpc.RegisterResponse\0222\n\tlog"
-  "inUser\022\021.rpc.LoginRequest\032\022.rpc.LoginRes"
-  "ponse\0222\n\rInstantUpload\022\017.rpc.Md5Request\032"
-  "\020.rpc.Md5Response\0225\n\nUploadFile\022\022.rpc.Up"
-  "loadRequest\032\023.rpc.UploadResponse\022:\n\021GetU"
-  "serFilesCount\022\021.rpc.CountRequest\032\022.rpc.C"
-  "ountResponse\022@\n\017GetUserFileList\022\025.rpc.Fi"
-  "lesListRequest\032\026.rpc.FilesListResponse\022:"
-  "\n\tShareFile\022\025.rpc.ShareFileRequest\032\026.rpc"
-  ".ShareFileResponse\022=\n\nDeleteFile\022\026.rpc.D"
-  "eleteFileRequest\032\027.rpc.DeleteFileRespons"
-  "e\0221\n\006PvFile\022\022.rpc.PvFileRequest\032\023.rpc.Pv"
-  "FileResponseb\006proto3"
+  "\"\034\n\014CountRequest\022\014\n\004user\030\001 \001(\t\",\n\rCountR"
+  "esponse\022\014\n\004code\030\001 \001(\005\022\r\n\005count\030\002 \001(\005\"a\n\020"
+  "FilesListRequest\022\017\n\007user_id\030\001 \001(\t\022\r\n\005sta"
+  "rt\030\003 \001(\005\022\r\n\005limit\030\004 \001(\005\022\036\n\010order_by\030\005 \001("
+  "\0162\014.rpc.OrderBy\"\262\001\n\010FileInfo\022\017\n\007user_id\030"
+  "\001 \001(\t\022\020\n\010file_md5\030\002 \001(\t\022\022\n\ncreated_at\030\003 "
+  "\001(\t\022\020\n\010filename\030\004 \001(\t\022\021\n\tis_shared\030\005 \001(\005"
+  "\022\022\n\nview_count\030\006 \001(\005\022\020\n\010file_url\030\007 \001(\t\022\021"
+  "\n\tfile_size\030\010 \001(\003\022\021\n\tfile_type\030\t \001(\t\"]\n\021"
+  "FilesListResponse\022\014\n\004code\030\001 \001(\005\022\034\n\005files"
+  "\030\002 \003(\0132\r.rpc.FileInfo\022\r\n\005count\030\003 \001(\005\022\r\n\005"
+  "total\030\004 \001(\005\"\?\n\020ShareFileRequest\022\014\n\004user\030"
+  "\001 \001(\t\022\013\n\003md5\030\002 \001(\t\022\020\n\010filename\030\003 \001(\t\"!\n\021"
+  "ShareFileResponse\022\014\n\004code\030\001 \001(\005\"@\n\021Delet"
+  "eFileRequest\022\014\n\004user\030\001 \001(\t\022\013\n\003md5\030\002 \001(\t\022"
+  "\020\n\010filename\030\003 \001(\t\"3\n\022DeleteFileResponse\022"
+  "\014\n\004code\030\001 \001(\005\022\017\n\007file_id\030\002 \001(\t\"<\n\rPvFile"
+  "Request\022\014\n\004user\030\001 \001(\t\022\013\n\003md5\030\002 \001(\t\022\020\n\010fi"
+  "lename\030\003 \001(\t\"\036\n\016PvFileResponse\022\014\n\004code\030\001"
+  " \001(\005*.\n\007OrderBy\022\n\n\006NORMAL\020\000\022\n\n\006PV_ASC\020\001\022"
+  "\013\n\007PV_DESC\020\0022\231\004\n\017DatabaseService\022;\n\014regi"
+  "sterUser\022\024.rpc.RegisterRequest\032\025.rpc.Reg"
+  "isterResponse\0222\n\tloginUser\022\021.rpc.LoginRe"
+  "quest\032\022.rpc.LoginResponse\0222\n\rInstantUplo"
+  "ad\022\017.rpc.Md5Request\032\020.rpc.Md5Response\0225\n"
+  "\nUploadFile\022\022.rpc.UploadRequest\032\023.rpc.Up"
+  "loadResponse\022:\n\021GetUserFilesCount\022\021.rpc."
+  "CountRequest\032\022.rpc.CountResponse\022@\n\017GetU"
+  "serFileList\022\025.rpc.FilesListRequest\032\026.rpc"
+  ".FilesListResponse\022:\n\tShareFile\022\025.rpc.Sh"
+  "areFileRequest\032\026.rpc.ShareFileResponse\022="
+  "\n\nDeleteFile\022\026.rpc.DeleteFileRequest\032\027.r"
+  "pc.DeleteFileResponse\0221\n\006PvFile\022\022.rpc.Pv"
+  "FileRequest\032\023.rpc.PvFileResponseb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_mysql_5frpc_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_mysql_5frpc_2eproto = {
-  false, false, 1900, descriptor_table_protodef_mysql_5frpc_2eproto, "mysql_rpc.proto", 
+  false, false, 1840, descriptor_table_protodef_mysql_5frpc_2eproto, "mysql_rpc.proto", 
   &descriptor_table_mysql_5frpc_2eproto_once, nullptr, 0, 19,
   schemas, file_default_instances, TableStruct_mysql_5frpc_2eproto::offsets,
   file_level_metadata_mysql_5frpc_2eproto, file_level_enum_descriptors_mysql_5frpc_2eproto, file_level_service_descriptors_mysql_5frpc_2eproto,
@@ -2701,14 +2691,6 @@ CountRequest::CountRequest(const CountRequest& from)
     user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_user(), 
       GetArenaForAllocation());
   }
-  token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_token().empty()) {
-    token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_token(), 
-      GetArenaForAllocation());
-  }
   // @@protoc_insertion_point(copy_constructor:rpc.CountRequest)
 }
 
@@ -2716,10 +2698,6 @@ inline void CountRequest::SharedCtor() {
 user_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
@@ -2733,7 +2711,6 @@ CountRequest::~CountRequest() {
 inline void CountRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   user_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  token_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void CountRequest::ArenaDtor(void* object) {
@@ -2753,7 +2730,6 @@ void CountRequest::Clear() {
   (void) cached_has_bits;
 
   user_.ClearToEmpty();
-  token_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -2769,16 +2745,6 @@ const char* CountRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           auto str = _internal_mutable_user();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.CountRequest.user"));
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string token = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_token();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.CountRequest.token"));
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -2822,16 +2788,6 @@ uint8_t* CountRequest::_InternalSerialize(
         1, this->_internal_user(), target);
   }
 
-  // string token = 2;
-  if (!this->_internal_token().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_token().data(), static_cast<int>(this->_internal_token().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rpc.CountRequest.token");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_token(), target);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2853,13 +2809,6 @@ size_t CountRequest::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_user());
-  }
-
-  // string token = 2;
-  if (!this->_internal_token().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_token());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -2887,9 +2836,6 @@ void CountRequest::MergeFrom(const CountRequest& from) {
   if (!from._internal_user().empty()) {
     _internal_set_user(from._internal_user());
   }
-  if (!from._internal_token().empty()) {
-    _internal_set_token(from._internal_token());
-  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -2913,11 +2859,6 @@ void CountRequest::InternalSwap(CountRequest* other) {
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &user_, lhs_arena,
       &other->user_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &token_, lhs_arena,
-      &other->token_, rhs_arena
   );
 }
 
@@ -3165,14 +3106,6 @@ FilesListRequest::FilesListRequest(const FilesListRequest& from)
     user_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_user_id(), 
       GetArenaForAllocation());
   }
-  token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_token().empty()) {
-    token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_token(), 
-      GetArenaForAllocation());
-  }
   ::memcpy(&start_, &from.start_,
     static_cast<size_t>(reinterpret_cast<char*>(&order_by_) -
     reinterpret_cast<char*>(&start_)) + sizeof(order_by_));
@@ -3183,10 +3116,6 @@ inline void FilesListRequest::SharedCtor() {
 user_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   user_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&start_) - reinterpret_cast<char*>(this)),
@@ -3204,7 +3133,6 @@ FilesListRequest::~FilesListRequest() {
 inline void FilesListRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   user_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  token_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void FilesListRequest::ArenaDtor(void* object) {
@@ -3224,7 +3152,6 @@ void FilesListRequest::Clear() {
   (void) cached_has_bits;
 
   user_id_.ClearToEmpty();
-  token_.ClearToEmpty();
   ::memset(&start_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&order_by_) -
       reinterpret_cast<char*>(&start_)) + sizeof(order_by_));
@@ -3243,16 +3170,6 @@ const char* FilesListRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
           auto str = _internal_mutable_user_id();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.FilesListRequest.user_id"));
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string token = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_token();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.FilesListRequest.token"));
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -3321,16 +3238,6 @@ uint8_t* FilesListRequest::_InternalSerialize(
         1, this->_internal_user_id(), target);
   }
 
-  // string token = 2;
-  if (!this->_internal_token().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_token().data(), static_cast<int>(this->_internal_token().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rpc.FilesListRequest.token");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_token(), target);
-  }
-
   // int32 start = 3;
   if (this->_internal_start() != 0) {
     target = stream->EnsureSpace(target);
@@ -3371,13 +3278,6 @@ size_t FilesListRequest::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_user_id());
-  }
-
-  // string token = 2;
-  if (!this->_internal_token().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_token());
   }
 
   // int32 start = 3;
@@ -3421,9 +3321,6 @@ void FilesListRequest::MergeFrom(const FilesListRequest& from) {
   if (!from._internal_user_id().empty()) {
     _internal_set_user_id(from._internal_user_id());
   }
-  if (!from._internal_token().empty()) {
-    _internal_set_token(from._internal_token());
-  }
   if (from._internal_start() != 0) {
     _internal_set_start(from._internal_start());
   }
@@ -3456,11 +3353,6 @@ void FilesListRequest::InternalSwap(FilesListRequest* other) {
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &user_id_, lhs_arena,
       &other->user_id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &token_, lhs_arena,
-      &other->token_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(FilesListRequest, order_by_)
@@ -4299,14 +4191,6 @@ ShareFileRequest::ShareFileRequest(const ShareFileRequest& from)
     user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_user(), 
       GetArenaForAllocation());
   }
-  token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_token().empty()) {
-    token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_token(), 
-      GetArenaForAllocation());
-  }
   md5_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     md5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
@@ -4331,10 +4215,6 @@ user_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlready
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 md5_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   md5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
@@ -4355,7 +4235,6 @@ ShareFileRequest::~ShareFileRequest() {
 inline void ShareFileRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   user_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  token_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   md5_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   filename_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -4377,7 +4256,6 @@ void ShareFileRequest::Clear() {
   (void) cached_has_bits;
 
   user_.ClearToEmpty();
-  token_.ClearToEmpty();
   md5_.ClearToEmpty();
   filename_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -4399,19 +4277,9 @@ const char* ShareFileRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
         } else
           goto handle_unusual;
         continue;
-      // string token = 2;
+      // string md5 = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_token();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.ShareFileRequest.token"));
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string md5 = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           auto str = _internal_mutable_md5();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.ShareFileRequest.md5"));
@@ -4419,9 +4287,9 @@ const char* ShareFileRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
         } else
           goto handle_unusual;
         continue;
-      // string filename = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+      // string filename = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           auto str = _internal_mutable_filename();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.ShareFileRequest.filename"));
@@ -4468,34 +4336,24 @@ uint8_t* ShareFileRequest::_InternalSerialize(
         1, this->_internal_user(), target);
   }
 
-  // string token = 2;
-  if (!this->_internal_token().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_token().data(), static_cast<int>(this->_internal_token().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rpc.ShareFileRequest.token");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_token(), target);
-  }
-
-  // string md5 = 3;
+  // string md5 = 2;
   if (!this->_internal_md5().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_md5().data(), static_cast<int>(this->_internal_md5().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "rpc.ShareFileRequest.md5");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_md5(), target);
+        2, this->_internal_md5(), target);
   }
 
-  // string filename = 4;
+  // string filename = 3;
   if (!this->_internal_filename().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_filename().data(), static_cast<int>(this->_internal_filename().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "rpc.ShareFileRequest.filename");
     target = stream->WriteStringMaybeAliased(
-        4, this->_internal_filename(), target);
+        3, this->_internal_filename(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4521,21 +4379,14 @@ size_t ShareFileRequest::ByteSizeLong() const {
         this->_internal_user());
   }
 
-  // string token = 2;
-  if (!this->_internal_token().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_token());
-  }
-
-  // string md5 = 3;
+  // string md5 = 2;
   if (!this->_internal_md5().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_md5());
   }
 
-  // string filename = 4;
+  // string filename = 3;
   if (!this->_internal_filename().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
@@ -4567,9 +4418,6 @@ void ShareFileRequest::MergeFrom(const ShareFileRequest& from) {
   if (!from._internal_user().empty()) {
     _internal_set_user(from._internal_user());
   }
-  if (!from._internal_token().empty()) {
-    _internal_set_token(from._internal_token());
-  }
   if (!from._internal_md5().empty()) {
     _internal_set_md5(from._internal_md5());
   }
@@ -4599,11 +4447,6 @@ void ShareFileRequest::InternalSwap(ShareFileRequest* other) {
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &user_, lhs_arena,
       &other->user_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &token_, lhs_arena,
-      &other->token_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -4827,14 +4670,6 @@ DeleteFileRequest::DeleteFileRequest(const DeleteFileRequest& from)
     user_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_user(), 
       GetArenaForAllocation());
   }
-  token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_token().empty()) {
-    token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_token(), 
-      GetArenaForAllocation());
-  }
   md5_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     md5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
@@ -4859,10 +4694,6 @@ user_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlready
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   user_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 md5_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
   md5_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
@@ -4883,7 +4714,6 @@ DeleteFileRequest::~DeleteFileRequest() {
 inline void DeleteFileRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   user_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  token_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   md5_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   filename_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -4905,7 +4735,6 @@ void DeleteFileRequest::Clear() {
   (void) cached_has_bits;
 
   user_.ClearToEmpty();
-  token_.ClearToEmpty();
   md5_.ClearToEmpty();
   filename_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -4927,19 +4756,9 @@ const char* DeleteFileRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
         } else
           goto handle_unusual;
         continue;
-      // string token = 2;
+      // string md5 = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_token();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.DeleteFileRequest.token"));
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string md5 = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           auto str = _internal_mutable_md5();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.DeleteFileRequest.md5"));
@@ -4947,9 +4766,9 @@ const char* DeleteFileRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
         } else
           goto handle_unusual;
         continue;
-      // string filename = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+      // string filename = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           auto str = _internal_mutable_filename();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc.DeleteFileRequest.filename"));
@@ -4996,34 +4815,24 @@ uint8_t* DeleteFileRequest::_InternalSerialize(
         1, this->_internal_user(), target);
   }
 
-  // string token = 2;
-  if (!this->_internal_token().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_token().data(), static_cast<int>(this->_internal_token().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rpc.DeleteFileRequest.token");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_token(), target);
-  }
-
-  // string md5 = 3;
+  // string md5 = 2;
   if (!this->_internal_md5().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_md5().data(), static_cast<int>(this->_internal_md5().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "rpc.DeleteFileRequest.md5");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_md5(), target);
+        2, this->_internal_md5(), target);
   }
 
-  // string filename = 4;
+  // string filename = 3;
   if (!this->_internal_filename().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_filename().data(), static_cast<int>(this->_internal_filename().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "rpc.DeleteFileRequest.filename");
     target = stream->WriteStringMaybeAliased(
-        4, this->_internal_filename(), target);
+        3, this->_internal_filename(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -5049,21 +4858,14 @@ size_t DeleteFileRequest::ByteSizeLong() const {
         this->_internal_user());
   }
 
-  // string token = 2;
-  if (!this->_internal_token().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_token());
-  }
-
-  // string md5 = 3;
+  // string md5 = 2;
   if (!this->_internal_md5().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_md5());
   }
 
-  // string filename = 4;
+  // string filename = 3;
   if (!this->_internal_filename().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
@@ -5095,9 +4897,6 @@ void DeleteFileRequest::MergeFrom(const DeleteFileRequest& from) {
   if (!from._internal_user().empty()) {
     _internal_set_user(from._internal_user());
   }
-  if (!from._internal_token().empty()) {
-    _internal_set_token(from._internal_token());
-  }
   if (!from._internal_md5().empty()) {
     _internal_set_md5(from._internal_md5());
   }
@@ -5127,11 +4926,6 @@ void DeleteFileRequest::InternalSwap(DeleteFileRequest* other) {
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &user_, lhs_arena,
       &other->user_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &token_, lhs_arena,
-      &other->token_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),

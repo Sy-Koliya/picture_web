@@ -22,6 +22,8 @@ public:
         new CountCall(&db_service_, cq_.get());
         new ListCall(&db_service_, cq_.get());
         new DeleteFileCall(&db_service_, cq_.get());
+        new ShareFileCall(&db_service_, cq_.get());
+        new PvFileCall(&db_service_, cq_.get());
     }
     ~MySqlRpcServer()
     {

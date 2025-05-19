@@ -1662,7 +1662,6 @@ class CountRequest final :
 
   enum : int {
     kUserFieldNumber = 1,
-    kTokenFieldNumber = 2,
   };
   // string user = 1;
   void clear_user();
@@ -1678,20 +1677,6 @@ class CountRequest final :
   std::string* _internal_mutable_user();
   public:
 
-  // string token = 2;
-  void clear_token();
-  const std::string& token() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_token(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_token();
-  PROTOBUF_NODISCARD std::string* release_token();
-  void set_allocated_token(std::string* token);
-  private:
-  const std::string& _internal_token() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_token(const std::string& value);
-  std::string* _internal_mutable_token();
-  public:
-
   // @@protoc_insertion_point(class_scope:rpc.CountRequest)
  private:
   class _Internal;
@@ -1700,7 +1685,6 @@ class CountRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_mysql_5frpc_2eproto;
 };
@@ -1986,7 +1970,6 @@ class FilesListRequest final :
 
   enum : int {
     kUserIdFieldNumber = 1,
-    kTokenFieldNumber = 2,
     kStartFieldNumber = 3,
     kLimitFieldNumber = 4,
     kOrderByFieldNumber = 5,
@@ -2003,20 +1986,6 @@ class FilesListRequest final :
   const std::string& _internal_user_id() const;
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_user_id(const std::string& value);
   std::string* _internal_mutable_user_id();
-  public:
-
-  // string token = 2;
-  void clear_token();
-  const std::string& token() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_token(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_token();
-  PROTOBUF_NODISCARD std::string* release_token();
-  void set_allocated_token(std::string* token);
-  private:
-  const std::string& _internal_token() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_token(const std::string& value);
-  std::string* _internal_mutable_token();
   public:
 
   // int32 start = 3;
@@ -2054,7 +2023,6 @@ class FilesListRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_id_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_;
   int32_t start_;
   int32_t limit_;
   int order_by_;
@@ -2638,9 +2606,8 @@ class ShareFileRequest final :
 
   enum : int {
     kUserFieldNumber = 1,
-    kTokenFieldNumber = 2,
-    kMd5FieldNumber = 3,
-    kFilenameFieldNumber = 4,
+    kMd5FieldNumber = 2,
+    kFilenameFieldNumber = 3,
   };
   // string user = 1;
   void clear_user();
@@ -2656,21 +2623,7 @@ class ShareFileRequest final :
   std::string* _internal_mutable_user();
   public:
 
-  // string token = 2;
-  void clear_token();
-  const std::string& token() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_token(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_token();
-  PROTOBUF_NODISCARD std::string* release_token();
-  void set_allocated_token(std::string* token);
-  private:
-  const std::string& _internal_token() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_token(const std::string& value);
-  std::string* _internal_mutable_token();
-  public:
-
-  // string md5 = 3;
+  // string md5 = 2;
   void clear_md5();
   const std::string& md5() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -2684,7 +2637,7 @@ class ShareFileRequest final :
   std::string* _internal_mutable_md5();
   public:
 
-  // string filename = 4;
+  // string filename = 3;
   void clear_filename();
   const std::string& filename() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -2706,7 +2659,6 @@ class ShareFileRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr md5_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filename_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -2983,9 +2935,8 @@ class DeleteFileRequest final :
 
   enum : int {
     kUserFieldNumber = 1,
-    kTokenFieldNumber = 2,
-    kMd5FieldNumber = 3,
-    kFilenameFieldNumber = 4,
+    kMd5FieldNumber = 2,
+    kFilenameFieldNumber = 3,
   };
   // string user = 1;
   void clear_user();
@@ -3001,21 +2952,7 @@ class DeleteFileRequest final :
   std::string* _internal_mutable_user();
   public:
 
-  // string token = 2;
-  void clear_token();
-  const std::string& token() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_token(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_token();
-  PROTOBUF_NODISCARD std::string* release_token();
-  void set_allocated_token(std::string* token);
-  private:
-  const std::string& _internal_token() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_token(const std::string& value);
-  std::string* _internal_mutable_token();
-  public:
-
-  // string md5 = 3;
+  // string md5 = 2;
   void clear_md5();
   const std::string& md5() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -3029,7 +2966,7 @@ class DeleteFileRequest final :
   std::string* _internal_mutable_md5();
   public:
 
-  // string filename = 4;
+  // string filename = 3;
   void clear_filename();
   const std::string& filename() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -3051,7 +2988,6 @@ class DeleteFileRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr md5_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filename_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -3559,57 +3495,6 @@ class PvFileResponse final :
 #endif  // __GNUC__
 // RegisterRequest
 
-// string nick_name = 1;
-inline void RegisterRequest::clear_nick_name() {
-  nick_name_.ClearToEmpty();
-}
-inline const std::string& RegisterRequest::nick_name() const {
-  // @@protoc_insertion_point(field_get:rpc.RegisterRequest.nick_name)
-  return _internal_nick_name();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void RegisterRequest::set_nick_name(ArgT0&& arg0, ArgT... args) {
- 
- nick_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rpc.RegisterRequest.nick_name)
-}
-inline std::string* RegisterRequest::mutable_nick_name() {
-  std::string* _s = _internal_mutable_nick_name();
-  // @@protoc_insertion_point(field_mutable:rpc.RegisterRequest.nick_name)
-  return _s;
-}
-inline const std::string& RegisterRequest::_internal_nick_name() const {
-  return nick_name_.Get();
-}
-inline void RegisterRequest::_internal_set_nick_name(const std::string& value) {
-  
-  nick_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
-}
-inline std::string* RegisterRequest::_internal_mutable_nick_name() {
-  
-  return nick_name_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
-}
-inline std::string* RegisterRequest::release_nick_name() {
-  // @@protoc_insertion_point(field_release:rpc.RegisterRequest.nick_name)
-  return nick_name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-}
-inline void RegisterRequest::set_allocated_nick_name(std::string* nick_name) {
-  if (nick_name != nullptr) {
-    
-  } else {
-    
-  }
-  nick_name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), nick_name,
-      GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (nick_name_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    nick_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rpc.RegisterRequest.nick_name)
-}
-
 // string user_name = 2;
 inline void RegisterRequest::clear_user_name() {
   user_name_.ClearToEmpty();
@@ -3659,6 +3544,57 @@ inline void RegisterRequest::set_allocated_user_name(std::string* user_name) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:rpc.RegisterRequest.user_name)
+}
+
+// string nick_name = 1;
+inline void RegisterRequest::clear_nick_name() {
+  nick_name_.ClearToEmpty();
+}
+inline const std::string& RegisterRequest::nick_name() const {
+  // @@protoc_insertion_point(field_get:rpc.RegisterRequest.nick_name)
+  return _internal_nick_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void RegisterRequest::set_nick_name(ArgT0&& arg0, ArgT... args) {
+ 
+ nick_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc.RegisterRequest.nick_name)
+}
+inline std::string* RegisterRequest::mutable_nick_name() {
+  std::string* _s = _internal_mutable_nick_name();
+  // @@protoc_insertion_point(field_mutable:rpc.RegisterRequest.nick_name)
+  return _s;
+}
+inline const std::string& RegisterRequest::_internal_nick_name() const {
+  return nick_name_.Get();
+}
+inline void RegisterRequest::_internal_set_nick_name(const std::string& value) {
+  
+  nick_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* RegisterRequest::_internal_mutable_nick_name() {
+  
+  return nick_name_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* RegisterRequest::release_nick_name() {
+  // @@protoc_insertion_point(field_release:rpc.RegisterRequest.nick_name)
+  return nick_name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void RegisterRequest::set_allocated_nick_name(std::string* nick_name) {
+  if (nick_name != nullptr) {
+    
+  } else {
+    
+  }
+  nick_name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), nick_name,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (nick_name_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    nick_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc.RegisterRequest.nick_name)
 }
 
 // string password = 3;
@@ -4507,57 +4443,6 @@ inline void CountRequest::set_allocated_user(std::string* user) {
   // @@protoc_insertion_point(field_set_allocated:rpc.CountRequest.user)
 }
 
-// string token = 2;
-inline void CountRequest::clear_token() {
-  token_.ClearToEmpty();
-}
-inline const std::string& CountRequest::token() const {
-  // @@protoc_insertion_point(field_get:rpc.CountRequest.token)
-  return _internal_token();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CountRequest::set_token(ArgT0&& arg0, ArgT... args) {
- 
- token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rpc.CountRequest.token)
-}
-inline std::string* CountRequest::mutable_token() {
-  std::string* _s = _internal_mutable_token();
-  // @@protoc_insertion_point(field_mutable:rpc.CountRequest.token)
-  return _s;
-}
-inline const std::string& CountRequest::_internal_token() const {
-  return token_.Get();
-}
-inline void CountRequest::_internal_set_token(const std::string& value) {
-  
-  token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
-}
-inline std::string* CountRequest::_internal_mutable_token() {
-  
-  return token_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
-}
-inline std::string* CountRequest::release_token() {
-  // @@protoc_insertion_point(field_release:rpc.CountRequest.token)
-  return token_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-}
-inline void CountRequest::set_allocated_token(std::string* token) {
-  if (token != nullptr) {
-    
-  } else {
-    
-  }
-  token_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), token,
-      GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (token_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rpc.CountRequest.token)
-}
-
 // -------------------------------------------------------------------
 
 // CountResponse
@@ -4655,57 +4540,6 @@ inline void FilesListRequest::set_allocated_user_id(std::string* user_id) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:rpc.FilesListRequest.user_id)
-}
-
-// string token = 2;
-inline void FilesListRequest::clear_token() {
-  token_.ClearToEmpty();
-}
-inline const std::string& FilesListRequest::token() const {
-  // @@protoc_insertion_point(field_get:rpc.FilesListRequest.token)
-  return _internal_token();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void FilesListRequest::set_token(ArgT0&& arg0, ArgT... args) {
- 
- token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rpc.FilesListRequest.token)
-}
-inline std::string* FilesListRequest::mutable_token() {
-  std::string* _s = _internal_mutable_token();
-  // @@protoc_insertion_point(field_mutable:rpc.FilesListRequest.token)
-  return _s;
-}
-inline const std::string& FilesListRequest::_internal_token() const {
-  return token_.Get();
-}
-inline void FilesListRequest::_internal_set_token(const std::string& value) {
-  
-  token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
-}
-inline std::string* FilesListRequest::_internal_mutable_token() {
-  
-  return token_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
-}
-inline std::string* FilesListRequest::release_token() {
-  // @@protoc_insertion_point(field_release:rpc.FilesListRequest.token)
-  return token_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-}
-inline void FilesListRequest::set_allocated_token(std::string* token) {
-  if (token != nullptr) {
-    
-  } else {
-    
-  }
-  token_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), token,
-      GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (token_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rpc.FilesListRequest.token)
 }
 
 // int32 start = 3;
@@ -5297,58 +5131,7 @@ inline void ShareFileRequest::set_allocated_user(std::string* user) {
   // @@protoc_insertion_point(field_set_allocated:rpc.ShareFileRequest.user)
 }
 
-// string token = 2;
-inline void ShareFileRequest::clear_token() {
-  token_.ClearToEmpty();
-}
-inline const std::string& ShareFileRequest::token() const {
-  // @@protoc_insertion_point(field_get:rpc.ShareFileRequest.token)
-  return _internal_token();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void ShareFileRequest::set_token(ArgT0&& arg0, ArgT... args) {
- 
- token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rpc.ShareFileRequest.token)
-}
-inline std::string* ShareFileRequest::mutable_token() {
-  std::string* _s = _internal_mutable_token();
-  // @@protoc_insertion_point(field_mutable:rpc.ShareFileRequest.token)
-  return _s;
-}
-inline const std::string& ShareFileRequest::_internal_token() const {
-  return token_.Get();
-}
-inline void ShareFileRequest::_internal_set_token(const std::string& value) {
-  
-  token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
-}
-inline std::string* ShareFileRequest::_internal_mutable_token() {
-  
-  return token_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
-}
-inline std::string* ShareFileRequest::release_token() {
-  // @@protoc_insertion_point(field_release:rpc.ShareFileRequest.token)
-  return token_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-}
-inline void ShareFileRequest::set_allocated_token(std::string* token) {
-  if (token != nullptr) {
-    
-  } else {
-    
-  }
-  token_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), token,
-      GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (token_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rpc.ShareFileRequest.token)
-}
-
-// string md5 = 3;
+// string md5 = 2;
 inline void ShareFileRequest::clear_md5() {
   md5_.ClearToEmpty();
 }
@@ -5399,7 +5182,7 @@ inline void ShareFileRequest::set_allocated_md5(std::string* md5) {
   // @@protoc_insertion_point(field_set_allocated:rpc.ShareFileRequest.md5)
 }
 
-// string filename = 4;
+// string filename = 3;
 inline void ShareFileRequest::clear_filename() {
   filename_.ClearToEmpty();
 }
@@ -5529,58 +5312,7 @@ inline void DeleteFileRequest::set_allocated_user(std::string* user) {
   // @@protoc_insertion_point(field_set_allocated:rpc.DeleteFileRequest.user)
 }
 
-// string token = 2;
-inline void DeleteFileRequest::clear_token() {
-  token_.ClearToEmpty();
-}
-inline const std::string& DeleteFileRequest::token() const {
-  // @@protoc_insertion_point(field_get:rpc.DeleteFileRequest.token)
-  return _internal_token();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void DeleteFileRequest::set_token(ArgT0&& arg0, ArgT... args) {
- 
- token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rpc.DeleteFileRequest.token)
-}
-inline std::string* DeleteFileRequest::mutable_token() {
-  std::string* _s = _internal_mutable_token();
-  // @@protoc_insertion_point(field_mutable:rpc.DeleteFileRequest.token)
-  return _s;
-}
-inline const std::string& DeleteFileRequest::_internal_token() const {
-  return token_.Get();
-}
-inline void DeleteFileRequest::_internal_set_token(const std::string& value) {
-  
-  token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
-}
-inline std::string* DeleteFileRequest::_internal_mutable_token() {
-  
-  return token_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
-}
-inline std::string* DeleteFileRequest::release_token() {
-  // @@protoc_insertion_point(field_release:rpc.DeleteFileRequest.token)
-  return token_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
-}
-inline void DeleteFileRequest::set_allocated_token(std::string* token) {
-  if (token != nullptr) {
-    
-  } else {
-    
-  }
-  token_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), token,
-      GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (token_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
-    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rpc.DeleteFileRequest.token)
-}
-
-// string md5 = 3;
+// string md5 = 2;
 inline void DeleteFileRequest::clear_md5() {
   md5_.ClearToEmpty();
 }
@@ -5631,7 +5363,7 @@ inline void DeleteFileRequest::set_allocated_md5(std::string* md5) {
   // @@protoc_insertion_point(field_set_allocated:rpc.DeleteFileRequest.md5)
 }
 
-// string filename = 4;
+// string filename = 3;
 inline void DeleteFileRequest::clear_filename() {
   filename_.ClearToEmpty();
 }

@@ -26,7 +26,7 @@ void SakilaDatabaseConnection::DoPrepareStatements()
 
      // — 注册 & 登录 —
     PrepareStatement(CHECK_REGISTER_INFO_EXIST,
-        "SELECT id FROM user_info WHERE user_name = ?",
+         "SELECT id FROM user_info WHERE user_name = ? OR nick_name = ?",
         CONNECTION_ASYNC);
     PrepareStatement(REGISTER_INTO_USER_INFO,
         "INSERT INTO user_info (user_name, nick_name, password, phone, email) "
@@ -161,6 +161,52 @@ void SakilaDatabaseConnection::DoPrepareStatements()
         "select file_id from file_info"
         " where md5 = ?",
         CONNECTION_ASYNC);
+
+    // 同步版 DeleteFileCall 所需的预处理语句注册
+    PrepareStatement(CHECK_USER_FILE_LIST_STATUS_SYNC,
+        "SELECT shared_status FROM user_file_list WHERE user = ? AND md5 = ? AND file_name = ?",
+        CONNECTION_SYNCH);
+
+    PrepareStatement(DELETE_SHARE_FILE_SYNC,
+        "DELETE FROM share_file_list WHERE user = ? AND md5 = ? AND file_name = ?",
+        CONNECTION_SYNCH);
+
+    PrepareStatement(GET_SHARE_FILE_COUNT_SYNC,
+        "SELECT count FROM user_file_count WHERE user = ?",
+        CONNECTION_SYNCH);
+
+    PrepareStatement(UPDATE_SHARE_FILE_COUNT_SYNC,
+        "UPDATE user_file_count SET count = ? WHERE user = ?",
+        CONNECTION_SYNCH);
+
+    PrepareStatement(GET_USER_FILE_COUNT_SYNC,
+        "SELECT count FROM user_file_count WHERE user = ?",
+        CONNECTION_SYNCH);
+
+    PrepareStatement(UPDATE_USER_FILE_COUNT_SYNC,
+        "UPDATE user_file_count SET count = ? WHERE user = ?",
+        CONNECTION_SYNCH);
+
+    PrepareStatement(DELETE_USER_FILE_LIST_SYNC,
+        "DELETE FROM user_file_list WHERE user = ? AND md5 = ? AND file_name = ?",
+        CONNECTION_SYNCH);
+
+    PrepareStatement(CHECK_FILE_INFO_COUNT_SYNC,
+        "SELECT count FROM file_info WHERE md5 = ?",
+        CONNECTION_SYNCH);
+
+    PrepareStatement(GET_FILE_ID_SYNC,
+        "SELECT file_id FROM file_info WHERE md5 = ?",  // 直接完整语句
+        CONNECTION_SYNCH);
+
+    PrepareStatement(UPDATE_FILE_INFO_COUNT_SYNC,
+        "UPDATE file_info SET count = ? WHERE md5 = ?",
+        CONNECTION_SYNCH);
+
+    PrepareStatement(DELETE_FILE_INFO_SYNC,
+        "DELETE FROM file_info WHERE md5 = ?",
+        CONNECTION_SYNCH);
+
 }
 
 

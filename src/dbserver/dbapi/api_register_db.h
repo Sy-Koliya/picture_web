@@ -59,6 +59,7 @@ class RegisterUserCall : public CallData<rpc::RegisterRequest, RegisterUserCall>
     {
         auto check_exist_stmt = SakilaDatabase.GetPreparedStatement(CHECK_REGISTER_INFO_EXIST);
         check_exist_stmt->setString(0,req.user_name());
+        check_exist_stmt->setString(1,req.nick_name());
         auto* insert_info_stmt = SakilaDatabase.GetPreparedStatement(REGISTER_INTO_USER_INFO);
         insert_info_stmt->setString(0, req.user_name());
         insert_info_stmt->setString(1,req.nick_name());
