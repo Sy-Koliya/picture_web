@@ -119,6 +119,34 @@ message PvFileResponse {
 
 
 
+message CancelShareFileRequest {
+  string user     = 1;
+  string md5      = 2;
+  string filename = 3;
+}
+message CancelShareFileResponse {
+  int32 code = 1; // 0=OK, 1=FAIL
+}
+
+message SaveFileRequest {
+  string user     = 1;
+  string md5      = 2;
+  string filename = 3;
+}
+message SaveFileResponse {
+  int32 code = 1; // 0=OK, 1=FAIL, 5=ALREADY_EXISTS
+}
+
+message PvShareFileRequest {
+  string user     = 1;
+  string md5      = 2;
+  string filename = 3;
+}
+message PvShareFileResponse {
+  int32 code = 1; // 0=OK, 1=FAIL
+}
+
+
 
 
 service DatabaseService {
@@ -131,4 +159,7 @@ service DatabaseService {
   rpc ShareFile (ShareFileRequest)  returns (ShareFileResponse);
   rpc DeleteFile(DeleteFileRequest) returns (DeleteFileResponse);
   rpc PvFile    (PvFileRequest)    returns (PvFileResponse);
+  rpc CancelShareFile(CancelShareFileRequest) returns (CancelShareFileResponse);
+  rpc SaveFile        (SaveFileRequest)        returns (SaveFileResponse);
+  rpc PvShareFile     (PvShareFileRequest)     returns (PvShareFileResponse);
 }

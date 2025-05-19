@@ -98,6 +98,27 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvFileResponse>> PrepareAsyncPvFile(::grpc::ClientContext* context, const ::rpc::PvFileRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvFileResponse>>(PrepareAsyncPvFileRaw(context, request, cq));
     }
+    virtual ::grpc::Status CancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::rpc::CancelShareFileResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelShareFileResponse>> AsyncCancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelShareFileResponse>>(AsyncCancelShareFileRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelShareFileResponse>> PrepareAsyncCancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelShareFileResponse>>(PrepareAsyncCancelShareFileRaw(context, request, cq));
+    }
+    virtual ::grpc::Status SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::rpc::SaveFileResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SaveFileResponse>> AsyncSaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SaveFileResponse>>(AsyncSaveFileRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SaveFileResponse>> PrepareAsyncSaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SaveFileResponse>>(PrepareAsyncSaveFileRaw(context, request, cq));
+    }
+    virtual ::grpc::Status PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::rpc::PvShareFileResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>> AsyncPvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>>(AsyncPvShareFileRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>> PrepareAsyncPvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>>(PrepareAsyncPvShareFileRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -119,6 +140,12 @@ class DatabaseService final {
       virtual void DeleteFile(::grpc::ClientContext* context, const ::rpc::DeleteFileRequest* request, ::rpc::DeleteFileResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void PvFile(::grpc::ClientContext* context, const ::rpc::PvFileRequest* request, ::rpc::PvFileResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void PvFile(::grpc::ClientContext* context, const ::rpc::PvFileRequest* request, ::rpc::PvFileResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void CancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void CancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -142,6 +169,12 @@ class DatabaseService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::DeleteFileResponse>* PrepareAsyncDeleteFileRaw(::grpc::ClientContext* context, const ::rpc::DeleteFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvFileResponse>* AsyncPvFileRaw(::grpc::ClientContext* context, const ::rpc::PvFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvFileResponse>* PrepareAsyncPvFileRaw(::grpc::ClientContext* context, const ::rpc::PvFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelShareFileResponse>* AsyncCancelShareFileRaw(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::CancelShareFileResponse>* PrepareAsyncCancelShareFileRaw(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SaveFileResponse>* AsyncSaveFileRaw(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::SaveFileResponse>* PrepareAsyncSaveFileRaw(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>* AsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rpc::PvShareFileResponse>* PrepareAsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -209,6 +242,27 @@ class DatabaseService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::PvFileResponse>> PrepareAsyncPvFile(::grpc::ClientContext* context, const ::rpc::PvFileRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::PvFileResponse>>(PrepareAsyncPvFileRaw(context, request, cq));
     }
+    ::grpc::Status CancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::rpc::CancelShareFileResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CancelShareFileResponse>> AsyncCancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CancelShareFileResponse>>(AsyncCancelShareFileRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CancelShareFileResponse>> PrepareAsyncCancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::CancelShareFileResponse>>(PrepareAsyncCancelShareFileRaw(context, request, cq));
+    }
+    ::grpc::Status SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::rpc::SaveFileResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::SaveFileResponse>> AsyncSaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::SaveFileResponse>>(AsyncSaveFileRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::SaveFileResponse>> PrepareAsyncSaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::SaveFileResponse>>(PrepareAsyncSaveFileRaw(context, request, cq));
+    }
+    ::grpc::Status PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::rpc::PvShareFileResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>> AsyncPvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>>(AsyncPvShareFileRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>> PrepareAsyncPvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>>(PrepareAsyncPvShareFileRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -230,6 +284,12 @@ class DatabaseService final {
       void DeleteFile(::grpc::ClientContext* context, const ::rpc::DeleteFileRequest* request, ::rpc::DeleteFileResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void PvFile(::grpc::ClientContext* context, const ::rpc::PvFileRequest* request, ::rpc::PvFileResponse* response, std::function<void(::grpc::Status)>) override;
       void PvFile(::grpc::ClientContext* context, const ::rpc::PvFileRequest* request, ::rpc::PvFileResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void CancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response, std::function<void(::grpc::Status)>) override;
+      void CancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response, std::function<void(::grpc::Status)>) override;
+      void SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, std::function<void(::grpc::Status)>) override;
+      void PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -259,6 +319,12 @@ class DatabaseService final {
     ::grpc::ClientAsyncResponseReader< ::rpc::DeleteFileResponse>* PrepareAsyncDeleteFileRaw(::grpc::ClientContext* context, const ::rpc::DeleteFileRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rpc::PvFileResponse>* AsyncPvFileRaw(::grpc::ClientContext* context, const ::rpc::PvFileRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rpc::PvFileResponse>* PrepareAsyncPvFileRaw(::grpc::ClientContext* context, const ::rpc::PvFileRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::CancelShareFileResponse>* AsyncCancelShareFileRaw(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::CancelShareFileResponse>* PrepareAsyncCancelShareFileRaw(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::SaveFileResponse>* AsyncSaveFileRaw(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::SaveFileResponse>* PrepareAsyncSaveFileRaw(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>* AsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>* PrepareAsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_registerUser_;
     const ::grpc::internal::RpcMethod rpcmethod_loginUser_;
     const ::grpc::internal::RpcMethod rpcmethod_InstantUpload_;
@@ -268,6 +334,9 @@ class DatabaseService final {
     const ::grpc::internal::RpcMethod rpcmethod_ShareFile_;
     const ::grpc::internal::RpcMethod rpcmethod_DeleteFile_;
     const ::grpc::internal::RpcMethod rpcmethod_PvFile_;
+    const ::grpc::internal::RpcMethod rpcmethod_CancelShareFile_;
+    const ::grpc::internal::RpcMethod rpcmethod_SaveFile_;
+    const ::grpc::internal::RpcMethod rpcmethod_PvShareFile_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -284,6 +353,9 @@ class DatabaseService final {
     virtual ::grpc::Status ShareFile(::grpc::ServerContext* context, const ::rpc::ShareFileRequest* request, ::rpc::ShareFileResponse* response);
     virtual ::grpc::Status DeleteFile(::grpc::ServerContext* context, const ::rpc::DeleteFileRequest* request, ::rpc::DeleteFileResponse* response);
     virtual ::grpc::Status PvFile(::grpc::ServerContext* context, const ::rpc::PvFileRequest* request, ::rpc::PvFileResponse* response);
+    virtual ::grpc::Status CancelShareFile(::grpc::ServerContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response);
+    virtual ::grpc::Status SaveFile(::grpc::ServerContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response);
+    virtual ::grpc::Status PvShareFile(::grpc::ServerContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_registerUser : public BaseClass {
@@ -465,7 +537,67 @@ class DatabaseService final {
       ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_registerUser<WithAsyncMethod_loginUser<WithAsyncMethod_InstantUpload<WithAsyncMethod_UploadFile<WithAsyncMethod_GetUserFilesCount<WithAsyncMethod_GetUserFileList<WithAsyncMethod_ShareFile<WithAsyncMethod_DeleteFile<WithAsyncMethod_PvFile<Service > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_CancelShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_CancelShareFile() {
+      ::grpc::Service::MarkMethodAsync(9);
+    }
+    ~WithAsyncMethod_CancelShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelShareFile(::grpc::ServerContext* /*context*/, const ::rpc::CancelShareFileRequest* /*request*/, ::rpc::CancelShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestCancelShareFile(::grpc::ServerContext* context, ::rpc::CancelShareFileRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::CancelShareFileResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_SaveFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SaveFile() {
+      ::grpc::Service::MarkMethodAsync(10);
+    }
+    ~WithAsyncMethod_SaveFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveFile(::grpc::ServerContext* /*context*/, const ::rpc::SaveFileRequest* /*request*/, ::rpc::SaveFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSaveFile(::grpc::ServerContext* context, ::rpc::SaveFileRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::SaveFileResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_PvShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_PvShareFile() {
+      ::grpc::Service::MarkMethodAsync(11);
+    }
+    ~WithAsyncMethod_PvShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PvShareFile(::grpc::ServerContext* /*context*/, const ::rpc::PvShareFileRequest* /*request*/, ::rpc::PvShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestPvShareFile(::grpc::ServerContext* context, ::rpc::PvShareFileRequest* request, ::grpc::ServerAsyncResponseWriter< ::rpc::PvShareFileResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_registerUser<WithAsyncMethod_loginUser<WithAsyncMethod_InstantUpload<WithAsyncMethod_UploadFile<WithAsyncMethod_GetUserFilesCount<WithAsyncMethod_GetUserFileList<WithAsyncMethod_ShareFile<WithAsyncMethod_DeleteFile<WithAsyncMethod_PvFile<WithAsyncMethod_CancelShareFile<WithAsyncMethod_SaveFile<WithAsyncMethod_PvShareFile<Service > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_registerUser : public BaseClass {
    private:
@@ -709,7 +841,88 @@ class DatabaseService final {
     virtual ::grpc::ServerUnaryReactor* PvFile(
       ::grpc::CallbackServerContext* /*context*/, const ::rpc::PvFileRequest* /*request*/, ::rpc::PvFileResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_registerUser<WithCallbackMethod_loginUser<WithCallbackMethod_InstantUpload<WithCallbackMethod_UploadFile<WithCallbackMethod_GetUserFilesCount<WithCallbackMethod_GetUserFileList<WithCallbackMethod_ShareFile<WithCallbackMethod_DeleteFile<WithCallbackMethod_PvFile<Service > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_CancelShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_CancelShareFile() {
+      ::grpc::Service::MarkMethodCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::CancelShareFileRequest, ::rpc::CancelShareFileResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response) { return this->CancelShareFile(context, request, response); }));}
+    void SetMessageAllocatorFor_CancelShareFile(
+        ::grpc::MessageAllocator< ::rpc::CancelShareFileRequest, ::rpc::CancelShareFileResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::CancelShareFileRequest, ::rpc::CancelShareFileResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_CancelShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelShareFile(::grpc::ServerContext* /*context*/, const ::rpc::CancelShareFileRequest* /*request*/, ::rpc::CancelShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* CancelShareFile(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::CancelShareFileRequest* /*request*/, ::rpc::CancelShareFileResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_SaveFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SaveFile() {
+      ::grpc::Service::MarkMethodCallback(10,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::SaveFileRequest, ::rpc::SaveFileResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response) { return this->SaveFile(context, request, response); }));}
+    void SetMessageAllocatorFor_SaveFile(
+        ::grpc::MessageAllocator< ::rpc::SaveFileRequest, ::rpc::SaveFileResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(10);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::SaveFileRequest, ::rpc::SaveFileResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SaveFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveFile(::grpc::ServerContext* /*context*/, const ::rpc::SaveFileRequest* /*request*/, ::rpc::SaveFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SaveFile(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::SaveFileRequest* /*request*/, ::rpc::SaveFileResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_PvShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_PvShareFile() {
+      ::grpc::Service::MarkMethodCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::rpc::PvShareFileRequest, ::rpc::PvShareFileResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response) { return this->PvShareFile(context, request, response); }));}
+    void SetMessageAllocatorFor_PvShareFile(
+        ::grpc::MessageAllocator< ::rpc::PvShareFileRequest, ::rpc::PvShareFileResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(11);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rpc::PvShareFileRequest, ::rpc::PvShareFileResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_PvShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PvShareFile(::grpc::ServerContext* /*context*/, const ::rpc::PvShareFileRequest* /*request*/, ::rpc::PvShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* PvShareFile(
+      ::grpc::CallbackServerContext* /*context*/, const ::rpc::PvShareFileRequest* /*request*/, ::rpc::PvShareFileResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_registerUser<WithCallbackMethod_loginUser<WithCallbackMethod_InstantUpload<WithCallbackMethod_UploadFile<WithCallbackMethod_GetUserFilesCount<WithCallbackMethod_GetUserFileList<WithCallbackMethod_ShareFile<WithCallbackMethod_DeleteFile<WithCallbackMethod_PvFile<WithCallbackMethod_CancelShareFile<WithCallbackMethod_SaveFile<WithCallbackMethod_PvShareFile<Service > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_registerUser : public BaseClass {
@@ -860,6 +1073,57 @@ class DatabaseService final {
     }
     // disable synchronous version of this method
     ::grpc::Status PvFile(::grpc::ServerContext* /*context*/, const ::rpc::PvFileRequest* /*request*/, ::rpc::PvFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_CancelShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_CancelShareFile() {
+      ::grpc::Service::MarkMethodGeneric(9);
+    }
+    ~WithGenericMethod_CancelShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelShareFile(::grpc::ServerContext* /*context*/, const ::rpc::CancelShareFileRequest* /*request*/, ::rpc::CancelShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SaveFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SaveFile() {
+      ::grpc::Service::MarkMethodGeneric(10);
+    }
+    ~WithGenericMethod_SaveFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveFile(::grpc::ServerContext* /*context*/, const ::rpc::SaveFileRequest* /*request*/, ::rpc::SaveFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_PvShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_PvShareFile() {
+      ::grpc::Service::MarkMethodGeneric(11);
+    }
+    ~WithGenericMethod_PvShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PvShareFile(::grpc::ServerContext* /*context*/, const ::rpc::PvShareFileRequest* /*request*/, ::rpc::PvShareFileResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1042,6 +1306,66 @@ class DatabaseService final {
     }
     void RequestPvFile(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_CancelShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_CancelShareFile() {
+      ::grpc::Service::MarkMethodRaw(9);
+    }
+    ~WithRawMethod_CancelShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelShareFile(::grpc::ServerContext* /*context*/, const ::rpc::CancelShareFileRequest* /*request*/, ::rpc::CancelShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestCancelShareFile(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SaveFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SaveFile() {
+      ::grpc::Service::MarkMethodRaw(10);
+    }
+    ~WithRawMethod_SaveFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveFile(::grpc::ServerContext* /*context*/, const ::rpc::SaveFileRequest* /*request*/, ::rpc::SaveFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSaveFile(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_PvShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_PvShareFile() {
+      ::grpc::Service::MarkMethodRaw(11);
+    }
+    ~WithRawMethod_PvShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PvShareFile(::grpc::ServerContext* /*context*/, const ::rpc::PvShareFileRequest* /*request*/, ::rpc::PvShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestPvShareFile(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1240,6 +1564,72 @@ class DatabaseService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* PvFile(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_CancelShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_CancelShareFile() {
+      ::grpc::Service::MarkMethodRawCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->CancelShareFile(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_CancelShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status CancelShareFile(::grpc::ServerContext* /*context*/, const ::rpc::CancelShareFileRequest* /*request*/, ::rpc::CancelShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* CancelShareFile(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SaveFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SaveFile() {
+      ::grpc::Service::MarkMethodRawCallback(10,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SaveFile(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SaveFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveFile(::grpc::ServerContext* /*context*/, const ::rpc::SaveFileRequest* /*request*/, ::rpc::SaveFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SaveFile(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_PvShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_PvShareFile() {
+      ::grpc::Service::MarkMethodRawCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->PvShareFile(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_PvShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status PvShareFile(::grpc::ServerContext* /*context*/, const ::rpc::PvShareFileRequest* /*request*/, ::rpc::PvShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* PvShareFile(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1485,9 +1875,90 @@ class DatabaseService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedPvFile(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::PvFileRequest,::rpc::PvFileResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<Service > > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_CancelShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_CancelShareFile() {
+      ::grpc::Service::MarkMethodStreamed(9,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::CancelShareFileRequest, ::rpc::CancelShareFileResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::CancelShareFileRequest, ::rpc::CancelShareFileResponse>* streamer) {
+                       return this->StreamedCancelShareFile(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_CancelShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status CancelShareFile(::grpc::ServerContext* /*context*/, const ::rpc::CancelShareFileRequest* /*request*/, ::rpc::CancelShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedCancelShareFile(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::CancelShareFileRequest,::rpc::CancelShareFileResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SaveFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SaveFile() {
+      ::grpc::Service::MarkMethodStreamed(10,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::SaveFileRequest, ::rpc::SaveFileResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::SaveFileRequest, ::rpc::SaveFileResponse>* streamer) {
+                       return this->StreamedSaveFile(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SaveFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SaveFile(::grpc::ServerContext* /*context*/, const ::rpc::SaveFileRequest* /*request*/, ::rpc::SaveFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSaveFile(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::SaveFileRequest,::rpc::SaveFileResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_PvShareFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_PvShareFile() {
+      ::grpc::Service::MarkMethodStreamed(11,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rpc::PvShareFileRequest, ::rpc::PvShareFileResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rpc::PvShareFileRequest, ::rpc::PvShareFileResponse>* streamer) {
+                       return this->StreamedPvShareFile(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_PvShareFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status PvShareFile(::grpc::ServerContext* /*context*/, const ::rpc::PvShareFileRequest* /*request*/, ::rpc::PvShareFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedPvShareFile(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rpc::PvShareFileRequest,::rpc::PvShareFileResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<Service > > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<Service > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_registerUser<WithStreamedUnaryMethod_loginUser<WithStreamedUnaryMethod_InstantUpload<WithStreamedUnaryMethod_UploadFile<WithStreamedUnaryMethod_GetUserFilesCount<WithStreamedUnaryMethod_GetUserFileList<WithStreamedUnaryMethod_ShareFile<WithStreamedUnaryMethod_DeleteFile<WithStreamedUnaryMethod_PvFile<WithStreamedUnaryMethod_CancelShareFile<WithStreamedUnaryMethod_SaveFile<WithStreamedUnaryMethod_PvShareFile<Service > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace rpc

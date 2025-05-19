@@ -31,6 +31,9 @@ static const char* DatabaseService_method_names[] = {
   "/rpc.DatabaseService/ShareFile",
   "/rpc.DatabaseService/DeleteFile",
   "/rpc.DatabaseService/PvFile",
+  "/rpc.DatabaseService/CancelShareFile",
+  "/rpc.DatabaseService/SaveFile",
+  "/rpc.DatabaseService/PvShareFile",
 };
 
 std::unique_ptr< DatabaseService::Stub> DatabaseService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -49,6 +52,9 @@ DatabaseService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& ch
   , rpcmethod_ShareFile_(DatabaseService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_DeleteFile_(DatabaseService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_PvFile_(DatabaseService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CancelShareFile_(DatabaseService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SaveFile_(DatabaseService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_PvShareFile_(DatabaseService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DatabaseService::Stub::registerUser(::grpc::ClientContext* context, const ::rpc::RegisterRequest& request, ::rpc::RegisterResponse* response) {
@@ -258,6 +264,75 @@ void DatabaseService::Stub::async::PvFile(::grpc::ClientContext* context, const 
   return result;
 }
 
+::grpc::Status DatabaseService::Stub::CancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::rpc::CancelShareFileResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::CancelShareFileRequest, ::rpc::CancelShareFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_CancelShareFile_, context, request, response);
+}
+
+void DatabaseService::Stub::async::CancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::CancelShareFileRequest, ::rpc::CancelShareFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CancelShareFile_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::CancelShareFile(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CancelShareFile_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::CancelShareFileResponse>* DatabaseService::Stub::PrepareAsyncCancelShareFileRaw(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::CancelShareFileResponse, ::rpc::CancelShareFileRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_CancelShareFile_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::CancelShareFileResponse>* DatabaseService::Stub::AsyncCancelShareFileRaw(::grpc::ClientContext* context, const ::rpc::CancelShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncCancelShareFileRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::rpc::SaveFileResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::SaveFileRequest, ::rpc::SaveFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SaveFile_, context, request, response);
+}
+
+void DatabaseService::Stub::async::SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::SaveFileRequest, ::rpc::SaveFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SaveFile_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::SaveFile(::grpc::ClientContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SaveFile_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::SaveFileResponse>* DatabaseService::Stub::PrepareAsyncSaveFileRaw(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::SaveFileResponse, ::rpc::SaveFileRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SaveFile_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::SaveFileResponse>* DatabaseService::Stub::AsyncSaveFileRaw(::grpc::ClientContext* context, const ::rpc::SaveFileRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSaveFileRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DatabaseService::Stub::PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::rpc::PvShareFileResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rpc::PvShareFileRequest, ::rpc::PvShareFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PvShareFile_, context, request, response);
+}
+
+void DatabaseService::Stub::async::PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rpc::PvShareFileRequest, ::rpc::PvShareFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PvShareFile_, context, request, response, std::move(f));
+}
+
+void DatabaseService::Stub::async::PvShareFile(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PvShareFile_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>* DatabaseService::Stub::PrepareAsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rpc::PvShareFileResponse, ::rpc::PvShareFileRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PvShareFile_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rpc::PvShareFileResponse>* DatabaseService::Stub::AsyncPvShareFileRaw(::grpc::ClientContext* context, const ::rpc::PvShareFileRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncPvShareFileRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 DatabaseService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DatabaseService_method_names[0],
@@ -349,6 +424,36 @@ DatabaseService::Service::Service() {
              ::rpc::PvFileResponse* resp) {
                return service->PvFile(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[9],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::CancelShareFileRequest, ::rpc::CancelShareFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::CancelShareFileRequest* req,
+             ::rpc::CancelShareFileResponse* resp) {
+               return service->CancelShareFile(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[10],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::SaveFileRequest, ::rpc::SaveFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::SaveFileRequest* req,
+             ::rpc::SaveFileResponse* resp) {
+               return service->SaveFile(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DatabaseService_method_names[11],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DatabaseService::Service, ::rpc::PvShareFileRequest, ::rpc::PvShareFileResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DatabaseService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rpc::PvShareFileRequest* req,
+             ::rpc::PvShareFileResponse* resp) {
+               return service->PvShareFile(ctx, req, resp);
+             }, this)));
 }
 
 DatabaseService::Service::~Service() {
@@ -411,6 +516,27 @@ DatabaseService::Service::~Service() {
 }
 
 ::grpc::Status DatabaseService::Service::PvFile(::grpc::ServerContext* context, const ::rpc::PvFileRequest* request, ::rpc::PvFileResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::CancelShareFile(::grpc::ServerContext* context, const ::rpc::CancelShareFileRequest* request, ::rpc::CancelShareFileResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::SaveFile(::grpc::ServerContext* context, const ::rpc::SaveFileRequest* request, ::rpc::SaveFileResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DatabaseService::Service::PvShareFile(::grpc::ServerContext* context, const ::rpc::PvShareFileRequest* request, ::rpc::PvShareFileResponse* response) {
   (void) context;
   (void) request;
   (void) response;

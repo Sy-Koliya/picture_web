@@ -24,6 +24,9 @@ public:
         new DeleteFileCall(&db_service_, cq_.get());
         new ShareFileCall(&db_service_, cq_.get());
         new PvFileCall(&db_service_, cq_.get());
+        new CancelShareFileCall(&db_service_, cq_.get());
+        new SaveFileCall        (&db_service_, cq_.get());
+        new PvShareFileCall     (&db_service_, cq_.get());
     }
     ~MySqlRpcServer()
     {

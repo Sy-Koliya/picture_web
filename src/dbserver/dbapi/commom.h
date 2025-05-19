@@ -9,5 +9,5 @@
 #include "dbapi/api_delete_file_db.h"
 #include "dbapi/api_share_file_db.h"
 #include "dbapi/api_pv_file_db.h"
-
+#include "dbapi/api_dealsharedfile_db.h"
 #endif

@@ -197,6 +197,32 @@ inline auto MysqlPvFile(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req
     return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncPvFile>{client, std::move(req)};
 }
 
+template <typename Req, typename Resp>
+inline auto MysqlPvShareFile(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncPvShareFile>{client, std::move(req)};
+}
+
+template <typename Req, typename Resp>
+inline auto MysqlCancelShareFile(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncCancelShareFile>{client, std::move(req)};
+}
+
+template <typename Req, typename Resp>
+inline auto MysqlSaveFile(GrpcClient<rpc::DatabaseService, Req, Resp> *client, Req req)
+{
+    return RpcAwaitable<GrpcClient<rpc::DatabaseService, Req, Resp>, Req, Resp, &DatabaseService::Stub::PrepareAsyncSaveFile>{client, std::move(req)};
+}
+
+
+
+
+
+
+
+
+// fdfs调用
 
 template <typename Req, typename Resp>
 inline auto FdfslUploadFileCall(GrpcClient<rpc::FdfsService, Req, Resp> *client, Req req)
